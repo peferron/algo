@@ -1,24 +1,26 @@
+'use strict';
+
 exports.sort = function (a) {
     // console.log('sort:', a)
 
     if (!a) {
-        return
+        return;
     }
 
-    mergesort(a, 0, a.length - 1)
+    mergesort(a, 0, a.length - 1);
 };
 
 function mergesort(a, start, end) {
     // console.log('mergesort:', a.slice(start, end + 1))
 
     if (end < start + 1) {
-        return
+        return;
     }
 
     var mid = Math.floor((start + end) / 2);
-    mergesort(a, start, mid)
-    mergesort(a, mid + 1, end)
-    merge(a, start, mid, end)
+    mergesort(a, start, mid);
+    mergesort(a, mid + 1, end);
+    merge(a, start, mid, end);
 }
 
 function merge(a, start, mid, end) {

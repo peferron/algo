@@ -53,7 +53,7 @@ function equal(a, b) {
         return true;
     }
     if (!a || !b || a.length !== b.length) {
-        return false
+        return false;
     }
     for (var i = 0; i < a.length; i++) {
         if (a[i] !== b[i]) {
