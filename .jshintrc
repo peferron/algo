@@ -1,0 +1,7 @@
+{
+    "indent": 4,
+    "quotmark": "single",
+    "maxlen": 100,
+    "globalstrict": true,
+    "node": true
+}
