@@ -8,10 +8,10 @@ There is purposely no code reuse between modules. Each module is self-contained 
 
 To test a JavaScript module, for example `mergesort`:
 ```shell
-$ node sort/mergesort/javascript/mergesort_test.js
+$ node mergesort/javascript/mergesort_test.js
 ```
 
 To test a Go module:
 ```shell
-$ go test ./sort/mergesort/go
+$ go test ./mergesort/go
 ```

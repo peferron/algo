@@ -1,3 +1,5 @@
+'use strict';
+
 var mergesort = require('./mergesort.js');
 
 var tests = [
@@ -23,7 +25,7 @@ var ok = true;
 
 tests.forEach(function(test, i) {
     console.log('Starting test #' + i + ' with input array', test.in);
-    a = clone(test.in);
+    var a = clone(test.in);
     mergesort.sort(a);
     if (equal(a, test.out)) {
         console.log('Test OK.\n');
