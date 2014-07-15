@@ -43,8 +43,6 @@ func clone(a []int) []int {
 		return nil
 	}
 	b := make([]int, len(a))
-	for i, v := range a {
-		b[i] = v
-	}
+	copy(b, a)
 	return b
 }
