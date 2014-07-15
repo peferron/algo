@@ -26,20 +26,18 @@ func mergesort(a []int, start, end int) {
 func merge(a []int, start, mid, end int) {
 	// fmt.Printf("merge: %v and %v\n", a[start:mid+1], a[mid+1:end+1])
 
-	m := []int{}
-	l := start
-	r := mid + 1
-	for l <= mid || r <= end {
-		if r > end || l <= mid && a[l] < a[r] {
-			m = append(m, a[l])
-			l++
+	merged := []int{}
+	left := start
+	right := mid + 1
+	for left <= mid || right <= end {
+		if right > end || left <= mid && a[left] < a[right] {
+			merged = append(merged, a[left])
+			left++
 		} else {
-			m = append(m, a[r])
-			r++
+			merged = append(merged, a[right])
+			right++
 		}
 	}
 
-	for i, v := range m {
-		a[start+i] = v
-	}
+	copy(a[start:], merged)
 }
