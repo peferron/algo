@@ -18,18 +18,18 @@ func partition(a []int) int {
 	p := medianPivot(a)
 	// fmt.Printf("partition: %v, pivot: %d (value %d)\n", a, p, a[p])
 
-	l := len(a) - 1
-	swap(a, p, l)
+	last := len(a) - 1
+	swap(a, p, last)
 
 	firstHigh := 0
-	for i := 0; i < l; i++ {
+	for i := 0; i < last; i++ {
 		v := a[i]
-		if v < a[l] {
+		if v < a[last] {
 			swap(a, i, firstHigh)
 			firstHigh++
 		}
 	}
-	swap(a, l, firstHigh)
+	swap(a, last, firstHigh)
 
 	return firstHigh
 }
