@@ -15,10 +15,8 @@ exports.sort = function (a) {
 function insert(a, i) {
     // console.log('insert:', a, 'index', i);
 
-    var j = i;
-    while (j > 0 && a[j] < a[j - 1]) {
+    for (var j = i; j > 0 && a[j] < a[j - 1]; j--) {
         swap(a, j, j - 1);
-        j--;
     }
 }
 
