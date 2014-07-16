@@ -28,7 +28,7 @@ func FasterNewHeap(a []int) *Heap {
 func (h *Heap) RemoveRoot() int {
 	rootValue := h.value(0)
 
-	last := node(len(*h) - 1)
+	last := h.last()
 	lastValue := h.value(last)
 	(*h) = (*h)[:last]
 
@@ -50,6 +50,10 @@ func (h *Heap) setValue(n node, v int) {
 	(*h)[n] = v
 }
 
+func (h *Heap) last() node {
+	return node(len(*h) - 1)
+}
+
 func (h *Heap) parent(n node) node {
 	if n == 0 {
 		return none
@@ -59,12 +63,12 @@ func (h *Heap) parent(n node) node {
 
 func (h *Heap) children(n node) (left node, right node) {
 	left = 2*n + 1
-	if int(left) >= len(*h) {
+	if left > h.last() {
 		left = none
 	}
 
 	right = 2*n + 2
-	if int(right) >= len(*h) {
+	if right > h.last() {
 		right = none
 	}
 
@@ -73,8 +77,7 @@ func (h *Heap) children(n node) (left node, right node) {
 
 func (h *Heap) insert(v int) {
 	*h = append(*h, v)
-	last := node(len(*h) - 1)
-	h.bubbleUp(last)
+	h.bubbleUp(h.last())
 }
 
 func (h *Heap) bubbleUp(n node) {
