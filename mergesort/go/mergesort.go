@@ -3,34 +3,26 @@ package mergesort
 func Sort(a []int) {
 	// fmt.Printf("Sort: %v\n", a)
 
-	if len(a) == 0 {
+	if len(a) < 2 {
 		return
 	}
 
-	mergesort(a, 0, len(a)-1)
+	mid := len(a) / 2
+
+	Sort(a[:mid])
+	Sort(a[mid:])
+	merge(a, mid)
 }
 
-func mergesort(a []int, start, end int) {
-	// fmt.Printf("mergesort: %v\n", a[start:end+1])
-
-	if end < start+1 {
-		return
-	}
-
-	mid := (start + end) / 2
-	mergesort(a, start, mid)
-	mergesort(a, mid+1, end)
-	merge(a, start, mid, end)
-}
-
-func merge(a []int, start, mid, end int) {
-	// fmt.Printf("merge: %v and %v\n", a[start:mid+1], a[mid+1:end+1])
+func merge(a []int, mid int) {
+	// fmt.Printf("merge: %v with mid: %d\n", a, mid)
 
 	merged := []int{}
-	left := start
-	right := mid + 1
-	for left <= mid || right <= end {
-		if right > end || left <= mid && a[left] < a[right] {
+
+	left := 0
+	right := mid
+	for left < mid || right < len(a) {
+		if right >= len(a) || left < mid && a[left] < a[right] {
 			merged = append(merged, a[left])
 			left++
 		} else {
@@ -39,5 +31,5 @@ func merge(a []int, start, mid, end int) {
 		}
 	}
 
-	copy(a[start:], merged)
+	copy(a, merged)
 }
