@@ -16,7 +16,7 @@ func Sort(a []int) {
 
 func partition(a []int) int {
 	p := medianPivot(a)
-	// fmt.Printf("partition: %v, pivot: %d (value %d)\n", a, p, a[p])
+	// fmt.Printf("partition: %v with pivot %d\n", a, p)
 
 	last := len(a) - 1
 	swap(a, p, last)
@@ -43,21 +43,20 @@ func swap(a []int, i, j int) {
 }
 
 func randomPivot(a []int) int {
-	return rand.Intn(len(a) - 1)
+	return rand.Intn(len(a))
 }
 
 func medianPivot(a []int) int {
-	x := 0
-	y := len(a) / 2
-	z := len(a) - 1
+	mid := len(a) / 2
+	end := len(a) - 1
 
 	switch {
-	case between(a[x], a[y], a[z]):
-		return x
-	case between(a[y], a[x], a[z]):
-		return y
+	case between(a[0], a[mid], a[end]):
+		return 0
+	case between(a[mid], a[0], a[end]):
+		return mid
 	default:
-		return z
+		return end
 	}
 }
 
