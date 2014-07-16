@@ -4,15 +4,15 @@ func Sort(a []int) {
 	// fmt.Printf("Sort: %v\n", a)
 
 	for i := 1; i < len(a); i++ {
-		insert(a, i)
+		insertLast(a[:i+1])
 	}
 }
 
-func insert(a []int, i int) {
-	// fmt.Printf("insert: %v index %d\n", a, i)
+func insertLast(a []int) {
+	// fmt.Printf("insertLast: %v\n", a)
 
-	for j := i; j > 0 && a[j] < a[j-1]; j-- {
-		swap(a, j, j-1)
+	for i := len(a) - 1; i > 0 && a[i] < a[i-1]; i-- {
+		swap(a, i, i-1)
 	}
 }
 
