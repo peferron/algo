@@ -26,20 +26,20 @@ function mergesort(a, start, end) {
 function merge(a, start, mid, end) {
     // console.log('merge:', a.slice(start, mid + 1), 'and', a.slice(mid + 1, end + 1))
 
-    var m = [];
-    var l = start;
-    var r = mid + 1;
-    while (l <= mid || r <= end) {
-        if (r > end || l <= mid && a[l] < a[r]) {
-            m.push(a[l]);
-            l++;
+    var merged = [];
+    var left = start;
+    var right = mid + 1;
+    while (left <= mid || right <= end) {
+        if (right > end || left <= mid && a[left] < a[right]) {
+            merged.push(a[left]);
+            left++;
         } else {
-            m.push(a[r]);
-            r++;
+            merged.push(a[right]);
+            right++;
         }
     }
 
-    for (var i = 0; i < m.length; i++) {
-        a[start + i] = m[i];
+    for (var i = 0; i < merged.length; i++) {
+        a[start + i] = merged[i];
     }
 }
