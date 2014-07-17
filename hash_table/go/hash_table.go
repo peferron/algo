@@ -1,7 +1,5 @@
 package hash_table
 
-import "fmt"
-
 type item struct {
 	k string
 	v int
@@ -10,7 +8,7 @@ type item struct {
 type HashTable []*[]item
 
 func NewHashTable(size int) *HashTable {
-	fmt.Printf("NewHashTable: size %d\n", size)
+	// fmt.Printf("NewHashTable: size %d\n", size)
 
 	t := make(HashTable, size)
 	return &t
@@ -27,17 +25,17 @@ func (t *HashTable) get(k string) (v int, ok bool) {
 		ok = true
 	}
 
-	fmt.Printf("get: %q -> %d, %t\n", k, v, ok)
+	// fmt.Printf("get: %q -> %d, %t\n", k, v, ok)
 	return
 }
 
 func (t *HashTable) set(k string, v int) {
-	fmt.Printf("set: %q, %d\n", k, v)
-
-	newItem := item{k, v}
+	// fmt.Printf("set: %q, %d\n", k, v)
 
 	h := hashMod(k, len(*t))
 	items := (*t)[h]
+	newItem := item{k, v}
+
 	if items == nil {
 		(*t)[h] = &[]item{newItem}
 		return
@@ -50,7 +48,7 @@ func (t *HashTable) set(k string, v int) {
 }
 
 func (t *HashTable) delete(k string) {
-	fmt.Printf("delete: %q\n", k)
+	// fmt.Printf("delete: %q\n", k)
 
 	h := hashMod(k, len(*t))
 	items := (*t)[h]
