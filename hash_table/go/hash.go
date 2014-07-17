@@ -1,13 +1,13 @@
 package hash_table
 
-func hash(s string) uint64 {
-	var h uint64
+func hash(s string) uint32 {
+	var h uint32
 	for _, r := range s {
-		h = 101*h + uint64(r)
+		h = 101*h + uint32(r)
 	}
 	return h
 }
 
 func hashMod(s string, mod int) int {
-	return int(hash(s) % uint64(mod))
+	return int(hash(s) % uint32(mod))
 }
