@@ -1,7 +1,23 @@
 {
+    // Enforcing options
+    "curly": true,
+    "eqeqeq": true,
+    "forin": true,
+    "freeze": true,
+    "immed": true,
     "indent": 4,
-    "quotmark": "single",
+    "latedef": "nofunc",
     "maxlen": 100,
+    "newcap": true,
+    "noarg": true,
+    "noempty": true,
+    "nonbsp": true,
+    "nonew": true,
+    "quotmark": "single",
+    "undef": true,
+    "unused": true,
+
+    // Relaxing options
     "globalstrict": true,
     "node": true
 }
