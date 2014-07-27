@@ -1,16 +1,17 @@
 'use strict';
 
-var heap = require('./heap.js');
+var maxheap = require('./maxheap.js');
 
-exports.sort = function (a) {
+exports.sort = function (a, maxHeapify) {
     // console.log('sort:', a)
 
     if (!a) {
         return;
     }
 
-    var h = new heap.Heap(a);
-    for (var i = 0; i < a.length; i++) {
+    var h = new maxheap.Heap(a, maxHeapify);
+
+    for (var i = a.length - 1; i >= 0; i--) {
         a[i] = h.removeRoot();
     }
 };

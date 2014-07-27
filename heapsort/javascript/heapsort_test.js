@@ -3,6 +3,7 @@
 var assert = require('assert');
 
 var heapsort = require('./heapsort.js');
+var maxheap = require('./maxheap.js');
 
 var tests = [
     {
@@ -23,15 +24,15 @@ var tests = [
     }
 ];
 
-tests.forEach(function(test, i) {
-    // console.log('Starting test #' + i + ' with input array', test.in);
+function test(heapify) {
+    tests.forEach(function(test, i) {
+        // console.log('Starting test #' + i + ' with input array', test.in);
 
-    var a = clone(test.in);
-    heapsort.sort(a);
-    assert.deepEqual(a, test.out);
-});
-
-console.log('All tests OK.');
+        var a = clone(test.in);
+        heapsort.sort(a, heapify);
+        assert.deepEqual(a, test.out);
+    });
+}
 
 function clone(a) {
     if (!a) {
@@ -39,3 +40,7 @@ function clone(a) {
     }
     return a.slice(0);
 }
+
+test(maxheap.slowHeapify);
+test(maxheap.fastHeapify);
+console.log('All tests OK.');
