@@ -23,6 +23,13 @@ var tests = [
     }
 ];
 
+function clone(a) {
+    if (!a) {
+        return a;
+    }
+    return a.slice(0);
+}
+
 tests.forEach(function(test, i) {
     // console.log('Starting test #' + i + ' with input array', test.in);
 
@@ -32,10 +39,3 @@ tests.forEach(function(test, i) {
 });
 
 console.log('All tests OK.');
-
-function clone(a) {
-    if (!a) {
-        return a;
-    }
-    return a.slice(0);
-}

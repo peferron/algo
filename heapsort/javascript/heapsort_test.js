@@ -43,4 +43,5 @@ function clone(a) {
 
 test(maxheap.slowHeapify);
 test(maxheap.fastHeapify);
+
 console.log('All tests OK.');
