@@ -20,7 +20,7 @@ h.set('def', 9);
 assert(h.has('def'));
 assert.strictEqual(h.get('def'), 9);
 
-h.delete('abc');
+h.del('abc');
 assert(!h.has('abc'));
 assert(h.has('def'));
 assert.strictEqual(h.get('def'), 9);

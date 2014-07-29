@@ -24,7 +24,7 @@ func TestHashTable(t *testing.T) {
 		t.Errorf("Expected (ok, v) to be (true, 9), was (%t, %d)", ok, v)
 	}
 
-	h.delete("abc")
+	h.del("abc")
 	if _, ok := h.get("abc"); ok {
 		t.Error("Expected ok to be true, was false")
 	}

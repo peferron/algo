@@ -47,14 +47,14 @@ func (t *HashTable) set(k string, v int) {
 	}
 }
 
-func (t *HashTable) delete(k string) {
-	// fmt.Printf("delete: %q\n", k)
+func (t *HashTable) del(k string) {
+	// fmt.Printf("del: %q\n", k)
 
 	h := hashMod(k, len(*t))
 	items := (*t)[h]
 
 	if i := indexOf(items, k); i >= 0 {
-		remove(items, i)
+		del(items, i)
 	}
 }
 
@@ -70,7 +70,7 @@ func indexOf(a *[]item, k string) int {
 	return -1
 }
 
-func remove(a *[]item, i int) {
+func del(a *[]item, i int) {
 	last := len(*a) - 1
 	if i < last {
 		(*a)[i] = (*a)[last]

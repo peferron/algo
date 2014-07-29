@@ -35,12 +35,12 @@ exports.HashTable = function(size) {
         }
     };
 
-    this.delete = function(key) {
+    this.del = function(key) {
         var h = hash.mod(key, size);
         var items = a[h];
         var i = indexOfItem(items, key);
         if (i >= 0) {
-            remove(items, i);
+            del(items, i);
         }
     };
 };
@@ -57,7 +57,7 @@ function indexOfItem(items, key) {
     return -1;
 }
 
-function remove(arr, i) {
+function del(arr, i) {
     // A splice would work too, but this is faster on big arrays - as long as order does not matter.
     if (i === arr.length - 1) {
         arr.pop();
