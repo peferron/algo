@@ -5,63 +5,63 @@ var hash = require('./hash.js');
 exports.HashTable = function(size) {
     var a = [];
 
-    this.has = function(k) {
-        var h = hash.mod(k, size);
+    this.has = function(key) {
+        var h = hash.mod(key, size);
         var items = a[h];
-        return indexOfItem(items, k) >= 0;
+        return indexOfItem(items, key) >= 0;
     };
 
-    this.get = function(k) {
-        var h = hash.mod(k, size);
+    this.get = function(key) {
+        var h = hash.mod(key, size);
         var items = a[h];
-        var i = indexOfItem(items, k);
+        var i = indexOfItem(items, key);
         if (i >= 0) {
             return items[i][1];
         }
     };
 
-    this.set = function(k, v) {
-        var h = hash.mod(k, size);
+    this.set = function(key, value) {
+        var h = hash.mod(key, size);
         var items = a[h];
         if (!items) {
-            a[h] = [[k, v]];
+            a[h] = [[key, value]];
             return;
         }
-        var i = indexOfItem(items, k);
+        var i = indexOfItem(items, key);
         if (i >= 0) {
-            items[i][1] = v;
+            items[i][1] = value;
         } else {
-            items.push([k, v]);
+            items.push([key, value]);
         }
     };
 
-    this.delete = function(k) {
-        var h = hash.mod(k, size);
+    this.delete = function(key) {
+        var h = hash.mod(key, size);
         var items = a[h];
-        var i = indexOfItem(items, k);
+        var i = indexOfItem(items, key);
         if (i >= 0) {
             remove(items, i);
         }
     };
 };
 
-function indexOfItem(items, k) {
+function indexOfItem(items, key) {
     if (!items) {
         return -1;
     }
     for (var i = 0; i < items.length; i++) {
-        if (items[i][0] === k) {
+        if (items[i][0] === key) {
             return i;
         }
     }
     return -1;
 }
 
-function remove(a, i) {
-    // A splice would work too, but this is faster on big arrays.
-    if (i === a.length - 1) {
-        a.pop();
+function remove(arr, i) {
+    // A splice would work too, but this is faster on big arrays - as long as order does not matter.
+    if (i === arr.length - 1) {
+        arr.pop();
     } else {
-        a[i] = a.pop();
+        arr[i] = arr.pop();
     }
 }

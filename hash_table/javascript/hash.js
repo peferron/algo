@@ -1,15 +1,15 @@
 'use strict';
 
-exports.mod = function(s, m) {
-    return hash(s) % m;
+exports.mod = function(str, modulo) {
+    return hash(str) % modulo;
 };
 
-function hash(s) {
+function hash(str) {
     var h = 0;
-    for (var i = 0; i < s.length; i++) {
+    for (var i = 0; i < str.length; i++) {
         // Simple multiplicative hash. The constant 101 works well, see
         // http://www.strchr.com/hash_functions
-        h = 101 * h + s.charCodeAt(i);
+        h = 101 * h + str.charCodeAt(i);
 
         // Bitwise arithmetic forces the result to be a 32-bit integer (see ECMAScript spec). Other
         // than that, h |= 0 (shorthand for h = h | 0) is a no-op.
