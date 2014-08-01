@@ -20,6 +20,9 @@ func TestHashTable(t *testing.T) {
 	}
 
 	h.set("def", 9)
+	if v, ok := h.get("abc"); !ok || v != 7 {
+		t.Errorf("Expected (ok, v) to be (true, 7), was (%t, %d)", ok, v)
+	}
 	if v, ok := h.get("def"); !ok || v != 9 {
 		t.Errorf("Expected (ok, v) to be (true, 9), was (%t, %d)", ok, v)
 	}
