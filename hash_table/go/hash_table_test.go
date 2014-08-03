@@ -1,12 +1,17 @@
 package hash_table
 
-import "testing"
+import (
+	"math/rand"
+	"testing"
+)
 
-func TestHashTable(t *testing.T) {
+var chars = []byte("01234567890abcdefghijklmnopqrstuvwxyz")
+
+func TestHashTableBasic(t *testing.T) {
 	h := NewHashTable(10)
 
 	if _, ok := h.get("abc"); ok {
-		t.Error("Expected ok to be true, was false")
+		t.Error("Expected ok to be false, was true")
 	}
 
 	h.set("abc", 5)
@@ -29,9 +34,75 @@ func TestHashTable(t *testing.T) {
 
 	h.del("abc")
 	if _, ok := h.get("abc"); ok {
-		t.Error("Expected ok to be true, was false")
+		t.Error("Expected ok to be false, was true")
 	}
 	if v, ok := h.get("def"); !ok || v != 9 {
 		t.Errorf("Expected (ok, v) to be (true, 9), was (%t, %d)", ok, v)
 	}
+}
+
+func TestHashTableRandom(t *testing.T) {
+	for i := 0; i < 100; i++ {
+		randomTest(t)
+	}
+}
+
+func randomTest(t *testing.T) {
+	h := NewHashTable(1000)
+	m := map[string]int{}
+	a := []string{}
+
+	for i := 0; i < 10000; i++ {
+		if rand.Float32() < 0.2 {
+			delRandom(h, m, &a)
+			continue
+		}
+		setRandom(h, m, &a)
+	}
+
+	check(t, h, m, a)
+}
+
+func check(t *testing.T, h *HashTable, m map[string]int, a []string) {
+	for _, k := range a {
+		if v, ok := h.get(k); !ok || v != m[k] {
+			t.Errorf("Expected (ok, v) to be (true, %d), was (%t, %d)", m[k], ok, v)
+		}
+	}
+}
+
+func setRandom(h *HashTable, m map[string]int, a *[]string) {
+	k := randomKey()
+	v := randomValue()
+	h.set(k, v)
+	if _, ok := m[k]; !ok {
+		(*a) = append(*a, k)
+	}
+	m[k] = v
+}
+
+func delRandom(h *HashTable, m map[string]int, a *[]string) {
+	l := len(*a)
+	if l <= 0 {
+		return
+	}
+	i := rand.Intn(l)
+	k := (*a)[i]
+	h.del(k)
+	delete(m, k)
+	(*a)[i] = (*a)[l-1]
+	(*a) = (*a)[:l-1]
+}
+
+func randomKey() string {
+	l := len(chars)
+	s := []byte{}
+	for i := 0; i < 3; i++ {
+		s = append(s, chars[rand.Intn(l)])
+	}
+	return string(s)
+}
+
+func randomValue() int {
+	return rand.Int()
 }
