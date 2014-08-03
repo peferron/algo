@@ -7,7 +7,7 @@ import (
 
 var chars = []byte("01234567890abcdefghijklmnopqrstuvwxyz")
 
-func TestHashTableBasic(t *testing.T) {
+func TestBasic(t *testing.T) {
 	h := NewHashTable(10)
 
 	if _, ok := h.get("abc"); ok {
@@ -41,13 +41,13 @@ func TestHashTableBasic(t *testing.T) {
 	}
 }
 
-func TestHashTableRandom(t *testing.T) {
+func TestRandom(t *testing.T) {
 	for i := 0; i < 100; i++ {
-		randomTest(t)
+		runRandomTest(t)
 	}
 }
 
-func randomTest(t *testing.T) {
+func runRandomTest(t *testing.T) {
 	h := NewHashTable(1000)
 	m := map[string]int{}
 	a := []string{}
