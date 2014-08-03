@@ -8,4 +8,4 @@
     * Insert: O(log n).
     * Delete: O(log n).
 
-The red-black trees implemented here are the traditional version (non left-leaning) with bottom-up insertion and deletion.
+The red-black trees implemented here are the traditional version (non left-leaning) with bottom-up (recursive) insertion and deletion.
