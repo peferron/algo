@@ -68,13 +68,6 @@ function Node(key, value) {
     this.right = null;
 }
 
-Node.prototype.root = function() {
-    if (!this.parent) {
-        return this;
-    }
-    return this.parent.root();
-};
-
 function flipColors(n) {
     flipColor(n);
     flipColor(n.left);
