@@ -7,3 +7,5 @@
     * Search: O(log n).
     * Insert: O(log n).
     * Delete: O(log n).
+
+The red-black trees implemented here are the traditional version (non left-leaning) with bottom-up insertion and deletion.
