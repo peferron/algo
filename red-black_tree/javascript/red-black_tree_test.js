@@ -2,10 +2,10 @@
 
 var assert = require('assert');
 
-var rb_tree = require('./red-black_tree.js');
+var rb = require('./red-black_tree.js');
 
 function basicTests() {
-    var t = new rb_tree.Tree();
+    var t = new rb.Tree();
 
     assert(!t.has('abc'));
 
@@ -47,7 +47,7 @@ function randomTests() {
 }
 
 function randomTest() {
-    var t = new rb_tree.Tree();
+    var t = new rb.Tree();
     var m = {};
     var a = [];
 
