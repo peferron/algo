@@ -387,7 +387,7 @@ function deleteCase2(n) {
 
 // Case 3:
 // - Preconditions: the node is black and is not the root, and the sibling is black.
-// - Case handled: the parent is black, and the sibling's children are black or null.
+// - Case handled: the parent is black and the sibling's children are black or null.
 // - Issue: same black violation as explained in case 2.
 // - Solution: Recolor the sibling red. This fixes the black violation between the node and its
 // sibling. However it pushes the issue up by one level - now, the paths passing through the parent
@@ -406,8 +406,8 @@ function deleteCase3(n) {
 }
 
 // Case 4:
-// - Preconditions: the node is black and is not the root, and not [the parent is black and the
-// sibling's children are black or null].
+// - Preconditions: the node is black and is not the root, the sibling is black, and not [the parent
+// is black and the sibling's children are black or null].
 // - Case handled: the parent is red and the sibling's children are black or null.
 // - Issue: same black violation as explained in case 2.
 // - Solution: Recolor the parent black and the sibling red. This increases the number of black
@@ -417,7 +417,7 @@ function deleteCase3(n) {
 function deleteCase4(n) {
     if (red(n.parent)) {
         var s = n.sibling();
-        if (black(s) && blackOrNull(s.left) && blackOrNull(s.right)) {
+        if (blackOrNull(s.left) && blackOrNull(s.right)) {
             n.parent.color = BLACK;
             s.color = RED;
             return;
@@ -427,25 +427,23 @@ function deleteCase4(n) {
 }
 
 // Case 5:
-// - Preconditions: the node is black and is1 not the root, and at least one of the sibling's
-// children is red.
-// - Case handled: the sibling is black, one of the sibling's children is red while the other is
-// black or null, and the node is a same type child as the sibling's red child.
+// - Preconditions: the node is black and is not the root, the sibling is black, and at least one of
+// the sibling's children is red.
+// - Case handled: one of the sibling's children is red while the other is black or null, and the
+// node is a same type child as the sibling's red child.
 // - Issue: same black violation as explained in case 2.
 // - Solution: Recolor the sibling red, and the sibling's red child black. Then rotate the sibling
 // away from the red child. The tree is now in the shape needed for delete case 6.
 function deleteCase5(n) {
     var s = n.sibling();
-    if (black(s)) {
-        if (red(s.left) && blackOrNull(s.right) && n === n.parent.left) {
-            s.color = RED;
-            s.left.color = BLACK;
-            rotateRight(s);
-        } else if (red(s.right) && blackOrNull(s.left) && n === n.parent.right) {
-            s.color = RED;
-            s.right.color = BLACK;
-            rotateLeft(s);
-        }
+    if (red(s.left) && blackOrNull(s.right) && n === n.parent.left) {
+        s.color = RED;
+        s.left.color = BLACK;
+        rotateRight(s);
+    } else if (red(s.right) && blackOrNull(s.left) && n === n.parent.right) {
+        s.color = RED;
+        s.right.color = BLACK;
+        rotateLeft(s);
     }
     deleteCase6(n);
 }
