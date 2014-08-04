@@ -38,8 +38,12 @@ exports.Tree = function() {
         return a;
     };
 
+    // Used for testing or debugging only.
     this.log = function() {
         log(root);
+    };
+    this.root = function() {
+        return root;
     };
 };
 

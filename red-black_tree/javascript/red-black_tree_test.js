@@ -41,7 +41,7 @@ function basicTests() {
 }
 
 function randomTests() {
-    for (var i = 0; i < 100; i++) {
+    for (var i = 0; i < 1000; i++) {
         randomTest();
     }
 }
@@ -51,7 +51,8 @@ function randomTest() {
     var m = {};
     var a = [];
 
-    for (var i = 0; i < 1000; i++) {
+    var count = Math.floor(Math.random() * 1000);
+    for (var i = 0; i < count; i++) {
         var r = Math.random();
         if (r < 0.2) {
             delRandom(t, m, a);
@@ -64,6 +65,8 @@ function randomTest() {
 }
 
 function check(t, m, a) {
+    assert(isRedBlackTree(t));
+
     a.forEach(function(k) {
         assert(t.has(k));
         assert.strictEqual(m[k], t.get(k));
@@ -74,6 +77,36 @@ function check(t, m, a) {
     a.sort().forEach(function(k, i) {
         assert.deepEqual(all[i], {key: k, value: m[k]});
     });
+}
+
+function isRedBlackTree(t) {
+    var r = t.root();
+    if (t && t.color === 'red') {
+        return false;
+    }
+    return blackHeight(r) >= 0;
+}
+
+function red(n) {
+    return n && n.color === 'red';
+}
+
+function blackHeight(n) {
+    if (!n) {
+        return 0;
+    }
+    if (red(n) && (red(n.left) || red(n.right))) {
+        return -1;
+    }
+    var l = blackHeight(n.left);
+    var r = blackHeight(n.right);
+    if (l < 0 || r < 0 || l !== r) {
+        return -1;
+    }
+    if (red(n)) {
+        return l;
+    }
+    return l + 1;
 }
 
 function setRandom(t, m, a) {
