@@ -1,11 +1,13 @@
 package heapsort
 
 import (
+	"math/rand"
 	"reflect"
+	"sort"
 	"testing"
 )
 
-var tests = []struct {
+var basicTests = []struct {
 	in  []int
 	out []int
 }{
@@ -27,16 +29,24 @@ var tests = []struct {
 	},
 }
 
-func TestSlow(t *testing.T) {
-	testSort(t, SlowMaxHeapify)
+func TestBasicSlow(t *testing.T) {
+	runBasicTests(t, SlowMaxHeapify)
 }
 
-func TestFast(t *testing.T) {
-	testSort(t, FastMaxHeapify)
+func TestBasicFast(t *testing.T) {
+	runBasicTests(t, FastMaxHeapify)
 }
 
-func testSort(t *testing.T, f MaxHeapifyFunc) {
-	for i, test := range tests {
+func TestRandomSlow(t *testing.T) {
+	runRandomTests(t, SlowMaxHeapify)
+}
+
+func TestRandomFast(t *testing.T) {
+	runRandomTests(t, FastMaxHeapify)
+}
+
+func runBasicTests(t *testing.T, f MaxHeapifyFunc) {
+	for i, test := range basicTests {
 		a := clone(test.in)
 		Sort(a, f)
 		if !reflect.DeepEqual(a, test.out) {
@@ -44,6 +54,31 @@ func testSort(t *testing.T, f MaxHeapifyFunc) {
 				i, test.in, test.out, a)
 		}
 	}
+}
+
+func runRandomTests(t *testing.T, f MaxHeapifyFunc) {
+	for i := 0; i < 1000; i++ {
+		runRandomTest(t, f)
+	}
+}
+
+func runRandomTest(t *testing.T, f MaxHeapifyFunc) {
+	in := randomInts()
+	a := clone(in)
+	Sort(a, f)
+	if !sort.IntsAreSorted(a) {
+		t.Errorf("In random test with input slice %v, got unsorted slice %v", in, a)
+	}
+}
+
+func randomInts() []int {
+	n := rand.Intn(1000)
+	a := make([]int, n)
+	for i := 0; i < n; i++ {
+		// Use n as the upper bound to produce some duplicates.
+		a[i] = rand.Intn(n)
+	}
+	return a
 }
 
 func clone(a []int) []int {
