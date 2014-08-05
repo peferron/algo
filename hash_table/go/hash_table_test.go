@@ -10,33 +10,33 @@ var chars = []byte("01234567890abcdefghijklmnopqrstuvwxyz")
 func TestBasic(t *testing.T) {
 	h := NewHashTable(10)
 
-	if _, ok := h.get("abc"); ok {
+	if _, ok := h.Get("abc"); ok {
 		t.Error("Expected ok to be false, was true")
 	}
 
-	h.set("abc", 5)
-	if v, ok := h.get("abc"); !ok || v != 5 {
+	h.Set("abc", 5)
+	if v, ok := h.Get("abc"); !ok || v != 5 {
 		t.Errorf("Expected (ok, v) to be (true, 5), was (%t, %d)", ok, v)
 	}
 
-	h.set("abc", 7)
-	if v, ok := h.get("abc"); !ok || v != 7 {
+	h.Set("abc", 7)
+	if v, ok := h.Get("abc"); !ok || v != 7 {
 		t.Errorf("Expected (ok, v) to be (true, 7), was (%t, %d)", ok, v)
 	}
 
-	h.set("def", 9)
-	if v, ok := h.get("abc"); !ok || v != 7 {
+	h.Set("def", 9)
+	if v, ok := h.Get("abc"); !ok || v != 7 {
 		t.Errorf("Expected (ok, v) to be (true, 7), was (%t, %d)", ok, v)
 	}
-	if v, ok := h.get("def"); !ok || v != 9 {
+	if v, ok := h.Get("def"); !ok || v != 9 {
 		t.Errorf("Expected (ok, v) to be (true, 9), was (%t, %d)", ok, v)
 	}
 
-	h.del("abc")
-	if _, ok := h.get("abc"); ok {
+	h.Del("abc")
+	if _, ok := h.Get("abc"); ok {
 		t.Error("Expected ok to be false, was true")
 	}
-	if v, ok := h.get("def"); !ok || v != 9 {
+	if v, ok := h.Get("def"); !ok || v != 9 {
 		t.Errorf("Expected (ok, v) to be (true, 9), was (%t, %d)", ok, v)
 	}
 }
@@ -65,7 +65,7 @@ func runRandomTest(t *testing.T) {
 
 func check(t *testing.T, h *HashTable, m map[string]int, a []string) {
 	for _, k := range a {
-		if v, ok := h.get(k); !ok || v != m[k] {
+		if v, ok := h.Get(k); !ok || v != m[k] {
 			t.Errorf("Expected (ok, v) to be (true, %d), was (%t, %d)", m[k], ok, v)
 		}
 	}
@@ -74,7 +74,7 @@ func check(t *testing.T, h *HashTable, m map[string]int, a []string) {
 func setRandom(h *HashTable, m map[string]int, a *[]string) {
 	k := randomKey()
 	v := randomValue()
-	h.set(k, v)
+	h.Set(k, v)
 	if _, ok := m[k]; !ok {
 		(*a) = append(*a, k)
 	}
@@ -88,7 +88,7 @@ func delRandom(h *HashTable, m map[string]int, a *[]string) {
 	}
 	i := rand.Intn(l)
 	k := (*a)[i]
-	h.del(k)
+	h.Del(k)
 	delete(m, k)
 	(*a)[i] = (*a)[l-1]
 	(*a) = (*a)[:l-1]

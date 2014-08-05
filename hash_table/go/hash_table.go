@@ -14,7 +14,7 @@ func NewHashTable(size int) *HashTable {
 	return &t
 }
 
-func (t *HashTable) get(k string) (v int, ok bool) {
+func (t *HashTable) Get(k string) (v int, ok bool) {
 	h := hashMod(k, len(*t))
 	items := (*t)[h]
 
@@ -29,7 +29,7 @@ func (t *HashTable) get(k string) (v int, ok bool) {
 	return
 }
 
-func (t *HashTable) set(k string, v int) {
+func (t *HashTable) Set(k string, v int) {
 	// fmt.Printf("set: %q, %d\n", k, v)
 
 	h := hashMod(k, len(*t))
@@ -47,7 +47,7 @@ func (t *HashTable) set(k string, v int) {
 	}
 }
 
-func (t *HashTable) del(k string) {
+func (t *HashTable) Del(k string) {
 	// fmt.Printf("del: %q\n", k)
 
 	h := hashMod(k, len(*t))
