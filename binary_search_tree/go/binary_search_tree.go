@@ -75,10 +75,13 @@ func remove(n *node, key string) *node {
 		return nil
 	}
 	if key == n.data.key {
-		if n.left != nil && n.right != nil {
-			return removeNodeWithTwoChildren(n)
+		if n.left == nil {
+			return n.right
 		}
-		return removeNodeWithAtMostOneChild(n)
+		if n.right == nil {
+			return n.left
+		}
+		return removeNodeWithTwoChildren(n)
 	}
 	if key < n.data.key {
 		n.left = remove(n.left, key)
@@ -93,13 +96,6 @@ func removeNodeWithTwoChildren(n *node) *node {
 	n.left, predecessor = removeMax(n.left)
 	n.data = predecessor.data
 	return n
-}
-
-func removeNodeWithAtMostOneChild(n *node) *node {
-	if n.left != nil {
-		return n.left
-	}
-	return n.right
 }
 
 func removeMax(n *node) (root, max *node) {
