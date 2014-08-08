@@ -77,9 +77,9 @@ func check(t *testing.T, s *Bst, m map[string]int, a []string) {
 	}
 	sort.Strings(a)
 	for i, d := range all {
-		if k := a[i]; d.key != k || d.value != m[k] {
+		if k := a[i]; d.Key != k || d.Value != m[k] {
 			t.Errorf("Expected data at index #%d to have key %q and value %d, was %q and %d",
-				i, k, m[k], d.key, d.value)
+				i, k, m[k], d.Key, d.Value)
 		}
 	}
 }

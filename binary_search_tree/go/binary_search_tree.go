@@ -5,8 +5,8 @@ type Bst struct {
 }
 
 type Data struct {
-	key   string
-	value int
+	Key   string
+	Value int
 }
 
 type node struct {
@@ -23,7 +23,7 @@ func NewBst() *Bst {
 
 func (t *Bst) Get(key string) (value int, ok bool) {
 	if n := find(t.root, key); n != nil {
-		return n.data.value, true
+		return n.data.Value, true
 	}
 	return 0, false
 }
@@ -45,10 +45,10 @@ func (t *Bst) All() []Data {
 }
 
 func find(n *node, key string) *node {
-	if n == nil || n.data.key == key {
+	if n == nil || n.data.Key == key {
 		return n
 	}
-	if key < n.data.key {
+	if key < n.data.Key {
 		return find(n.left, key)
 	}
 	return find(n.right, key)
@@ -58,11 +58,11 @@ func insert(n *node, key string, value int) *node {
 	if n == nil {
 		return &node{Data{key, value}, nil, nil}
 	}
-	if key == n.data.key {
-		n.data.value = value
+	if key == n.data.Key {
+		n.data.Value = value
 		return n
 	}
-	if key < n.data.key {
+	if key < n.data.Key {
 		n.left = insert(n.left, key, value)
 	} else {
 		n.right = insert(n.right, key, value)
@@ -74,7 +74,7 @@ func remove(n *node, key string) *node {
 	if n == nil {
 		return nil
 	}
-	if key == n.data.key {
+	if key == n.data.Key {
 		if n.left == nil {
 			return n.right
 		}
@@ -83,7 +83,7 @@ func remove(n *node, key string) *node {
 		}
 		return removeNodeWithTwoChildren(n)
 	}
-	if key < n.data.key {
+	if key < n.data.Key {
 		n.left = remove(n.left, key)
 	} else {
 		n.right = remove(n.right, key)
