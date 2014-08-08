@@ -10,8 +10,8 @@ type SplayTree struct {
 }
 
 type Data struct {
-	key   string
-	value int
+	Key   string
+	Value int
 }
 
 type node struct {
@@ -28,10 +28,10 @@ func NewSplayTree() *SplayTree {
 
 func (t *SplayTree) Get(key string) (value int, ok bool) {
 	t.root = splay(t.root, key)
-	if t.root == nil || key != t.root.data.key {
+	if t.root == nil || key != t.root.data.Key {
 		return 0, false
 	}
-	return t.root.data.value, true
+	return t.root.data.Value, true
 }
 
 func (t *SplayTree) Set(key string, value int) {
@@ -52,22 +52,22 @@ func (t *SplayTree) All() []Data {
 
 func insert(n *node, key string, value int) *node {
 	n = splay(n, key)
-	if n != nil && key == n.data.key {
-		n.data.value = value
+	if n != nil && key == n.data.Key {
+		n.data.Value = value
 		return n
 	}
 	newNode := &node{Data{key, value}, nil, nil}
 	if n == nil {
 		return newNode
 	}
-	if key < n.data.key {
-		// n.data.key is the smallest key > key in the tree, which guarantees n.left.data.key < key.
+	if key < n.data.Key {
+		// n.data.Key is the smallest key > key in the tree, which guarantees n.left.data.Key < key.
 		newNode.left = n.left
 		newNode.right = n
 		n.left = nil
 	} else {
-		// Symmetrical case: n.data.key is the greatest key < key in the tree, which guarantees
-		// n.right.data.key > key.
+		// Symmetrical case: n.data.Key is the greatest key < key in the tree, which guarantees
+		// n.right.data.Key > key.
 		newNode.right = n.right
 		newNode.left = n
 		n.right = nil
@@ -77,7 +77,7 @@ func insert(n *node, key string, value int) *node {
 
 func remove(n *node, key string) *node {
 	n = splay(n, key)
-	if n == nil || key != n.data.key {
+	if n == nil || key != n.data.Key {
 		return n
 	}
 	if n.left == nil {
@@ -108,11 +108,11 @@ func splay(n *node, key string) *node {
 	var leftRoot, leftLast, rightRoot, rightLast *node
 
 	for {
-		if key == n.data.key {
+		if key == n.data.Key {
 			break
 		}
-		if key < n.data.key {
-			if n.left != nil && key < n.left.data.key {
+		if key < n.data.Key {
+			if n.left != nil && key < n.left.data.Key {
 				// Zig-zig.
 				n = rotateRight(n)
 			}
@@ -122,7 +122,7 @@ func splay(n *node, key string) *node {
 			rightRoot, rightLast = linkRight(rightRoot, rightLast, n)
 			n = n.left
 		} else {
-			if n.right != nil && key > n.right.data.key {
+			if n.right != nil && key > n.right.data.Key {
 				// Zig-zig.
 				n = rotateLeft(n)
 			}
@@ -192,7 +192,7 @@ func (n *node) String() string {
 	if n == nil {
 		return "[nil]"
 	}
-	return fmt.Sprintf("{%s: %d}", n.data.key, n.data.value)
+	return fmt.Sprintf("{%s: %d}", n.data.Key, n.data.Value)
 }
 
 func (t *SplayTree) Log() {
