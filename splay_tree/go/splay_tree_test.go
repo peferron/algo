@@ -79,19 +79,19 @@ func TestRandom(t *testing.T) {
 }
 
 func runRandomTest(t *testing.T) {
-	h := NewSplayTree()
+	s := NewSplayTree()
 	m := map[string]int{}
 	a := []string{}
 
 	for i := 0; i < 10000; i++ {
 		if rand.Float32() < 0.2 {
-			delRandom(h, m, &a)
+			delRandom(s, m, &a)
 			continue
 		}
-		setRandom(h, m, &a)
+		setRandom(s, m, &a)
 	}
 
-	check(t, h, m, a)
+	check(t, s, m, a)
 }
 
 func check(t *testing.T, s *SplayTree, m map[string]int, a []string) {
