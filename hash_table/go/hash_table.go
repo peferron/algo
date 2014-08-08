@@ -1,76 +1,78 @@
 package hash_table
 
-type item struct {
-	k string
-	v int
+type HashTable struct {
+	a []*[]element
 }
 
-type HashTable []*[]item
+type element struct {
+	key   string
+	value int
+}
 
 func NewHashTable(size int) *HashTable {
 	// fmt.Printf("NewHashTable: size %d\n", size)
 
-	t := make(HashTable, size)
-	return &t
+	a := make([]*[]element, size)
+	return &HashTable{a}
 }
 
-func (t *HashTable) Get(k string) (v int, ok bool) {
-	h := hashMod(k, len(*t))
-	items := (*t)[h]
+func (t *HashTable) Get(key string) (value int, ok bool) {
+	h := hashMod(key, len(t.a))
+	elements := t.a[h]
 
-	if i := indexOf(items, k); i < 0 {
+	if i := indexOf(elements, key); i < 0 {
 		ok = false
 	} else {
-		v = (*items)[i].v
+		value = (*elements)[i].value
 		ok = true
 	}
 
-	// fmt.Printf("get: %q -> %d, %t\n", k, v, ok)
+	// fmt.Printf("get: %q -> %d, %t\n", key, value, ok)
 	return
 }
 
-func (t *HashTable) Set(k string, v int) {
+func (t *HashTable) Set(key string, value int) {
 	// fmt.Printf("set: %q, %d\n", k, v)
 
-	h := hashMod(k, len(*t))
-	items := (*t)[h]
-	newItem := item{k, v}
+	h := hashMod(key, len(t.a))
+	elements := t.a[h]
+	newElement := element{key, value}
 
-	if items == nil {
-		(*t)[h] = &[]item{newItem}
+	if elements == nil {
+		t.a[h] = &[]element{newElement}
 		return
 	}
-	if i := indexOf(items, k); i < 0 {
-		*items = append(*items, newItem)
+	if i := indexOf(elements, key); i < 0 {
+		*elements = append(*elements, newElement)
 	} else {
-		(*items)[i] = newItem
+		(*elements)[i] = newElement
 	}
 }
 
-func (t *HashTable) Del(k string) {
+func (t *HashTable) Del(key string) {
 	// fmt.Printf("del: %q\n", k)
 
-	h := hashMod(k, len(*t))
-	items := (*t)[h]
+	h := hashMod(key, len(t.a))
+	elements := t.a[h]
 
-	if i := indexOf(items, k); i >= 0 {
-		del(items, i)
+	if i := indexOf(elements, key); i >= 0 {
+		del(elements, i)
 	}
 }
 
-func indexOf(a *[]item, k string) int {
+func indexOf(a *[]element, key string) int {
 	if a == nil {
 		return -1
 	}
-	for i, item := range *a {
-		if item.k == k {
+	for i, element := range *a {
+		if element.key == key {
 			return i
 		}
 	}
 	return -1
 }
 
-func del(a *[]item, i int) {
+func del(a *[]element, i int) {
 	last := len(*a) - 1
 	if i < last {
 		(*a)[i] = (*a)[last]
