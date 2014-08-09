@@ -9,29 +9,29 @@ function basicTests() {
 
     assert(q.empty());
 
-    q.insert(3, 'abc');
+    q.insert(7, 'abc');
     assert(!q.empty());
-    assert.strictEqual(q.removeMax(), 'abc');
+    assert.strictEqual(q.removeMin(), 'abc');
     assert(q.empty());
 
-    q.insert(7, 'def');
+    q.insert(3, 'def');
     assert(!q.empty());
 
-    q.insert(2, 'ghi');
+    q.insert(8, 'ghi');
     assert(!q.empty());
 
-    q.insert(7, 'jkl');
+    q.insert(3, 'jkl');
     assert(!q.empty());
 
-    var m1 = q.removeMax();
+    var m1 = q.removeMin();
     assert(!q.empty());
 
-    var m2 = q.removeMax();
+    var m2 = q.removeMin();
     assert(!q.empty());
 
     assert(m1 === 'def' && m2 === 'jkl' || m1 === 'jkl' && m2 === 'def');
 
-    assert.strictEqual(q.removeMax(), 'ghi');
+    assert.strictEqual(q.removeMin(), 'ghi');
     assert(q.empty());
 }
 

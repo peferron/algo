@@ -1,35 +1,35 @@
 'use strict';
 
-// Priorities are ints ranging from 0 (lowest priority) to maxPriority (highest priority).
-exports.Queue = function(maxPriority) {
+// Keys must be integers ranging from 0 (highest priority) to p (lowest priority).
+exports.Queue = function(p) {
 
-    var a = initArray(maxPriority);
-    var top = -1;
+    var a = initArray(p);
+    var min = p + 1;
 
-    this.insert = function(priority, value) {
-        a[priority].push(value);
-        top = Math.max(top, priority);
+    this.insert = function(key, value) {
+        a[key].push(value);
+        min = Math.min(min, key);
     };
 
-    this.removeMax = function() {
-        if (top < 0) {
+    this.removeMin = function() {
+        if (min > p) {
             return;
         }
-        var value = a[top].pop();
-        while (top >= 0 && !a[top].length) {
-            top--;
+        var value = a[min].pop();
+        while (min <= p && !a[min].length) {
+            min++;
         }
         return value;
     };
 
     this.empty = function() {
-        return top < 0;
+        return min > p;
     };
 };
 
-function initArray(maxPriority) {
+function initArray(p) {
     var a = [];
-    for (var i = 0; i <= maxPriority; i++) {
+    for (var i = 0; i <= p; i++) {
         a.push([]);
     }
     return a;
