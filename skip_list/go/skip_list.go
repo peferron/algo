@@ -19,8 +19,7 @@ type Data struct {
 const p = 0.25
 
 func NewSkipList() *SkipList {
-	head := &element{next: nil}
-	return &SkipList{head}
+	return &SkipList{&element{}}
 }
 
 func (l *SkipList) Get(key string) (value int, ok bool) {
