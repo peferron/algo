@@ -35,7 +35,7 @@ func (l *SkipList) Get(key string) (value int, ok bool) {
 		if n.data.Key == key {
 			return n.data.Value, true
 		}
-		// Continue searching the current layer.
+		// Keep searching the current layer.
 		e = n
 	}
 	return 0, false
@@ -58,7 +58,7 @@ func (l *SkipList) Set(key string, value int) {
 			n.data.Value = value
 			return
 		}
-		// Continue searching the current layer.
+		// Keep searching the current layer.
 		e = n
 	}
 	newElement := &element{Data{key, value}, nil}
@@ -102,7 +102,7 @@ func (l *SkipList) Del(key string) {
 			layer--
 			continue
 		}
-		// Continue searching the current layer.
+		// Keep searching the current layer.
 		e = n
 	}
 }
