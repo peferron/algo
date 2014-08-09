@@ -97,7 +97,7 @@ func runRandomTest(t *testing.T) {
 func check(t *testing.T, s *SplayTree, m map[string]int, a []string) {
 	for _, k := range a {
 		if v, ok := s.Get(k); !ok || v != m[k] {
-			t.Errorf("Expected (ok, v) to be (true, %d), was (%t, %d)", m[k], ok, v)
+			t.Errorf("On Get(%q), expected (ok, v) to be (true, %d), was (%t, %d)", k, m[k], ok, v)
 		}
 	}
 
