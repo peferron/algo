@@ -89,7 +89,7 @@ func mergePairsTwoPass(a []*Node) *Node {
 	}
 }
 
-// mergePairsTwoPass is the recommended merging function, but the ones below are also correct.
+/* mergePairsTwoPass is the recommended merging function, but the ones below are also correct.
 
 // http://www.imdb.com/title/tt0119116/
 func mergeMultiPass(a []*Node) *Node {
@@ -116,7 +116,7 @@ func mergeMultiPass2(a []*Node) *Node {
 	return a[0]
 }
 
-// Performs worse than mergePairsTwoPass.
+// Bad performance.
 func mergeRightToLeft(a []*Node) *Node {
 	if len(a) < 1 {
 		return nil
@@ -124,7 +124,7 @@ func mergeRightToLeft(a []*Node) *Node {
 	return merge(a[0], mergeRightToLeft(a[1:]))
 }
 
-// Performs *much* worse than mergePairsTwoPass.
+// *Really* bad performance.
 func mergeLeftToRight(a []*Node) *Node {
 	l := len(a)
 	if l < 1 {
@@ -132,3 +132,5 @@ func mergeLeftToRight(a []*Node) *Node {
 	}
 	return merge(mergeLeftToRight(a[:l-1]), a[l-1])
 }
+
+*/
