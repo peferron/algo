@@ -4,14 +4,14 @@ exports.Heap = function(a, heapify) {
     var end = a.length - 1;
     heapify(a, end);
 
-    this.removeRoot = function() {
-        var root = a[0];
+    this.deleteMax = function() {
+        var maxValue = a[0];
 
         a[0] = a[end];
         end--;
         bubbleDown(a, 0, end);
 
-        return root;
+        return maxValue;
     };
 };
 

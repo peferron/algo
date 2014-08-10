@@ -23,16 +23,16 @@ func FastMaxHeapify(a []int) MaxHeap {
 	return h
 }
 
-func (h *MaxHeap) RemoveRoot() int {
+func (h *MaxHeap) DeleteMax() int {
 	a := (*h)
-	rootValue := a[0]
+	maxValue := a[0]
 
 	l := a.last()
 	a[0] = a[l]
 	(*h) = (*h)[:l]
 	h.bubbleDown(0)
 
-	return rootValue
+	return maxValue
 }
 
 // Non-exported
