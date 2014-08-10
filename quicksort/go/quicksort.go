@@ -1,7 +1,5 @@
 package quicksort
 
-import "math/rand"
-
 func Sort(a []int) {
 	if len(a) < 2 {
 		return
@@ -35,10 +33,6 @@ func swap(a []int, i, j int) {
 	a[j] = t
 }
 
-func randomPivot(a []int) int {
-	return rand.Intn(len(a))
-}
-
 func medianPivot(a []int) int {
 	mid := len(a) / 2
 	end := len(a) - 1
@@ -56,3 +50,9 @@ func medianPivot(a []int) int {
 func between(a, x, y int) bool {
 	return x <= a && a <= y || y <= a && a <= x
 }
+
+/* randomPivot is an alternative to medianPivot, but mediaPivot is recommended.
+func randomPivot(a []int) int {
+	return rand.Intn(len(a))
+}
+*/

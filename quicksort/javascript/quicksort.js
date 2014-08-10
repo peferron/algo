@@ -49,11 +49,6 @@ function swap(a, i, j) {
     a[j] = t;
 }
 
-function randomPivot(a, start, end) {
-    // Math.random() returns a number in the range [0, 1)
-    return start + Math.floor(Math.random() * (end - start + 1));
-}
-
 function medianPivot(a, start, end) {
     var mid = Math.floor((end - start) / 2);
 
@@ -69,3 +64,10 @@ function medianPivot(a, start, end) {
 function between(a, x, y) {
     return x <= a && a <= y || y <= a && a <= y;
 }
+
+/* randomPivot is an alternative to medianPivot, but mediaPivot is recommended.
+function randomPivot(a, start, end) {
+    // Math.random() returns a number in the range [0, 1)
+    return start + Math.floor(Math.random() * (end - start + 1));
+}
+*/
