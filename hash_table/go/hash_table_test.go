@@ -19,6 +19,10 @@ func TestBasic(t *testing.T) {
 		t.Errorf("Expected (ok, v) to be (true, 5), was (%t, %d)", ok, v)
 	}
 
+	// Check that deleting a non-existing key doesn't crash.
+	h.Del("aaa")
+	h.Del("zzz")
+
 	h.Set("abc", 7)
 	if v, ok := h.Get("abc"); !ok || v != 7 {
 		t.Errorf("Expected (ok, v) to be (true, 7), was (%t, %d)", ok, v)

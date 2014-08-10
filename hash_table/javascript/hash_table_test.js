@@ -13,6 +13,10 @@ function basicTests() {
     assert(h.has('abc'));
     assert.strictEqual(h.get('abc'), 5);
 
+    // Check that deleting a non-existing key doesn't crash.
+    h.del('aaa');
+    h.del('zzz');
+
     h.set('abc', 7);
     assert(h.has('abc'));
     assert.strictEqual(h.get('abc'), 7);

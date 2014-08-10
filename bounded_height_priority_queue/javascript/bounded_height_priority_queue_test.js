@@ -33,6 +33,8 @@ function basicTests() {
 
     assert.strictEqual(q.deleteMin(), 'eight');
     assert(q.empty());
+
+    assert(typeof q.deleteMin() === 'undefined');
 }
 
 basicTests();

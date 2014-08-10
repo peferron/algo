@@ -2,6 +2,7 @@ package binary_search_tree
 
 import (
 	"math/rand"
+	"reflect"
 	"sort"
 	"testing"
 )
@@ -14,11 +15,21 @@ func TestBasic(t *testing.T) {
 	if _, ok := s.Get(2); ok {
 		t.Error("Expected ok to be false, was true")
 	}
+	if a := s.All(); !reflect.DeepEqual(a, []Data{}) {
+		t.Errorf("Expected a to be [], was %v", a)
+	}
 
 	s.Set(2, "two")
 	if v, ok := s.Get(2); !ok || v != "two" {
 		t.Errorf("Expected (ok, v) to be (true, \"two\"), was (%t, %q)", ok, v)
 	}
+	if a := s.All(); !reflect.DeepEqual(a, []Data{Data{2, "two"}}) {
+		t.Errorf("Expected a to be [(2, \"two\")], was %v", a)
+	}
+
+	// Check that deleting a non-existing key doesn't crash.
+	s.Del(1)
+	s.Del(10)
 
 	s.Set(2, "two again")
 	if v, ok := s.Get(2); !ok || v != "two again" {
@@ -31,6 +42,9 @@ func TestBasic(t *testing.T) {
 	}
 	if v, ok := s.Get(5); !ok || v != "five" {
 		t.Errorf("Expected (ok, v) to be (true, \"five\"), was (%t, %q)", ok, v)
+	}
+	if a := s.All(); !reflect.DeepEqual(a, []Data{Data{2, "two again"}, Data{5, "five"}}) {
+		t.Errorf("Expected a to be [(2, \"two\")], was %v", a)
 	}
 
 	s.Del(2)

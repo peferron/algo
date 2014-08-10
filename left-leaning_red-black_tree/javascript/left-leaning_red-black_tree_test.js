@@ -13,6 +13,10 @@ function basicTests() {
     assert(t.has(2));
     assert.strictEqual(t.get(2), 'two');
 
+    // Check that deleting a non-existing key doesn't crash.
+    t.del(1);
+    t.del(10);
+
     t.set(2, 'two again');
     assert(t.has(2));
     assert.strictEqual(t.get(2), 'two again');

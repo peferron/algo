@@ -16,6 +16,10 @@ func TestBasic(t *testing.T) {
 		t.Error("Expected empty to be true, was false")
 	}
 
+	if n := h.DeleteMin(); n != nil {
+		t.Errorf("Expected n to be nil, was (%d, %q)", n.Key, n.Value)
+	}
+
 	h.Insert(7, "seven")
 	if h.Empty() {
 		t.Error("Expected empty to be false, was true")
