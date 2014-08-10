@@ -26,6 +26,9 @@ func (h *PairingHeap) Insert(key int, value interface{}) *Node {
 }
 
 func (h *PairingHeap) DeleteMin() *Node {
+	if h.root == nil {
+		return nil
+	}
 	for _, c := range h.root.children {
 		if c != nil {
 			c.parent = nil
