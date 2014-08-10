@@ -1,13 +1,13 @@
 package pairing_heap
 
 type PairingHeap struct {
-	root *node
+	root *Node
 }
 
-type node struct {
-	key      int
-	value    interface{}
-	children []*node
+type Node struct {
+	Key      int
+	Value    interface{}
+	children []*Node
 }
 
 func NewPairingHeap() *PairingHeap {
@@ -18,30 +18,30 @@ func (h *PairingHeap) Empty() bool {
 	return h.root == nil
 }
 
-func (h *PairingHeap) Insert(key int, value interface{}) {
-	newNode := &node{key, value, nil}
+func (h *PairingHeap) Insert(key int, value interface{}) *Node {
+	newNode := &Node{key, value, nil}
 	h.root = merge(h.root, newNode)
+	return newNode
 }
 
-func (h *PairingHeap) DeleteMin() (int, interface{}) {
-	k := h.root.key
-	v := h.root.value
+func (h *PairingHeap) DeleteMin() *Node {
+	n := h.root
 	h.root = mergePairsTwoPass(h.root.children)
-	return k, v
+	return n
 }
 
 func (h *PairingHeap) Merge(a *PairingHeap) {
 	h.root = merge(h.root, a.root)
 }
 
-func merge(a, b *node) *node {
+func merge(a, b *Node) *Node {
 	if a == nil {
 		return b
 	}
 	if b == nil {
 		return a
 	}
-	if a.key < b.key {
+	if a.Key < b.Key {
 		a.children = append(a.children, b)
 		return a
 	}
@@ -49,7 +49,7 @@ func merge(a, b *node) *node {
 	return b
 }
 
-func mergePairsTwoPass(a []*node) *node {
+func mergePairsTwoPass(a []*Node) *Node {
 	switch len(a) {
 	case 0:
 		return nil
@@ -63,7 +63,7 @@ func mergePairsTwoPass(a []*node) *node {
 // mergePairsTwoPass is the recommended merging function, but the ones below are also correct.
 
 // http://www.imdb.com/title/tt0119116/
-func mergeMultiPass(a []*node) *node {
+func mergeMultiPass(a []*Node) *Node {
 	l := len(a)
 	switch l {
 	case 0:
@@ -75,7 +75,7 @@ func mergeMultiPass(a []*node) *node {
 	}
 }
 
-func mergeMultiPass2(a []*node) *node {
+func mergeMultiPass2(a []*Node) *Node {
 	if len(a) < 1 {
 		return nil
 	}
@@ -88,7 +88,7 @@ func mergeMultiPass2(a []*node) *node {
 }
 
 // Performs worse than mergePairsTwoPass.
-func mergeRightToLeft(a []*node) *node {
+func mergeRightToLeft(a []*Node) *Node {
 	if len(a) < 1 {
 		return nil
 	}
@@ -96,7 +96,7 @@ func mergeRightToLeft(a []*node) *node {
 }
 
 // Performs *much* worse than mergePairsTwoPass.
-func mergeLeftToRight(a []*node) *node {
+func mergeLeftToRight(a []*Node) *Node {
 	l := len(a)
 	if l < 1 {
 		return nil

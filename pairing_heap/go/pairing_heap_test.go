@@ -20,8 +20,8 @@ func TestBasic(t *testing.T) {
 	if h.Empty() {
 		t.Error("Expected empty to be false, was true")
 	}
-	if k, v := h.DeleteMin(); k != 7 || v != "seven" {
-		t.Errorf("Expected (k, v) to be (7, \"seven\"), was (%d, %q)", k, v)
+	if n := h.DeleteMin(); n.Key != 7 || n.Value != "seven" {
+		t.Errorf("Expected (n.Key, n.Value) to be (7, \"seven\"), was (%d, %q)", n.Key, n.Value)
 	}
 	if !h.Empty() {
 		t.Error("Expected empty to be true, was false")
@@ -42,24 +42,26 @@ func TestBasic(t *testing.T) {
 		t.Error("Expected empty to be false, was true")
 	}
 
-	k1, v1 := h.DeleteMin()
+	n1 := h.DeleteMin()
 	if h.Empty() {
 		t.Error("Expected empty to be false, was true")
 	}
 
-	k2, v2 := h.DeleteMin()
+	n2 := h.DeleteMin()
 	if h.Empty() {
 		t.Error("Expected empty to be false, was true")
 	}
 
-	if k1 != 3 || k2 != 3 ||
-		!(v1 == "three" && v2 == "three again" || v1 == "three again" && v2 == "three") {
-		t.Errorf("Expected (k1, v1) and (k2, v2) to be (3, \"three\") and (3, \"three again\") "+
-			"in any order, was (%d, %q) and (%d, %q)", k1, v1, k2, v2)
+	if n1.Key != 3 || n2.Key != 3 ||
+		!(n1.Value == "three" && n2.Value == "three again" ||
+			n1.Value == "three again" && n2.Value == "three") {
+		t.Errorf("Expected (n1.Key, n1.Value) and (n2.Key, n2.Value) to be (3, \"three\") and "+
+			"(3, \"three again\") in any order, was (%d, %q) and (%d, %q)",
+			n1.Key, n1.Value, n2.Key, n2.Value)
 	}
 
-	if k, v := h.DeleteMin(); k != 8 || v != "eight" {
-		t.Errorf("Expected (k, v) to be (8, \"eight\"), was (%d, %q)", k, v)
+	if n := h.DeleteMin(); n.Key != 8 || n.Value != "eight" {
+		t.Errorf("Expected (n.Key, n.Value) to be (8, \"eight\"), was (%d, %q)", n.Key, n.Value)
 	}
 	if !h.Empty() {
 		t.Error("Expected empty to be true, was false")
@@ -79,24 +81,26 @@ func TestMerge(t *testing.T) {
 
 	a.Merge(b)
 
-	if k, v := a.DeleteMin(); k != 2 || v != "two" {
-		t.Errorf("Expected (k, v) to be (2, \"two\"), was (%d, %q)", k, v)
+	if n := a.DeleteMin(); n.Key != 2 || n.Value != "two" {
+		t.Errorf("Expected (n.Key, n.Value) to be (2, \"two\"), was (%d, %q)", n.Key, n.Value)
 	}
 
-	k1, v1 := a.DeleteMin()
-	k2, v2 := a.DeleteMin()
-	if k1 != 3 || k2 != 3 ||
-		!(v1 == "three" && v2 == "three again" || v1 == "three again" && v2 == "three") {
-		t.Errorf("Expected (k1, v1) and (k2, v2) to be (3, \"three\") and (3, \"three again\") "+
-			"in any order, was (%d, %q) and (%d, %q)", k1, v1, k2, v2)
+	n1 := a.DeleteMin()
+	n2 := a.DeleteMin()
+	if n1.Key != 3 || n2.Key != 3 ||
+		!(n1.Value == "three" && n2.Value == "three again" ||
+			n1.Value == "three again" && n2.Value == "three") {
+		t.Errorf("Expected (n1.Key, n1.Value) and (n2.Key, n2.Value) to be (3, \"three\") and "+
+			"(3, \"three again\") in any order, was (%d, %q) and (%d, %q)",
+			n1.Key, n1.Value, n2.Key, n2.Value)
 	}
 
-	if k, v := a.DeleteMin(); k != 4 || v != "four" {
-		t.Errorf("Expected (k, v) to be (4, \"four\"), was (%d, %q)", k, v)
+	if n := a.DeleteMin(); n.Key != 4 || n.Value != "four" {
+		t.Errorf("Expected (n.Key, n.Value) to be (4, \"four\"), was (%d, %q)", n.Key, n.Value)
 	}
 
-	if k, v := a.DeleteMin(); k != 7 || v != "seven" {
-		t.Errorf("Expected (k, v) to be (7, \"seven\"), was (%d, %q)", k, v)
+	if n := a.DeleteMin(); n.Key != 7 || n.Value != "seven" {
+		t.Errorf("Expected (n.Key, n.Value) to be (7, \"seven\"), was (%d, %q)", n.Key, n.Value)
 	}
 
 	if !a.Empty() {
@@ -140,12 +144,12 @@ func check(t *testing.T, h *PairingHeap, p *testArray) {
 	}
 }
 
-func validHeap(n *node) bool {
+func validHeap(n *Node) bool {
 	if n == nil {
 		return true
 	}
 	for _, c := range n.children {
-		if c != nil && n.key > c.key || !validHeap(c) {
+		if c != nil && n.Key > c.Key || !validHeap(c) {
 			return false
 		}
 	}
@@ -163,13 +167,13 @@ func deleteMin(t *testing.T, h *PairingHeap, p *testArray) {
 	if h.Empty() {
 		return
 	}
-	k, v := h.DeleteMin()
-	a := p[k]
-	b := remove(a, v.(string))
+	n := h.DeleteMin()
+	a := p[n.Key]
+	b := remove(a, n.Value.(string))
 	if len(b) >= len(a) {
-		t.Errorf("Could not remove (%d, %q) from array", k, v)
+		t.Errorf("Could not remove (%d, %q) from array", n.Key, n.Value)
 	}
-	p[k] = b
+	p[n.Key] = b
 }
 
 func remove(a []string, s string) []string {
