@@ -201,30 +201,31 @@ function del(n, key) {
     if (!n) {
         return null;
     }
+
     if (key < n.key) {
-        if (!red(n.left) && !red(n.left.left)) {
+        if (n.left && !red(n.left) && !red(n.left.left)) {
             n = moveRedLeft(n);
         }
         n.left = del(n.left, key);
         return fixUp(n);
+    }
+
+    if (red(n.left)) {
+        n = rotateRight(n);
+    }
+    if (key === n.key && !n.right) {
+        return null;
+    }
+    if (n.right && !red(n.right) && !red(n.right.left)) {
+        n = moveRedRight(n);
+    }
+    if (key === n.key) {
+        var min = findMin(n.right);
+        n.key = min.key;
+        n.value = min.value;
+        n.right = deleteMin(n.right);
     } else {
-        if (red(n.left)) {
-            n = rotateRight(n);
-        }
-        if (key === n.key && !n.right) {
-            return null;
-        }
-        if (!red(n.right) && !red(n.right.left)) {
-            n = moveRedRight(n);
-        }
-        if (key === n.key) {
-            var min = findMin(n.right);
-            n.key = min.key;
-            n.value = min.value;
-            n.right = deleteMin(n.right);
-        } else {
-            n.right = del(n.right, key);
-        }
+        n.right = del(n.right, key);
     }
     return fixUp(n);
 }
