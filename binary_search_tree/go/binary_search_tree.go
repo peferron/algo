@@ -5,8 +5,8 @@ type Bst struct {
 }
 
 type Data struct {
-	Key   string
-	Value int
+	Key   int
+	Value interface{}
 }
 
 type node struct {
@@ -21,18 +21,18 @@ func NewBst() *Bst {
 	return &Bst{nil}
 }
 
-func (t *Bst) Get(key string) (value int, ok bool) {
+func (t *Bst) Get(key int) (value interface{}, ok bool) {
 	if n := find(t.root, key); n != nil {
 		return n.data.Value, true
 	}
 	return 0, false
 }
 
-func (t *Bst) Set(key string, value int) {
+func (t *Bst) Set(key int, value interface{}) {
 	t.root = insert(t.root, key, value)
 }
 
-func (t *Bst) Del(key string) {
+func (t *Bst) Del(key int) {
 	t.root = remove(t.root, key)
 }
 
@@ -44,7 +44,7 @@ func (t *Bst) All() []Data {
 	return a
 }
 
-func find(n *node, key string) *node {
+func find(n *node, key int) *node {
 	if n == nil || n.data.Key == key {
 		return n
 	}
@@ -54,7 +54,7 @@ func find(n *node, key string) *node {
 	return find(n.right, key)
 }
 
-func insert(n *node, key string, value int) *node {
+func insert(n *node, key int, value interface{}) *node {
 	if n == nil {
 		return &node{Data{key, value}, nil, nil}
 	}
@@ -70,7 +70,7 @@ func insert(n *node, key string, value int) *node {
 	return n
 }
 
-func remove(n *node, key string) *node {
+func remove(n *node, key int) *node {
 	if n == nil {
 		return nil
 	}

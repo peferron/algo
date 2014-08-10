@@ -12,8 +12,8 @@ type element struct {
 }
 
 type Data struct {
-	Key   string
-	Value int
+	Key   int
+	Value interface{}
 }
 
 const p = 0.25
@@ -22,7 +22,7 @@ func NewSkipList() *SkipList {
 	return &SkipList{&element{}}
 }
 
-func (l *SkipList) Get(key string) (value int, ok bool) {
+func (l *SkipList) Get(key int) (value interface{}, ok bool) {
 	e := l.head
 	layer := len(l.head.next) - 1
 	for layer >= 0 {
@@ -41,7 +41,7 @@ func (l *SkipList) Get(key string) (value int, ok bool) {
 	return 0, false
 }
 
-func (l *SkipList) Set(key string, value int) {
+func (l *SkipList) Set(key int, value interface{}) {
 	var prevs []*element
 	e := l.head
 	layer := len(l.head.next) - 1
@@ -82,7 +82,7 @@ func insert(head *element, prevs []*element, e *element) {
 	}
 }
 
-func (l *SkipList) Del(key string) {
+func (l *SkipList) Del(key int) {
 	e := l.head
 	layer := len(l.head.next) - 1
 	for layer >= 0 {

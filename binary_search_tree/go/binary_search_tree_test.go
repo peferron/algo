@@ -11,34 +11,34 @@ var chars = []byte("01234567890abcdefghijklmnopqrstuvwxyz")
 func TestBasic(t *testing.T) {
 	s := NewBst()
 
-	if _, ok := s.Get("abc"); ok {
+	if _, ok := s.Get(2); ok {
 		t.Error("Expected ok to be false, was true")
 	}
 
-	s.Set("abc", 5)
-	if v, ok := s.Get("abc"); !ok || v != 5 {
-		t.Errorf("Expected (ok, v) to be (true, 5), was (%t, %d)", ok, v)
+	s.Set(2, "two")
+	if v, ok := s.Get(2); !ok || v != "two" {
+		t.Errorf("Expected (ok, v) to be (true, \"two\"), was (%t, %q)", ok, v)
 	}
 
-	s.Set("abc", 7)
-	if v, ok := s.Get("abc"); !ok || v != 7 {
-		t.Errorf("Expected (ok, v) to be (true, 7), was (%t, %d)", ok, v)
+	s.Set(2, "two again")
+	if v, ok := s.Get(2); !ok || v != "two again" {
+		t.Errorf("Expected (ok, v) to be (true, \"two again\"), was (%t, %q)", ok, v)
 	}
 
-	s.Set("def", 9)
-	if v, ok := s.Get("abc"); !ok || v != 7 {
-		t.Errorf("Expected (ok, v) to be (true, 7), was (%t, %d)", ok, v)
+	s.Set(5, "five")
+	if v, ok := s.Get(2); !ok || v != "two again" {
+		t.Errorf("Expected (ok, v) to be (true, \"two again\"), was (%t, %q)", ok, v)
 	}
-	if v, ok := s.Get("def"); !ok || v != 9 {
-		t.Errorf("Expected (ok, v) to be (true, 9), was (%t, %d)", ok, v)
+	if v, ok := s.Get(5); !ok || v != "five" {
+		t.Errorf("Expected (ok, v) to be (true, \"five\"), was (%t, %q)", ok, v)
 	}
 
-	s.Del("abc")
-	if _, ok := s.Get("abc"); ok {
+	s.Del(2)
+	if _, ok := s.Get(2); ok {
 		t.Error("Expected ok to be false, was true")
 	}
-	if v, ok := s.Get("def"); !ok || v != 9 {
-		t.Errorf("Expected (ok, v) to be (true, 9), was (%t, %d)", ok, v)
+	if v, ok := s.Get(5); !ok || v != "five" {
+		t.Errorf("Expected (ok, v) to be (true, \"five\"), was (%t, %q)", ok, v)
 	}
 }
 
@@ -49,25 +49,26 @@ func TestRandom(t *testing.T) {
 }
 
 func runRandomTest(t *testing.T) {
-	h := NewBst()
-	m := map[string]int{}
-	a := []string{}
+	s := NewBst()
+	m := map[int]string{}
+	a := []int{}
 
-	for i := 0; i < 10000; i++ {
+	count := rand.Intn(10000)
+	for i := 0; i < count; i++ {
 		if rand.Float32() < 0.2 {
-			delRandom(h, m, &a)
+			delRandom(s, m, &a)
 			continue
 		}
-		setRandom(h, m, &a)
+		setRandom(s, m, &a)
 	}
 
-	check(t, h, m, a)
+	check(t, s, m, a)
 }
 
-func check(t *testing.T, s *Bst, m map[string]int, a []string) {
+func check(t *testing.T, s *Bst, m map[int]string, a []int) {
 	for _, k := range a {
 		if v, ok := s.Get(k); !ok || v != m[k] {
-			t.Errorf("On Get(%q), expected (ok, v) to be (true, %d), was (%t, %d)", k, m[k], ok, v)
+			t.Errorf("On Get(%d), expected (ok, v) to be (true, %q), was (%t, %q)", k, m[k], ok, v)
 		}
 	}
 
@@ -75,16 +76,16 @@ func check(t *testing.T, s *Bst, m map[string]int, a []string) {
 	if len(all) != len(a) {
 		t.Errorf("Expected t.all() to have len %d, was %d", len(a), len(all))
 	}
-	sort.Strings(a)
+	sort.Ints(a)
 	for i, d := range all {
 		if k := a[i]; d.Key != k || d.Value != m[k] {
-			t.Errorf("Expected data at index #%d to have key %q and value %d, was %q and %d",
+			t.Errorf("Expected data at index #%d to have key %d and value %q, was %d and %q",
 				i, k, m[k], d.Key, d.Value)
 		}
 	}
 }
 
-func setRandom(s *Bst, m map[string]int, a *[]string) {
+func setRandom(s *Bst, m map[int]string, a *[]int) {
 	k := randomKey()
 	v := randomValue()
 	s.Set(k, v)
@@ -94,7 +95,7 @@ func setRandom(s *Bst, m map[string]int, a *[]string) {
 	m[k] = v
 }
 
-func delRandom(s *Bst, m map[string]int, a *[]string) {
+func delRandom(s *Bst, m map[int]string, a *[]int) {
 	l := len(*a)
 	if l <= 0 {
 		return
@@ -107,15 +108,15 @@ func delRandom(s *Bst, m map[string]int, a *[]string) {
 	(*a) = (*a)[:l-1]
 }
 
-func randomKey() string {
+func randomKey() int {
+	return rand.Intn(10000)
+}
+
+func randomValue() string {
 	l := len(chars)
 	s := []byte{}
-	for i := 0; i < 3; i++ {
+	for i := 0; i < 6; i++ {
 		s = append(s, chars[rand.Intn(l)])
 	}
 	return string(s)
-}
-
-func randomValue() int {
-	return rand.Int()
 }

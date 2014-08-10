@@ -7,40 +7,41 @@ var llrb = require('./left-leaning_red-black_tree.js');
 function basicTests() {
     var t = new llrb.Tree();
 
-    assert(!t.has('abc'));
+    assert(!t.has(2));
 
-    t.set('abc', 5);
-    assert(t.has('abc'));
-    assert.strictEqual(t.get('abc'), 5);
+    t.set(2, 'two');
+    assert(t.has(2));
+    assert.strictEqual(t.get(2), 'two');
 
-    t.set('abc', 7);
-    assert(t.has('abc'));
-    assert.strictEqual(t.get('abc'), 7);
+    t.set(2, 'two again');
+    assert(t.has(2));
+    assert.strictEqual(t.get(2), 'two again');
 
-    t.set('def', 9);
-    assert(t.has('abc'));
-    assert.strictEqual(t.get('abc'), 7);
-    assert(t.has('def'));
-    assert.strictEqual(t.get('def'), 9);
+    t.set(5, 'five');
+    assert(t.has(2));
+    assert.strictEqual(t.get(2), 'two again');
+    assert(t.has(5));
+    assert.strictEqual(t.get(5), 'five');
 
-    t.del('abc');
-    assert(t.has('def'));
-    assert.strictEqual(t.get('def'), 9);
+    t.del(2);
+    assert(!t.has(2));
+    assert(t.has(5));
+    assert.strictEqual(t.get(5), 'five');
 
-    t.set('ghi', 1);
-    t.set('abc', 10);
-    t.set('xyz', 15);
+    t.set(7, 'seven');
+    t.set(2, 'two again again');
+    t.set(9, 'nine');
 
     assert.deepEqual(t.all(), [
-        {key: 'abc', value: 10},
-        {key: 'def', value: 9},
-        {key: 'ghi', value: 1},
-        {key: 'xyz', value: 15}
+        {key: 2, value: 'two again again'},
+        {key: 5, value: 'five'},
+        {key: 7, value: 'seven'},
+        {key: 9, value: 'nine'}
     ]);
 }
 
 function randomTests() {
-    for (var i = 0; i < 1000; i++) {
+    for (var i = 0; i < 100; i++) {
         randomTest();
     }
 }
@@ -50,7 +51,7 @@ function randomTest() {
     var m = {};
     var a = [];
 
-    var count = Math.floor(Math.random() * 1000);
+    var count = Math.floor(Math.random() * 10000);
     for (var i = 0; i < count; i++) {
         var r = Math.random();
         if (r < 0.2) {
@@ -73,7 +74,7 @@ function check(t, m, a) {
 
     var all = t.all();
     assert.strictEqual(a.length, all.length);
-    a.sort().forEach(function(k, i) {
+    a.sort(compareNumbers).forEach(function(k, i) {
         assert.deepEqual(all[i], {key: k, value: m[k]});
     });
 }
@@ -130,11 +131,15 @@ function delRandom(t, m, a) {
 }
 
 function randomKey() {
-    return (Math.PI * Math.random()).toString(36).substr(2, 3);
+    return Math.floor(Math.random() * 1000);
 }
 
 function randomValue() {
-    return Math.floor(Math.random() * 1e9);
+    return (Math.PI * Math.random()).toString(36).substr(2, 6);
+}
+
+function compareNumbers(a, b) {
+    return a - b;
 }
 
 basicTests();

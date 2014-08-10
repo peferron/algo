@@ -11,63 +11,63 @@ var chars = []byte("01234567890abcdefghijklmnopqrstuvwxyz")
 func TestBasic(t *testing.T) {
 	s := NewSplayTree()
 
-	if _, ok := s.Get("abc"); ok {
+	if _, ok := s.Get(2); ok {
 		t.Error("Expected ok to be false, was true")
 	}
 
-	s.Set("abc", 5)
-	if v, ok := s.Get("abc"); !ok || v != 5 {
-		t.Errorf("Expected (ok, v) to be (true, 5), was (%t, %d)", ok, v)
+	s.Set(2, "two")
+	if v, ok := s.Get(2); !ok || v != "two" {
+		t.Errorf("Expected (ok, v) to be (true, \"two\"), was (%t, %q)", ok, v)
 	}
 
-	s.Set("abc", 7)
-	if v, ok := s.Get("abc"); !ok || v != 7 {
-		t.Errorf("Expected (ok, v) to be (true, 7), was (%t, %d)", ok, v)
+	s.Set(2, "two again")
+	if v, ok := s.Get(2); !ok || v != "two again" {
+		t.Errorf("Expected (ok, v) to be (true, \"two again\"), was (%t, %q)", ok, v)
 	}
 
-	s.Set("def", 9)
-	if v, ok := s.Get("abc"); !ok || v != 7 {
-		t.Errorf("Expected (ok, v) to be (true, 7), was (%t, %d)", ok, v)
+	s.Set(5, "five")
+	if v, ok := s.Get(2); !ok || v != "two again" {
+		t.Errorf("Expected (ok, v) to be (true, \"two again\"), was (%t, %q)", ok, v)
 	}
-	if v, ok := s.Get("def"); !ok || v != 9 {
-		t.Errorf("Expected (ok, v) to be (true, 9), was (%t, %d)", ok, v)
+	if v, ok := s.Get(5); !ok || v != "five" {
+		t.Errorf("Expected (ok, v) to be (true, \"five\"), was (%t, %q)", ok, v)
 	}
 
-	s.Del("abc")
-	if _, ok := s.Get("abc"); ok {
+	s.Del(2)
+	if _, ok := s.Get(2); ok {
 		t.Error("Expected ok to be false, was true")
 	}
-	if v, ok := s.Get("def"); !ok || v != 9 {
-		t.Errorf("Expected (ok, v) to be (true, 9), was (%t, %d)", ok, v)
+	if v, ok := s.Get(5); !ok || v != "five" {
+		t.Errorf("Expected (ok, v) to be (true, \"five\"), was (%t, %q)", ok, v)
 	}
 }
 
 func TestSplay(t *testing.T) {
-	e := &node{Data{"e", 0}, nil, nil}
-	f := &node{Data{"f", 0}, e, nil}
-	c := &node{Data{"c", 0}, nil, nil}
-	d := &node{Data{"d", 0}, c, f}
-	h := &node{Data{"h", 0}, nil, nil}
-	g := &node{Data{"g", 0}, d, h}
-	j := &node{Data{"j", 0}, nil, nil}
-	i := &node{Data{"i", 0}, g, j}
-	a := &node{Data{"a", 0}, nil, nil}
-	b := &node{Data{"b", 0}, a, i}
+	five := &node{Data{5, "five"}, nil, nil}
+	six := &node{Data{6, "six"}, five, nil}
+	three := &node{Data{3, "three"}, nil, nil}
+	four := &node{Data{4, "four"}, three, six}
+	eight := &node{Data{8, "eight"}, nil, nil}
+	seven := &node{Data{7, "seven"}, four, eight}
+	ten := &node{Data{10, "ten"}, nil, nil}
+	nine := &node{Data{9, "nine"}, seven, ten}
+	one := &node{Data{1, "one"}, nil, nil}
+	two := &node{Data{2, "two"}, one, nine}
 
-	s := &SplayTree{b}
+	s := &SplayTree{two}
 
-	s.Get("f")
+	s.Get(6)
 
-	if f.left != b || f.right != g ||
-		b.left != a || b.right != d ||
-		a.left != nil || a.right != nil ||
-		d.left != c || d.right != e ||
-		c.left != nil || c.right != nil ||
-		e.left != nil || e.right != nil ||
-		g.left != nil || g.right != i ||
-		i.left != h || i.right != j ||
-		h.left != nil || h.right != nil ||
-		j.left != nil || j.right != nil {
+	if six.left != two || six.right != seven ||
+		two.left != one || two.right != four ||
+		one.left != nil || one.right != nil ||
+		four.left != three || four.right != five ||
+		three.left != nil || three.right != nil ||
+		five.left != nil || five.right != nil ||
+		seven.left != nil || seven.right != nine ||
+		nine.left != eight || nine.right != ten ||
+		eight.left != nil || eight.right != nil ||
+		ten.left != nil || ten.right != nil {
 		t.Error("Incorrect shape after splay operation")
 	}
 }
@@ -80,10 +80,11 @@ func TestRandom(t *testing.T) {
 
 func runRandomTest(t *testing.T) {
 	s := NewSplayTree()
-	m := map[string]int{}
-	a := []string{}
+	m := map[int]string{}
+	a := []int{}
 
-	for i := 0; i < 10000; i++ {
+	count := rand.Intn(10000)
+	for i := 0; i < count; i++ {
 		if rand.Float32() < 0.2 {
 			delRandom(s, m, &a)
 			continue
@@ -94,10 +95,10 @@ func runRandomTest(t *testing.T) {
 	check(t, s, m, a)
 }
 
-func check(t *testing.T, s *SplayTree, m map[string]int, a []string) {
+func check(t *testing.T, s *SplayTree, m map[int]string, a []int) {
 	for _, k := range a {
 		if v, ok := s.Get(k); !ok || v != m[k] {
-			t.Errorf("On Get(%q), expected (ok, v) to be (true, %d), was (%t, %d)", k, m[k], ok, v)
+			t.Errorf("On Get(%d), expected (ok, v) to be (true, %q), was (%t, %q)", k, m[k], ok, v)
 		}
 	}
 
@@ -105,16 +106,16 @@ func check(t *testing.T, s *SplayTree, m map[string]int, a []string) {
 	if len(all) != len(a) {
 		t.Errorf("Expected t.all() to have len %d, was %d", len(a), len(all))
 	}
-	sort.Strings(a)
+	sort.Ints(a)
 	for i, d := range all {
 		if k := a[i]; d.Key != k || d.Value != m[k] {
-			t.Errorf("Expected data at index #%d to have key %q and value %d, was %q and %d",
+			t.Errorf("Expected data at index #%d to have key %d and value %q, was %d and %q",
 				i, k, m[k], d.Key, d.Value)
 		}
 	}
 }
 
-func setRandom(s *SplayTree, m map[string]int, a *[]string) {
+func setRandom(s *SplayTree, m map[int]string, a *[]int) {
 	k := randomKey()
 	v := randomValue()
 	s.Set(k, v)
@@ -124,7 +125,7 @@ func setRandom(s *SplayTree, m map[string]int, a *[]string) {
 	m[k] = v
 }
 
-func delRandom(s *SplayTree, m map[string]int, a *[]string) {
+func delRandom(s *SplayTree, m map[int]string, a *[]int) {
 	l := len(*a)
 	if l <= 0 {
 		return
@@ -137,15 +138,15 @@ func delRandom(s *SplayTree, m map[string]int, a *[]string) {
 	(*a) = (*a)[:l-1]
 }
 
-func randomKey() string {
+func randomKey() int {
+	return rand.Intn(10000)
+}
+
+func randomValue() string {
 	l := len(chars)
 	s := []byte{}
-	for i := 0; i < 3; i++ {
+	for i := 0; i < 6; i++ {
 		s = append(s, chars[rand.Intn(l)])
 	}
 	return string(s)
-}
-
-func randomValue() int {
-	return rand.Int()
 }

@@ -10,8 +10,8 @@ type SplayTree struct {
 }
 
 type Data struct {
-	Key   string
-	Value int
+	Key   int
+	Value interface{}
 }
 
 type node struct {
@@ -26,7 +26,7 @@ func NewSplayTree() *SplayTree {
 	return &SplayTree{nil}
 }
 
-func (t *SplayTree) Get(key string) (value int, ok bool) {
+func (t *SplayTree) Get(key int) (value interface{}, ok bool) {
 	t.root = splay(t.root, key)
 	if t.root == nil || key != t.root.data.Key {
 		return 0, false
@@ -34,11 +34,11 @@ func (t *SplayTree) Get(key string) (value int, ok bool) {
 	return t.root.data.Value, true
 }
 
-func (t *SplayTree) Set(key string, value int) {
+func (t *SplayTree) Set(key int, value interface{}) {
 	t.root = insert(t.root, key, value)
 }
 
-func (t *SplayTree) Del(key string) {
+func (t *SplayTree) Del(key int) {
 	t.root = remove(t.root, key)
 }
 
@@ -50,7 +50,7 @@ func (t *SplayTree) All() []Data {
 	return a
 }
 
-func insert(n *node, key string, value int) *node {
+func insert(n *node, key int, value interface{}) *node {
 	n = splay(n, key)
 	if n != nil && key == n.data.Key {
 		n.data.Value = value
@@ -75,7 +75,7 @@ func insert(n *node, key string, value int) *node {
 	return newNode
 }
 
-func remove(n *node, key string) *node {
+func remove(n *node, key int) *node {
 	n = splay(n, key)
 	if n == nil || key != n.data.Key {
 		return n
@@ -100,7 +100,7 @@ func remove(n *node, key string) *node {
 // is in the tree, the new root is the node with the key. If key is not in the tree, the new root is
 // either the node with the greatest key < key in the tree, or the node with the smallest key > key
 // in the tree.
-func splay(n *node, key string) *node {
+func splay(n *node, key int) *node {
 	if n == nil {
 		return nil
 	}
