@@ -3,8 +3,6 @@ package heapsort
 type MaxHeap []int
 type node int
 
-// Exported
-
 type MaxHeapifyFunc func(a []int) MaxHeap
 
 func SlowMaxHeapify(a []int) MaxHeap {
@@ -34,8 +32,6 @@ func (h *MaxHeap) DeleteMax() int {
 
 	return maxValue
 }
-
-// Non-exported
 
 func (h MaxHeap) last() node {
 	return node(len(h) - 1)

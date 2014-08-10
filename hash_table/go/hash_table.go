@@ -10,8 +10,6 @@ type element struct {
 }
 
 func NewHashTable(size int) *HashTable {
-	// fmt.Printf("NewHashTable: size %d\n", size)
-
 	a := make([]*[]element, size)
 	return &HashTable{a}
 }
@@ -26,14 +24,10 @@ func (t *HashTable) Get(key string) (value interface{}, ok bool) {
 		value = (*elements)[i].value
 		ok = true
 	}
-
-	// fmt.Printf("get: %q -> %d, %t\n", key, value, ok)
 	return
 }
 
 func (t *HashTable) Set(key string, value interface{}) {
-	// fmt.Printf("set: %q, %d\n", k, v)
-
 	h := hashMod(key, len(t.a))
 	elements := t.a[h]
 	newElement := element{key, value}
@@ -50,8 +44,6 @@ func (t *HashTable) Set(key string, value interface{}) {
 }
 
 func (t *HashTable) Del(key string) {
-	// fmt.Printf("del: %q\n", k)
-
 	h := hashMod(key, len(t.a))
 	elements := t.a[h]
 

@@ -3,12 +3,9 @@ package quicksort
 import "math/rand"
 
 func Sort(a []int) {
-	// fmt.Printf("Sort: %v\n", a)
-
 	if len(a) < 2 {
 		return
 	}
-
 	p := partition(a)
 	Sort(a[:p])
 	Sort(a[p+1:])
@@ -16,8 +13,6 @@ func Sort(a []int) {
 
 func partition(a []int) int {
 	p := medianPivot(a)
-	// fmt.Printf("partition: %v with pivot %d\n", a, p)
-
 	last := len(a) - 1
 	swap(a, p, last)
 
@@ -35,8 +30,6 @@ func partition(a []int) int {
 }
 
 func swap(a []int, i, j int) {
-	// fmt.Printf("swap: %v indexes %d and %d\n", a, i, j)
-
 	t := a[i]
 	a[i] = a[j]
 	a[j] = t

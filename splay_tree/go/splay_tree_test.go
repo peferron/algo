@@ -1,10 +1,35 @@
 package splay_tree
 
 import (
+	"fmt"
 	"math/rand"
 	"sort"
+	"strings"
 	"testing"
 )
+
+// Logging functions
+
+func (n *node) String() string {
+	if n == nil {
+		return "[nil]"
+	}
+	return fmt.Sprintf("{%s: %d}", n.data.Key, n.data.Value)
+}
+
+func (t *SplayTree) Log() {
+	log(t.root, 0)
+}
+
+func log(n *node, indent int) {
+	fmt.Printf("%s%v\n", strings.Repeat(" ", indent), n)
+	if n != nil {
+		log(n.left, indent+2)
+		log(n.right, indent+2)
+	}
+}
+
+// Tests
 
 var chars = []byte("01234567890abcdefghijklmnopqrstuvwxyz")
 

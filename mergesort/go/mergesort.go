@@ -1,8 +1,6 @@
 package mergesort
 
 func Sort(a []int) {
-	// fmt.Printf("Sort: %v\n", a)
-
 	if len(a) < 2 {
 		return
 	}
@@ -15,8 +13,6 @@ func Sort(a []int) {
 }
 
 func merge(a []int, mid int) {
-	// fmt.Printf("merge: %v with mid: %d\n", a, mid)
-
 	merged := []int{}
 
 	left := 0
