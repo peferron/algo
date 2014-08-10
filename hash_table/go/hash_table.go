@@ -6,7 +6,7 @@ type HashTable struct {
 
 type element struct {
 	key   string
-	value int
+	value interface{}
 }
 
 func NewHashTable(size int) *HashTable {
@@ -16,7 +16,7 @@ func NewHashTable(size int) *HashTable {
 	return &HashTable{a}
 }
 
-func (t *HashTable) Get(key string) (value int, ok bool) {
+func (t *HashTable) Get(key string) (value interface{}, ok bool) {
 	h := hashMod(key, len(t.a))
 	elements := t.a[h]
 
@@ -31,7 +31,7 @@ func (t *HashTable) Get(key string) (value int, ok bool) {
 	return
 }
 
-func (t *HashTable) Set(key string, value int) {
+func (t *HashTable) Set(key string, value interface{}) {
 	// fmt.Printf("set: %q, %d\n", k, v)
 
 	h := hashMod(key, len(t.a))

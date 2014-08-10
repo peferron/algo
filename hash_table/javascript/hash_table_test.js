@@ -40,7 +40,8 @@ function randomTest() {
     var m = {};
     var a = [];
 
-    for (var i = 0; i < 10000; i++) {
+    var count = Math.floor(Math.random() * 10000);
+    for (var i = 0; i < count; i++) {
         var r = Math.random();
         if (r < 0.2) {
             delRandom(h, m, a);

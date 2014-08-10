@@ -52,7 +52,8 @@ func runRandomTest(t *testing.T) {
 	m := map[string]int{}
 	a := []string{}
 
-	for i := 0; i < 10000; i++ {
+	count := rand.Intn(10000)
+	for i := 0; i < count; i++ {
 		if rand.Float32() < 0.2 {
 			delRandom(h, m, &a)
 			continue
