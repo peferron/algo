@@ -1,4 +1,4 @@
-# algo
+# algo [![Build Status](https://drone.io/github.com/peferron/algo/status.png)](https://drone.io/github.com/peferron/algo/latest)
 
 This is just me fooling around and implementing various algorithms and data structures in languages I am interested in.
 
