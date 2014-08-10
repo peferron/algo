@@ -9,18 +9,18 @@ function basicTests() {
 
     assert(q.empty());
 
-    q.insert(7, 'abc');
+    q.insert(7, 'seven');
     assert(!q.empty());
-    assert.strictEqual(q.deleteMin(), 'abc');
+    assert.strictEqual(q.deleteMin(), 'seven');
     assert(q.empty());
 
-    q.insert(3, 'def');
+    q.insert(3, 'three');
     assert(!q.empty());
 
-    q.insert(8, 'ghi');
+    q.insert(8, 'eight');
     assert(!q.empty());
 
-    q.insert(3, 'jkl');
+    q.insert(3, 'three again');
     assert(!q.empty());
 
     var m1 = q.deleteMin();
@@ -29,9 +29,9 @@ function basicTests() {
     var m2 = q.deleteMin();
     assert(!q.empty());
 
-    assert(m1 === 'def' && m2 === 'jkl' || m1 === 'jkl' && m2 === 'def');
+    assert(m1 === 'three' && m2 === 'three again' || m1 === 'three again' && m2 === 'three');
 
-    assert.strictEqual(q.deleteMin(), 'ghi');
+    assert.strictEqual(q.deleteMin(), 'eight');
     assert(q.empty());
 }
 
