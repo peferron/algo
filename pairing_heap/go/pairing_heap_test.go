@@ -134,21 +134,28 @@ func runRandomTest(t *testing.T) {
 	count := rand.Intn(10000)
 	var n *Node
 	for i := 0; i < count; i++ {
-		r := rand.Float32()
-		switch {
-		case r < 0.2 && n != nil && n.Key > 0:
-			decreaseKey(h, p, n)
-			n = nil
-		case 0.2 <= r && r < 0.4 && !h.Empty():
-			if d := deleteMin(t, h, p); d == n {
-				n = nil
-			}
-		default:
-			n = insertRandom(h, p)
-		}
+		n = randomRound(t, h, p, n)
 	}
 
 	check(t, h, p)
+}
+
+func randomRound(t *testing.T, h *PairingHeap, p *testArray, n *Node) *Node {
+	r := rand.Float32()
+	switch {
+	case r < 0.2 && n != nil && n.Key > 0:
+		decreaseKey(h, p, n)
+		return nil
+
+	case 0.2 <= r && r < 0.4 && !h.Empty():
+		if d := deleteMin(t, h, p); d == n {
+			return nil
+		}
+		return n
+
+	default:
+		return insertRandom(h, p)
+	}
 }
 
 func check(t *testing.T, h *PairingHeap, p *testArray) {
