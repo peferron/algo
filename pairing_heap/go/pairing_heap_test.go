@@ -68,6 +68,19 @@ func TestBasic(t *testing.T) {
 	}
 }
 
+func TestDecreaseKey(t *testing.T) {
+	h := NewPairingHeap()
+
+	h.Insert(7, "seven")
+	nine := h.Insert(9, "nine then two")
+	h.DecreaseKey(nine, 2)
+
+	if n := h.DeleteMin(); n.Key != 2 || n.Value != "nine then two" {
+		t.Errorf("Expected (n.Key, n.Value) to be (2, \"nine then two\"), was (%d, %q)",
+			n.Key, n.Value)
+	}
+}
+
 func TestMerge(t *testing.T) {
 	a := NewPairingHeap()
 	b := NewPairingHeap()
@@ -118,13 +131,21 @@ func runRandomTest(t *testing.T) {
 	h := NewPairingHeap()
 	p := &testArray{}
 
-	count := rand.Intn(5000)
+	count := rand.Intn(10000)
+	var n *Node
 	for i := 0; i < count; i++ {
-		if rand.Float32() < 0.2 {
-			deleteMin(t, h, p)
-			continue
+		r := rand.Float32()
+		switch {
+		case r < 0.2 && n != nil && n.Key > 0:
+			decreaseKey(h, p, n)
+			n = nil
+		case 0.2 <= r && r < 0.4 && !h.Empty():
+			if d := deleteMin(t, h, p); d == n {
+				n = nil
+			}
+		default:
+			n = insertRandom(h, p)
 		}
-		insertRandom(h, p)
 	}
 
 	check(t, h, p)
@@ -156,27 +177,37 @@ func validHeap(n *Node) bool {
 	return true
 }
 
-func insertRandom(h *PairingHeap, p *testArray) {
+func insertRandom(h *PairingHeap, p *testArray) *Node {
 	k := randomKey(len(p))
 	v := randomValue()
-	h.Insert(k, v)
+	n := h.Insert(k, v)
 	p[k] = append(p[k], v)
+	return n
 }
 
-func deleteMin(t *testing.T, h *PairingHeap, p *testArray) {
-	if h.Empty() {
-		return
-	}
+func decreaseKey(h *PairingHeap, p *testArray, n *Node) {
+	oldKey := n.Key
+	newKey := rand.Intn(n.Key)
+	value := n.Value.(string)
+
+	p[oldKey] = removeString(p[oldKey], value)
+	p[newKey] = append(p[newKey], value)
+
+	h.DecreaseKey(n, newKey)
+}
+
+func deleteMin(t *testing.T, h *PairingHeap, p *testArray) *Node {
 	n := h.DeleteMin()
 	a := p[n.Key]
-	b := remove(a, n.Value.(string))
+	b := removeString(a, n.Value.(string))
 	if len(b) >= len(a) {
 		t.Errorf("Could not remove (%d, %q) from array", n.Key, n.Value)
 	}
 	p[n.Key] = b
+	return n
 }
 
-func remove(a []string, s string) []string {
+func removeString(a []string, s string) []string {
 	for i, v := range a {
 		if v == s {
 			last := len(a) - 1

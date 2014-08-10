@@ -7,6 +7,7 @@ type PairingHeap struct {
 type Node struct {
 	Key      int
 	Value    interface{}
+	parent   *Node
 	children []*Node
 }
 
@@ -19,12 +20,17 @@ func (h *PairingHeap) Empty() bool {
 }
 
 func (h *PairingHeap) Insert(key int, value interface{}) *Node {
-	newNode := &Node{key, value, nil}
+	newNode := &Node{key, value, nil, nil}
 	h.root = merge(h.root, newNode)
 	return newNode
 }
 
 func (h *PairingHeap) DeleteMin() *Node {
+	for _, c := range h.root.children {
+		if c != nil {
+			c.parent = nil
+		}
+	}
 	n := h.root
 	h.root = mergePairsTwoPass(h.root.children)
 	return n
@@ -32,6 +38,27 @@ func (h *PairingHeap) DeleteMin() *Node {
 
 func (h *PairingHeap) Merge(a *PairingHeap) {
 	h.root = merge(h.root, a.root)
+}
+
+func (h *PairingHeap) DecreaseKey(n *Node, key int) {
+	n.Key = key
+	if n.parent == nil || n.parent.Key <= key {
+		return
+	}
+	n.parent.children = remove(n.parent.children, n)
+	n.parent = nil
+	h.root = merge(h.root, n)
+}
+
+func remove(a []*Node, n *Node) []*Node {
+	for i, x := range a {
+		if x == n {
+			last := len(a) - 1
+			a[i] = a[last]
+			return a[:last]
+		}
+	}
+	return a
 }
 
 func merge(a, b *Node) *Node {
@@ -43,9 +70,11 @@ func merge(a, b *Node) *Node {
 	}
 	if a.Key < b.Key {
 		a.children = append(a.children, b)
+		b.parent = a
 		return a
 	}
 	b.children = append(b.children, a)
+	a.parent = b
 	return b
 }
 
