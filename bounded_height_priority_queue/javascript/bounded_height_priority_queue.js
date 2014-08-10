@@ -11,7 +11,7 @@ exports.Queue = function(p) {
         min = Math.min(min, key);
     };
 
-    this.removeMin = function() {
+    this.deleteMin = function() {
         if (min > p) {
             return;
         }
