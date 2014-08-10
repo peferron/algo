@@ -1,6 +1,11 @@
 #!/bin/bash
 
+s=0
+trap "s=1" ERR
+
 cd $(dirname "${0}")
 
 go test ./...
 find . -name "*_test.js" | xargs -t -n 1 node
+
+exit $s
