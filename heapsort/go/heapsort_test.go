@@ -57,7 +57,7 @@ func runBasicTests(t *testing.T, f MaxHeapifyFunc) {
 }
 
 func runRandomTests(t *testing.T, f MaxHeapifyFunc) {
-	for i := 0; i < 1000; i++ {
+	for i := 0; i < 1000 && !t.Failed(); i++ {
 		runRandomTest(t, f)
 	}
 }

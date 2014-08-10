@@ -73,7 +73,7 @@ func TestSplay(t *testing.T) {
 }
 
 func TestRandom(t *testing.T) {
-	for i := 0; i < 100; i++ {
+	for i := 0; i < 100 && !t.Failed(); i++ {
 		runRandomTest(t)
 	}
 }

@@ -41,7 +41,7 @@ func TestBasic(t *testing.T) {
 }
 
 func TestRandom(t *testing.T) {
-	for i := 0; i < 1000; i++ {
+	for i := 0; i < 1000 && !t.Failed(); i++ {
 		runRandomTest(t)
 	}
 }
