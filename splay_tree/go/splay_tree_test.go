@@ -96,6 +96,10 @@ func runRandomTest(t *testing.T) {
 }
 
 func check(t *testing.T, s *SplayTree, m map[int]string, a []int) {
+	if !validBinarySearchTree(s.root) {
+		t.Errorf("Binary search tree structure not respected")
+	}
+
 	for _, k := range a {
 		if v, ok := s.Get(k); !ok || v != m[k] {
 			t.Errorf("On Get(%d), expected (ok, v) to be (true, %q), was (%t, %q)", k, m[k], ok, v)
@@ -149,4 +153,17 @@ func randomValue() string {
 		s = append(s, chars[rand.Intn(l)])
 	}
 	return string(s)
+}
+
+func validBinarySearchTree(n *node) bool {
+	if n == nil {
+		return true
+	}
+	if n.left != nil && n.left.data.Key >= n.data.Key {
+		return false
+	}
+	if n.right != nil && n.right.data.Key < n.data.Key {
+		return false
+	}
+	return validBinarySearchTree(n.left) && validBinarySearchTree(n.right)
 }
