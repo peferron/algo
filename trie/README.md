@@ -7,4 +7,4 @@
     * Search: O(key length).
     * Insert: O(key length).
     * Delete: O(key length).
-* Pre-order traversal returns a list of the elements in lexicographically sorted order.
+* Pre-order traversal returns a list of the elements in lexicographical order.

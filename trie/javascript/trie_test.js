@@ -8,6 +8,7 @@ function basicTests() {
     var t = new trie.Trie();
 
     assert(!t.has('abc'));
+    assert.deepEqual(t.all(), []);
 
     t.set('abc', 5);
     assert(!t.has('ab'));
@@ -22,6 +23,7 @@ function basicTests() {
     t.set('abc', 7);
     assert(t.has('abc'));
     assert.strictEqual(t.get('abc'), 7);
+    assert.deepEqual(t.all(), [{key: 'abc', value: 7}]);
 
     t.set('def', 9);
     assert(t.has('abc'));
@@ -36,6 +38,11 @@ function basicTests() {
     assert.strictEqual(t.get('def'), 9);
     assert(t.has('abcd'));
     assert.strictEqual(t.get('abcd'), 11);
+    assert.deepEqual(t.all(), [
+        {key: 'abc', value: 7},
+        {key: 'abcd', value: 11},
+        {key: 'def', value: 9}
+    ]);
 
     t.del('abc');
     assert(!t.has('abc'));
@@ -56,7 +63,7 @@ function randomTest() {
     var m = {};
     var a = [];
 
-    var count = Math.floor(Math.random() * 10000);
+    var count = Math.floor(Math.random() * 1000);
     for (var i = 0; i < count; i++) {
         var r = Math.random();
         if (r < 0.2) {
@@ -73,6 +80,12 @@ function check(t, m, a) {
     a.forEach(function(k) {
         assert(t.has(k));
         assert.strictEqual(m[k], t.get(k));
+    });
+
+    var all = t.all();
+    assert.strictEqual(a.length, all.length);
+    a.sort().forEach(function(k, i) {
+        assert.deepEqual(all[i], {key: k, value: m[k]});
     });
 }
 
