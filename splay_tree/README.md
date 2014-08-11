@@ -14,5 +14,3 @@ The splay trees implemented here use top-down splaying, inspired from:
 
 * [ftp://ftp.cs.cmu.edu/usr/sleator/splaying/SplayTree.java](ftp://ftp.cs.cmu.edu/usr/sleator/splaying/SplayTree.java)
 * [ftp://ftp.cs.cmu.edu/usr/sleator/splaying/top-down-splay.c](ftp://ftp.cs.cmu.edu/usr/sleator/splaying/top-down-splay.c).
-
-These files are also saved in this directory in case the links go dead.
