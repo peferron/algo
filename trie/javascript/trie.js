@@ -44,8 +44,8 @@ function find(n, key) {
     if (!key) {
         return n;
     }
-    var c = key[0];
-    var child = n.children[c];
+    var char = key[0];
+    var child = n.children[char];
     if (!child) {
         return null;
     }
@@ -57,18 +57,18 @@ function set(n, key, value) {
         n.value = value;
         return;
     }
-    var c = key[0];
-    var child = n.children[c];
+    var char = key[0];
+    var child = n.children[char];
     if (!child) {
         child = new Node();
-        n.children[c] = child;
+        n.children[char] = child;
     }
     set(child, key.substring(1), value);
 }
 
 function del(n, key) {
-    var c = key[0];
-    var child = n.children[c];
+    var char = key[0];
+    var child = n.children[char];
     if (!child) {
         return;
     }
@@ -78,7 +78,7 @@ function del(n, key) {
     }
     // Delete this child.
     if (isEmpty(child.children)) {
-        delete n.children[c];
+        delete n.children[char];
     } else {
         child.delValue();
     }
@@ -95,11 +95,11 @@ function isEmpty(obj) {
 
 // function log(n, indent) {
 //     var spaces = new Array(indent + 1).join(' ');
-//     for (var c in n.children) {
-//         if (n.children.hasOwnProperty(c)) {
-//             var child = n.children[c];
+//     for (var char in n.children) {
+//         if (n.children.hasOwnProperty(char)) {
+//             var child = n.children[char];
 //             var v = child.hasValue() ? '(' + child.value + ')' : '';
-//             console.log(spaces + c + ' ' + v);
+//             console.log(spaces + char + ' ' + v);
 //             log(child, indent + 2);
 //         }
 //     }
