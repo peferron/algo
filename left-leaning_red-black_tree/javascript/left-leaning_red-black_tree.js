@@ -38,31 +38,14 @@ exports.Tree = function() {
         return a;
     };
 
-    // Used for testing or debugging only.
-    this.log = function() {
-        log(root);
-    };
-    this.root = function() {
-        return root;
-    };
+    // this.log = function() {
+    //     log(root);
+    // };
+
+    // this.root = function() {
+    //     return root;
+    // };
 };
-
-function log(n, indent) {
-    indent = indent || 0;
-    var spaces = new Array(indent + 1).join(' ');
-    console.log(spaces + str(n));
-    if (n) {
-        log(n.left, indent + 2);
-        log(n.right, indent + 2);
-    }
-}
-
-function str(n) {
-    if (n === null) {
-        return '[nil]';
-    }
-    return '[' + n.color + '] ' + n.key + ': ' + n.value;
-}
 
 function Node(key, value) {
     this.key = key;
@@ -229,3 +212,20 @@ function del(n, key) {
     }
     return fixUp(n);
 }
+
+// function log(n, indent) {
+//     indent = indent || 0;
+//     var spaces = new Array(indent + 1).join(' ');
+//     console.log(spaces + str(n));
+//     if (n) {
+//         log(n.left, indent + 2);
+//         log(n.right, indent + 2);
+//     }
+// }
+
+// function str(n) {
+//     if (n === null) {
+//         return '[nil]';
+//     }
+//     return '[' + n.color + '] ' + n.key + ': ' + n.value;
+// }
