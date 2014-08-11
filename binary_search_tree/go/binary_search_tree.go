@@ -15,8 +15,6 @@ type node struct {
 	right *node
 }
 
-type dataCallback func(Data)
-
 func NewBst() *Bst {
 	return &Bst{nil}
 }
@@ -106,7 +104,7 @@ func removeMax(n *node) (root, max *node) {
 	return n, max
 }
 
-func inOrder(n *node, cb dataCallback) {
+func inOrder(n *node, cb func(Data)) {
 	if n == nil {
 		return
 	}

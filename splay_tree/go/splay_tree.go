@@ -15,8 +15,6 @@ type node struct {
 	right *node
 }
 
-type dataCallback func(Data)
-
 func NewSplayTree() *SplayTree {
 	return &SplayTree{nil}
 }
@@ -172,7 +170,7 @@ func rotateRight(n *node) *node {
 	return l
 }
 
-func inOrder(n *node, cb dataCallback) {
+func inOrder(n *node, cb func(Data)) {
 	if n == nil {
 		return
 	}
