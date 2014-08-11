@@ -100,10 +100,11 @@ func delRandom(h *HashTable, m map[string]int, a *[]string) {
 }
 
 func randomKey() string {
-	l := len(chars)
+	l := 1 + rand.Intn(10)
+	c := len(chars)
 	s := []byte{}
-	for i := 0; i < 3; i++ {
-		s = append(s, chars[rand.Intn(l)])
+	for i := 0; i < l; i++ {
+		s = append(s, chars[rand.Intn(c)])
 	}
 	return string(s)
 }

@@ -86,7 +86,8 @@ function delRandom(h, m, a) {
 }
 
 function randomKey() {
-    return (Math.PI * Math.random()).toString(36).substr(2, 3);
+    var l = Math.floor(1 + Math.random() * 10);
+    return (Math.PI * Math.random()).toString(36).substr(2, l);
 }
 
 function randomValue() {

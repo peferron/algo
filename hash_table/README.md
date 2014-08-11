@@ -3,7 +3,7 @@
 [http://en.wikipedia.org/wiki/Hash_table](http://en.wikipedia.org/wiki/Hash_table)
 
 * Space complexity: O(n).
-* Time complexity:
+* Time complexity (not including hashing, which is usually O(key length)):
     * Search: worst case O(n), average O(1).
     * Insert: worst case O(n), average O(1).
     * Delete: worst case O(n), average O(1).
