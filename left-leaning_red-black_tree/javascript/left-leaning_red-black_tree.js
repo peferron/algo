@@ -38,12 +38,13 @@ exports.Tree = function() {
         return a;
     };
 
+    // Used for testing only.
+    this.root = function() {
+        return root;
+    };
+
     // this.log = function() {
     //     log(root);
-    // };
-
-    // this.root = function() {
-    //     return root;
     // };
 };
 
