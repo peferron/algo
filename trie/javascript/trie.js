@@ -5,10 +5,10 @@
 var alphabetSize = 36; // 0-9 and a-z
 var charToIndex = function(char) {
     return parseInt(char, 36);
-}
+};
 var indexToChar = function(index) {
     return index.toString(36);
-}
+};
 
 exports.Trie = function() {
     var root = new Node();
