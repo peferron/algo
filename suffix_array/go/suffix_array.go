@@ -2,10 +2,6 @@ package suffix_array
 
 import "sort"
 
-func LongestPalindrome(s string) int {
-	return -1
-}
-
 func FirstOccurrence(s, sub string) int {
 	a := newSuffixArray(s)
 	suffixIndex := searchLow(a, s, sub)

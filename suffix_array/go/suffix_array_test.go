@@ -5,14 +5,6 @@ import (
 	"testing"
 )
 
-func TestLongestPalindrome(t *testing.T) {
-	s := "aba ghhg defabax"
-
-	if i := LongestPalindrome(s); i != 4 {
-		t.Errorf("Expected longest palindrome to return index 4, was %d", i)
-	}
-}
-
 func TestFirstOccurrence(t *testing.T) {
 	s := "aba ghhg defabax"
 
