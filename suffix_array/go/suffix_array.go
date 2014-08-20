@@ -2,36 +2,13 @@ package suffix_array
 
 import "sort"
 
-func FirstOccurrence(s, sub string) int {
-	a := newSuffixArray(s)
-	suffixIndex := searchLow(a, s, sub)
-	start := a[suffixIndex]
-	length := start + len(sub)
-	if length <= len(s) && s[start:length] == sub {
-		return start
-	}
-	return -1
+type SuffixArray struct {
+	s string
+	a []int
 }
 
-func AllOccurrences(s, sub string) []int {
-	o := []int{}
-	a := newSuffixArray(s)
-	lowSuffixIndex := searchLow(a, s, sub)
-	highSuffixIndex := searchHigh(a, s, sub)
-	for i := lowSuffixIndex; i <= highSuffixIndex; i++ {
-		start := a[i]
-		length := start + len(sub)
-		if length <= len(s) && s[start:length] == sub {
-			o = append(o, start)
-		}
-	}
-	return o
-}
-
-type suffixArray []int
-
-func newSuffixArray(s string) suffixArray {
-	a := suffixArray{}
+func NewSuffixArray(s string) *SuffixArray {
+	a := SuffixArray{s, []int{}}
 	suffixes := []string{}
 	indexes := map[string]int{}
 	for i := 0; i <= len(s); i++ {
@@ -42,23 +19,47 @@ func newSuffixArray(s string) suffixArray {
 	sort.Strings(suffixes)
 	for _, suffix := range suffixes {
 		index := indexes[suffix]
-		a = append(a, index)
+		a.a = append(a.a, index)
 	}
-	return a
+	return &a
 }
 
-func searchLow(a suffixArray, s, sub string) int {
+func (a *SuffixArray) FirstOccurrence(sub string) int {
+	suffixIndex := a.searchLow(sub)
+	start := a.a[suffixIndex]
+	length := start + len(sub)
+	if length <= len(a.s) && a.s[start:length] == sub {
+		return start
+	}
+	return -1
+}
+
+func (a *SuffixArray) AllOccurrences(sub string) []int {
+	o := []int{}
+	lowSuffixIndex := a.searchLow(sub)
+	highSuffixIndex := a.searchHigh(sub)
+	for i := lowSuffixIndex; i <= highSuffixIndex; i++ {
+		start := a.a[i]
+		length := start + len(sub)
+		if length <= len(a.s) && a.s[start:length] == sub {
+			o = append(o, start)
+		}
+	}
+	return o
+}
+
+func (a *SuffixArray) searchLow(sub string) int {
 	low := 0
-	high := len(a) - 1
+	high := len(a.a) - 1
 	for low < high {
 		// low <= mid < high
 		mid := (high + low) / 2
-		suffixStart := a[mid]
+		suffixStart := a.a[mid]
 		l := suffixStart + len(sub)
-		if l > len(s) {
-			l = len(s)
+		if l > len(a.s) {
+			l = len(a.s)
 		}
-		suffix := s[suffixStart:l]
+		suffix := a.s[suffixStart:l]
 		if sub > suffix {
 			low = mid + 1
 		} else {
@@ -68,18 +69,18 @@ func searchLow(a suffixArray, s, sub string) int {
 	return low
 }
 
-func searchHigh(a suffixArray, s, sub string) int {
+func (a *SuffixArray) searchHigh(sub string) int {
 	low := 0
-	high := len(a) - 1
+	high := len(a.a) - 1
 	for low < high {
 		// low < mid <= high
 		mid := (high + low + 1) / 2
-		suffixStart := a[mid]
+		suffixStart := a.a[mid]
 		l := suffixStart + len(sub)
-		if l > len(s) {
-			l = len(s)
+		if l > len(a.s) {
+			l = len(a.s)
 		}
-		suffix := s[suffixStart:l]
+		suffix := a.s[suffixStart:l]
 		if sub < suffix {
 			high = mid - 1
 		} else {
