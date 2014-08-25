@@ -22,9 +22,25 @@ func TestLongestCommonSubstring(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		a := NewGST(test.in...)
-		if out := a.LongestCommonSubstring(); out != test.out {
+		if out := LongestCommonSubstring(test.in); out != test.out {
 			t.Errorf("For input strings %q, expected longest common substring to be %q, was %q",
+				test.in, test.out, out)
+		}
+	}
+}
+
+func TestLongestPalindrome(t *testing.T) {
+	var tests = []struct {
+		in  string
+		out string
+	}{
+		{"aba bcdcba", "bcdcb"},
+		{"abcddxcba", "dd"},
+	}
+
+	for _, test := range tests {
+		if out := LongestPalindrome(test.in); out != test.out {
+			t.Errorf("For input string %q, expected longest palindrome to be %q, was %q",
 				test.in, test.out, out)
 		}
 	}

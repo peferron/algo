@@ -9,16 +9,8 @@ type node struct {
 	children map[string]*node
 }
 
-func NewGST(a ...string) *Tree {
-	root := &node{emptyLabel, map[string]*node{}}
-	for i, s := range a {
-		l := labellize(uint(i))
-		insertString(root, s, l)
-	}
-	return &Tree{root}
-}
-
-func (t *Tree) LongestCommonSubstring() string {
+func LongestCommonSubstring(a []string) string {
+	t := newGST(a)
 	longest := ""
 	depthFirstSearch(t.root, "", func(n *node, prefix string) {
 		if n.label == t.root.label && len(prefix) > len(longest) {
@@ -26,6 +18,26 @@ func (t *Tree) LongestCommonSubstring() string {
 		}
 	})
 	return longest
+}
+
+func LongestPalindrome(s string) string {
+	t := newGST([]string{s, reverse(s)})
+	longest := ""
+	depthFirstSearch(t.root, "", func(n *node, prefix string) {
+		if n.label == t.root.label && len(prefix) > len(longest) {
+			longest = prefix
+		}
+	})
+	return longest
+}
+
+func newGST(a []string) *Tree {
+	root := &node{emptyLabel, map[string]*node{}}
+	for i, s := range a {
+		l := labellize(uint(i))
+		insertString(root, s, l)
+	}
+	return &Tree{root}
 }
 
 func insertString(n *node, s string, l label) {
@@ -84,6 +96,18 @@ func depthFirstSearch(n *node, prefix string, f func(*node, string)) {
 	for edge, child := range n.children {
 		depthFirstSearch(child, prefix+edge, f)
 	}
+}
+
+func reverse(s string) string {
+	runes := []rune{}
+	for _, r := range s {
+		runes = append(runes, r)
+	}
+	l := len(runes)
+	for i := 0; i < l/2; i++ {
+		runes[i], runes[l-i-1] = runes[l-i-1], runes[i]
+	}
+	return string(runes)
 }
 
 // func (t *Tree) Log() {
