@@ -28,9 +28,7 @@ func partition(a []int) int {
 }
 
 func swap(a []int, i, j int) {
-	t := a[i]
-	a[i] = a[j]
-	a[j] = t
+	a[i], a[j] = a[j], a[i]
 }
 
 func medianPivot(a []int) int {

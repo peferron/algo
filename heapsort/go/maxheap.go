@@ -63,9 +63,7 @@ func (h MaxHeap) bubbleDown(n node) {
 }
 
 func (h MaxHeap) swap(i, j node) {
-	t := h[i]
-	h[i] = h[j]
-	h[j] = t
+	h[i], h[j] = h[j], h[i]
 }
 
 func parent(n node) node {
