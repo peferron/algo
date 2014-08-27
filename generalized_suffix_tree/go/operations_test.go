@@ -1,6 +1,33 @@
 package generalized_suffix_tree
 
-import "testing"
+import (
+	"reflect"
+	"sort"
+	"testing"
+)
+
+func TestAllOccurrences(t *testing.T) {
+	var tests = []struct {
+		inStr string
+		inSub string
+		out   []int
+	}{
+		{"aba ghhg defabax", "bad", []int{}},
+		{"aba ghhg defabax", "ba", []int{1, 13}},
+	}
+
+	for _, test := range tests {
+		out := AllOccurrences(test.inStr, test.inSub)
+
+		// AllOccurrences doesn't guarantee the output order, so it must be sorted before comparing.
+		sort.Ints(out)
+
+		if !reflect.DeepEqual(out, test.out) {
+			t.Errorf("For input string %q, expected all occurrences of %q to be %v, was %v",
+				test.inStr, test.inSub, test.out, out)
+		}
+	}
+}
 
 func TestLongestCommonSubstring(t *testing.T) {
 	var tests = []struct {

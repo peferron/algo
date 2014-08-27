@@ -1,59 +1,40 @@
 package generalized_suffix_tree
 
 type Tree struct {
-	root *node
+	root *Node
 }
 
-type node struct {
-	label    label
-	children map[string]*node
+type Node struct {
+	Start    int
+	Children map[string]*Node
 }
 
-func LongestCommonSubstring(a []string) string {
-	t := newGST(a)
-	longest := ""
-	depthFirstSearch(t.root, "", func(n *node, prefix string) {
-		if n.label == t.root.label && len(prefix) > len(longest) {
-			longest = prefix
-		}
-	})
-	return longest
-}
+const Terminators = "$#%"
 
-func LongestPalindrome(s string) string {
-	t := newGST([]string{s, reverse(s)})
-	longest := ""
-	depthFirstSearch(t.root, "", func(n *node, prefix string) {
-		if n.label == t.root.label && len(prefix) > len(longest) {
-			longest = prefix
-		}
-	})
-	return longest
-}
-
-func newGST(a []string) *Tree {
-	root := &node{emptyLabel, map[string]*node{}}
+func NewGST(a ...string) *Tree {
+	root := &Node{
+		-1,
+		map[string]*Node{},
+	}
 	for i, s := range a {
-		l := labellize(uint(i))
-		insertString(root, s, l)
+		terminator := Terminators[i : i+1]
+		insertString(root, s+terminator, i)
 	}
 	return &Tree{root}
 }
 
-func insertString(n *node, s string, l label) {
+func insertString(n *Node, s string, index int) {
 	for i := range s {
-		insertSuffix(n, s[i:], l)
+		insertSuffix(n, s[i:], index, i)
 	}
 }
 
-func insertSuffix(n *node, suffix string, l label) {
-	n.label = join(n.label, l)
-
+func insertSuffix(n *Node, suffix string, index, start int) {
 	if len(suffix) == 0 {
 		return
 	}
 
-	for edge, child := range n.children {
+	for edge, child := range n.Children {
 		p := commonPrefixLen(edge, suffix)
 
 		if p == 0 {
@@ -63,24 +44,30 @@ func insertSuffix(n *node, suffix string, l label) {
 		if p == len(edge) {
 			// The suffix contains the entire edge.
 			// Insert the trimmed suffix one level down.
-			insertSuffix(child, suffix[p:], l)
+			insertSuffix(child, suffix[p:], index, start)
 			return
 		}
 
 		// There is a partial match between the edge and the suffix.
 		// Split the edge in two.
-		mid := &node{child.label, map[string]*node{}}
-		mid.children[edge[p:]] = child
-		delete(n.children, edge)
-		n.children[edge[:p]] = mid
+		mid := &Node{
+			-1,
+			map[string]*Node{},
+		}
+		mid.Children[edge[p:]] = child
+		delete(n.Children, edge)
+		n.Children[edge[:p]] = mid
 
 		// Insert the trimmed suffix one level down.
-		insertSuffix(mid, suffix[p:], l)
+		insertSuffix(mid, suffix[p:], index, start)
 		return
 	}
 
-	newNode := &node{l, map[string]*node{}}
-	n.children[suffix] = newNode
+	newNode := &Node{
+		start,
+		map[string]*Node{},
+	}
+	n.Children[suffix] = newNode
 }
 
 func commonPrefixLen(a, b string) int {
@@ -91,34 +78,14 @@ func commonPrefixLen(a, b string) int {
 	return i
 }
 
-func depthFirstSearch(n *node, prefix string, f func(*node, string)) {
-	f(n, prefix)
-	for edge, child := range n.children {
-		depthFirstSearch(child, prefix+edge, f)
-	}
-}
-
-func reverse(s string) string {
-	runes := []rune{}
-	for _, r := range s {
-		runes = append(runes, r)
-	}
-	l := len(runes)
-	for i := 0; i < l/2; i++ {
-		runes[i], runes[l-i-1] = runes[l-i-1], runes[i]
-	}
-	return string(runes)
-}
-
 // func (t *Tree) Log() {
-// 	labelLen := len(fmt.Sprintf("%b", t.root.label))
-// 	log(t.root, labelLen, 0)
+// 	log(t.root, 0)
 // }
 
-// func log(n *node, labelLen, indent int) {
-// 	fmt.Printf("%s(%0"+strconv.Itoa(labelLen)+"b)\n", strings.Repeat(" ", indent), n.label)
-// 	for edge, child := range n.children {
+// func log(n *Node, indent int) {
+// 	fmt.Printf("%s(%d)\n", strings.Repeat(" ", indent), n.Start)
+// 	for edge, child := range n.Children {
 // 		fmt.Printf("%s%s\n", strings.Repeat(" ", indent+2), edge)
-// 		log(child, labelLen, indent+4)
+// 		log(child, indent+4)
 // 	}
 // }

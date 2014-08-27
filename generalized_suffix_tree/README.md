@@ -5,6 +5,8 @@
 * Space complexity: O(n).
 * Time complexity:
     * Construction: O(n).
+    * Find all z occurrences of a substring k : O(|k| + z).
     * Find the longest common substring: O(n).
+    * Find the longest palindromic substring: O(n).
 
-The generalized suffix trees implemented here are implemented with a naïve construction taking O(n²) time. Also, instead of using unique string terminators, each node is labelled with the strings it appears in, using a bit vector.
+The generalized suffix trees implemented here are naïvely constructed in O(n²) time, and do not preprocess lowest common ancestor (LCA) queries. Only three string terminators are configured: $, # and %.
