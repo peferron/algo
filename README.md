@@ -21,5 +21,5 @@ $ go test ./mergesort/go
 Test a specific JavaScript module:
 
 ```shell
-$ node mergesort/javascript/mergesort_test.js
+$ node mergesort/javascript/*_test.js
 ```
