@@ -27,13 +27,10 @@ function testSearch(searchFunction, expectedVertices) {
         ]
     });
 
-    adjacency_list.log(list);
-
     assert.strictEqual(list.length, 6);
 
     var vertices = [];
     var processVertex = function(x) {
-        console.log('Processing vertex: ' + x);
         vertices.push(x);
     };
 
