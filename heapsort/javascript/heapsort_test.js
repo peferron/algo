@@ -25,9 +25,7 @@ function basicTests(heapify) {
         }
     ];
 
-    tests.forEach(function(test, i) {
-        // console.log('Starting test #' + i + ' with input array', test.in);
-
+    tests.forEach(function(test) {
         var a = clone(test.in);
         heapsort.sort(a, heapify);
         assert.deepEqual(a, test.out);

@@ -24,9 +24,7 @@ function basicTests() {
         }
     ];
 
-    tests.forEach(function(test, i) {
-        // console.log('Starting test #' + i + ' with input array', test.in);
-
+    tests.forEach(function(test) {
         var a = clone(test.in);
         mergesort.sort(a);
         assert.deepEqual(a, test.out);

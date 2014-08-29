@@ -1,22 +1,16 @@
 'use strict';
 
 exports.sort = function (a) {
-    // console.log('sort:', a)
-
     if (!a) {
         return;
     }
-
     quicksort(a, 0, a.length - 1);
 };
 
 function quicksort(a, start, end) {
-    // console.log('quicksort:', a, 'between', start, 'and', end);
-
     if (end < start + 1) {
         return;
     }
-
     var p = partition(a, start, end);
     quicksort(a, start, p - 1);
     quicksort(a, p + 1, end);
@@ -24,8 +18,6 @@ function quicksort(a, start, end) {
 
 function partition(a, start, end) {
     var p = medianPivot(a, start, end);
-
-    // console.log('partition:', a, 'between', start, 'and', end, 'with pivot', p);
 
     swap(a, p, end);
 
@@ -42,8 +34,6 @@ function partition(a, start, end) {
 }
 
 function swap(a, i, j) {
-    // console.log('swap:', a, 'indexes', i, 'and', j);
-
     var t = a[i];
     a[i] = a[j];
     a[j] = t;

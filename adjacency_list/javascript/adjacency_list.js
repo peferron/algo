@@ -23,12 +23,12 @@ function insertEdge(list, x, y, directed) {
     }
 }
 
-exports.log = function(list) {
-    list.forEach(function(edges, x) {
-        var str = 'Vertex ' + x + ': ';
-        edges.forEach(function(y) {
-            str += y + ' ';
-        });
-        console.log(str);
-    });
-};
+// exports.log = function(list) {
+//     list.forEach(function(edges, x) {
+//         var str = 'Vertex ' + x + ': ';
+//         edges.forEach(function(y) {
+//             str += y + ' ';
+//         });
+//         console.log(str);
+//     });
+// };

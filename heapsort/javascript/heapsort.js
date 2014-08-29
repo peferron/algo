@@ -3,8 +3,6 @@
 var maxheap = require('./maxheap.js');
 
 exports.sort = function (a, maxHeapify) {
-    // console.log('sort:', a)
-
     if (!a) {
         return;
     }
