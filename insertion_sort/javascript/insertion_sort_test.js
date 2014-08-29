@@ -49,10 +49,10 @@ function randomTest() {
 
 function randomInts() {
     var n = Math.floor(Math.random() * 1000);
-    var a = [];
+    var a = new Array(n);
     for (var i = 0; i < n; i++) {
         // Use n as the upper bound to produce some duplicates.
-        a.push(Math.floor(Math.random() * n));
+        a[i] = Math.floor(Math.random() * n);
     }
     return a;
 }

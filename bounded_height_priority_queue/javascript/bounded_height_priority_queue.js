@@ -2,7 +2,6 @@
 
 // Keys must be integers ranging from 0 (highest priority) to p (lowest priority).
 exports.Queue = function(p) {
-
     var a = initArray(p);
     var min = p + 1;
 
@@ -28,9 +27,9 @@ exports.Queue = function(p) {
 };
 
 function initArray(p) {
-    var a = [];
+    var a = new Array(p + 1);
     for (var i = 0; i <= p; i++) {
-        a.push([]);
+        a[i] = [];
     }
     return a;
 }
