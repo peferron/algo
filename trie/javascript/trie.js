@@ -106,12 +106,11 @@ function preOrder(n, key, callback) {
     if (n.hasValue()) {
         callback(key, n.value);
     }
-    for (var i = 0; i < n.children.length; i++) {
-        var child = n.children[i];
+    n.children.forEach(function(child, i) {
         if (child) {
             preOrder(child, key + indexToChar(i), callback);
         }
-    }
+    });
 }
 
 function isEmpty(a) {
