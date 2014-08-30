@@ -1,52 +1,48 @@
 'use strict';
 
+module.exports = Tree;
+
 var RED = 'red';
 var BLACK = 'black';
 
-exports.Tree = function() {
-    var root = null;
+function Tree() {
+    this.root = null;
+}
 
-    this.has = function(key) {
-        var n = find(root, key);
-        return !!n;
-    };
-
-    this.get = function(key) {
-        var n = find(root, key);
-        if (n) {
-            return n.value;
-        }
-    };
-
-    this.set = function(key, value) {
-        root = insert(root, key, value);
-        root.color = BLACK;
-    };
-
-    this.del = function(key) {
-        root = del(root, key);
-        if (root) {
-            root.color = BLACK;
-        }
-    };
-
-    this.all = function() {
-        var a = [];
-        inOrder(root, function(n) {
-            a.push({key: n.key, value: n.value});
-        });
-        return a;
-    };
-
-    // Used for testing only.
-    this.root = function() {
-        return root;
-    };
-
-    // this.log = function() {
-    //     log(root);
-    // };
+Tree.prototype.has = function(key) {
+    return find(this.root, key) !== null;
 };
+
+Tree.prototype.get = function(key) {
+    var n = find(this.root, key);
+    if (n) {
+        return n.value;
+    }
+};
+
+Tree.prototype.set = function(key, value) {
+    this.root = insert(this.root, key, value);
+    this.root.color = BLACK;
+};
+
+Tree.prototype.del = function(key) {
+    this.root = del(this.root, key);
+    if (this.root) {
+        this.root.color = BLACK;
+    }
+};
+
+Tree.prototype.all = function() {
+    var a = [];
+    inOrder(this.root, function(n) {
+        a.push({key: n.key, value: n.value});
+    });
+    return a;
+};
+
+// Tree.prototype.log = function() {
+//     log(this.root);
+// };
 
 function Node(key, value) {
     this.key = key;
