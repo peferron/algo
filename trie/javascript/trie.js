@@ -1,50 +1,48 @@
 'use strict';
 
+module.exports = Trie;
+
 // alphabetSize, charToIndex and indexToChar are hardcoded here to keep the code short, however they
-// could easily be be passed as arguments in the Trie constructor.
+// could easily be be passed as arguments to the Trie constructor.
 var alphabetSize = 36; // 0-9 and a-z
-var charToIndex = function(char) {
-    return parseInt(char, 36);
+var charToIndex = function(char) { return parseInt(char, 36); };
+var indexToChar = function(index) { return index.toString(36); };
+
+function Trie() {
+    this.root = new Node();
+}
+
+Trie.prototype.has = function(key) {
+    var n = find(this.root, key);
+    return n && n.hasValue();
 };
-var indexToChar = function(index) {
-    return index.toString(36);
+
+Trie.prototype.get = function(key) {
+    var n = find(this.root, key);
+    if (n && n.hasValue()) {
+        return n.value;
+    }
 };
 
-exports.Trie = function() {
-    var root = new Node();
-
-    this.has = function(key) {
-        var n = find(root, key);
-        return n && n.hasValue();
-    };
-
-    this.get = function(key) {
-        var n = find(root, key);
-        if (n && n.hasValue()) {
-            return n.value;
-        }
-    };
-
-    this.set = function(key, value) {
-        set(root, key, value);
-    };
-
-    this.del = function(key) {
-        del(root, key);
-    };
-
-    this.all = function() {
-        var a = [];
-        preOrder(root, '', function(key, value) {
-            a.push({key: key, value: value});
-        });
-        return a;
-    };
-
-    // this.log = function() {
-    //     log(root, 0);
-    // }
+Trie.prototype.set = function(key, value) {
+    set(this.root, key, value);
 };
+
+Trie.prototype.del = function(key) {
+    del(this.root, key);
+};
+
+Trie.prototype.all = function() {
+    var a = [];
+    preOrder(this.root, '', function(key, value) {
+        a.push({key: key, value: value});
+    });
+    return a;
+};
+
+// Trie.prototype.log = function() {
+//     log(this.root, 0);
+// };
 
 function Node() {
     this.children = new Array(alphabetSize);
@@ -121,12 +119,11 @@ function isEmpty(a) {
 
 // function log(n, indent) {
 //     var spaces = new Array(indent + 1).join(' ');
-//     for (var char in n.children) {
-//         if (n.children.hasOwnProperty(char)) {
-//             var child = n.children[char];
+//     n.children.forEach(function(child, i) {
+//         if (child) {
 //             var v = child.hasValue() ? '(' + child.value + ')' : '';
-//             console.log(spaces + char + ' ' + v);
+//             console.log(spaces + indexToChar(i) + ' ' + v);
 //             log(child, indent + 2);
 //         }
-//     }
+//     });
 // }

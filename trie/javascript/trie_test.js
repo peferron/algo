@@ -2,10 +2,10 @@
 
 var assert = require('assert');
 
-var trie = require('./trie.js');
+var Trie = require('./trie.js');
 
 function basicTests() {
-    var t = new trie.Trie();
+    var t = new Trie();
 
     assert(!t.has('abc'));
     assert.deepEqual(t.all(), []);
@@ -59,7 +59,7 @@ function randomTests() {
 }
 
 function randomTest() {
-    var t = new trie.Trie();
+    var t = new Trie();
     var m = {};
     var a = [];
 
