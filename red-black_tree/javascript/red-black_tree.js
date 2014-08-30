@@ -1,65 +1,62 @@
 'use strict';
 
+module.exports = Tree;
+
 var RED = 'red';
 var BLACK = 'black';
 
-exports.Tree = function() {
-    var root = null;
+function Tree() {
+    this.root = null;
+}
 
-    this.has = function(key) {
-        var n = find(root, key);
-        return n && n.key === key;
-    };
-
-    this.get = function(key) {
-        var n = find(root, key);
-        if (n && n.key === key) {
-            return n.value;
-        }
-    };
-
-    this.set = function(key, value) {
-        var n = find(root, key);
-        if (n && n.key === key) {
-            n.value = value;
-        } else {
-            var newNode = new Node(key, value);
-            insert(n, newNode);
-            root = newNode.root();
-        }
-    };
-
-    this.del = function(key) {
-        var n = find(root, key);
-        if (!n || n.key !== key) {
-            return;
-        }
-        var anotherNode = n.parent || n.left || n.right;
-        del(n);
-        if (anotherNode) {
-            root = anotherNode.root();
-        } else {
-            root = null;
-        }
-    };
-
-    this.all = function() {
-        var a = [];
-        inOrder(root, function(n) {
-            a.push({key: n.key, value: n.value});
-        });
-        return a;
-    };
-
-    // Used for testing only.
-    this.root = function() {
-        return root;
-    };
-
-    // this.log = function() {
-    //     log(root);
-    // };
+Tree.prototype.has = function(key) {
+    var n = find(this.root, key);
+    return n && n.key === key;
 };
+
+Tree.prototype.get = function(key) {
+    var n = find(this.root, key);
+    if (n && n.key === key) {
+        return n.value;
+    }
+};
+
+Tree.prototype.set = function(key, value) {
+    var n = find(this.root, key);
+    if (n && n.key === key) {
+        n.value = value;
+    } else {
+        var newNode = new Node(key, value);
+        insert(n, newNode);
+        this.root = newNode.root();
+    }
+};
+
+Tree.prototype.del = function(key) {
+    var n = find(this.root, key);
+    if (!n || n.key !== key) {
+        return;
+    }
+    var anotherNode = n.parent || n.left || n.right;
+    del(n);
+    if (anotherNode) {
+        this.root = anotherNode.root();
+    } else {
+        this.root = null;
+    }
+};
+
+Tree.prototype.all = function() {
+    var a = [];
+    inOrder(this.root, function(n) {
+        a.push({key: n.key, value: n.value});
+    });
+    return a;
+};
+
+// Tree.prototype.log = function() {
+//     log(this.root);
+// };
 
 function Node(key, value) {
     this.key = key;

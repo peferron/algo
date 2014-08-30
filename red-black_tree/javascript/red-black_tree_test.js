@@ -2,10 +2,10 @@
 
 var assert = require('assert');
 
-var rb = require('./red-black_tree.js');
+var Tree = require('./red-black_tree.js');
 
 function basicTests() {
-    var t = new rb.Tree();
+    var t = new Tree();
 
     assert(!t.has(2));
 
@@ -51,7 +51,7 @@ function randomTests() {
 }
 
 function randomTest() {
-    var t = new rb.Tree();
+    var t = new Tree();
     var m = {};
     var a = [];
 
@@ -84,11 +84,10 @@ function check(t, m, a) {
 }
 
 function isRedBlackTree(t) {
-    var r = t.root();
     if (t && t.color === 'red') {
         return false;
     }
-    return blackHeight(r) >= 0;
+    return blackHeight(t.root) >= 0;
 }
 
 function red(n) {
