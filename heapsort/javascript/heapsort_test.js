@@ -75,9 +75,10 @@ function clone(a) {
     return a.slice(0);
 }
 
-basicTests(maxheap.slowHeapify);
 basicTests(maxheap.fastHeapify);
-randomTests(maxheap.slowHeapify);
+basicTests(maxheap.slowHeapify);
+
 randomTests(maxheap.fastHeapify);
+randomTests(maxheap.slowHeapify);
 
 console.log('All tests OK.');
