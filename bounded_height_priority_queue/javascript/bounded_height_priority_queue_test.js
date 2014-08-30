@@ -2,10 +2,10 @@
 
 var assert = require('assert');
 
-var bhpq = require('./bounded_height_priority_queue.js');
+var Queue = require('./bounded_height_priority_queue.js');
 
 function basicTests() {
-    var q = new bhpq.Queue(10);
+    var q = new Queue(10);
 
     assert(q.empty());
 

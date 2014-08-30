@@ -1,29 +1,32 @@
 'use strict';
 
+module.exports = Queue;
+
 // Keys must be integers ranging from 0 (highest priority) to p (lowest priority).
-exports.Queue = function(p) {
-    var a = initArray(p);
-    var min = p + 1;
+function Queue(p) {
+    this.p = p;
+    this.min = p + 1;
+    this.a = initArray(p);
+}
 
-    this.insert = function(key, value) {
-        a[key].push(value);
-        min = Math.min(min, key);
-    };
+Queue.prototype.insert = function(key, value) {
+    this.a[key].push(value);
+    this.min = Math.min(this.min, key);
+};
 
-    this.deleteMin = function() {
-        if (min > p) {
-            return;
-        }
-        var value = a[min].pop();
-        while (min <= p && !a[min].length) {
-            min++;
-        }
-        return value;
-    };
+Queue.prototype.deleteMin = function() {
+    if (this.min > this.p) {
+        return;
+    }
+    var value = this.a[this.min].pop();
+    while (this.min <= this.p && !this.a[this.min].length) {
+        this.min++;
+    }
+    return value;
+};
 
-    this.empty = function() {
-        return min > p;
-    };
+Queue.prototype.empty = function() {
+    return this.min > this.p;
 };
 
 function initArray(p) {
