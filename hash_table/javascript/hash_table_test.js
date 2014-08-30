@@ -2,10 +2,10 @@
 
 var assert = require('assert');
 
-var hash_table = require('./hash_table.js');
+var HashTable = require('./hash_table.js');
 
 function basicTests() {
-    var h = new hash_table.HashTable(10);
+    var h = new HashTable(10);
 
     assert(!h.has('abc'));
 
@@ -40,7 +40,7 @@ function randomTests() {
 }
 
 function randomTest() {
-    var h = new hash_table.HashTable(1000);
+    var h = new HashTable(1000);
     var m = {};
     var a = [];
 

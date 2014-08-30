@@ -15,7 +15,7 @@ func NewHashTable(size int) *HashTable {
 }
 
 func (t *HashTable) Get(key string) (value interface{}, ok bool) {
-	h := hashMod(key, len(t.a))
+	h := hash(key, len(t.a))
 	elements := t.a[h]
 
 	if i := indexOf(elements, key); i < 0 {
@@ -28,7 +28,7 @@ func (t *HashTable) Get(key string) (value interface{}, ok bool) {
 }
 
 func (t *HashTable) Set(key string, value interface{}) {
-	h := hashMod(key, len(t.a))
+	h := hash(key, len(t.a))
 	elements := t.a[h]
 	newElement := element{key, value}
 
@@ -44,7 +44,7 @@ func (t *HashTable) Set(key string, value interface{}) {
 }
 
 func (t *HashTable) Del(key string) {
-	h := hashMod(key, len(t.a))
+	h := hash(key, len(t.a))
 	elements := t.a[h]
 
 	if i := indexOf(elements, key); i >= 0 {

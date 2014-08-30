@@ -1,48 +1,51 @@
 'use strict';
 
+module.exports = HashTable;
+
 var hash = require('./hash.js');
 
-exports.HashTable = function(size) {
-    var a = [];
+function HashTable(size) {
+    this.size = size;
+    this.a = [];
+}
 
-    this.has = function(key) {
-        var h = hash.mod(key, size);
-        var items = a[h];
-        return indexOfItem(items, key) >= 0;
-    };
+HashTable.prototype.has = function(key) {
+    var h = hash(key, this.size);
+    var items = this.a[h];
+    return indexOfItem(items, key) >= 0;
+};
 
-    this.get = function(key) {
-        var h = hash.mod(key, size);
-        var items = a[h];
-        var i = indexOfItem(items, key);
-        if (i >= 0) {
-            return items[i][1];
-        }
-    };
+HashTable.prototype.get = function(key) {
+    var h = hash(key, this.size);
+    var items = this.a[h];
+    var i = indexOfItem(items, key);
+    if (i >= 0) {
+        return items[i][1];
+    }
+};
 
-    this.set = function(key, value) {
-        var h = hash.mod(key, size);
-        var items = a[h];
-        if (!items) {
-            a[h] = [[key, value]];
-            return;
-        }
-        var i = indexOfItem(items, key);
-        if (i >= 0) {
-            items[i][1] = value;
-        } else {
-            items.push([key, value]);
-        }
-    };
+HashTable.prototype.set = function(key, value) {
+    var h = hash(key, this.size);
+    var items = this.a[h];
+    if (!items) {
+        this.a[h] = [[key, value]];
+        return;
+    }
+    var i = indexOfItem(items, key);
+    if (i >= 0) {
+        items[i][1] = value;
+    } else {
+        items.push([key, value]);
+    }
+};
 
-    this.del = function(key) {
-        var h = hash.mod(key, size);
-        var items = a[h];
-        var i = indexOfItem(items, key);
-        if (i >= 0) {
-            del(items, i);
-        }
-    };
+HashTable.prototype.del = function(key) {
+    var h = hash(key, this.size);
+    var items = this.a[h];
+    var i = indexOfItem(items, key);
+    if (i >= 0) {
+        del(items, i);
+    }
 };
 
 function indexOfItem(items, key) {
