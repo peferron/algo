@@ -2,24 +2,24 @@
 
 var assert = require('assert');
 
-var adjacency_list = require('./adjacency_list.js');
-var operations = require('./operations.js');
+var AdjacencyList = require('./adjacency_list.js');
+
+var info = {
+    vertexCount: 6,
+    edges: [
+        [0, 1],
+        [0, 4],
+        [0, 5],
+        [1, 2],
+        [1, 4],
+        [2, 3],
+        [3, 4]
+    ]
+};
 
 function testConstruct() {
-    var list = new adjacency_list.construct({
-        vertexCount: 6,
-        edges: [
-            [0, 1],
-            [0, 4],
-            [0, 5],
-            [1, 2],
-            [1, 4],
-            [2, 3],
-            [3, 4]
-        ]
-    });
-
-    assert.deepEqual(list, [
+    var list = new AdjacencyList(info);
+    assert.deepEqual(list.a, [
         [1, 4, 5],
         [0, 2, 4],
         [1, 3],
@@ -30,37 +30,17 @@ function testConstruct() {
 }
 
 function testBreadthFirstSearch() {
-    testSearch(operations.breadthFirstSearch, [0, 1, 4, 5, 2, 3]);
+    var list = new AdjacencyList(info);
+    var vertices = [];
+    list.breadthFirstSearch(0, vertices.push.bind(vertices));
+    assert.deepEqual(vertices, [0, 1, 4, 5, 2, 3]);
 }
 
 function testDepthFirstSearch() {
-    testSearch(operations.depthFirstSearch, [0, 1, 2, 3, 4, 5]);
-}
-
-function testSearch(searchFunction, expectedVertices) {
-    var list = new adjacency_list.construct({
-        vertexCount: 6,
-        edges: [
-            [0, 1],
-            [0, 4],
-            [0, 5],
-            [1, 2],
-            [1, 4],
-            [2, 3],
-            [3, 4]
-        ]
-    });
-
-    assert.strictEqual(list.length, 6);
-
+    var list = new AdjacencyList(info);
     var vertices = [];
-    var processVertex = function(x) {
-        vertices.push(x);
-    };
-
-    searchFunction(list, 0, processVertex);
-
-    assert.deepEqual(vertices, expectedVertices);
+    list.depthFirstSearch(0, vertices.push.bind(vertices));
+    assert.deepEqual(vertices, [0, 1, 2, 3, 4, 5]);
 }
 
 testConstruct();
