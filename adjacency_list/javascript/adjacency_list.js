@@ -58,7 +58,6 @@ function breadthFirstSearch(a, start, vertexCallback) {
             if (processed[y]) {
                 return;
             }
-
             vertexCallback(y);
             processed[y] = true;
             queue.push(y);
