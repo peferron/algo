@@ -16,10 +16,6 @@ List.prototype.depthFirstSearch = function(start, vertexCallback) {
     depthFirstSearch(this.a, start, vertexCallback);
 };
 
-// List.prototype.log = function() {
-//     log(this.a);
-// };
-
 function constructArray(info) {
     var a = initArray(info.vertexCount);
     info.edges.forEach(function(edge) {
@@ -85,6 +81,10 @@ function depthFirstSearch(a, start, vertexCallback) {
 
     dfs(start);
 }
+
+// List.prototype.log = function() {
+//     log(this.a);
+// };
 
 // function log(a) {
 //     a.forEach(function(edges, x) {
