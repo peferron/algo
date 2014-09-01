@@ -3,7 +3,11 @@
 module.exports = hash;
 
 function hash(str, modulo) {
-    return rawHash(str) % modulo;
+    var h = rawHash(str) % modulo;
+    if (h < 0) {
+        return h + modulo;
+    }
+    return h;
 }
 
 function rawHash(str) {
