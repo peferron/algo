@@ -12,13 +12,15 @@ Test all modules:
 $ ./test
 ```
 
-Test a specific Go module, for example `mergesort`:
+To test a specific module, for example `mergesort`:
+
+Go:
 
 ```shell
 $ go test ./mergesort/go
 ```
 
-Test a specific JavaScript module:
+JavaScript:
 
 ```shell
 $ node mergesort/javascript/*_test.js
