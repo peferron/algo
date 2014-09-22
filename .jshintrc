@@ -19,5 +19,7 @@
 
     // Relaxing options
     "globalstrict": true,
+
+    // Environment
     "node": true
 }
