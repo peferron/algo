@@ -1,9 +1,7 @@
 package eratosthenes_sieve
 
-// http://stackoverflow.com/a/568618
-
 type Sieve struct {
-	// The last returned prime.
+	// The last tested number.
 	i int
 
 	// Maps each composite to a list of primes that divide it.
@@ -20,8 +18,9 @@ func NewSieve() *Sieve {
 func (s *Sieve) Next() int {
 	for {
 		s.i++
+		primes, ok := s.sieve[s.i]
 
-		if _, ok := s.sieve[s.i]; !ok {
+		if !ok {
 			// i is a prime.
 			// All multiples i*j with j < i have already been marked when j has been processed, so
 			// the first multiple that needs to be marked is i*i.
@@ -30,7 +29,7 @@ func (s *Sieve) Next() int {
 		}
 
 		// i is a composite.
-		for _, p := range s.sieve[s.i] {
+		for _, p := range primes {
 			// i is a multiple of p: i = n*p.
 			// Now, the next multiple of p needs to be marked: m = (n+1)*p = i+p.
 			m := s.i + p
