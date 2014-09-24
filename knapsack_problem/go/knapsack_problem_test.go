@@ -8,7 +8,7 @@ import (
 var tests = []struct {
 	items     []Item
 	maxWeight int
-	expected  []Item
+	solution  []Item
 }{
 	// Basic cases.
 	{
@@ -116,10 +116,9 @@ var tests = []struct {
 
 func TestPack(t *testing.T) {
 	for _, test := range tests {
-		actual := Pack(test.items, test.maxWeight)
-		if !reflect.DeepEqual(actual, test.expected) {
-			t.Fatalf("With items %v and max weight %d, expected %v, was %v",
-				test.items, test.maxWeight, test.expected, actual)
+		if s := Solve(test.items, test.maxWeight); !reflect.DeepEqual(s, test.solution) {
+			t.Fatalf("For items %v and max weight %d, expected the solution to be %v, was %v",
+				test.items, test.maxWeight, test.solution, s)
 		}
 	}
 }

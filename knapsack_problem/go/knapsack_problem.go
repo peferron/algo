@@ -5,7 +5,7 @@ type Item struct {
 	value  int
 }
 
-func Pack(items []Item, w int) []Item {
+func Solve(items []Item, w int) []Item {
 	n := len(items)
 	if n == 0 {
 		return items
