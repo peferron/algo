@@ -19,7 +19,7 @@ UnionFind.prototype.find = function(i) {
 
     var root = this.find(parent);
 
-    // Flatten the tree to speed up subsequent finds.
+    // Path compression: flatten the tree to speed up subsequent finds.
     this.parents[i] = root;
 
     return root;
