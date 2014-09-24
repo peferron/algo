@@ -5,10 +5,10 @@ type Item struct {
 	value  int
 }
 
-func Solve(items []Item, w int) []Item {
+func Solve(items []Item, w int) []int {
 	n := len(items)
 	if n == 0 {
-		return items
+		return []int{}
 	}
 
 	m := solve(items, n, w)
@@ -51,11 +51,11 @@ func solve(items []Item, n, w int) [][]int {
 	return m
 }
 
-// reconstruct returns the list of items used to achieve the value at position m[i][j], sorted by
-// increasing item index.
-func reconstruct(m [][]int, items []Item, i, j int) []Item {
+// reconstruct returns the indexes of the items used to achieve the value at position m[i][j],
+// sorted by increasing order.
+func reconstruct(m [][]int, items []Item, i, j int) []int {
 	if i == 0 || j == 0 {
-		return []Item{}
+		return []int{}
 	}
 
 	maxValueWithItem := m[i][j]
@@ -68,7 +68,7 @@ func reconstruct(m [][]int, items []Item, i, j int) []Item {
 
 	// The current item is needed in the set.
 	item := items[i-1]
-	return append(reconstruct(m, items, i-1, j-item.weight), item)
+	return append(reconstruct(m, items, i-1, j-item.weight), i-1)
 }
 
 func max(x, y int) int {

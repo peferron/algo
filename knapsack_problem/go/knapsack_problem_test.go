@@ -8,109 +8,109 @@ import (
 var tests = []struct {
 	items     []Item
 	maxWeight int
-	solution  []Item
+	solution  []int
 }{
 	// Basic cases.
 	{
 		nil,
 		1,
-		nil,
+		[]int{},
 	},
 	{
 		[]Item{},
 		1,
-		[]Item{},
+		[]int{},
 	},
 	{
 		[]Item{Item{1, 1}},
 		0,
-		[]Item{},
+		[]int{},
 	},
 
 	// All items have weight = value, and a perfect fill is possible.
 	{
 		[]Item{Item{1, 1}},
 		1,
-		[]Item{Item{1, 1}},
+		[]int{0},
 	},
 	{
 		[]Item{Item{1, 1}, Item{1, 1}},
 		2,
-		[]Item{Item{1, 1}, Item{1, 1}},
+		[]int{0, 1},
 	},
 	{
 		[]Item{Item{1, 1}, Item{2, 2}},
 		3,
-		[]Item{Item{1, 1}, Item{2, 2}},
+		[]int{0, 1},
 	},
 	{
 		[]Item{Item{1, 1}, Item{2, 2}, Item{3, 3}},
 		4,
-		[]Item{Item{1, 1}, Item{3, 3}},
+		[]int{0, 2},
 	},
 	{
 		[]Item{Item{1, 1}, Item{2, 2}, Item{2, 2}},
 		4,
-		[]Item{Item{2, 2}, Item{2, 2}},
+		[]int{1, 2},
 	},
 	{
 		[]Item{Item{3, 3}, Item{5, 5}, Item{7, 7}},
 		8,
-		[]Item{Item{3, 3}, Item{5, 5}},
+		[]int{0, 1},
 	},
 	{
 		[]Item{Item{2, 2}, Item{4, 4}, Item{5, 5}, Item{8, 8}},
 		14,
-		[]Item{Item{2, 2}, Item{4, 4}, Item{8, 8}},
+		[]int{0, 1, 3},
 	},
 
 	// All items have weight = value, but a perfect fill is impossible.
 	{
 		[]Item{Item{1, 1}},
 		2,
-		[]Item{Item{1, 1}},
+		[]int{0},
 	},
 	{
 		[]Item{Item{1, 1}, Item{1, 1}},
 		7,
-		[]Item{Item{1, 1}, Item{1, 1}},
+		[]int{0, 1},
 	},
 	{
 		[]Item{Item{1, 1}, Item{2, 2}},
 		5,
-		[]Item{Item{1, 1}, Item{2, 2}},
+		[]int{0, 1},
 	},
 	{
 		[]Item{Item{3, 3}, Item{5, 5}, Item{7, 7}},
 		9,
-		[]Item{Item{3, 3}, Item{5, 5}},
+		[]int{0, 1},
 	},
 	{
 		[]Item{Item{1, 1}, Item{4, 4}},
 		3,
-		[]Item{Item{1, 1}},
+		[]int{0},
 	},
 	{
 		[]Item{Item{2, 2}, Item{4, 4}, Item{5, 5}, Item{8, 8}},
 		16,
-		[]Item{Item{2, 2}, Item{5, 5}, Item{8, 8}},
+		[]int{0, 2, 3},
 	},
 
 	// Items can have weight != value.
 	{
 		[]Item{Item{1, 1}, Item{1, 3}, Item{1, 2}},
 		1,
-		[]Item{Item{1, 3}},
+		[]int{1},
 	},
 	{
 		[]Item{Item{1, 3}, Item{2, 2}, Item{3, 1}},
 		4,
-		[]Item{Item{1, 3}, Item{2, 2}},
+		[]int{0, 1},
 	},
 	{
 		[]Item{Item{2, 2}, Item{4, 4}, Item{5, 9}, Item{8, 8}},
 		14,
-		[]Item{Item{5, 9}, Item{8, 8}},
+		[]int{2, 3},
 	},
 }
 
