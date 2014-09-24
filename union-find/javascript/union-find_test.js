@@ -13,9 +13,8 @@ var tests = [
         ],
         expect: {
             parents: [0, 1, 2, 3, 4],
-            sizes: [1, 1, 1, 1, 1],
-            finds: [0, 1, 2, 3, 4],
-            compressedSizes: [1, 1, 1, 1, 1]
+            ranks: [1, 1, 1, 1, 1],
+            finds: [0, 1, 2, 3, 4]
         }
     },
     {
@@ -31,9 +30,8 @@ var tests = [
         ],
         expect: {
             parents: [0, 1, 1, 3, 4],
-            sizes: [1, 2, 1, 1, 1],
-            finds: [0, 1, 1, 3, 4],
-            compressedSizes: [1, 2, 1, 1, 1]
+            ranks: [1, 2, 1, 1, 1],
+            finds: [0, 1, 1, 3, 4]
         }
     },
     {
@@ -54,9 +52,8 @@ var tests = [
         ],
         expect: {
             parents: [0, 1, 1, 3, 4],
-            sizes: [1, 2, 1, 1, 1],
-            finds: [0, 1, 1 , 3 , 4],
-            compressedSizes: [1, 2, 1, 1, 1]
+            ranks: [1, 2, 1, 1, 1],
+            finds: [0, 1, 1 , 3 , 4]
         }
     },
     {
@@ -77,9 +74,8 @@ var tests = [
         ],
         expect: {
             parents: [0, 1, 1, 1, 4],
-            sizes: [1, 3, 1, 1, 1],
-            finds: [0, 1, 1, 1, 4],
-            compressedSizes: [1, 3, 1, 1, 1]
+            ranks: [1, 2, 1, 1, 1],
+            finds: [0, 1, 1, 1, 4]
         }
     },
     {
@@ -100,9 +96,8 @@ var tests = [
         ],
         expect: {
             parents: [0, 1, 1, 1, 4],
-            sizes: [1, 3, 1, 1, 1],
-            finds: [0, 1, 1, 1, 4],
-            compressedSizes: [1, 3, 1, 1, 1]
+            ranks: [1, 2, 1, 1, 1],
+            finds: [0, 1, 1, 1, 4]
         }
     },
     {
@@ -123,9 +118,8 @@ var tests = [
         ],
         expect: {
             parents: [0, 1, 1, 1, 4],
-            sizes: [1, 3, 1, 1, 1],
-            finds: [0, 1, 1, 1, 4],
-            compressedSizes: [1, 3, 1, 1, 1]
+            ranks: [1, 2, 1, 1, 1],
+            finds: [0, 1, 1, 1, 4]
         }
     },
     {
@@ -146,9 +140,8 @@ var tests = [
         ],
         expect: {
             parents: [0, 1, 1, 1, 4],
-            sizes: [1, 3, 1, 1, 1],
-            finds: [0, 1, 1, 1, 4],
-            compressedSizes: [1, 3, 1, 1, 1]
+            ranks: [1, 2, 1, 1, 1],
+            finds: [0, 1, 1, 1, 4]
         }
     },
     {
@@ -176,9 +169,8 @@ var tests = [
         ],
         expect: {
             parents: [0, 1, 1, 1, 3],
-            sizes: [1, 4, 1, 2, 1],
-            finds: [0, 1, 1 , 1, 1],
-            compressedSizes: [1, 4, 1, 1, 1]
+            ranks: [1, 3, 1, 2, 1],
+            finds: [0, 1, 1 , 1, 1]
         }
     },
     {
@@ -236,9 +228,8 @@ var tests = [
         ],
         expect: {
             parents: [0, 1, 1, 1, 3, 1, 5, 5, 7],
-            sizes: [1, 8, 1, 2, 1, 4, 1, 2, 1],
-            finds: [0, 1, 1, 1, 1, 1, 1, 1, 1],
-            compressedSizes: [1, 8, 1, 1, 1, 1, 1, 1, 1]
+            ranks: [1, 4, 1, 2, 1, 3, 1, 2, 1],
+            finds: [0, 1, 1, 1, 1, 1, 1, 1, 1]
         }
     }
 ];
@@ -257,7 +248,7 @@ function runTest(test) {
     // });
 
     assert.deepEqual(u.parents, test.expect.parents);
-    assert.deepEqual(u.sizes, test.expect.sizes);
+    assert.deepEqual(u.ranks, test.expect.ranks);
 
     for (var i = 0; i < test.size; i++) {
         var root = u.find(i);
@@ -266,9 +257,6 @@ function runTest(test) {
 
     // find() has been run against each element, so the tree should be flat now.
     assert.deepEqual(u.parents, test.expect.finds);
-    if (test.expect.afterCompressionSizes) {
-        assert.deepEqual(u.sizes, test.expect.afterCompressionSizes);
-    }
 }
 
 runTests();
