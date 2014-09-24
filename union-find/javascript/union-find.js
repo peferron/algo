@@ -20,7 +20,16 @@ UnionFind.prototype.find = function(i) {
     var root = this.find(parent);
 
     // Path compression: flatten the tree to speed up subsequent finds.
-    this.parents[i] = root;
+    if (parent !== root) {
+        this.parents[i] = root;
+
+        // Update the parent size.
+        // Note: This step could be skipped while maintaining the same asymptotic complexity. The
+        // size would then become an upper bound of the exact size; similar to how, with the
+        // link-by-rank method, the rank is an upper bound of the height, rather than the exact
+        // height.
+        this.sizes[parent] -= this.sizes[i];
+    }
 
     return root;
 };
