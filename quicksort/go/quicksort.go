@@ -11,13 +11,14 @@ func Sort(a []int) {
 
 func partition(a []int) int {
 	p := medianPivot(a)
+	pv := a[p]
+
 	last := len(a) - 1
 	swap(a, p, last)
 
 	firstHigh := 0
-	for i := 0; i < last; i++ {
-		v := a[i]
-		if v < a[last] {
+	for i, v := range a {
+		if v < pv {
 			swap(a, i, firstHigh)
 			firstHigh++
 		}
