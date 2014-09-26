@@ -55,7 +55,7 @@ function between(a, x, y) {
     return x <= a && a <= y || y <= a && a <= y;
 }
 
-/* randomPivot is an alternative to medianPivot, but mediaPivot is recommended.
+/* randomPivot is an alternative to medianPivot, but medianPivot is recommended.
 function randomPivot(a, start, end) {
     // Math.random() returns a number in the range [0, 1)
     return start + Math.floor(Math.random() * (end - start + 1));

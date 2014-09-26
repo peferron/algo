@@ -50,7 +50,7 @@ func between(a, x, y int) bool {
 	return x <= a && a <= y || y <= a && a <= x
 }
 
-/* randomPivot is an alternative to medianPivot, but mediaPivot is recommended.
+/* randomPivot is an alternative to medianPivot, but medianPivot is recommended.
 func randomPivot(a []int) int {
 	return rand.Intn(len(a))
 }
