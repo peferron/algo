@@ -6,11 +6,8 @@ func Partitions(n int) []partition {
 	partitions := []partition{}
 
 	// The first partition of n in lexicographically decreasing order is {n} itself.
-	p := partition{n}
-
-	for p != nil {
+	for p := (partition{n}); p != nil; p = next(p) {
 		partitions = append(partitions, p)
-		p = next(p)
 	}
 
 	return partitions
