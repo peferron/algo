@@ -2,6 +2,7 @@ package integer_partition_generation
 
 type partition []int
 
+// Partitions returns the integer partitions of n, sorted in lexicographically decreasing order.
 func Partitions(n int) []partition {
 	partitions := []partition{}
 
@@ -13,6 +14,7 @@ func Partitions(n int) []partition {
 	return partitions
 }
 
+// next returns the partition immediately following a in lexicographically decreasing order.
 func next(p partition) partition {
 	g := indexLastGreaterThan1(p)
 	if g < 0 {
@@ -20,23 +22,33 @@ func next(p partition) partition {
 		return nil
 	}
 
-	// To generate a new partition that is after p in lexicographically decreasing order, we remove
-	// 1 from the last element greater than 1, then append it back at the end of the partition.
+	// To generate a new partition q that is after p in lexicographically decreasing order, remove 1
+	// from the last element greater than 1, then append it back at the end of the partition.
 	// Example: {3, 1, 1} -> {2, 1, 1, 1}.
-	c := clone(p)
-	c[g]--
-	c = append(c, 1)
+	q := clone(p)
+	q[g]--
+	q = append(q, 1)
 
-	// This new partition is after p in lexicographically decreasing order, however it is not
-	// necessarily *immediately* after p. To fix that, we must "collect" all the 1s that follow g.
+	// q is after p in lexicographically decreasing order, but not necessarily *immediately* after.
+	// To fix that, the 1s that follow q must be "collected".
 	// Example: {2, 1, 1, 1} -> {2, 2, 1}.
-	// Note that in the above example, we must be careful not to "overcollect" the 1s into {2, 3},
-	// because that's the same partition as {3, 2}, which has already been generated since it's
-	// before p in lexicographically decreasing order. The "collection" must stop when it reaches
-	// the value of p[g].
-	return collect(c, g)
+	// Note that in the above example, the 1s must not be "overcollected" into {2, 3}, because
+	// that's the same partition as {3, 2}, which has already been generated since it's before q in
+	// lexicographically decreasing order. The "collection" must stop when the receiving element
+	// reaches the value of q[g].
+	for i := g + 1; i < len(q); i++ {
+		// Collect the last element of q into q[i] until there's nothing left to collect or q[i]
+		// reaches the max.
+		for len(q)-1 > i && q[i] < q[g] {
+			q[i]++
+			q = q[:len(q)-1]
+		}
+	}
+
+	return q
 }
 
+// indexLastGreaterThan1 returns the index of the last element greater than 1 in p, or -1 if none.
 func indexLastGreaterThan1(p partition) int {
 	for i := len(p) - 1; i >= 0; i-- {
 		if v := p[i]; v > 1 {
@@ -46,21 +58,9 @@ func indexLastGreaterThan1(p partition) int {
 	return -1
 }
 
+// clone returns a copy of a.
 func clone(p partition) partition {
-	c := make(partition, len(p))
-	copy(c, p)
-	return c
-}
-
-func collect(p partition, g int) partition {
-	max := p[g]
-	for i := g + 1; i < len(p); i++ {
-		// Collect the last element of p into p[i] until there's nothing left to collect or p[i]
-		// reaches the max.
-		for len(p)-1 > i && p[i] < max {
-			p[i]++
-			p = p[:len(p)-1]
-		}
-	}
-	return p
+	q := make(partition, len(p))
+	copy(q, p)
+	return q
 }
