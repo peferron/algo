@@ -1,20 +1,20 @@
 'use strict';
 
-exports.sort = function (a) {
+module.exports = function(a) {
     if (!a) {
         return;
     }
-    mergesort(a, 0, a.length - 1);
+    sort(a, 0, a.length - 1);
 };
 
-function mergesort(a, start, end) {
+function sort(a, start, end) {
     if (end < start + 1) {
         return;
     }
 
     var mid = Math.floor((start + end) / 2);
-    mergesort(a, start, mid);
-    mergesort(a, mid + 1, end);
+    sort(a, start, mid);
+    sort(a, mid + 1, end);
     merge(a, start, mid, end);
 }
 

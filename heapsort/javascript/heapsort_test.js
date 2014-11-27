@@ -2,7 +2,7 @@
 
 var assert = require('assert');
 
-var heapsort = require('./heapsort.js');
+var sort = require('./heapsort.js');
 var maxheap = require('./maxheap.js');
 
 function basicTests(maxHeapify) {
@@ -27,7 +27,7 @@ function basicTests(maxHeapify) {
 
     tests.forEach(function(test) {
         var a = clone(test.in);
-        heapsort.sort(a, maxHeapify);
+        sort(a, maxHeapify);
         assert.deepEqual(a, test.out);
     });
 }
@@ -42,7 +42,7 @@ function randomTest(maxHeapify) {
     var input = randomInts();
     var a = clone(input);
 
-    heapsort.sort(a, maxHeapify);
+    sort(a, maxHeapify);
     assert(isSorted(a));
 }
 

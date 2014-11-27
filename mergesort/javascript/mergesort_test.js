@@ -2,7 +2,7 @@
 
 var assert = require('assert');
 
-var mergesort = require('./mergesort.js');
+var sort = require('./mergesort.js');
 
 function basicTests() {
     var tests = [
@@ -26,7 +26,7 @@ function basicTests() {
 
     tests.forEach(function(test) {
         var a = clone(test.in);
-        mergesort.sort(a);
+        sort(a);
         assert.deepEqual(a, test.out);
     });
 }
@@ -41,7 +41,7 @@ function randomTest() {
     var input = randomInts();
     var a = clone(input);
 
-    mergesort.sort(a);
+    sort(a);
     assert(isSorted(a));
 }
 

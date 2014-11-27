@@ -1,6 +1,8 @@
 'use strict';
 
-exports.sort = function (a) {
+module.exports = sort;
+
+function sort(a) {
     if (!a) {
         return;
     }
@@ -8,7 +10,7 @@ exports.sort = function (a) {
         var j = smallest(a, i);
         swap(a, i, j);
     }
-};
+}
 
 function smallest(a, start) {
     var s = start;

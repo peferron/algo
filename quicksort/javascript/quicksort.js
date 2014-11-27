@@ -1,19 +1,19 @@
 'use strict';
 
-exports.sort = function (a) {
+module.exports = function(a) {
     if (!a) {
         return;
     }
-    quicksort(a, 0, a.length - 1);
+    sort(a, 0, a.length - 1);
 };
 
-function quicksort(a, start, end) {
+function sort(a, start, end) {
     if (end < start + 1) {
         return;
     }
     var p = partition(a, start, end);
-    quicksort(a, start, p - 1);
-    quicksort(a, p + 1, end);
+    sort(a, start, p - 1);
+    sort(a, p + 1, end);
 }
 
 function partition(a, start, end) {

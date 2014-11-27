@@ -2,7 +2,7 @@
 
 var assert = require('assert');
 
-var insertion_sort = require('./insertion_sort.js');
+var sort = require('./insertion_sort.js');
 
 function basicTests() {
     var tests = [
@@ -26,7 +26,7 @@ function basicTests() {
 
     tests.forEach(function(test) {
         var a = clone(test.in);
-        insertion_sort.sort(a);
+        sort(a);
         assert.deepEqual(a, test.out);
     });
 }
@@ -41,7 +41,7 @@ function randomTest() {
     var input = randomInts();
     var a = clone(input);
 
-    insertion_sort.sort(a);
+    sort(a);
     assert(isSorted(a));
 }
 

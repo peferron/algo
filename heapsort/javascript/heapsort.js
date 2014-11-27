@@ -1,6 +1,8 @@
 'use strict';
 
-exports.sort = function (a, maxHeapify) {
+module.exports = sort;
+
+function sort(a, maxHeapify) {
     if (!a) {
         return;
     }
@@ -10,4 +12,4 @@ exports.sort = function (a, maxHeapify) {
     for (var i = a.length - 1; i >= 0; i--) {
         a[i] = h.deleteMax();
     }
-};
+}

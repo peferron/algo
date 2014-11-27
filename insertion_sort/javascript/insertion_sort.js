@@ -1,13 +1,15 @@
 'use strict';
 
-exports.sort = function (a) {
+module.exports = sort;
+
+function sort(a) {
     if (!a) {
         return;
     }
     for (var i = 0; i < a.length; i++) {
         insert(a, i);
     }
-};
+}
 
 function insert(a, i) {
     for (var j = i; j > 0 && a[j] < a[j - 1]; j--) {
