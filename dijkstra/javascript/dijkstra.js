@@ -36,27 +36,31 @@ function dijkstra(g, start, end) {
         });
 
         visited[x] = true;
-        x = indexOfMinimumDistance(distances, visited);
+        x = best(distances, visited);
     }
 
     return null;
 }
 
-function path(end, parents) {
-    if (end < 0) {
+// path returns an array containing all the ancestors of x, sorted from x's oldest ancestor to x
+// itself.
+function path(x, parents) {
+    if (x < 0) {
         return [];
     }
-    return path(parents[end], parents).concat([end]);
+    return path(parents[x], parents).concat([x]);
 }
 
-function indexOfMinimumDistance(distances, visited) {
-    var minIndex = -1;
+// best returns the best vertex to visit, or -1 if none.
+function best(distances, visited) {
+    // The best vertex to visit is the unvisited vertex with the lowest initialized distance.
+    var bestIndex = -1;
     var minDistance = Infinity;
-    distances.forEach(function(d, i) {
-        if (!visited[i] && d < minDistance) {
-            minIndex = i;
-            minDistance = d;
+    distances.forEach(function(distance, i) {
+        if (!visited[i] && distance < minDistance) {
+            bestIndex = i;
+            minDistance = distance;
         }
     });
-    return minIndex;
+    return bestIndex;
 }
