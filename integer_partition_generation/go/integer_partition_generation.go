@@ -18,7 +18,7 @@ func Partitions(n int) []partition {
 func next(p partition) partition {
 	g := indexLastGreaterThan1(p)
 	if g < 0 {
-		// Root case: p is made entirely of 1s. There is no next partition.
+		// Base case: p is made entirely of 1s. There is no next partition.
 		return nil
 	}
 
