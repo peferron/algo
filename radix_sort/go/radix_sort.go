@@ -4,13 +4,13 @@ import "math"
 
 func Sort(a []int) []int {
 	negative, positive := splitSign(a)
-	sortedNegative := reverse(radixSort(negative))
-	sortedPositive := radixSort(positive)
+	sortedNegative := reverse(sortAbs(negative))
+	sortedPositive := sortAbs(positive)
 	return append(sortedNegative, sortedPositive...)
 }
 
-// radixSort returns a copy of a, sorted in increasing absolute value order.
-func radixSort(a []int) []int {
+// sortAbs returns a copy of a, sorted in increasing absolute value order.
+func sortAbs(a []int) []int {
 	base := 10
 	d := maxDigits(a, base)
 	for n := 0; n < d; n++ {
