@@ -5,8 +5,6 @@ type Info struct {
 	Edges       []Edge
 }
 
-type Vertex int
-
 type Edge struct {
 	X int
 	Y int
