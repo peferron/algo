@@ -2,17 +2,17 @@
 
 'use strict';
 
-module.exports = List;
+module.exports = AdjacencyList;
 
-function List(info) {
+function AdjacencyList(info) {
     this.a = constructArray(info);
 }
 
-List.prototype.breadthFirstSearch = function(start, vertexCallback) {
+AdjacencyList.prototype.breadthFirstSearch = function(start, vertexCallback) {
     breadthFirstSearch(this.a, start, vertexCallback);
 };
 
-List.prototype.depthFirstSearch = function(start, vertexCallback) {
+AdjacencyList.prototype.depthFirstSearch = function(start, vertexCallback) {
     depthFirstSearch(this.a, start, vertexCallback);
 };
 
