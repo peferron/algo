@@ -6,25 +6,22 @@ func Sort(g Graph) []int {
 	a := NewAdjacencyList(g)
 
 	sorted := []int{}
-	prepend := func(x int) {
+
+	processed := make([]bool, len(a))
+	process := func(x int) {
+		if processed[x] {
+			return
+		}
+		processed[x] = true
+		// Vertices are processed in reverse topological order. To bring back the correct order,
+		// each vertex must be prepended instead of appended.
+		// Unfortunately, Go does not have a very clean syntax for prepending elements.
 		sorted = append([]int{x}, sorted...)
 	}
 
-	discovered := make([]bool, len(a))
 	for i := range a {
-		depthFirstSearch(a, discovered, i, prepend)
+		a.DepthFirstSearch(i, process)
 	}
 
 	return sorted
-}
-
-func depthFirstSearch(a AdjacencyList, discovered []bool, x int, lateCallback vertexCallback) {
-	if discovered[x] {
-		return
-	}
-	discovered[x] = true
-	for _, y := range a[x] {
-		depthFirstSearch(a, discovered, y, lateCallback)
-	}
-	lateCallback(x)
 }

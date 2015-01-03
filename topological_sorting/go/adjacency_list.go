@@ -12,10 +12,28 @@ type Edge struct {
 
 type AdjacencyList [][]int
 
+type VertexCallback func(x int)
+
 func NewAdjacencyList(g Graph) AdjacencyList {
 	a := make(AdjacencyList, g.VertexCount)
 	for _, edge := range g.Edges {
 		a[edge.X] = append(a[edge.X], edge.Y)
 	}
 	return a
+}
+
+func (a AdjacencyList) DepthFirstSearch(x int, lateCallback VertexCallback) {
+	discovered := make([]bool, len(a))
+	dfs(a, discovered, x, lateCallback)
+}
+
+func dfs(a AdjacencyList, discovered []bool, x int, lateCallback VertexCallback) {
+	if discovered[x] {
+		return
+	}
+	discovered[x] = true
+	for _, y := range a[x] {
+		dfs(a, discovered, y, lateCallback)
+	}
+	lateCallback(x)
 }
