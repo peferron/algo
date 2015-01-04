@@ -1,6 +1,6 @@
 # algo [![Build Status](https://drone.io/github.com/peferron/algo/status.png)](https://drone.io/github.com/peferron/algo/latest)
 
-This is just me fooling around and implementing various algorithms and data structures in Go and JavaScript. Swift might join the list if it becomes cross-platform enough.
+This is just me fooling around and implementing various algorithms and data structures in JavaScript and Go. Swift might join the list if it becomes cross-platform enough.
 
 **Warning!** The code in this repository is:
 
@@ -16,7 +16,7 @@ Test all modules:
 $ ./test
 ```
 
-To test a specific module, for example `mergesort`:
+Test a specific module, for example `mergesort`:
 
 Go:
 
