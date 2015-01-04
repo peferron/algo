@@ -2,18 +2,20 @@
 
 'use strict';
 
-var Graph = require('./graph.js');
+var AdjacencyList = require('./adjacency_list.js');
 
-module.exports = function(info, start, end) {
-    var g = new Graph(info);
-    return dijkstra(g, start, end);
+module.exports = function(graph, start, end) {
+    var list = new AdjacencyList(graph);
+    return dijkstra(list, start, end);
 };
 
-function dijkstra(g, start, end) {
-    var visited = new Array(g.vertexCount);
-    var distances = new Array(g.vertexCount);
-    var parents = new Array(g.vertexCount);
-    for (var i = 0; i < g.vertexCount; i++) {
+function dijkstra(list, start, end) {
+    var n = list.a.length;
+
+    var visited = new Array(n);
+    var distances = new Array(n);
+    var parents = new Array(n);
+    for (var i = 0; i < n; i++) {
         visited[i] = false;
         distances[i] = Infinity;
         parents[i] = -1;
@@ -27,7 +29,7 @@ function dijkstra(g, start, end) {
         }
 
         var dx = distances[x];
-        g.edges[x].forEach(function(edge) {
+        list.a[x].forEach(function(edge) {
             var dy = dx + edge.distance;
             if (dy < distances[edge.y]) {
                 distances[edge.y] = dy;
