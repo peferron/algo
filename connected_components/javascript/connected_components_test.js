@@ -1,8 +1,6 @@
-'use strict';
-
 var assert = require('assert');
 
-var connectedComponents = require('./connected_components.js');
+import {connectedComponents} from './connected_components';
 
 var tests = [
     {

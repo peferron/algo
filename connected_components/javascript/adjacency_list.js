@@ -1,30 +1,21 @@
-/* jshint loopfunc: true */
-
-'use strict';
-
-module.exports = AdjacencyList;
-
-function AdjacencyList(graph) {
-    this.a = constructAdjacencyList(graph);
+export class AdjacencyList {
+    constructor(graph) {
+        this.a = constructAdjacencyList(graph);
+    }
+    depthFirstSearch(start, earlyCallback) {
+        depthFirstSearch(this.a, start, earlyCallback);
+    }
 }
-
-AdjacencyList.prototype.depthFirstSearch = function(start, earlyCallback) {
-    depthFirstSearch(this.a, start, earlyCallback);
-};
 
 function constructAdjacencyList(graph) {
-    var a = initAdjacencyList(graph.vertexCount);
-    graph.edges.forEach(function(edge) {
-        insertEdge(a, edge[0], edge[1], false);
-    });
-    return a;
-}
+    // new Array(vertexCount).fill([]) does not work because it reuses the same array instance for
+    // every element.
+    let a = Array.from(new Array(graph.vertexCount), () => []);
 
-function initAdjacencyList(vertexCount) {
-    var a = new Array(vertexCount);
-    for (var i = 0; i < vertexCount; i++) {
-        a[i] = [];
+    for (let edge of graph.edges) {
+        insertEdge(a, edge[0], edge[1], false);
     }
+
     return a;
 }
 
@@ -36,17 +27,16 @@ function insertEdge(a, x, y, directed) {
 }
 
 function depthFirstSearch(a, start, earlyCallback) {
-    var processed = new Array(a.length);
+    let processed = new Array(a.length);
 
-    function dfs(x) {
+    let dfs = x => {
         if (processed[x]) {
             return;
         }
         processed[x] = true;
         earlyCallback(x);
-        var edges = a[x];
-        edges.forEach(dfs);
-    }
+        a[x].forEach(dfs);
+    };
 
     dfs(start);
 }

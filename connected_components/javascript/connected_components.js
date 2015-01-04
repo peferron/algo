@@ -1,18 +1,12 @@
-/* jshint loopfunc: true */
+import {AdjacencyList} from './adjacency_list';
 
-'use strict';
+export function connectedComponents(graph) {
+    let list = new AdjacencyList(graph);
 
-var AdjacencyList = require('./adjacency_list.js');
+    let currentComponent = 0;
+    let components = new Array(list.a.length);
 
-module.exports = connectedComponents;
-
-function connectedComponents(graph) {
-    var list = new AdjacencyList(graph);
-
-    var currentComponent = 0;
-    var components = new Array(list.a.length);
-
-    for (var x = 0; x < list.a.length; x++) {
+    for (let x = 0; x < list.a.length; x++) {
         if (!isNaN(components[x])) {
             // This vertex has already been processed.
             continue;
@@ -20,7 +14,7 @@ function connectedComponents(graph) {
 
         // Mark this vertex and all connected vertices with the current component number.
         components[x] = currentComponent;
-        list.depthFirstSearch(x, function(y) {
+        list.depthFirstSearch(x, y => {
             components[y] = currentComponent;
         });
 
