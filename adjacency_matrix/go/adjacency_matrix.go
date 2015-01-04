@@ -37,13 +37,13 @@ func (m *AdjacencyMatrix) insertEdge(x, y int, directed bool) {
 	}
 }
 
-func (m *AdjacencyMatrix) BreadthFirstSearch(start int, f VertexCallback) {
+func (m *AdjacencyMatrix) BreadthFirstSearch(start int, early VertexCallback) {
 	queue := []int{}
 	processed := make([]bool, len(*m))
 
 	queue = append(queue, start)
 	processed[start] = true
-	f(start)
+	early(start)
 
 	for len(queue) > 0 {
 		x := queue[0]
@@ -52,27 +52,27 @@ func (m *AdjacencyMatrix) BreadthFirstSearch(start int, f VertexCallback) {
 			if !connected || processed[y] {
 				continue
 			}
-			f(y)
+			early(y)
 			processed[y] = true
 			queue = append(queue, y)
 		}
 	}
 }
 
-func (m *AdjacencyMatrix) DepthFirstSearch(start int, f VertexCallback) {
+func (m *AdjacencyMatrix) DepthFirstSearch(start int, early VertexCallback) {
 	processed := make([]bool, len(*m))
-	m.dfs(start, processed, f)
+	m.dfs(start, processed, early)
 }
 
-func (m *AdjacencyMatrix) dfs(x int, processed []bool, f VertexCallback) {
+func (m *AdjacencyMatrix) dfs(x int, processed []bool, early VertexCallback) {
 	if processed[x] {
 		return
 	}
-	f(x)
+	early(x)
 	processed[x] = true
 	for y, connected := range (*m)[x] {
 		if connected {
-			m.dfs(y, processed, f)
+			m.dfs(y, processed, early)
 		}
 	}
 }

@@ -39,7 +39,7 @@ function insertEdge(a, x, y, directed) {
     }
 }
 
-function breadthFirstSearch(a, start, vertexCallback) {
+function breadthFirstSearch(a, start, earlyCallback) {
     if (!a.length) {
         return;
     }
@@ -47,7 +47,7 @@ function breadthFirstSearch(a, start, vertexCallback) {
     var processed = new Array(a.length);
     var queue = [];
 
-    vertexCallback(start);
+    earlyCallback(start);
     processed[start] = true;
     queue.push(start);
 
@@ -58,21 +58,21 @@ function breadthFirstSearch(a, start, vertexCallback) {
             if (processed[y]) {
                 return;
             }
-            vertexCallback(y);
+            earlyCallback(y);
             processed[y] = true;
             queue.push(y);
         });
     }
 }
 
-function depthFirstSearch(a, start, vertexCallback) {
+function depthFirstSearch(a, start, earlyCallback) {
     var processed = new Array(a.length);
 
     function dfs(x) {
         if (processed[x]) {
             return;
         }
-        vertexCallback(x);
+        earlyCallback(x);
         processed[x] = true;
         var edges = a[x];
         edges.forEach(dfs);
