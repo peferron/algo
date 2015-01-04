@@ -18,14 +18,14 @@ $ ./test
 
 Test a specific module, for example `mergesort`:
 
-Go:
-
-```shell
-$ go test ./mergesort/go
-```
-
 JavaScript:
 
 ```shell
 $ node mergesort/javascript/*_test.js
+```
+
+Go:
+
+```shell
+$ go test ./mergesort/go
 ```
