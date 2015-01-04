@@ -4,27 +4,27 @@
 
 module.exports = AdjacencyList;
 
-function AdjacencyList(info) {
-    this.a = constructArray(info);
+function AdjacencyList(graph) {
+    this.a = constructAdjacencyList(graph);
 }
 
-AdjacencyList.prototype.breadthFirstSearch = function(start, vertexCallback) {
-    breadthFirstSearch(this.a, start, vertexCallback);
+AdjacencyList.prototype.breadthFirstSearch = function(start, earlyCallback) {
+    breadthFirstSearch(this.a, start, earlyCallback);
 };
 
-AdjacencyList.prototype.depthFirstSearch = function(start, vertexCallback) {
-    depthFirstSearch(this.a, start, vertexCallback);
+AdjacencyList.prototype.depthFirstSearch = function(start, earlyCallback) {
+    depthFirstSearch(this.a, start, earlyCallback);
 };
 
-function constructArray(info) {
-    var a = initArray(info.vertexCount);
-    info.edges.forEach(function(edge) {
+function constructAdjacencyList(graph) {
+    var a = initAdjacencyList(graph.vertexCount);
+    graph.edges.forEach(function(edge) {
         insertEdge(a, edge[0], edge[1], false);
     });
     return a;
 }
 
-function initArray(vertexCount) {
+function initAdjacencyList(vertexCount) {
     var a = new Array(vertexCount);
     for (var i = 0; i < vertexCount; i++) {
         a[i] = [];

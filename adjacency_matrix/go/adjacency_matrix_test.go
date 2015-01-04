@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-var info = Info{
+var graph = Graph{
 	6,
 	[]Edge{
 		Edge{0, 1},
@@ -19,7 +19,7 @@ var info = Info{
 }
 
 func TestConstruct(t *testing.T) {
-	m := NewAdjacencyMatrix(info)
+	m := NewAdjacencyMatrix(graph)
 	expected := &AdjacencyMatrix{
 		[]bool{false, true, false, false, true, true},
 		[]bool{true, false, true, false, true, false},
@@ -29,30 +29,30 @@ func TestConstruct(t *testing.T) {
 		[]bool{true, false, false, false, false, false},
 	}
 	if !reflect.DeepEqual(m, expected) {
-		t.Errorf("For info %+v, expected matrix to be %v, but was %v", info, expected, m)
+		t.Errorf("For graph %+v, expected matrix to be %v, but was %v", graph, expected, m)
 	}
 }
 
 func TestBreadthFirstSearch(t *testing.T) {
 	vertices := []int{}
-	NewAdjacencyMatrix(info).BreadthFirstSearch(0, func(x int) {
+	NewAdjacencyMatrix(graph).BreadthFirstSearch(0, func(x int) {
 		vertices = append(vertices, x)
 	})
 
 	if expected := []int{0, 1, 4, 5, 2, 3}; !reflect.DeepEqual(vertices, expected) {
-		t.Errorf("For info %+v, expected breadth-first search order to be %v, but was %v",
-			info, expected, vertices)
+		t.Errorf("For graph %+v, expected breadth-first search order to be %v, but was %v",
+			graph, expected, vertices)
 	}
 }
 
 func TestDepthFirstSearch(t *testing.T) {
 	vertices := []int{}
-	NewAdjacencyMatrix(info).DepthFirstSearch(0, func(x int) {
+	NewAdjacencyMatrix(graph).DepthFirstSearch(0, func(x int) {
 		vertices = append(vertices, x)
 	})
 
 	if expected := []int{0, 1, 2, 3, 4, 5}; !reflect.DeepEqual(vertices, expected) {
-		t.Errorf("For info %+v, expected depth-first search order to be %v, but was %v",
-			info, expected, vertices)
+		t.Errorf("For graph %+v, expected depth-first search order to be %v, but was %v",
+			graph, expected, vertices)
 	}
 }
