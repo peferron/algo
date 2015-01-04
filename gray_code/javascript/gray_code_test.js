@@ -4,31 +4,48 @@ var assert = require('assert');
 
 var grayCode = require('./gray_code.js');
 
-assert.deepEqual(grayCode(0), [
-    []
-]);
+var tests = [
+    {
+        n: 0,
+        code: [
+            []
+        ]
+    },
+    {
+        n: 1,
+        code: [
+            [],
+            [1]
+        ]
+    },
+    {
+        n: 2,
+        code: [
+            [],
+            [1],
+            [1, 2],
+            [2]
+        ]
+    },
+    {
+        n: 3,
+        code: [
+            [],
+            [1],
+            [1, 2],
+            [2],
+            [2, 3],
+            [1, 2, 3],
+            [1, 3],
+            [3]
+        ]
+    }
+];
 
-assert.deepEqual(grayCode(1), [
-    [],
-    [1]
-]);
+function runTest(test) {
+    assert.deepEqual(grayCode(test.n), test.code);
+}
 
-assert.deepEqual(grayCode(2), [
-    [],
-    [1],
-    [1, 2],
-    [2]
-]);
-
-assert.deepEqual(grayCode(3), [
-    [],
-    [1],
-    [1, 2],
-    [2],
-    [2, 3],
-    [1, 2, 3],
-    [1, 3],
-    [3]
-]);
+tests.forEach(runTest);
 
 console.log('All tests OK.');

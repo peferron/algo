@@ -12,7 +12,7 @@ var primes = []int{2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 5
 	773, 787, 797, 809, 811, 821, 823, 827, 829, 839, 853, 857, 859, 863, 877, 881, 883, 887, 907,
 	911, 919, 929, 937, 941, 947, 953, 967, 971, 977, 983, 991, 997}
 
-func TestNext(t *testing.T) {
+func Test(t *testing.T) {
 	s := NewSieve()
 	for i, expected := range primes {
 		if actual := s.Next(); actual != expected {

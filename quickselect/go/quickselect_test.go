@@ -46,7 +46,7 @@ var basicTests = []struct {
 	},
 }
 
-func TestBasic(t *testing.T) {
+func TestBasicInputs(t *testing.T) {
 	for i, test := range basicTests {
 
 		if v := Select(test.a, test.k); v != test.expected {
@@ -56,13 +56,13 @@ func TestBasic(t *testing.T) {
 	}
 }
 
-func TestRandom(t *testing.T) {
+func TestRandomInputs(t *testing.T) {
 	for i := 0; i < 1000 && !t.Failed(); i++ {
-		runRandomTest(t)
+		testRandomInput(t)
 	}
 }
 
-func runRandomTest(t *testing.T) {
+func testRandomInput(t *testing.T) {
 	a := randomInts()
 
 	c := clone(a)

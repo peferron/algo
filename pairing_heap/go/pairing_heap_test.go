@@ -9,7 +9,7 @@ var chars = []byte("01234567890abcdefghijklmnopqrstuvwxyz")
 
 type testArray [1000][]string
 
-func TestBasic(t *testing.T) {
+func TestBasicSequence(t *testing.T) {
 	h := NewPairingHeap()
 
 	if !h.Empty() {
@@ -125,26 +125,26 @@ func TestMerge(t *testing.T) {
 	}
 }
 
-func TestRandom(t *testing.T) {
+func TestRandomSequences(t *testing.T) {
 	for i := 0; i < 100 && !t.Failed(); i++ {
-		runRandomTest(t)
+		testRandomSequence(t)
 	}
 }
 
-func runRandomTest(t *testing.T) {
+func testRandomSequence(t *testing.T) {
 	h := NewPairingHeap()
 	p := &testArray{}
 
 	count := rand.Intn(10000)
 	var n *Node
 	for i := 0; i < count; i++ {
-		n = randomRound(t, h, p, n)
+		n = randomOperation(t, h, p, n)
 	}
 
-	check(t, h, p)
+	validate(t, h, p)
 }
 
-func randomRound(t *testing.T, h *PairingHeap, p *testArray, n *Node) *Node {
+func randomOperation(t *testing.T, h *PairingHeap, p *testArray, n *Node) *Node {
 	r := rand.Float32()
 	switch {
 	case r < 0.2 && n != nil && n.Key > 0:
@@ -162,7 +162,7 @@ func randomRound(t *testing.T, h *PairingHeap, p *testArray, n *Node) *Node {
 	}
 }
 
-func check(t *testing.T, h *PairingHeap, p *testArray) {
+func validate(t *testing.T, h *PairingHeap, p *testArray) {
 	if !validHeap(h.root) {
 		t.Errorf("Heap structure not respected")
 	}

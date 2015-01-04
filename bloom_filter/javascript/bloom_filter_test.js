@@ -4,13 +4,13 @@ var assert = require('assert');
 
 var BloomFilter = require('./bloom_filter.js');
 
-function randomTests() {
+function testRandomSequences() {
     for (var i = 0; i < 100; i++) {
-        randomTest();
+        testRandomSequence();
     }
 }
 
-function randomTest() {
+function testRandomSequence() {
     var b = new BloomFilter(1000, 0.1);
     var m = {};
 
@@ -28,10 +28,10 @@ function randomTest() {
         }
     }
 
-    check(b, m);
+    validate(b, m);
 }
 
-function check(b, m) {
+function validate(b, m) {
     var attempts = 0;
     var errors = 0;
     for (var key in m) {
@@ -61,6 +61,6 @@ function randomKey() {
     return (Math.PI * Math.random()).toString(36).substr(2, l);
 }
 
-randomTests();
+testRandomSequences();
 
 console.log('All tests OK.');

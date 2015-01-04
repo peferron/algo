@@ -5,7 +5,7 @@ var assert = require('assert');
 var sort = require('./heapsort.js');
 var maxheap = require('./maxheap.js');
 
-function basicTests(maxHeapify) {
+function testBasicInputs(maxHeapify) {
     var tests = [
         {
             in: null,
@@ -32,13 +32,13 @@ function basicTests(maxHeapify) {
     });
 }
 
-function randomTests(maxHeapify) {
+function testRandomInputs(maxHeapify) {
     for (var i = 0; i < 1000; i++) {
-        randomTest(maxHeapify);
+        testRandomInput(maxHeapify);
     }
 }
 
-function randomTest(maxHeapify) {
+function testRandomInput(maxHeapify) {
     var input = randomInts();
     var a = clone(input);
 
@@ -75,10 +75,10 @@ function clone(a) {
     return a.slice(0);
 }
 
-basicTests(maxheap.fastHeapify);
-basicTests(maxheap.slowHeapify);
+testBasicInputs(maxheap.fastHeapify);
+testBasicInputs(maxheap.slowHeapify);
 
-randomTests(maxheap.fastHeapify);
-randomTests(maxheap.slowHeapify);
+testRandomInputs(maxheap.fastHeapify);
+testRandomInputs(maxheap.slowHeapify);
 
 console.log('All tests OK.');

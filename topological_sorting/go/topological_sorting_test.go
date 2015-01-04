@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-var basicTests = []struct {
+var tests = []struct {
 	graph Graph
 	sorts [][]int
 }{
@@ -31,8 +31,8 @@ var basicTests = []struct {
 	},
 }
 
-func TestBasic(t *testing.T) {
-	for i, test := range basicTests {
+func Test(t *testing.T) {
+	for i, test := range tests {
 		if s := Sort(test.graph); !contains(test.sorts, s) {
 			t.Errorf("In test #%d with input graph %+v, expected topological sort to be one of %v, was %v",
 				i, test.graph, test.sorts, s)

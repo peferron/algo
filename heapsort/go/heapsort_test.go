@@ -29,23 +29,23 @@ var basicTests = []struct {
 	},
 }
 
-func TestBasicSlow(t *testing.T) {
-	runBasicTests(t, SlowMaxHeapify)
+func TestBasicInputsSlow(t *testing.T) {
+	testBasicInputs(t, SlowMaxHeapify)
 }
 
-func TestBasicFast(t *testing.T) {
-	runBasicTests(t, FastMaxHeapify)
+func TestBasicInputsFast(t *testing.T) {
+	testBasicInputs(t, FastMaxHeapify)
 }
 
-func TestRandomSlow(t *testing.T) {
-	runRandomTests(t, SlowMaxHeapify)
+func TestRandomInputsSlow(t *testing.T) {
+	testRandomInputs(t, SlowMaxHeapify)
 }
 
-func TestRandomFast(t *testing.T) {
-	runRandomTests(t, FastMaxHeapify)
+func TestRandomInputsFast(t *testing.T) {
+	testRandomInputs(t, FastMaxHeapify)
 }
 
-func runBasicTests(t *testing.T, f MaxHeapifyFunc) {
+func testBasicInputs(t *testing.T, f MaxHeapifyFunc) {
 	for i, test := range basicTests {
 		a := clone(test.in)
 		Sort(a, f)
@@ -56,13 +56,13 @@ func runBasicTests(t *testing.T, f MaxHeapifyFunc) {
 	}
 }
 
-func runRandomTests(t *testing.T, f MaxHeapifyFunc) {
+func testRandomInputs(t *testing.T, f MaxHeapifyFunc) {
 	for i := 0; i < 1000 && !t.Failed(); i++ {
-		runRandomTest(t, f)
+		testRandomInput(t, f)
 	}
 }
 
-func runRandomTest(t *testing.T, f MaxHeapifyFunc) {
+func testRandomInput(t *testing.T, f MaxHeapifyFunc) {
 	in := randomInts()
 	a := clone(in)
 	Sort(a, f)

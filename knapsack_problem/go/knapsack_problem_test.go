@@ -114,7 +114,7 @@ var tests = []struct {
 	},
 }
 
-func TestPack(t *testing.T) {
+func Test(t *testing.T) {
 	for _, test := range tests {
 		if s := Solve(test.items, test.maxWeight); !reflect.DeepEqual(s, test.solution) {
 			t.Fatalf("For items %v and max weight %d, expected the solution to be %v, was %v",

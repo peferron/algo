@@ -29,7 +29,7 @@ var basicTests = []struct {
 	},
 }
 
-func TestBasic(t *testing.T) {
+func TestBasicInputs(t *testing.T) {
 	for i, test := range basicTests {
 		if out := Sort(test.in); !reflect.DeepEqual(out, test.out) {
 			t.Errorf("In test #%d with input slice %v, expected sorted slice to be %v, was %v",
@@ -38,13 +38,13 @@ func TestBasic(t *testing.T) {
 	}
 }
 
-func TestRandom(t *testing.T) {
+func TestRandomInputs(t *testing.T) {
 	for i := 0; i < 1000 && !t.Failed(); i++ {
-		runRandomTest(t)
+		testRandomInput(t)
 	}
 }
 
-func runRandomTest(t *testing.T) {
+func testRandomInput(t *testing.T) {
 	in := randomInts()
 	if out := Sort(in); !sort.IntsAreSorted(out) {
 		t.Errorf("In random test with input slice %v, got unsorted slice %v", in, out)

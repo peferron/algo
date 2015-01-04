@@ -9,7 +9,7 @@ import (
 
 var chars = []byte("01234567890abcdefghijklmnopqrstuvwxyz")
 
-func TestBasic(t *testing.T) {
+func TestBasicSequence(t *testing.T) {
 	l := NewSkipList()
 
 	if _, ok := l.Get(2); ok {
@@ -56,30 +56,36 @@ func TestBasic(t *testing.T) {
 	}
 }
 
-func TestRandom(t *testing.T) {
+func TestRandomSequences(t *testing.T) {
 	for i := 0; i < 100 && !t.Failed(); i++ {
-		runRandomTest(t)
+		testRandomSequence(t)
 	}
 }
 
-func runRandomTest(t *testing.T) {
+func testRandomSequence(t *testing.T) {
 	l := NewSkipList()
 	m := map[int]string{}
 	a := []int{}
 
 	count := rand.Intn(10000)
 	for i := 0; i < count; i++ {
-		if rand.Float32() < 0.2 {
-			delRandom(l, m, &a)
-			continue
-		}
-		setRandom(l, m, &a)
+		randomOperation(l, m, &a)
 	}
 
-	check(t, l, m, a)
+	validate(t, l, m, a)
 }
 
-func check(t *testing.T, l *SkipList, m map[int]string, a []int) {
+func randomOperation(l *SkipList, m map[int]string, a *[]int) {
+	r := rand.Float32()
+	switch {
+	case r < 0.2:
+		delRandom(l, m, a)
+	default:
+		setRandom(l, m, a)
+	}
+}
+
+func validate(t *testing.T, l *SkipList, m map[int]string, a []int) {
 	for _, k := range a {
 		if v, ok := l.Get(k); !ok || v != m[k] {
 			t.Errorf("On Get(%d), expected (ok, v) to be (true, %q), was (%t, %q)", k, m[k], ok, v)

@@ -4,7 +4,7 @@ var assert = require('assert');
 
 var Queue = require('./bounded_height_priority_queue.js');
 
-function basicTests() {
+function testBasicSequence() {
     var q = new Queue(10);
 
     assert(q.empty());
@@ -37,6 +37,6 @@ function basicTests() {
     assert(typeof q.deleteMin() === 'undefined');
 }
 
-basicTests();
+testBasicSequence();
 
 console.log('All tests OK.');

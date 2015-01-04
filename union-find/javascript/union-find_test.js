@@ -234,10 +234,6 @@ var tests = [
     }
 ];
 
-function runTests() {
-    tests.forEach(runTest);
-}
-
 function runTest(test) {
     var u = new UnionFind(test.size);
 
@@ -259,6 +255,6 @@ function runTest(test) {
     assert.deepEqual(u.parents, test.expect.finds);
 }
 
-runTests();
+tests.forEach(runTest);
 
 console.log('All tests OK.');

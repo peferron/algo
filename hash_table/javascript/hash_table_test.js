@@ -4,7 +4,7 @@ var assert = require('assert');
 
 var HashTable = require('./hash_table.js');
 
-function basicTests() {
+function testBasicSequence() {
     var h = new HashTable(10);
 
     assert(!h.has('abc'));
@@ -33,35 +33,39 @@ function basicTests() {
     assert.strictEqual(h.get('def'), 9);
 }
 
-function randomTests() {
+function testRandomSequences() {
     for (var i = 0; i < 100; i++) {
-        randomTest();
+        testRandomSequence();
     }
 }
 
-function randomTest() {
+function testRandomSequence() {
     var h = new HashTable(1000);
     var m = {};
     var a = [];
 
     var count = Math.floor(Math.random() * 10000);
     for (var i = 0; i < count; i++) {
-        var r = Math.random();
-        if (r < 0.2) {
-            delRandom(h, m, a);
-            continue;
-        }
-        setRandom(h, m, a);
+        randomOperation(h, m, a);
     }
 
-    check(h, m, a);
+    validate(h, m, a);
 }
 
-function check(h, m, a) {
+function validate(h, m, a) {
     a.forEach(function(k) {
         assert(h.has(k));
         assert.strictEqual(m[k], h.get(k));
     });
+}
+
+function randomOperation(h, m, a) {
+    var r = Math.random();
+    if (r < 0.2) {
+        delRandom(h, m, a);
+    } else {
+        setRandom(h, m, a);
+    }
 }
 
 function setRandom(h, m, a) {
@@ -94,7 +98,7 @@ function randomValue() {
     return Math.floor(Math.random() * 1e9);
 }
 
-basicTests();
-randomTests();
+testBasicSequence();
+testRandomSequences();
 
 console.log('All tests OK.');

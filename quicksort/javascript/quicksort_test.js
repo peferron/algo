@@ -4,7 +4,7 @@ var assert = require('assert');
 
 var sort = require('./quicksort.js');
 
-function basicTests() {
+function testBasicInputs() {
     var tests = [
         {
             in: null,
@@ -31,13 +31,13 @@ function basicTests() {
     });
 }
 
-function randomTests() {
+function testRandomInputs() {
     for (var i = 0; i < 1000; i++) {
-        randomTest();
+        testRandomInput();
     }
 }
 
-function randomTest() {
+function testRandomInput() {
     var input = randomInts();
     var a = clone(input);
 
@@ -81,7 +81,7 @@ function clone(a) {
     return a.slice(0);
 }
 
-basicTests();
-randomTests();
+testBasicInputs();
+testRandomInputs();
 
 console.log('All tests OK.');

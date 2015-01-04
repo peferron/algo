@@ -57,15 +57,13 @@ var tests = [
     }
 ];
 
-function runTests() {
-    tests.forEach(function(test) {
-        test.problems.forEach(function(problem) {
-            var solution = dijkstra(test.graph, problem.start, problem.end);
-            assert.deepEqual(solution, problem.solution);
-        });
+function runTest(test) {
+    test.problems.forEach(function(problem) {
+        var solution = dijkstra(test.graph, problem.start, problem.end);
+        assert.deepEqual(solution, problem.solution);
     });
 }
 
-runTests();
+tests.forEach(runTest);
 
 console.log('All tests OK.');

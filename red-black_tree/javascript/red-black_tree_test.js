@@ -4,7 +4,7 @@ var assert = require('assert');
 
 var Tree = require('./red-black_tree.js');
 
-function basicTests() {
+function testBasicSequence() {
     var t = new Tree();
 
     assert(!t.has(2));
@@ -44,31 +44,26 @@ function basicTests() {
     ]);
 }
 
-function randomTests() {
+function testRandomSequences() {
     for (var i = 0; i < 100; i++) {
-        randomTest();
+        testRandomSequence();
     }
 }
 
-function randomTest() {
+function testRandomSequence() {
     var t = new Tree();
     var m = {};
     var a = [];
 
     var count = Math.floor(Math.random() * 10000);
     for (var i = 0; i < count; i++) {
-        var r = Math.random();
-        if (r < 0.2) {
-            delRandom(t, m, a);
-            continue;
-        }
-        setRandom(t, m, a);
+        randomOperation(t, m, a);
     }
 
-    check(t, m, a);
+    validate(t, m, a);
 }
 
-function check(t, m, a) {
+function validate(t, m, a) {
     assert(isRedBlackTree(t));
 
     a.forEach(function(k) {
@@ -112,6 +107,15 @@ function blackHeight(n) {
     return l + 1;
 }
 
+function randomOperation(t, m, a) {
+    var r = Math.random();
+    if (r < 0.2) {
+        delRandom(t, m, a);
+    } else {
+        setRandom(t, m, a);
+    }
+}
+
 function setRandom(t, m, a) {
     var k = randomKey();
     var v = randomValue();
@@ -145,7 +149,7 @@ function compareNumbers(a, b) {
     return a - b;
 }
 
-basicTests();
-randomTests();
+testBasicSequence();
+testRandomSequences();
 
 console.log('All tests OK.');

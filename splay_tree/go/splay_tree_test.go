@@ -34,7 +34,7 @@ func log(n *node, indent int) {
 
 var chars = []byte("01234567890abcdefghijklmnopqrstuvwxyz")
 
-func TestBasic(t *testing.T) {
+func TestBasicSequence(t *testing.T) {
 	s := NewSplayTree()
 
 	if _, ok := s.Get(2); ok {
@@ -111,30 +111,26 @@ func TestSplay(t *testing.T) {
 	}
 }
 
-func TestRandom(t *testing.T) {
+func TestRandomSequences(t *testing.T) {
 	for i := 0; i < 100 && !t.Failed(); i++ {
-		runRandomTest(t)
+		testRandomSequence(t)
 	}
 }
 
-func runRandomTest(t *testing.T) {
+func testRandomSequence(t *testing.T) {
 	s := NewSplayTree()
 	m := map[int]string{}
 	a := []int{}
 
 	count := rand.Intn(10000)
 	for i := 0; i < count; i++ {
-		if rand.Float32() < 0.2 {
-			delRandom(s, m, &a)
-			continue
-		}
-		setRandom(s, m, &a)
+		randomOperation(s, m, &a)
 	}
 
-	check(t, s, m, a)
+	validate(t, s, m, a)
 }
 
-func check(t *testing.T, s *SplayTree, m map[int]string, a []int) {
+func validate(t *testing.T, s *SplayTree, m map[int]string, a []int) {
 	if !validBinarySearchTree(s.root) {
 		t.Errorf("Binary search tree structure not respected")
 	}
@@ -155,6 +151,16 @@ func check(t *testing.T, s *SplayTree, m map[int]string, a []int) {
 			t.Errorf("Expected data at index #%d to have key %d and value %q, was %d and %q",
 				i, k, m[k], d.Key, d.Value)
 		}
+	}
+}
+
+func randomOperation(s *SplayTree, m map[int]string, a *[]int) {
+	r := rand.Float32()
+	switch {
+	case r < 0.2:
+		delRandom(s, m, a)
+	default:
+		setRandom(s, m, a)
 	}
 }
 

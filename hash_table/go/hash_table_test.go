@@ -7,7 +7,7 @@ import (
 
 var chars = []byte("01234567890abcdefghijklmnopqrstuvwxyz")
 
-func TestBasic(t *testing.T) {
+func TestBasicSequence(t *testing.T) {
 	h := NewHashTable(10)
 
 	if _, ok := h.Get("abc"); ok {
@@ -45,19 +45,20 @@ func TestBasic(t *testing.T) {
 	}
 }
 
-func TestRandom(t *testing.T) {
+func TestRandomSequences(t *testing.T) {
 	for i := 0; i < 100 && !t.Failed(); i++ {
-		runRandomTest(t)
+		testRandomSequence(t)
 	}
 }
 
-func runRandomTest(t *testing.T) {
+func testRandomSequence(t *testing.T) {
 	h := NewHashTable(1000)
 	m := map[string]int{}
 	a := []string{}
 
 	count := rand.Intn(10000)
 	for i := 0; i < count; i++ {
+		randomOperation(h, m, &a)
 		if rand.Float32() < 0.2 {
 			delRandom(h, m, &a)
 			continue
@@ -65,14 +66,24 @@ func runRandomTest(t *testing.T) {
 		setRandom(h, m, &a)
 	}
 
-	check(t, h, m, a)
+	validate(t, h, m, a)
 }
 
-func check(t *testing.T, h *HashTable, m map[string]int, a []string) {
+func validate(t *testing.T, h *HashTable, m map[string]int, a []string) {
 	for _, k := range a {
 		if v, ok := h.Get(k); !ok || v != m[k] {
 			t.Errorf("On Get(%q), expected (ok, v) to be (true, %d), was (%t, %d)", k, m[k], ok, v)
 		}
+	}
+}
+
+func randomOperation(h *HashTable, m map[string]int, a *[]string) {
+	r := rand.Float32()
+	switch {
+	case r < 0.2:
+		delRandom(h, m, a)
+	default:
+		setRandom(h, m, a)
 	}
 }
 

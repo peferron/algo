@@ -4,7 +4,7 @@ var assert = require('assert');
 
 var Trie = require('./trie.js');
 
-function basicTests() {
+function testBasicSequence() {
     var t = new Trie();
 
     assert(!t.has('abc'));
@@ -52,31 +52,26 @@ function basicTests() {
     assert.strictEqual(t.get('abcd'), 11);
 }
 
-function randomTests() {
+function testRandomSequences() {
     for (var i = 0; i < 100; i++) {
-        randomTest();
+        testRandomSequence();
     }
 }
 
-function randomTest() {
+function testRandomSequence() {
     var t = new Trie();
     var m = {};
     var a = [];
 
     var count = Math.floor(Math.random() * 1000);
     for (var i = 0; i < count; i++) {
-        var r = Math.random();
-        if (r < 0.2) {
-            delRandom(t, m, a);
-            continue;
-        }
-        setRandom(t, m, a);
+        randomOperation(t, m, a);
     }
 
-    check(t, m, a);
+    validate(t, m, a);
 }
 
-function check(t, m, a) {
+function validate(t, m, a) {
     a.forEach(function(k) {
         assert(t.has(k));
         assert.strictEqual(m[k], t.get(k));
@@ -87,6 +82,15 @@ function check(t, m, a) {
     a.sort().forEach(function(k, i) {
         assert.deepEqual(all[i], {key: k, value: m[k]});
     });
+}
+
+function randomOperation(t, m, a) {
+    var r = Math.random();
+    if (r < 0.2) {
+        delRandom(t, m, a);
+    } else {
+        setRandom(t, m, a);
+    }
 }
 
 function setRandom(t, m, a) {
@@ -119,7 +123,7 @@ function randomValue() {
     return Math.floor(Math.random() * 1e9);
 }
 
-basicTests();
-randomTests();
+testBasicSequence();
+testRandomSequences();
 
 console.log('All tests OK.');
