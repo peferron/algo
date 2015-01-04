@@ -12,8 +12,8 @@ function constructAdjacencyList(graph) {
     // every element.
     let a = Array.from(new Array(graph.vertexCount), () => []);
 
-    for (let edge of graph.edges) {
-        insertEdge(a, edge[0], edge[1], false);
+    for (let [x, y] of graph.edges) {
+        insertEdge(a, x, y, false);
     }
 
     return a;
