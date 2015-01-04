@@ -19,7 +19,7 @@ AdjacencyList.prototype.depthFirstSearch = function(start, earlyCallback) {
 function constructAdjacencyList(graph) {
     var a = initAdjacencyList(graph.vertexCount);
     graph.edges.forEach(function(edge) {
-        insertEdge(a, edge[0], edge[1], false);
+        insertEdge(a, edge[0], edge[1], graph.directed);
     });
     return a;
 }

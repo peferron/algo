@@ -13,7 +13,7 @@ function constructAdjacencyList(graph) {
     let a = Array.from(new Array(graph.vertexCount), () => []);
 
     for (let [x, y] of graph.edges) {
-        insertEdge(a, x, y, false);
+        insertEdge(a, x, y, graph.directed);
     }
 
     return a;

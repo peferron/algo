@@ -12,6 +12,7 @@ var tests = []struct {
 	{
 		Graph{
 			7,
+			true,
 			[]Edge{
 				Edge{0, 1},
 				Edge{1, 3},

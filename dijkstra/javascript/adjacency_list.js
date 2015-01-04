@@ -9,7 +9,7 @@ function AdjacencyList(graph) {
 function constructAdjacencyList(graph) {
     var a = initAdjacencyList(graph.vertexCount);
     graph.edges.forEach(function(edge) {
-        insertEdge(a, edge.x, edge.y, edge.distance, false);
+        insertEdge(a, edge.x, edge.y, edge.distance, graph.directed);
     });
     return a;
 }
@@ -22,9 +22,9 @@ function initAdjacencyList(vertexCount) {
     return a;
 }
 
-function insertEdge(edges, x, y, distance, directed) {
-    edges[x].push({y: y, distance: distance});
+function insertEdge(a, x, y, distance, directed) {
+    a[x].push({y: y, distance: distance});
     if (!directed) {
-        insertEdge(edges, y, x, distance, true);
+        insertEdge(a, y, x, distance, true);
     }
 }

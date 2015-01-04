@@ -2,6 +2,7 @@ package topological_sorting
 
 type Graph struct {
 	VertexCount int
+	Directed    bool
 	Edges       []Edge
 }
 
@@ -17,9 +18,16 @@ type VertexCallback func(x int)
 func NewAdjacencyList(g Graph) AdjacencyList {
 	a := make(AdjacencyList, g.VertexCount)
 	for _, edge := range g.Edges {
-		a[edge.X] = append(a[edge.X], edge.Y)
+		insertEdge(a, edge.X, edge.Y, g.Directed)
 	}
 	return a
+}
+
+func insertEdge(a AdjacencyList, x, y int, directed bool) {
+	a[x] = append(a[x], y)
+	if !directed {
+		insertEdge(a, y, x, true)
+	}
 }
 
 func (a AdjacencyList) DepthFirstSearch(x int, lateCallback VertexCallback) {

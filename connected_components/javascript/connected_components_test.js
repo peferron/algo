@@ -6,6 +6,7 @@ var tests = [
     {
         graph: {
             vertexCount: 0,
+            directed: false,
             edges: []
         },
         components: []
@@ -13,6 +14,7 @@ var tests = [
     {
         graph: {
             vertexCount: 1,
+            directed: false,
             edges: []
         },
         components: [0]
@@ -20,6 +22,7 @@ var tests = [
     {
         graph: {
             vertexCount: 2,
+            directed: false,
             edges: []
         },
         components: [0, 1]
@@ -27,6 +30,7 @@ var tests = [
     {
         graph: {
             vertexCount: 2,
+            directed: false,
             edges: [
                 [0, 1]
             ]
@@ -36,6 +40,7 @@ var tests = [
     {
         graph: {
             vertexCount: 7,
+            directed: false,
             edges: [
                 [0, 2],
                 [2, 3],

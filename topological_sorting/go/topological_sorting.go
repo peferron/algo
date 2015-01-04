@@ -3,6 +3,10 @@ package topological_sorting
 type vertexCallback func(x int)
 
 func Sort(g Graph) []int {
+	if !g.Directed {
+		panic("Topological sorting only supports directed graphs")
+	}
+
 	a := NewAdjacencyList(g)
 
 	sorted := []int{}

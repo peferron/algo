@@ -2,6 +2,7 @@ package adjacency_matrix
 
 type Graph struct {
 	VertexCount int
+	Directed    bool
 	Edges       []Edge
 }
 
@@ -17,7 +18,7 @@ type VertexCallback func(x int)
 func NewAdjacencyMatrix(graph Graph) *AdjacencyMatrix {
 	m := initAdjacencyMatrix(graph.VertexCount)
 	for _, edge := range graph.Edges {
-		m.insertEdge(edge.X, edge.Y, false)
+		m.insertEdge(edge.X, edge.Y, graph.Directed)
 	}
 	return m
 }

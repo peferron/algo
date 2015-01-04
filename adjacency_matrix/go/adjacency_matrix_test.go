@@ -7,6 +7,7 @@ import (
 
 var graph = Graph{
 	6,
+	false,
 	[]Edge{
 		Edge{0, 1},
 		Edge{0, 4},

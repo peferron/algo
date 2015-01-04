@@ -1,6 +1,10 @@
 import {AdjacencyList} from './adjacency_list';
 
 export function connectedComponents(graph) {
+    if (graph.directed) {
+        throw new Error('This algorithm only supports undirected graphs');
+    }
+
     let list = new AdjacencyList(graph);
 
     let currentComponent = 0;

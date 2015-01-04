@@ -8,6 +8,7 @@ var tests = [
     {
         graph: {
             vertexCount: 1,
+            directed: false,
             edges: [],
         },
         problems: [
@@ -17,6 +18,7 @@ var tests = [
     {
         graph: {
             vertexCount: 2,
+            directed: false,
             edges: [
                 {x: 0, y: 1, distance: 7},
             ]
@@ -28,6 +30,7 @@ var tests = [
     {
         graph: {
             vertexCount: 2,
+            directed: false,
             edges: []
         },
         problems: [
@@ -37,6 +40,7 @@ var tests = [
     {
         graph: {
             vertexCount: 6,
+            directed: false,
             edges: [
                 {x: 0, y: 1, distance: 7},
                 {x: 0, y: 2, distance: 9},

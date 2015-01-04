@@ -6,6 +6,7 @@ var AdjacencyList = require('./adjacency_list.js');
 
 var graph = {
     vertexCount: 6,
+    directed: false,
     edges: [
         [0, 1],
         [0, 4],
