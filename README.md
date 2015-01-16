@@ -35,3 +35,9 @@ $ go test ./mergesort/go
 ```shell
 $ ./test
 ```
+
+### Retesting a module automatically after a relevant file changes
+
+```shell
+$ ./watch mergesort
+```

@@ -1,0 +1,13 @@
+#!/bin/bash
+
+command -v rerun >/dev/null 2>&1 || {
+    echo "The program 'rerun' is required. To install rerun, type:"
+    echo "    gem install rerun"
+    echo "or visit https://github.com/alexch/rerun"
+    exit 1
+}
+
+[ -d $1/go ] && rerun -bx --name "Tests for $1/go" --pattern "**/*.go" -- go test ./$1/go &
+[ -d $1/javascript ] && rerun -bx --name "Tests for $1/javascript" --pattern "**/*.js" -- traceur --require true ./$1/javascript/*_test.js &
+
+wait
