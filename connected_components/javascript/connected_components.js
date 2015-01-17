@@ -17,7 +17,6 @@ export function connectedComponents(graph) {
         }
 
         // Mark this vertex and all connected vertices with the current component number.
-        components[x] = currentComponent;
         list.depthFirstSearch(x, y => {
             components[y] = currentComponent;
         });
