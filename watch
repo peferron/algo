@@ -7,7 +7,7 @@ command -v rerun >/dev/null 2>&1 || {
     exit 1
 }
 
-[ -d $1/go ] && rerun -bx --name "Tests for $1/go" --dir "$1/go" --pattern "**/*.go" -- go test ./$1/go &
-[ -d $1/javascript ] && rerun -bx --name "Tests for $1/javascript" --dir "$1/javascript" --pattern "**/*.js" -- traceur --require true ./$1/javascript/*_test.js &
+[ -d $1/go ] && rerun -bcx --name "Tests for $1/go" --dir "$1/go" --pattern "**/*.go" -- go test ./$1/go &
+[ -d $1/javascript ] && rerun -bcx --name "Tests for $1/javascript" --dir "$1/javascript" --pattern "**/*.js" -- traceur --require true ./$1/javascript/*_test.js &
 
 wait
