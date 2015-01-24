@@ -1,14 +1,16 @@
-module adjacency_list {
+/// <reference path="graph.d.ts"/>
+
+module biconnected_components {
     export class AdjacencyList {
-        a = null;
-        constructor(graph) {
+        a: number[][];
+        constructor(graph: Graph) {
             this.a = constructAdjacencyList(graph);
         }
     }
 
-    function constructAdjacencyList(graph) {
-        // new Array(vertexCount).fill([]) does not work because it reuses the same array instance for
-        // every element.
+    function constructAdjacencyList(graph: Graph): number[][] {
+        // new Array(vertexCount).fill([]) does not work because it reuses the same array instance
+        // for every element.
         let a = Array.from(new Array(graph.vertexCount), () => []);
 
         graph.edges.forEach(edge => {
@@ -18,7 +20,7 @@ module adjacency_list {
         return a;
     }
 
-    function insertEdge(a, x, y, directed) {
+    function insertEdge(a: number[][], x: number, y: number, directed: boolean): void {
         a[x].push(y);
         if (!directed) {
             insertEdge(a, y, x, true);

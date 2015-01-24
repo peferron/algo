@@ -1,7 +1,8 @@
+/// <reference path="graph.d.ts"/>
 /// <reference path="adjacency_list.ts"/>
 
 module biconnected_components {
-    export function articulations(graph) {
+    export function articulations(graph: Graph): number[] {
         if (graph.directed) {
             throw new Error('This algorithm only supports undirected graphs');
         }
@@ -9,25 +10,25 @@ module biconnected_components {
             return [];
         }
 
-        let articuls = [];
+        let articuls: number[] = [];
 
-        let list = new adjacency_list.AdjacencyList(graph);
+        let list = new AdjacencyList(graph);
 
-        let visited = new Array(list.a.length);
-        let depth = new Array(list.a.length);
-        let lowpoint = new Array(list.a.length);
-        let parent = new Array(list.a.length);
+        let visited: boolean[] = new Array(list.a.length);
+        let depth: number[] = new Array(list.a.length);
+        let lowpoint: number[] = new Array(list.a.length);
+        let parent: number[] = new Array(list.a.length);
 
         let currentDepth = 0;
 
-        function processVertexEarly(x) {
+        function processVertexEarly(x: number): void {
             visited[x] = true;
             depth[x] = currentDepth;
             lowpoint[x] = currentDepth;
             currentDepth++;
         }
 
-        function processEdge(x, y) {
+        function processEdge(x: number, y: number): void {
             if (!visited[y]) {
                 parent[y] = x;
                 dfs(y);
@@ -40,13 +41,13 @@ module biconnected_components {
             }
         }
 
-        function processVertexLate(x, children) {
+        function processVertexLate(x: number, children: number): void {
             if (isNaN(parent[x]) && children > 1) {
                 articuls.push(x);
             }
         }
 
-        function dfs(x) {
+        function dfs(x: number): void {
             processVertexEarly(x);
             let children = 0;
             list.a[x].forEach(y => {
