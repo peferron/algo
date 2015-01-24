@@ -16,8 +16,8 @@ if [ -d "$dir" ]; then
 
     tsc -t ES6 --out "$tmpfile" "$dir"/*_test.ts && traceur --require true "$tmpfile"
 
-    rm -f "$tmpfile"
-    rm -df "$tmpdir"
+    rm "$tmpfile"
+    rmdir "$tmpdir"
 fi
 
 exit $s
