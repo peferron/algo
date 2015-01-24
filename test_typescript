@@ -8,7 +8,10 @@ trap "s=1" ERR
 if [ -d "$dir" ]; then
     printf "$dir: "
 
-    tmpdir=`mktemp -d "com.github.peferron.algo.$1.typescript.XXXXXXXXXX"` || exit 1
+    # See http://unix.stackexchange.com/a/84980
+    template="com.github.peferron.algo.$1.typescript"
+    tmpdir=`mktemp -d 2>/dev/null || mktemp -d -t $template` || exit 1
+
     tmpfile="$tmpdir"/out.js
 
     tsc -t ES6 --out "$tmpfile" "$dir"/*_test.ts && traceur --require true "$tmpfile"
