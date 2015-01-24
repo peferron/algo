@@ -38,7 +38,7 @@ $ ./test_typescript biconnected_components
 
 ### Testing all modules and languages
 
-Install all of the per-language requirements above, then run:
+Install all the language-specific requirements above, then run:
 
 ```shell
 $ ./test
@@ -46,7 +46,7 @@ $ ./test
 
 ### Retesting a module automatically after a source file changes
 
-Install [rerun](https://github.com/alexch/rerun) and all of the per-language requirements above, then run:
+Install [rerun](https://github.com/alexch/rerun) and all the language-specific requirements above, then run:
 
 ```shell
 $ ./watch mergesort
