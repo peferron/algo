@@ -1,0 +1,8 @@
+#!/bin/bash
+
+dir="$1/go"
+
+if [ -d "$dir" ]; then
+    printf "$dir: "
+    go test "./$dir"
+fi

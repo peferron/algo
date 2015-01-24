@@ -1,0 +1,20 @@
+#!/bin/bash
+
+dir="$1/typescript"
+
+s=0
+trap "s=1" ERR
+
+if [ -d "$dir" ]; then
+    printf "$dir: "
+
+    tmpdir=`mktemp -d -t "com.github.peferron.algo.$1.typescript"` || exit 1
+    tmpfile="$tmpdir"/out.js
+
+    tsc -t ES6 --out "$tmpfile" "$dir"/*_test.ts && traceur --require true "$tmpfile"
+
+    rm -f "$tmpfile"
+    rm -df "$tmpdir"
+fi
+
+exit $s
