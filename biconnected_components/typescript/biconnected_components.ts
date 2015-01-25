@@ -1,4 +1,3 @@
-/// <reference path="graph.d.ts"/>
 /// <reference path="adjacency_list.ts"/>
 
 module biconnected_components {

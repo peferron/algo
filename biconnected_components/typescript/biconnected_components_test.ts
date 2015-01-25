@@ -1,11 +1,10 @@
-/// <reference path="graph.d.ts"/>
 /// <reference path="biconnected_components.ts"/>
 
 declare function require(name: string);
 let assert = require('assert');
 
 interface Test {
-    graph: Graph;
+    graph: biconnected_components.Graph;
     articulations: number[];
 }
 

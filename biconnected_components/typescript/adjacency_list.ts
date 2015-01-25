@@ -1,6 +1,10 @@
-/// <reference path="graph.d.ts"/>
-
 module biconnected_components {
+    export interface Graph {
+        vertexCount: number;
+        directed: boolean;
+        edges: number[][];
+    }
+
     export class AdjacencyList {
         a: number[][];
         constructor(graph: Graph) {
