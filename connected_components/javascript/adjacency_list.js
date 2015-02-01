@@ -29,14 +29,14 @@ function insertEdge(a, x, y, directed) {
 function depthFirstSearch(a, start, earlyCallback) {
     let processed = new Array(a.length);
 
-    let dfs = x => {
+    function dfs(x) {
         if (processed[x]) {
             return;
         }
         processed[x] = true;
         earlyCallback(x);
         a[x].forEach(dfs);
-    };
+    }
 
     dfs(start);
 }
