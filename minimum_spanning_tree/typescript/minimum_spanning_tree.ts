@@ -34,7 +34,9 @@ module minimum_spanning_tree {
             }
         }
 
-        list.a.forEach(edges => edges.forEach(processEdge));
+        list.a.forEach(edges => {
+            edges.forEach(processEdge)
+        });
 
         return best;
     }
