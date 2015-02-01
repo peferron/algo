@@ -14,7 +14,7 @@ if [ -d "$dir" ]; then
 
     tmpfile="$tmpdir"/out.js
 
-    tsc -t ES6 --out "$tmpfile" "$dir"/*_test.ts && traceur --require true "$tmpfile"
+    tsc --target ES6 --noImplicitAny --out "$tmpfile" "$dir"/*_test.ts && traceur --require true "$tmpfile"
 
     rm "$tmpfile"
     rmdir "$tmpdir"

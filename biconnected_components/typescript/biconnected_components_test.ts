@@ -1,6 +1,6 @@
 /// <reference path="biconnected_components.ts"/>
 
-declare function require(name: string);
+declare function require(name: string): any;
 let assert = require('assert');
 
 interface Test {
