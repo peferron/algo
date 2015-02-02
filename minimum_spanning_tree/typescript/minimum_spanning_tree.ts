@@ -2,16 +2,16 @@
 
 module minimum_spanning_tree {
     export function edges(graph: Graph): Edge[] {
-        let list = new AdjacencyList(graph);
+        const list = new AdjacencyList(graph);
 
-        let mstEdges: Edge[] = [];
-        let mstVertices = new Array(graph.vertexCount).fill(false);
+        const mstEdges: Edge[] = [];
+        const mstVertices = new Array(graph.vertexCount).fill(false);
 
         // Start with vertex #0 in the MST.
         mstVertices[0] = true;
 
         while (true) {
-            let edge = lightestCrossEdge(list, mstVertices);
+            const edge = lightestCrossEdge(list, mstVertices);
             if (!edge) {
                 break;
             }
@@ -25,7 +25,7 @@ module minimum_spanning_tree {
 
     // lightestCrossEdge returns the minimum weight edge with exactly one vertex in the MST.
     function lightestCrossEdge(list: AdjacencyList, mstVertices: boolean[]): Edge {
-        var best: Edge = null;
+        let best: Edge = null;
 
         function processEdge(edge: Edge) {
             if (mstVertices[edge.x] !== mstVertices[edge.y] &&

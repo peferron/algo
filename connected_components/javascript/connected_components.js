@@ -5,10 +5,10 @@ export function connectedComponents(graph) {
         throw new Error('This algorithm only supports undirected graphs');
     }
 
-    let list = new AdjacencyList(graph);
+    const list = new AdjacencyList(graph);
 
     let currentComponent = 0;
-    let components = new Array(list.a.length);
+    const components = new Array(list.a.length);
 
     for (let x = 0; x < list.a.length; x++) {
         if (!isNaN(components[x])) {

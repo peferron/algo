@@ -10,7 +10,7 @@ export class AdjacencyList {
 function constructAdjacencyList(graph) {
     // new Array(vertexCount).fill([]) does not work because it reuses the same array instance for
     // every element.
-    let a = Array.from(new Array(graph.vertexCount), () => []);
+    const a = Array.from(new Array(graph.vertexCount), () => []);
 
     for (let [x, y] of graph.edges) {
         insertEdge(a, x, y, graph.directed);
@@ -27,7 +27,7 @@ function insertEdge(a, x, y, directed) {
 }
 
 function depthFirstSearch(a, start, earlyCallback) {
-    let processed = new Array(a.length);
+    const processed = new Array(a.length);
 
     function dfs(x) {
         if (processed[x]) {

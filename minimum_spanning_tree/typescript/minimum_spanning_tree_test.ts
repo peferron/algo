@@ -1,7 +1,7 @@
 /// <reference path="minimum_spanning_tree.ts"/>
 
 declare function require(name: string): any;
-let assert = require('assert');
+const assert = require('assert');
 
 import Graph = minimum_spanning_tree.Graph;
 import Edge = minimum_spanning_tree.Edge
@@ -11,7 +11,7 @@ interface Test {
     mstEdges: Edge[];
 }
 
-let tests: Test[] = [
+const tests: Test[] = [
     {
         graph: {
             vertexCount: 0,
@@ -67,7 +67,7 @@ let tests: Test[] = [
 ];
 
 function runTest(test: Test): void {
-    let mstEdges = minimum_spanning_tree.edges(test.graph).sort(compareEdges);
+    const mstEdges = minimum_spanning_tree.edges(test.graph).sort(compareEdges);
     assert.deepEqual(mstEdges, test.mstEdges);
 }
 

@@ -1,8 +1,8 @@
-var assert = require('assert');
+const assert = require('assert');
 
 import {articulations} from './biconnected_components';
 
-var tests = [
+const tests = [
     {
         graph: {
             vertexCount: 0,
@@ -119,7 +119,7 @@ function compareNumbers(a, b) {
 }
 
 function runTest(test) {
-    let sorted = articulations(test.graph).sort(compareNumbers);
+    const sorted = articulations(test.graph).sort(compareNumbers);
     assert.deepEqual(sorted, test.articulations);
 }
 

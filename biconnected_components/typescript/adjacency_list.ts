@@ -15,7 +15,7 @@ module biconnected_components {
     function constructAdjacencyList(graph: Graph): number[][] {
         // new Array(vertexCount).fill([]) does not work because it reuses the same array instance
         // for every element.
-        let a = Array.from(new Array(graph.vertexCount), () => []);
+        const a = Array.from(new Array(graph.vertexCount), () => []);
 
         graph.edges.forEach(edge => {
             insertEdge(a, edge[0], edge[1], graph.directed);

@@ -8,14 +8,14 @@ export function articulations(graph) {
         return [];
     }
 
-    let articuls = [];
+    const articuls = [];
 
-    let list = new AdjacencyList(graph);
+    const list = new AdjacencyList(graph);
 
-    let visited = new Array(list.a.length);
-    let depth = new Array(list.a.length);
-    let lowpoint = new Array(list.a.length);
-    let parent = new Array(list.a.length);
+    const visited = new Array(list.a.length);
+    const depth = new Array(list.a.length);
+    const lowpoint = new Array(list.a.length);
+    const parent = new Array(list.a.length);
 
     let currentDepth = 0;
 

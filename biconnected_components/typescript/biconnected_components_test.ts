@@ -1,14 +1,14 @@
 /// <reference path="biconnected_components.ts"/>
 
 declare function require(name: string): any;
-let assert = require('assert');
+const assert = require('assert');
 
 interface Test {
     graph: biconnected_components.Graph;
     articulations: number[];
 }
 
-let tests: Test[] = [
+const tests: Test[] = [
     {
         graph: {
             vertexCount: 0,
@@ -125,7 +125,7 @@ function compareNumbers(a: number, b: number): number {
 }
 
 function runTest(test: Test): void {
-    let sorted = biconnected_components.articulations(test.graph).sort(compareNumbers);
+    const sorted = biconnected_components.articulations(test.graph).sort(compareNumbers);
     assert.deepEqual(sorted, test.articulations);
 }
 

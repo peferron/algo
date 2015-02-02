@@ -1,8 +1,8 @@
-let assert = require('assert');
+const assert = require('assert');
 
 import {connectedComponents} from './connected_components';
 
-let tests = [
+const tests = [
     {
         graph: {
             vertexCount: 0,

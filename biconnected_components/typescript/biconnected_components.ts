@@ -9,14 +9,14 @@ module biconnected_components {
             return [];
         }
 
-        let articuls: number[] = [];
+        const articuls: number[] = [];
 
-        let list = new AdjacencyList(graph);
+        const list = new AdjacencyList(graph);
 
-        let visited: boolean[] = new Array(list.a.length);
-        let depth: number[] = new Array(list.a.length);
-        let lowpoint: number[] = new Array(list.a.length);
-        let parent: number[] = new Array(list.a.length);
+        const visited: boolean[] = new Array(list.a.length);
+        const depth: number[] = new Array(list.a.length);
+        const lowpoint: number[] = new Array(list.a.length);
+        const parent: number[] = new Array(list.a.length);
 
         let currentDepth = 0;
 

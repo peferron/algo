@@ -21,7 +21,7 @@ module minimum_spanning_tree {
     function constructAdjacencyList(graph: Graph): Edge[][] {
         // new Array(vertexCount).fill([]) does not work because it reuses the same array instance
         // for every element.
-        let a = Array.from(new Array(graph.vertexCount), () => []);
+        const a = Array.from(new Array(graph.vertexCount), () => []);
 
         graph.edges.forEach(edge => {
             insertEdge(a, edge, graph.directed);
@@ -33,7 +33,7 @@ module minimum_spanning_tree {
     function insertEdge(a: Edge[][], edge: Edge, directed: boolean): void {
         a[edge.x].push(edge);
         if (!directed) {
-            let reversed = {x: edge.y, y: edge.x, weight: edge.weight};
+            const reversed = {x: edge.y, y: edge.x, weight: edge.weight};
             insertEdge(a, reversed, true);
         }
     }
