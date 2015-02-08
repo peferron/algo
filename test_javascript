@@ -4,5 +4,5 @@ dir="$1/javascript"
 
 if [ -d "$dir" ]; then
     printf "$dir: "
-    6to5-node --blacklist es6.tailCall ./"$dir"/*_test.js
+    traceur --require true ./"$dir"/*_test.js
 fi
