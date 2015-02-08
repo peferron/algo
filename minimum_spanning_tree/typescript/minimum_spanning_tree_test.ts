@@ -36,8 +36,8 @@ const tests: Test[] = [
         ]
     },
     {
-        // See http://en.wikipedia.org/wiki/Bor%C5%AFvka%27s_algorithm#Example for an illustation of
-        // this example.
+        // See an illustration of this example at:
+        // http://en.wikipedia.org/wiki/Bor%C5%AFvka%27s_algorithm#Example
         graph: {
             vertexCount: 7,
             directed: true,

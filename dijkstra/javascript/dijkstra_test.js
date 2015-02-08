@@ -67,8 +67,8 @@ var tests = [
             ]
         },
         problems: [
-            // Refer to http://en.wikipedia.org/wiki/Dijkstra%27s_algorithm for an animated
-            // illustration of Dijkstra's algorithm solving this example.
+            // See an animated illustration of this example at:
+            // http://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
             {start: 0, end: 4, solution: [0, 2, 5, 4]}
         ]
     }
