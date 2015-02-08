@@ -20,13 +20,11 @@ $ ./test_go mergesort
 
 ### Testing a JavaScript module
 
-Install [Node.js](http://nodejs.org) and [Traceur](https://github.com/google/traceur-compiler), then run:
+Install [Node.js](http://nodejs.org) and [6to5](http://6to5.org), then run:
 
 ```shell
 $ ./test_javascript mergesort
 ```
-
-The requirement for Traceur might be lifted if Node.js or [io.js](https://iojs.org) get enough support for ECMAScript 6+.
 
 ### Testing a TypeScript module
 
