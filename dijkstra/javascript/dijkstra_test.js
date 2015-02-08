@@ -19,6 +19,16 @@ var tests = [
         graph: {
             vertexCount: 2,
             directed: false,
+            edges: []
+        },
+        problems: [
+            {start: 0, end: 1, solution: null}
+        ]
+    },
+    {
+        graph: {
+            vertexCount: 2,
+            directed: false,
             edges: [
                 {x: 0, y: 1, distance: 7},
             ]
@@ -30,11 +40,14 @@ var tests = [
     {
         graph: {
             vertexCount: 2,
-            directed: false,
-            edges: []
+            directed: true,
+            edges: [
+                {x: 0, y: 1, distance: 7},
+            ]
         },
         problems: [
-            {start: 0, end: 1, solution: null}
+            {start: 0, end: 1, solution: [0, 1]},
+            {start: 1, end: 0, solution: null}
         ]
     },
     {
