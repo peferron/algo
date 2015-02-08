@@ -5,8 +5,8 @@ module.exports = Trie;
 // alphabetSize, charToIndex and indexToChar are hardcoded here to keep the code short, however they
 // could easily be be passed as arguments to the Trie constructor.
 var alphabetSize = 36; // 0-9 and a-z
-var charToIndex = function(char) { return parseInt(char, 36); };
-var indexToChar = function(index) { return index.toString(36); };
+function charToIndex(char) { return parseInt(char, alphabetSize); }
+function indexToChar(index) { return index.toString(alphabetSize); }
 
 function Trie() {
     this.root = new Node();
