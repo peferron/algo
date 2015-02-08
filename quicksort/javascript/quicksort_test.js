@@ -74,13 +74,6 @@ function clone(a) {
     return a.slice(0);
 }
 
-function clone(a) {
-    if (!a) {
-        return a;
-    }
-    return a.slice(0);
-}
-
 testBasicInputs();
 testRandomInputs();
 
