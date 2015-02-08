@@ -1,4 +1,4 @@
-import {AdjacencyList} from './adjacency_list';
+import {AdjacencyList} from './adjacency_list.js';
 
 export function articulations(graph) {
     if (graph.directed) {

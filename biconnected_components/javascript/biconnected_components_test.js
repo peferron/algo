@@ -1,6 +1,6 @@
 const assert = require('assert');
 
-import {articulations} from './biconnected_components';
+import {articulations} from './biconnected_components.js';
 
 const tests = [
     {

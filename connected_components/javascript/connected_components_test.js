@@ -1,6 +1,6 @@
 const assert = require('assert');
 
-import {connectedComponents} from './connected_components';
+import {connectedComponents} from './connected_components.js';
 
 const tests = [
     {
