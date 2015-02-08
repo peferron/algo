@@ -14,7 +14,7 @@ if [ -d "$dir" ]; then
 
     tmpfile="$tmpdir"/out.js
 
-    tsc --target ES6 --noImplicitAny --out "$tmpfile" "$dir"/*_test.ts && traceur --require true "$tmpfile"
+    tsc --target ES6 --noImplicitAny --out "$tmpfile" "$dir"/*_test.ts && 6to5-node "$tmpfile"
 
     rm "$tmpfile"
     rmdir "$tmpdir"
