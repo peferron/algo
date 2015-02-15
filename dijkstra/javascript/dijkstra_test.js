@@ -30,7 +30,7 @@ var tests = [
             vertexCount: 2,
             directed: false,
             edges: [
-                {x: 0, y: 1, distance: 7},
+                {x: 0, y: 1, weight: 7},
             ]
         },
         problems: [
@@ -42,7 +42,7 @@ var tests = [
             vertexCount: 2,
             directed: true,
             edges: [
-                {x: 0, y: 1, distance: 7},
+                {x: 0, y: 1, weight: 7},
             ]
         },
         problems: [
@@ -55,15 +55,15 @@ var tests = [
             vertexCount: 6,
             directed: false,
             edges: [
-                {x: 0, y: 1, distance: 7},
-                {x: 0, y: 2, distance: 9},
-                {x: 0, y: 5, distance: 14},
-                {x: 1, y: 2, distance: 10},
-                {x: 1, y: 3, distance: 15},
-                {x: 2, y: 3, distance: 11},
-                {x: 2, y: 5, distance: 2},
-                {x: 3, y: 4, distance: 6},
-                {x: 4, y: 5, distance: 9}
+                {x: 0, y: 1, weight: 7},
+                {x: 0, y: 2, weight: 9},
+                {x: 0, y: 5, weight: 14},
+                {x: 1, y: 2, weight: 10},
+                {x: 1, y: 3, weight: 15},
+                {x: 2, y: 3, weight: 11},
+                {x: 2, y: 5, weight: 2},
+                {x: 3, y: 4, weight: 6},
+                {x: 4, y: 5, weight: 9}
             ]
         },
         problems: [

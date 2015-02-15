@@ -30,7 +30,7 @@ function dijkstra(list, start, end) {
 
         var dx = distances[x];
         list.a[x].forEach(function(edge) {
-            var dy = dx + edge.distance;
+            var dy = dx + edge.weight;
             if (dy < distances[edge.y]) {
                 distances[edge.y] = dy;
                 parents[edge.y] = x;
