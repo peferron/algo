@@ -1,6 +1,8 @@
 #!/bin/bash
 
-lightblue='\033[1;34m'
+red='\033[1;31m'
+green='\033[1;32m'
+blue='\033[1;34m'
 nocolor='\033[0m'
 
 s=0
@@ -10,10 +12,16 @@ cd $(dirname "${0}")
 
 for i in $(ls -d */); do
     module=${i%%/}
-    printf "\n${lightblue}$module${nocolor}\n"
+    printf "\n${blue}$module${nocolor}\n"
     ./test_go "$module"
     ./test_javascript "$module"
     ./test_typescript "$module"
 done
+
+if [ $s -eq 0 ]; then
+    printf "\n${green}All tests OK.${nocolor}\n"
+else
+    printf "\n${red}Some tests failed.${nocolor}\n"
+fi
 
 exit $s
