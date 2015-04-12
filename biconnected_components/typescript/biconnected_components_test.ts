@@ -1,10 +1,11 @@
-/// <reference path="biconnected_components.ts"/>
+import {Graph} from './adjacency_list';
+import {articulations} from './biconnected_components';
 
 declare function require(name: string): any;
 const assert = require('assert');
 
 interface Test {
-    graph: biconnected_components.Graph;
+    graph: Graph;
     articulations: number[];
 }
 
@@ -125,7 +126,7 @@ function compareNumbers(a: number, b: number): number {
 }
 
 function runTest(test: Test): void {
-    const sorted = biconnected_components.articulations(test.graph).sort(compareNumbers);
+    const sorted = articulations(test.graph).sort(compareNumbers);
     assert.deepEqual(sorted, test.articulations);
 }
 

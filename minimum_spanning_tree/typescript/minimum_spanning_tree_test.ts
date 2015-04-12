@@ -1,10 +1,8 @@
-/// <reference path="minimum_spanning_tree.ts"/>
+import {Graph, Edge} from './adjacency_list';
+import minimumSpanningTreeEdges from './minimum_spanning_tree';
 
 declare function require(name: string): any;
 const assert = require('assert');
-
-import Graph = minimum_spanning_tree.Graph;
-import Edge = minimum_spanning_tree.Edge
 
 interface Test {
     graph: Graph;
@@ -67,7 +65,7 @@ const tests: Test[] = [
 ];
 
 function runTest(test: Test): void {
-    const mstEdges = minimum_spanning_tree.edges(test.graph).sort(compareEdges);
+    const mstEdges = minimumSpanningTreeEdges(test.graph).sort(compareEdges);
     assert.deepEqual(mstEdges, test.mstEdges);
 }
 

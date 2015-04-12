@@ -12,11 +12,11 @@ if [ -d "$dir" ]; then
     template="com.github.peferron.algo.$1.typescript"
     tmpdir=`mktemp -d 2>/dev/null || mktemp -d -t $template` || exit 1
 
-    tmpfile="$tmpdir"/out.js
+    if tsc --target ES6 --noImplicitAny --noEmitOnError --outDir "$tmpdir" "$dir"/*_test.ts; then
+        babel-node "$tmpdir"/*_test.js
+        rm "$tmpdir"/*.js
+    fi
 
-    tsc --target ES6 --noImplicitAny --out "$tmpfile" "$dir"/*_test.ts && traceur --require true "$tmpfile"
-
-    rm "$tmpfile"
     rmdir "$tmpdir"
 fi
 

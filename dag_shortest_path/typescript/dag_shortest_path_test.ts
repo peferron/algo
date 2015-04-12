@@ -1,10 +1,11 @@
-/// <reference path="dag_shortest_path.ts"/>
+import {Graph} from './adjacency_list';
+import shortestPath from './dag_shortest_path';
 
 declare function require(name: string): any;
 const assert = require('assert');
 
 interface Test {
-    graph: dag_shortest_path.Graph;
+    graph: Graph;
     problems: Problem[];
 }
 
@@ -71,7 +72,7 @@ const tests: Test[] = [
 
 function runTest(test: Test): void {
     test.problems.forEach(problem => {
-        const solution = dag_shortest_path.solve(test.graph, problem.start, problem.end);
+        const solution = shortestPath(test.graph, problem.start, problem.end);
         if (solution) {
             assert(contains(problem.solutions, solution));
         } else {

@@ -4,5 +4,5 @@ dir="$1/javascript"
 
 if [ -d "$dir" ]; then
     printf "$dir: "
-    traceur --require true ./"$dir"/*_test.js
+    babel-node ./"$dir"/*_test.js
 fi

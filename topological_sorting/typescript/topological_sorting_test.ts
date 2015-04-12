@@ -1,10 +1,11 @@
-/// <reference path="topological_sorting.ts"/>
+import {Graph} from './adjacency_list';
+import sort from './topological_sorting';
 
 declare function require(name: string): any;
 const assert = require('assert');
 
 interface Test {
-    graph: topological_sorting.Graph;
+    graph: Graph;
     sorts: number[][];
 }
 
@@ -33,8 +34,7 @@ const tests: Test[] = [
 ];
 
 function runTest(test: Test): void {
-    const sort = topological_sorting.sort(test.graph);
-    assert(contains(test.sorts, sort));
+    assert(contains(test.sorts, sort(test.graph)));
 }
 
 function contains(list: number[][], item: number[]): boolean {

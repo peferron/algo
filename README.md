@@ -20,17 +20,17 @@ $ ./test_go mergesort
 
 ### Testing a JavaScript module
 
-Install [Node.js](http://nodejs.org) and [Traceur](https://github.com/google/traceur-compiler), then run:
+Install [Node.js](http://nodejs.org) and [Babel](https://github.com/babel/babel), then run:
 
 ```shell
 $ ./test_javascript mergesort
 ```
 
-The requirement for Traceur might be lifted if Node.js or [io.js](https://iojs.org) get enough support for ECMAScript 6+.
+The requirement for Babel might be lifted if Node.js or [io.js](https://iojs.org) get enough support for ECMAScript 6+.
 
 ### Testing a TypeScript module
 
-Install [Node.js](http://nodejs.org/) and the [TypeScript compiler](http://www.typescriptlang.org), then run:
+Install [Node.js](http://nodejs.org/), [TypeScript compiler](http://www.typescriptlang.org) version `1.5.0-alpha` or higher, and [Babel](https://github.com/babel/babel), then run:
 
 ```shell
 $ ./test_typescript biconnected_components
