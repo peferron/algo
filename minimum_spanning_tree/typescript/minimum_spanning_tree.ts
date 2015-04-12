@@ -33,7 +33,9 @@ function lightestCrossEdge(list: AdjacencyList, mstVertices: boolean[]): Edge {
         }
     }
 
-    list.a.forEach(edges => edges.forEach(processEdge));
+    for (let edges of list.a) {
+        edges.forEach(processEdge);
+    }
 
     return best;
 }

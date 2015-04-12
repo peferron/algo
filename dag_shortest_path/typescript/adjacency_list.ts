@@ -27,9 +27,9 @@ function constructAdjacencyList(graph: Graph): Edge[][] {
     // for every element.
     const a = Array.from(new Array(graph.vertexCount), () => []);
 
-    graph.edges.forEach(edge => {
+    for (let edge of graph.edges) {
         insertEdge(a, edge, graph.directed);
-    });
+    }
 
     return a;
 }

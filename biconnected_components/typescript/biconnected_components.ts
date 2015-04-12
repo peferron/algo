@@ -48,12 +48,12 @@ export function articulations(graph: Graph): number[] {
     function dfs(x: number): void {
         processVertexEarly(x);
         let children = 0;
-        list.a[x].forEach(y => {
+        for (let y of list.a[x]) {
             if (!visited[y]) {
                 children++;
             }
             processEdge(x, y);
-        });
+        }
         processVertexLate(x, children);
     }
 
