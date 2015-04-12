@@ -15,6 +15,9 @@ if [ -d "$dir" ]; then
     if tsc --target ES6 --noImplicitAny --noEmitOnError --outDir "$tmpdir" "$dir"/*_test.ts; then
         babel-node "$tmpdir"/*_test.js
         rm "$tmpdir"/*.js
+    else
+        # For some reason, when tsc fails the ERR trap is not triggered.
+        s=1
     fi
 
     rmdir "$tmpdir"
