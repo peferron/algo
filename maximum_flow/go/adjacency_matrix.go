@@ -17,7 +17,7 @@ type AdjacencyMatrix [][]int
 func NewAdjacencyMatrix(g Graph) AdjacencyMatrix {
 	a := newEmptyAdjacencyMatrix(g.VertexCount)
 	for _, edge := range g.Edges {
-		a[edge.X][edge.Y] = edge.Capacity
+		a.insertEdge(edge, g.Directed)
 	}
 	return a
 }
@@ -30,6 +30,14 @@ func newEmptyAdjacencyMatrix(n int) AdjacencyMatrix {
 		// might as well not exist at all.
 	}
 	return a
+}
+
+func (a AdjacencyMatrix) insertEdge(edge Edge, directed bool) {
+	a[edge.X][edge.Y] = edge.Capacity
+	if !directed {
+		reversed := Edge{edge.Y, edge.X, edge.Capacity}
+		a.insertEdge(reversed, directed)
+	}
 }
 
 func (a AdjacencyMatrix) BreadthFirstSearch(start int, callback func(Edge) bool) {
