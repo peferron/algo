@@ -18,6 +18,8 @@ Install [Go](http://golang.org), then run:
 $ ./test_go mergesort
 ```
 
+(Replace `mergesort` by the module of your choice.)
+
 ### Testing a JavaScript module
 
 Install [Node.js](http://nodejs.org) and [Babel](https://github.com/babel/babel), then run:
