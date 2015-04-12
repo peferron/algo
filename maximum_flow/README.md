@@ -1,3 +1,3 @@
 # Maximum flow
 
-[http://community.topcoder.com/tc?module=Static&d1=tutorials&d2=maxFlow](http://community.topcoder.com/tc?module=Static&d1=tutorials&d2=maxFlow)
+[https://www.topcoder.com/community/data-science/data-science-tutorials/maximum-flow-section-1/](https://www.topcoder.com/community/data-science/data-science-tutorials/maximum-flow-section-1/)
