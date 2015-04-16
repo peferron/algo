@@ -12,8 +12,8 @@ if [ -d "$dir" ]; then
     template="com.github.peferron.algo.$1.typescript"
     tmpdir=`mktemp -d 2>/dev/null || mktemp -d -t $template` || exit 1
 
-    if tsc --target ES6 --noImplicitAny --noEmitOnError --outDir "$tmpdir" "$dir"/*_test.ts; then
-        babel-node "$tmpdir"/*_test.js
+    if node_modules/typescript/bin/tsc --target ES6 --noImplicitAny --noEmitOnError --outDir "$tmpdir" "$dir"/*_test.ts; then
+        node_modules/babel/bin/babel-node "$tmpdir"/*_test.js
         rm "$tmpdir"/*.js
     else
         # For some reason, when tsc fails the ERR trap is not triggered.

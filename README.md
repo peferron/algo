@@ -12,7 +12,7 @@ Modules do not share code and use built-in language features only. This makes ea
 
 ### Testing a Go module
 
-Install [Go](http://golang.org), then run:
+[Install Go](http://golang.org/doc/install), then run:
 
 ```shell
 $ ./test_go mergesort
@@ -22,17 +22,15 @@ $ ./test_go mergesort
 
 ### Testing a JavaScript module
 
-Install [Node.js](http://nodejs.org) and [Babel](https://github.com/babel/babel), then run:
+[Install Node.js](http://nodejs.org) and run `npm install`. Then run:
 
 ```shell
 $ ./test_javascript mergesort
 ```
 
-The requirement for Babel might be lifted if Node.js or [io.js](https://iojs.org) get enough support for ECMAScript 6+.
-
 ### Testing a TypeScript module
 
-Install [Node.js](http://nodejs.org/), [TypeScript compiler](http://www.typescriptlang.org) version `1.5.0-alpha` or higher, and [Babel](https://github.com/babel/babel), then run:
+[Install Node.js](http://nodejs.org) and run `npm install`. Then run:
 
 ```shell
 $ ./test_typescript biconnected_components
@@ -40,7 +38,7 @@ $ ./test_typescript biconnected_components
 
 ### Testing all modules and languages
 
-Install all the language-specific requirements above, then run:
+Install all the language-specific requirements above. Then run:
 
 ```shell
 $ ./test
@@ -48,7 +46,7 @@ $ ./test
 
 ### Retesting a module automatically after a source file changes
 
-Install [rerun](https://github.com/alexch/rerun) and all the language-specific requirements above, then run:
+Install all the language-specific requirements above and [install rerun](https://github.com/alexch/rerun). Then run:
 
 ```shell
 $ ./watch mergesort

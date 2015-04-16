@@ -12,10 +12,12 @@ cd $(dirname "${0}")
 
 for i in $(ls -d */); do
     module=${i%%/}
-    printf "\n${blue}$module${nocolor}\n"
-    ./test_go "$module"
-    ./test_javascript "$module"
-    ./test_typescript "$module"
+    if [ $module != "node_modules" ]; then
+        printf "\n${blue}$module${nocolor}\n"
+        ./test_go "$module"
+        ./test_javascript "$module"
+        ./test_typescript "$module"
+    fi
 done
 
 if [ $s -eq 0 ]; then

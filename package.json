@@ -1,0 +1,22 @@
+{
+  "name": "algo",
+  "version": "1.0.0",
+  "description": "Algorithms and data structures implemented in Go, JS, and TypeScript.",
+  "scripts": {
+    "test": "./test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/peferron/algo"
+  },
+  "author": "pe.ferron@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/peferron/algo/issues"
+  },
+  "homepage": "https://github.com/peferron/algo",
+  "dependencies": {
+    "babel": "^5.1.10",
+    "typescript": "^1.5.0-alpha"
+  }
+}
