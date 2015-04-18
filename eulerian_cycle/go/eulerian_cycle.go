@@ -50,9 +50,9 @@ func findEulerianCycle(edges []Edge) []int {
 	path := visitEdges(edges, visited, 0)
 
 	for len(path) > 0 {
-		// Move the last edge of the path into the eulerian cycle. This builds the eulerian cycle in
-		// reverse order, so to get the correct final order we prepend the edge instead of appending
-		// it.
+		// Move the last edge of path into the eulerian cycle. This builds the eulerian cycle in
+		// reverse order, so to get the correct final order we need to prepend the edge instead of
+		// appending it.
 		popped := path[len(path)-1]
 		path = path[:len(path)-1]
 		eulerianCycle = prepend(eulerianCycle, popped.X)
@@ -61,8 +61,8 @@ func findEulerianCycle(edges []Edge) []int {
 		// That's because each vertex in the graph of unvisited edges still maintains the Eulerian
 		// property of in-degree == out-degree, so the same reasoning as above still applies.
 		//
-		// Note that if path is not empty, popped.X is equal to path[len(path)-1].Y, so the path
-		// will still be a valid continuous path even after being extended by the new cycle.
+		// Note that if path is not empty, popped.X is equal to path[len(path)-1].Y, so path will
+		// still be a valid continuous path even after being extended by the new cycle.
 		path = append(path, visitEdges(edges, visited, popped.X)...)
 	}
 
