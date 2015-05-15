@@ -16,11 +16,26 @@ func EulerianCycle(g Graph) []int {
 }
 
 func stronglyConnected(g Graph) bool {
+	// A directed graph is strongly connected if and only if all vertices can reach, and are
+	// reachable, from a given vertex.
+	x := 0
+	return canReachEntireGraph(g, x) && canReachEntireGraph(reverse(g), x)
+}
+
+func canReachEntireGraph(g Graph, from int) bool {
 	n := 0
-	NewAdjacencyList(g).DepthFirstSearch(0, func(x int) {
+	NewAdjacencyList(g).DepthFirstSearch(from, func(x int) {
 		n++
 	})
 	return n == g.VertexCount
+}
+
+func reverse(g Graph) Graph {
+	reversedEdges := make([]Edge, len(g.Edges))
+	for i, edge := range g.Edges {
+		reversedEdges[i] = Edge{edge.Y, edge.X}
+	}
+	return Graph{g.VertexCount, g.Directed, reversedEdges}
 }
 
 func sameInDegreesAsOutDegrees(g Graph) bool {
