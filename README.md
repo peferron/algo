@@ -12,7 +12,7 @@ Modules do not share code and use built-in language features only. This makes ea
 
 ### Testing a Go module
 
-[Install Go](http://golang.org/doc/install), then run:
+[Install Go](http://golang.org/doc/install). Then run:
 
 ```shell
 $ ./test_go mergesort
