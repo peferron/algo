@@ -16,7 +16,6 @@ if [ -d "$dir" ]; then
         node_modules/babel/bin/babel-node "$tmpdir"/*_test.js
         rm "$tmpdir"/*.js
     else
-        # For some reason, when tsc fails the ERR trap is not triggered.
         s=1
     fi
 

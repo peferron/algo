@@ -4,5 +4,5 @@ dir="$1/javascript"
 
 if [ -d "$dir" ]; then
     printf "$dir: "
-    node_modules/babel/bin/babel-node ./"$dir"/*_test.js
+    node_modules/babel/bin/babel-node "$dir"/*_test.js
 fi
