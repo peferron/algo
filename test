@@ -17,6 +17,7 @@ for i in $(ls -d */); do
         ./test_go "$module"
         ./test_javascript "$module"
         ./test_typescript "$module"
+        ./test_rust "$module"
     fi
 done
 

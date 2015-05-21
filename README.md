@@ -1,6 +1,6 @@
 # algo [![Build Status](https://drone.io/github.com/peferron/algo/status.png)](https://drone.io/github.com/peferron/algo/latest)
 
-This is just me fooling around and implementing various algorithms and data structures in [Go](http://golang.org), JavaScript, and [TypeScript](http://www.typescriptlang.org). [Swift](https://developer.apple.com/swift) might join the list if it becomes cross-platform enough.
+This is just me fooling around and implementing various algorithms and data structures in [Go](http://golang.org), JavaScript, [TypeScript](http://www.typescriptlang.org), and [Rust](http://www.rust-lang.org).
 
 Modules do not share code and use built-in language features only. This makes each module easiest to reason about individually.
 
@@ -34,6 +34,14 @@ $ ./test_javascript mergesort
 
 ```shell
 $ ./test_typescript biconnected_components
+```
+
+### Testing a Rust module
+
+[Install Rust](http://www.rust-lang.org). Then run:
+
+```shell
+$ ./test_rust edge_connectivity
 ```
 
 ### Testing all modules and languages

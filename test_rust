@@ -1,0 +1,25 @@
+#!/bin/bash
+
+dir="$1/rust"
+
+s=0
+trap "s=1" ERR
+
+if [ -d "$dir" ]; then
+    printf "$dir: "
+
+    # See http://unix.stackexchange.com/a/84980
+    template="com.github.peferron.algo.$1.rust"
+    tmpdir=`mktemp -d 2>/dev/null || mktemp -d -t $template` || exit 1
+
+    if rustc --test --out-dir "$tmpdir" "$dir"/*_test.rs; then
+        "$tmpdir"/*_test
+        rm "$tmpdir"/*_test
+    else
+        s=1
+    fi
+
+    rmdir "$tmpdir"
+fi
+
+exit $s
