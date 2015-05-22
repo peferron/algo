@@ -5,12 +5,12 @@ use std::usize;
 
 // maximum_flow returns the maximum flow from source to sink in g.
 pub fn maximum_flow(g: &Graph, source: usize, sink: usize) -> u32 {
-    // r is the residual flow graph of g. Initially, that's just the same as g.
-    let mut r = AdjacencyMatrix::from_graph(g);
+    // Initially, the residual flow graph of g is just the same as g.
+    let mut residual_flow_graph = AdjacencyMatrix::from_graph(g);
 
     let mut flow = 0;
     loop {
-        let path_capacity = r.add_augmenting_path(source, sink);
+        let path_capacity = residual_flow_graph.add_augmenting_path(source, sink);
         if path_capacity > 0 {
             flow += path_capacity;
         } else {

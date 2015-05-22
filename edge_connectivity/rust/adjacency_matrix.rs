@@ -3,7 +3,6 @@ use std::iter::{Iterator, repeat};
 
 use graph::{Edge, Graph};
 
-#[derive(Debug)]
 pub struct AdjacencyMatrix {
     rows: Vec<Vec<u32>>,
 }
@@ -12,17 +11,20 @@ impl AdjacencyMatrix {
     fn new(size: usize) -> AdjacencyMatrix {
         let row = vec![0; size];
         let rows = repeat(row).take(size).collect();
+
         AdjacencyMatrix { rows: rows }
     }
 
     pub fn from_graph(g: &Graph) -> AdjacencyMatrix {
         let mut m = AdjacencyMatrix::new(g.vertex_count);
+
         for edge in &g.edges {
             m[edge.x][edge.y] = 1;
             if !g.directed {
                 m[edge.y][edge.x] = 1;
             }
         }
+
         m
     }
 
@@ -34,6 +36,8 @@ impl AdjacencyMatrix {
         BreadthFirstSearch::with_adjacency_matrix(self, start)
     }
 }
+
+// For convenience, enable writing matrix[x] instead of matrix.rows[x]).
 
 impl Index<usize> for AdjacencyMatrix {
     type Output = Vec<u32>;
