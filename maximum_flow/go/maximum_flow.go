@@ -42,10 +42,12 @@ func (r AdjacencyMatrix) addAugmentingPath(source, sink int) int {
 // and returns the capacity of the path.
 func (r AdjacencyMatrix) substractPath(parents []int, end int) int {
 	capacity := r.pathCapacity(parents, end)
-	path(parents, end, func(x, y int) {
-		r[x][y] -= capacity
-		r[y][x] += capacity
-	})
+
+	for _, edge := range edges(parents, end) {
+		r[edge.X][edge.Y] -= capacity
+		r[edge.Y][edge.X] += capacity
+	}
+
 	return capacity
 }
 
@@ -53,18 +55,21 @@ func (r AdjacencyMatrix) substractPath(parents []int, end int) int {
 // graph r.
 func (r AdjacencyMatrix) pathCapacity(parents []int, end int) int {
 	capacity := 0
-	path(parents, end, func(x, y int) {
-		if c := r[x][y]; capacity == 0 || capacity > c {
+
+	for _, edge := range edges(parents, end) {
+		if c := r[edge.X][edge.Y]; capacity == 0 || capacity > c {
 			capacity = c
 		}
-	})
+	}
+
 	return capacity
 }
 
-// path calls callback with each segment of the path described by parents and end.
-func path(parents []int, end int, callback func(x, y int)) {
+// edges returns the edges of the path described by parents and end.
+func edges(parents []int, end int) []Edge {
 	if p := parents[end]; p >= 0 {
-		path(parents, p, callback)
-		callback(p, end)
+		edge := Edge{X: p, Y: end}
+		return append(edges(parents, p), edge)
 	}
+	return nil
 }
