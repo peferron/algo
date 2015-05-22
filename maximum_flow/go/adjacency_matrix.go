@@ -36,7 +36,7 @@ func (a AdjacencyMatrix) insertEdge(edge Edge, directed bool) {
 	a[edge.X][edge.Y] = edge.Capacity
 	if !directed {
 		reversed := Edge{edge.Y, edge.X, edge.Capacity}
-		a.insertEdge(reversed, directed)
+		a.insertEdge(reversed, true)
 	}
 }
 

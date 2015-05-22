@@ -2,10 +2,6 @@ package maximum_flow
 
 // MaximumFlow returns the maximum flow from source to sink in g.
 func MaximumFlow(g Graph, source, sink int) int {
-	if !g.Directed {
-		panic("This maximum flow algorithm only supports directed graphs")
-	}
-
 	// r is the residual flow graph of g. Initially, that's just the same as g.
 	r := NewAdjacencyMatrix(g)
 
