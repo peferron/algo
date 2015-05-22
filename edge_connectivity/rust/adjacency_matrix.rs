@@ -18,10 +18,10 @@ impl AdjacencyMatrix {
     pub fn from_graph(g: &Graph) -> AdjacencyMatrix {
         let mut m = AdjacencyMatrix::new(g.vertex_count);
 
-        for edge in &g.edges {
-            m[edge.x][edge.y] = 1;
+        for &Edge { x, y } in &g.edges {
+            m[x][y] = 1;
             if !g.directed {
-                m[edge.y][edge.x] = 1;
+                m[y][x] = 1;
             }
         }
 

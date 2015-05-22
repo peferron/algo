@@ -60,16 +60,13 @@ impl AdjacencyMatrix {
     // pathCapacity returns the capacity of the path described by parents and end in the residual
     // flow graph.
     fn path_capacity(&self, parents: &Vec<usize>, end: usize) -> u32 {
-        let mut capacity = 0;
+        let edges = edges(parents, end);
+        let capacities = edges.iter().map(|edge| self[edge.x][edge.y]);
 
-        for Edge {x, y} in edges(parents, end) {
-            let edge_capacity = self[x][y];
-            if capacity == 0 || capacity > edge_capacity {
-                capacity = edge_capacity
-            }
+        match capacities.min() {
+            Some(capacity) => capacity,
+            None => 0,
         }
-
-        capacity
     }
 }
 
