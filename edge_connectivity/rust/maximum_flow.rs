@@ -44,7 +44,7 @@ impl AdjacencyMatrix {
     fn substract_path(&mut self, parents: &Vec<usize>, end: usize) -> u32 {
         let capacity = self.path_capacity(parents, end);
 
-        for (x, y) in edges(parents, end) {
+        for Edge {x, y} in edges(parents, end) {
             self[x][y] -= capacity;
             self[y][x] += capacity;
         }
@@ -57,10 +57,10 @@ impl AdjacencyMatrix {
     fn path_capacity(&self, parents: &Vec<usize>, end: usize) -> u32 {
         let mut capacity = 0;
 
-        for (x, y) in edges(parents, end) {
-            let c = self[x][y];
-            if capacity == 0 || capacity > c {
-                capacity = c
+        for Edge {x, y} in edges(parents, end) {
+            let edge_capacity = self[x][y];
+            if capacity == 0 || capacity > edge_capacity {
+                capacity = edge_capacity
             }
         }
 
@@ -69,16 +69,15 @@ impl AdjacencyMatrix {
 }
 
 // edges returns the edges of the path described by parents and end.
-fn edges(parents: &Vec<usize>, mut end: usize) -> Vec<(usize, usize)> {
+fn edges(parents: &Vec<usize>, mut end: usize) -> Vec<Edge> {
     let mut edges = vec![];
 
-    loop {
-        let p = parents[end];
-        if p == usize::MAX {
-            edges.reverse();
-            return edges
-        }
-        edges.push((p, end));
-        end = p
+    while parents[end] < usize::MAX {
+        let edge = Edge { x: parents[end], y: end };
+        edges.push(edge);
+        end = parents[end];
     }
+
+    edges.reverse();
+    edges
 }
