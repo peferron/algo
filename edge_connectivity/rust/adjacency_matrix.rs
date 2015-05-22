@@ -109,7 +109,8 @@ impl<'a> Iterator for BreadthFirstSearch<'a> {
 // }
 
 // struct BreadthFirstSearch<'a> {
-//     unfold: Unfold<BreadthFirstSearchState<'a>, fn(&mut BreadthFirstSearchState) -> Option<Edge>>,
+//     unfold: Unfold<BreadthFirstSearchState<'a>,
+//         fn(&mut BreadthFirstSearchState) -> Option<Edge>>,
 // }
 
 // impl<'a> Iterator for BreadthFirstSearch<'a> {
@@ -165,7 +166,9 @@ impl<'a> Iterator for BreadthFirstSearch<'a> {
 // instead of a classic for loop).
 
 // impl AdjacencyMatrix {
-//     pub fn breadth_first_search<C>(&self, start: usize, mut callback: C) where C: FnMut(Edge) -> bool {
+//     pub fn breadth_first_search<C>(&self, start: usize, mut callback: C)
+//        where C: FnMut(Edge) -> bool {
+
 //         let mut visited = vec!(false; self.size());
 //         visited[start] = true;
 
