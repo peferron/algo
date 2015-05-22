@@ -33,7 +33,7 @@ impl AdjacencyMatrix {
     }
 }
 
-// For convenience, enable writing matrix[x] instead of matrix.rows[x]).
+// For convenience, enable writing matrix[x] instead of matrix.rows[x].
 
 impl Index<usize> for AdjacencyMatrix {
     type Output = Vec<u32>;
