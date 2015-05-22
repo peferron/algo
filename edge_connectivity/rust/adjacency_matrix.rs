@@ -35,6 +35,34 @@ impl AdjacencyMatrix {
     pub fn breadth_first_search(&self, start: usize) -> BreadthFirstSearch {
         BreadthFirstSearch::with_adjacency_matrix(self, start)
     }
+
+    // Breadth-first search using a callback closure. The implementation is much simpler than the
+    // iterator-based BFS, however the external API is not as nice (forced to use a callback closure
+    // instead of a classic for loop).
+
+    // pub fn breadth_first_search<C>(&self, start: usize, mut callback: C) where C: FnMut(Edge) -> bool {
+    //     let mut visited = vec!(false; self.size());
+    //     visited[start] = true;
+
+    //     let mut queue = vec![start];
+
+    //     while queue.len() > 0 {
+    //         // Dequeue first element.
+    //         let x = queue.remove(0);
+
+    //         for y in 0..self.size() {
+    //             if visited[y] || self[x][y] == 0 {
+    //                 continue;
+    //             }
+    //             visited[y] = true;
+    //             queue.push(y);
+    //             // The edge callback can return true to abort the current graph traversal.
+    //             if callback(Edge { x: x, y: y }) {
+    //                 return;
+    //             }
+    //         }
+    //     }
+    // }
 }
 
 // For convenience, enable writing matrix[x] instead of matrix.rows[x]).

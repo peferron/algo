@@ -36,6 +36,12 @@ impl AdjacencyMatrix {
             }
         }
 
+        // self.breadth_first_search(source, |Edge { x, y }| {
+        //     parents[y] = x;
+        //     // Return true to abort the BFS.
+        //     y == sink
+        // });
+
         self.substract_path(&parents, sink)
     }
 
