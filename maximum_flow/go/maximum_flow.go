@@ -7,11 +7,11 @@ func MaximumFlow(g Graph, source, sink int) int {
 
 	flow := 0
 	for {
-		if pathCapacity := r.addAugmentingPath(source, sink); pathCapacity > 0 {
-			flow += pathCapacity
-		} else {
+		pathCapacity := r.addAugmentingPath(source, sink)
+		if pathCapacity <= 0 {
 			return flow
 		}
+		flow += pathCapacity
 	}
 }
 

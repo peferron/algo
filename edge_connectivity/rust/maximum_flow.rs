@@ -11,11 +11,10 @@ pub fn maximum_flow(g: &Graph, source: usize, sink: usize) -> u32 {
     let mut flow = 0;
     loop {
         let path_capacity = residual_flow_graph.add_augmenting_path(source, sink);
-        if path_capacity > 0 {
-            flow += path_capacity;
-        } else {
+        if path_capacity <= 0 {
             return flow;
         }
+        flow += path_capacity;
     }
 }
 
