@@ -1,5 +1,3 @@
-#![feature(core)]
-
 mod graph;
 mod adjacency_matrix;
 mod edge_connectivity;
