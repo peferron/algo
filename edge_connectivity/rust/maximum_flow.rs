@@ -1,4 +1,4 @@
-use graph::Graph;
+use graph::{Edge, Graph};
 use adjacency_matrix::AdjacencyMatrix;
 
 use std::usize;
@@ -28,11 +28,13 @@ impl AdjacencyMatrix {
     fn add_augmenting_path(&mut self, source: usize, sink: usize) -> u32 {
         let mut parents = vec![usize::MAX; self.size()];
 
-        self.breadth_first_search(source, |edge| {
-            parents[edge.y] = edge.x;
-            // Return true to abort the BFS.
-            edge.y == sink
-        });
+        for Edge { x, y } in self.breadth_first_search(source) {
+            parents[y] = x;
+            if y == sink {
+                // Abort the BFS.
+                break;
+            }
+        }
 
         self.substract_path(&parents, sink)
     }
