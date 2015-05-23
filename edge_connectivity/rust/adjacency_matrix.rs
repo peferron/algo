@@ -51,6 +51,13 @@ impl IndexMut<usize> for AdjacencyMatrix {
 
 // Breadth-first search.
 
+struct BreadthFirstSearch<'a> {
+    matrix: &'a AdjacencyMatrix,
+    visited: Vec<bool>,
+    queue: Vec<usize>,
+    y: usize,
+}
+
 impl AdjacencyMatrix {
     pub fn breadth_first_search(&self, start: usize) -> BreadthFirstSearch {
         let mut visited = vec!(false; self.size());
@@ -63,13 +70,6 @@ impl AdjacencyMatrix {
             y: 0
         }
     }
-}
-
-struct BreadthFirstSearch<'a> {
-    matrix: &'a AdjacencyMatrix,
-    visited: Vec<bool>,
-    queue: Vec<usize>,
-    y: usize,
 }
 
 impl<'a> Iterator for BreadthFirstSearch<'a> {
@@ -98,46 +98,37 @@ impl<'a> Iterator for BreadthFirstSearch<'a> {
     }
 }
 
-// Breadth-first search using std::iter::Unfold. Unless I missed something, it's much more
-// complicated than not using Unfold.
+// Breadth-first search using std::iter::Unfold. In this situation there's no reason to use it over
+// implementing Iterator directly. Unfold seems to shine in situations where we can just pass it a
+// closure, but here we cannot use a closure because we need to return an iterator (see
+// http://is.gd/2MDM1r).
 
-// struct BreadthFirstSearchState<'a> {
+// struct BFS<'a> {
 //     matrix: &'a AdjacencyMatrix,
 //     visited: Vec<bool>,
 //     queue: Vec<usize>,
 //     y: usize,
 // }
 
-// struct BreadthFirstSearch<'a> {
-//     unfold: Unfold<BreadthFirstSearchState<'a>,
-//         fn(&mut BreadthFirstSearchState) -> Option<Edge>>,
-// }
-
-// impl<'a> Iterator for BreadthFirstSearch<'a> {
-//     type Item = Edge;
-
-//     fn next(&mut self) -> Option<Edge> {
-//         self.unfold.next()
-//     }
-// }
-
 // impl AdjacencyMatrix {
-//     pub fn breadth_first_search(&self, start: usize) -> BreadthFirstSearch {
+//     pub fn breadth_first_search(&self, start: usize) ->
+//         Unfold<BFS, fn(&mut BFS) -> Option<Edge>> {
+
 //         let mut visited = vec!(false; self.size());
 //         visited[start] = true;
 
-//         let state = BreadthFirstSearchState {
+//         let state = BFS {
 //             matrix: self,
 //             visited: visited,
 //             queue: vec![start],
 //             y: 0
 //         };
 
-//         BreadthFirstSearch { unfold: Unfold::new(state, unfold_breadth_first_search) }
+//         Unfold::new(state, unfold_breadth_first_search)
 //     }
 // }
 
-// fn unfold_breadth_first_search(state: &mut BreadthFirstSearchState) -> Option<Edge> {
+// fn unfold_breadth_first_search(state: &mut BFS) -> Option<Edge> {
 //     while !state.queue.is_empty() {
 //         let x = state.queue[0];
 
