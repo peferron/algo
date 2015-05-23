@@ -1,4 +1,4 @@
-# algo [![Build Status](https://drone.io/github.com/peferron/algo/status.png)](https://drone.io/github.com/peferron/algo/latest)
+# algo [![Build Status](https://travis-ci.org/peferron/algo.svg?branch=master)](https://travis-ci.org/peferron/algo)
 
 This is just me fooling around and implementing various algorithms and data structures in [Go](http://golang.org), JavaScript, [TypeScript](http://www.typescriptlang.org), and [Rust](http://www.rust-lang.org).
 
