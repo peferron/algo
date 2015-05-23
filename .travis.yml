@@ -2,9 +2,9 @@ language: node_js
 
 before_install:
   # Install Go
-  - sudo apt-get install golang
+  - sudo apt-get install -y golang
 
   # Install Rust
-  - sudo add-apt-repository ppa:hansjorg/rust
+  - sudo add-apt-repository -y ppa:hansjorg/rust
   - sudo apt-get update
-  - sudo apt-get install rust-stable
+  - sudo apt-get install -y rust-stable
