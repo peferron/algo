@@ -9,13 +9,10 @@ pub fn maximum_flow(g: &Graph, source: usize, sink: usize) -> u32 {
     let mut residual_flow_graph = AdjacencyMatrix::from_graph(g);
 
     let mut flow = 0;
-    loop {
-        let path_capacity = residual_flow_graph.add_augmenting_path(source, sink);
-        if path_capacity <= 0 {
-            return flow;
-        }
+    while let Some(path_capacity) = residual_flow_graph.add_augmenting_path(source, sink) {
         flow += path_capacity;
     }
+    flow
 }
 
 impl AdjacencyMatrix {
@@ -23,8 +20,8 @@ impl AdjacencyMatrix {
     // graph.
     // If an augmenting path is found, addAugmentingPath updates the residual flow graph to reflect
     // the addition of the augmenting path, and returns the capacity of the augmenting path.
-    // If no augmenting path is found, addAugmentingPath returns 0.
-    fn add_augmenting_path(&mut self, source: usize, sink: usize) -> u32 {
+    // If no augmenting path is found, addAugmentingPath returns None.
+    fn add_augmenting_path(&mut self, source: usize, sink: usize) -> Option<u32> {
         let mut parents = vec![usize::MAX; self.size()];
 
         for Edge { x, y } in self.breadth_first_search(source) {
@@ -46,12 +43,14 @@ impl AdjacencyMatrix {
 
     // substractPath substracts the path described by parents and end from the residual flow graph,
     // and returns the capacity of the path.
-    fn substract_path(&mut self, parents: &Vec<usize>, end: usize) -> u32 {
+    fn substract_path(&mut self, parents: &Vec<usize>, end: usize) -> Option<u32> {
         let capacity = self.path_capacity(parents, end);
 
-        for Edge {x, y} in edges(parents, end) {
-            self[x][y] -= capacity;
-            self[y][x] += capacity;
+        if let Some(c) = capacity {
+            for Edge {x, y} in edges(parents, end) {
+                self[x][y] -= c;
+                self[y][x] += c;
+            }
         }
 
         capacity
@@ -59,14 +58,10 @@ impl AdjacencyMatrix {
 
     // pathCapacity returns the capacity of the path described by parents and end in the residual
     // flow graph.
-    fn path_capacity(&self, parents: &Vec<usize>, end: usize) -> u32 {
+    fn path_capacity(&self, parents: &Vec<usize>, end: usize) -> Option<u32> {
         let edges = edges(parents, end);
         let capacities = edges.iter().map(|edge| self[edge.x][edge.y]);
-
-        match capacities.min() {
-            Some(capacity) => capacity,
-            None => 0,
-        }
+        capacities.min()
     }
 }
 
