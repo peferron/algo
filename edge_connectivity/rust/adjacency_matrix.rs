@@ -16,16 +16,16 @@ impl AdjacencyMatrix {
     }
 
     pub fn from_graph(g: &Graph) -> AdjacencyMatrix {
-        let mut m = AdjacencyMatrix::new(g.vertex_count);
+        let mut matrix = AdjacencyMatrix::new(g.vertex_count);
 
         for &Edge { x, y } in &g.edges {
-            m[x][y] = 1;
+            matrix[x][y] = 1;
             if !g.directed {
-                m[y][x] = 1;
+                matrix[y][x] = 1;
             }
         }
 
-        m
+        matrix
     }
 
     pub fn size(&self) -> usize {
