@@ -15,7 +15,7 @@ func (n *node) String() string {
 	if n == nil {
 		return "[nil]"
 	}
-	return fmt.Sprintf("{%s: %d}", n.data.Key, n.data.Value)
+	return fmt.Sprintf("{%d: %d}", n.data.Key, n.data.Value)
 }
 
 func (t *SplayTree) Log() {

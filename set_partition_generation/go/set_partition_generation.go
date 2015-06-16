@@ -2,13 +2,13 @@ package set_partition_generation
 
 type restrictedGrowthFunction []int
 
-type partition []block
-type block []int
+type Partition []Block
+type Block []int
 
 // Partitions returns the set partitions of the integers from 1 to n, sorted in lexicographically
 // increasing order.
-func Partitions(n int) []partition {
-	partitions := []partition{}
+func Partitions(n int) []Partition {
+	partitions := []Partition{}
 
 	// The first restricted growth function in lexicographically increasing order is the one filled
 	// with zeros: {0, 0, 0...} (n times).
@@ -21,15 +21,15 @@ func Partitions(n int) []partition {
 }
 
 // getPartition returns the partition corresponding to f.
-func getPartition(f restrictedGrowthFunction) partition {
+func getPartition(f restrictedGrowthFunction) Partition {
 	// Due to the definition of restricted growth functions, the block with index k is always
 	// encountered before the block with index k+1. Thanks to that, there's no need to pre-allocate
 	// the partition blocks; new blocks can simply be appended to the partition one at a time when
 	// encountered.
-	p := partition{}
+	p := Partition{}
 	for i, blockIndex := range f {
 		if blockIndex == len(p) {
-			p = append(p, block{})
+			p = append(p, Block{})
 		}
 		// Careful about off-by-one errors: i ranges from 0 to n-1, but the partition is done over
 		// integers from 1 to n.

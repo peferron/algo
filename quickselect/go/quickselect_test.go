@@ -51,7 +51,7 @@ func TestBasicInputs(t *testing.T) {
 
 		if v := Select(test.a, test.k); v != test.expected {
 			t.Errorf("In test #%d with a = %v and k = %d, expected result to be %d, was %d",
-				i, test.a, test.k, test.expected)
+				i, test.a, test.k, test.expected, v)
 		}
 	}
 }

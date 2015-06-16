@@ -7,122 +7,122 @@ import (
 
 var basicTests = []struct {
 	n        int
-	expected []partition
+	expected []Partition
 }{
 	{
 		1,
-		[]partition{
-			partition{
-				block{1},
+		[]Partition{
+			Partition{
+				Block{1},
 			},
 		},
 	},
 	{
 		2,
-		[]partition{
-			partition{
-				block{1, 2},
+		[]Partition{
+			Partition{
+				Block{1, 2},
 			},
-			partition{
-				block{1},
-				block{2},
+			Partition{
+				Block{1},
+				Block{2},
 			},
 		},
 	},
 	{
 		3,
-		[]partition{
-			partition{
-				block{1, 2, 3},
+		[]Partition{
+			Partition{
+				Block{1, 2, 3},
 			},
-			partition{
-				block{1, 2},
-				block{3},
+			Partition{
+				Block{1, 2},
+				Block{3},
 			},
-			partition{
-				block{1, 3},
-				block{2},
+			Partition{
+				Block{1, 3},
+				Block{2},
 			},
-			partition{
-				block{1},
-				block{2, 3},
+			Partition{
+				Block{1},
+				Block{2, 3},
 			},
-			partition{
-				block{1},
-				block{2},
-				block{3},
+			Partition{
+				Block{1},
+				Block{2},
+				Block{3},
 			},
 		},
 	},
 	{
 		4,
-		[]partition{
-			partition{
-				block{1, 2, 3, 4},
+		[]Partition{
+			Partition{
+				Block{1, 2, 3, 4},
 			},
-			partition{
-				block{1, 2, 3},
-				block{4},
+			Partition{
+				Block{1, 2, 3},
+				Block{4},
 			},
-			partition{
-				block{1, 2, 4},
-				block{3},
+			Partition{
+				Block{1, 2, 4},
+				Block{3},
 			},
-			partition{
-				block{1, 2},
-				block{3, 4},
+			Partition{
+				Block{1, 2},
+				Block{3, 4},
 			},
-			partition{
-				block{1, 2},
-				block{3},
-				block{4},
+			Partition{
+				Block{1, 2},
+				Block{3},
+				Block{4},
 			},
-			partition{
-				block{1, 3, 4},
-				block{2},
+			Partition{
+				Block{1, 3, 4},
+				Block{2},
 			},
-			partition{
-				block{1, 3},
-				block{2, 4},
+			Partition{
+				Block{1, 3},
+				Block{2, 4},
 			},
-			partition{
-				block{1, 3},
-				block{2},
-				block{4},
+			Partition{
+				Block{1, 3},
+				Block{2},
+				Block{4},
 			},
-			partition{
-				block{1, 4},
-				block{2, 3},
+			Partition{
+				Block{1, 4},
+				Block{2, 3},
 			},
-			partition{
-				block{1},
-				block{2, 3, 4},
+			Partition{
+				Block{1},
+				Block{2, 3, 4},
 			},
-			partition{
-				block{1},
-				block{2, 3},
-				block{4},
+			Partition{
+				Block{1},
+				Block{2, 3},
+				Block{4},
 			},
-			partition{
-				block{1, 4},
-				block{2},
-				block{3},
+			Partition{
+				Block{1, 4},
+				Block{2},
+				Block{3},
 			},
-			partition{
-				block{1},
-				block{2, 4},
-				block{3},
+			Partition{
+				Block{1},
+				Block{2, 4},
+				Block{3},
 			},
-			partition{
-				block{1},
-				block{2},
-				block{3, 4},
+			Partition{
+				Block{1},
+				Block{2},
+				Block{3, 4},
 			},
-			partition{
-				block{1},
-				block{2},
-				block{3},
-				block{4},
+			Partition{
+				Block{1},
+				Block{2},
+				Block{3},
+				Block{4},
 			},
 		},
 	},

@@ -1,13 +1,13 @@
 package integer_partition_generation
 
-type partition []int
+type Partition []int
 
 // Partitions returns the integer partitions of n, sorted in lexicographically decreasing order.
-func Partitions(n int) []partition {
-	partitions := []partition{}
+func Partitions(n int) []Partition {
+	partitions := []Partition{}
 
 	// The first partition of n in lexicographically decreasing order is {n} itself.
-	for p := (partition{n}); p != nil; p = next(p) {
+	for p := (Partition{n}); p != nil; p = next(p) {
 		partitions = append(partitions, p)
 	}
 
@@ -15,7 +15,7 @@ func Partitions(n int) []partition {
 }
 
 // next returns the partition immediately following a in lexicographically decreasing order.
-func next(p partition) partition {
+func next(p Partition) Partition {
 	g := indexLastGreaterThan1(p)
 	if g < 0 {
 		// Base case: p is made entirely of 1s. There is no next partition.
@@ -49,7 +49,7 @@ func next(p partition) partition {
 }
 
 // indexLastGreaterThan1 returns the index of the last element greater than 1 in p, or -1 if none.
-func indexLastGreaterThan1(p partition) int {
+func indexLastGreaterThan1(p Partition) int {
 	for i := len(p) - 1; i >= 0; i-- {
 		if v := p[i]; v > 1 {
 			return i
@@ -59,8 +59,8 @@ func indexLastGreaterThan1(p partition) int {
 }
 
 // clone returns a copy of a.
-func clone(p partition) partition {
-	q := make(partition, len(p))
+func clone(p Partition) Partition {
+	q := make(Partition, len(p))
 	copy(q, p)
 	return q
 }

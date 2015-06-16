@@ -1,0 +1,6 @@
+#!/bin/sh
+
+find . -type d -name "go" \
+| xargs -n 1 golint \
+| grep -v "should have comment or be unexported" \
+| grep -v "don't use an underscore in package name" \

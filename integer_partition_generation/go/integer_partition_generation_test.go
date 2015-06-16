@@ -7,49 +7,49 @@ import (
 
 var basicTests = []struct {
 	n        int
-	expected []partition
+	expected []Partition
 }{
 	{
 		1,
-		[]partition{
-			partition{1},
+		[]Partition{
+			Partition{1},
 		},
 	},
 	{
 		2,
-		[]partition{
-			partition{2},
-			partition{1, 1},
+		[]Partition{
+			Partition{2},
+			Partition{1, 1},
 		},
 	},
 	{
 		3,
-		[]partition{
-			partition{3},
-			partition{2, 1},
-			partition{1, 1, 1},
+		[]Partition{
+			Partition{3},
+			Partition{2, 1},
+			Partition{1, 1, 1},
 		},
 	},
 	{
 		4,
-		[]partition{
-			partition{4},
-			partition{3, 1},
-			partition{2, 2},
-			partition{2, 1, 1},
-			partition{1, 1, 1, 1},
+		[]Partition{
+			Partition{4},
+			Partition{3, 1},
+			Partition{2, 2},
+			Partition{2, 1, 1},
+			Partition{1, 1, 1, 1},
 		},
 	},
 	{
 		5,
-		[]partition{
-			partition{5},
-			partition{4, 1},
-			partition{3, 2},
-			partition{3, 1, 1},
-			partition{2, 2, 1},
-			partition{2, 1, 1, 1},
-			partition{1, 1, 1, 1, 1},
+		[]Partition{
+			Partition{5},
+			Partition{4, 1},
+			Partition{3, 2},
+			Partition{3, 1, 1},
+			Partition{2, 2, 1},
+			Partition{2, 1, 1, 1},
+			Partition{1, 1, 1, 1, 1},
 		},
 	},
 }

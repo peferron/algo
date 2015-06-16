@@ -20,7 +20,7 @@ func Distances(g Graph) [][]float64 {
 	return previous
 }
 
-// newFloat64Matrix returns a new matrix of float64, of size n*n.
+// NewFloat64Matrix returns a new matrix of float64, of size n*n.
 func NewFloat64Matrix(n int) [][]float64 {
 	m := make([][]float64, n)
 	for i := range m {
