@@ -7,8 +7,5 @@ pub fn edge_connectivity(g: &Graph) -> u32 {
     let maximum_flows = (1..g.vertex_count).map(|i| maximum_flow(g, 0, i));
     let connectivity = maximum_flows.min();
 
-    match connectivity {
-        Some(c) => c,
-        None => 0,
-    }
+    connectivity.unwrap_or(0)
 }
