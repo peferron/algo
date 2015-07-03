@@ -24,7 +24,7 @@ export class AdjacencyList {
 function constructAdjacencyList(graph: Graph): Edge[][] {
     // new Array(vertexCount).fill([]) does not work because it reuses the same array instance
     // for every element.
-    const a = Array.from(new Array(graph.vertexCount), () => []);
+    const a = Array.from({length: graph.vertexCount}, () => []);
 
     for (let edge of graph.edges) {
         insertEdge(a, edge, graph.directed);

@@ -45,7 +45,7 @@ export class AdjacencyMatrix {
 
 function constructAdjacencyMatrix(graph: Graph): boolean[][] {
     const a = Array.from(
-        new Array(graph.vertexCount),
+        {length: graph.vertexCount},
         () => new Array(graph.vertexCount).fill(false)
     );
 
