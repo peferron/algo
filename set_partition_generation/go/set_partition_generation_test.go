@@ -12,117 +12,117 @@ var basicTests = []struct {
 	{
 		1,
 		[]Partition{
-			Partition{
-				Block{1},
+			{
+				{1},
 			},
 		},
 	},
 	{
 		2,
 		[]Partition{
-			Partition{
-				Block{1, 2},
+			{
+				{1, 2},
 			},
-			Partition{
-				Block{1},
-				Block{2},
+			{
+				{1},
+				{2},
 			},
 		},
 	},
 	{
 		3,
 		[]Partition{
-			Partition{
-				Block{1, 2, 3},
+			{
+				{1, 2, 3},
 			},
-			Partition{
-				Block{1, 2},
-				Block{3},
+			{
+				{1, 2},
+				{3},
 			},
-			Partition{
-				Block{1, 3},
-				Block{2},
+			{
+				{1, 3},
+				{2},
 			},
-			Partition{
-				Block{1},
-				Block{2, 3},
+			{
+				{1},
+				{2, 3},
 			},
-			Partition{
-				Block{1},
-				Block{2},
-				Block{3},
+			{
+				{1},
+				{2},
+				{3},
 			},
 		},
 	},
 	{
 		4,
 		[]Partition{
-			Partition{
-				Block{1, 2, 3, 4},
+			{
+				{1, 2, 3, 4},
 			},
-			Partition{
-				Block{1, 2, 3},
-				Block{4},
+			{
+				{1, 2, 3},
+				{4},
 			},
-			Partition{
-				Block{1, 2, 4},
-				Block{3},
+			{
+				{1, 2, 4},
+				{3},
 			},
-			Partition{
-				Block{1, 2},
-				Block{3, 4},
+			{
+				{1, 2},
+				{3, 4},
 			},
-			Partition{
-				Block{1, 2},
-				Block{3},
-				Block{4},
+			{
+				{1, 2},
+				{3},
+				{4},
 			},
-			Partition{
-				Block{1, 3, 4},
-				Block{2},
+			{
+				{1, 3, 4},
+				{2},
 			},
-			Partition{
-				Block{1, 3},
-				Block{2, 4},
+			{
+				{1, 3},
+				{2, 4},
 			},
-			Partition{
-				Block{1, 3},
-				Block{2},
-				Block{4},
+			{
+				{1, 3},
+				{2},
+				{4},
 			},
-			Partition{
-				Block{1, 4},
-				Block{2, 3},
+			{
+				{1, 4},
+				{2, 3},
 			},
-			Partition{
-				Block{1},
-				Block{2, 3, 4},
+			{
+				{1},
+				{2, 3, 4},
 			},
-			Partition{
-				Block{1},
-				Block{2, 3},
-				Block{4},
+			{
+				{1},
+				{2, 3},
+				{4},
 			},
-			Partition{
-				Block{1, 4},
-				Block{2},
-				Block{3},
+			{
+				{1, 4},
+				{2},
+				{3},
 			},
-			Partition{
-				Block{1},
-				Block{2, 4},
-				Block{3},
+			{
+				{1},
+				{2, 4},
+				{3},
 			},
-			Partition{
-				Block{1},
-				Block{2},
-				Block{3, 4},
+			{
+				{1},
+				{2},
+				{3, 4},
 			},
-			Partition{
-				Block{1},
-				Block{2},
-				Block{3},
-				Block{4},
+			{
+				{1},
+				{2},
+				{3},
+				{4},
 			},
 		},
 	},

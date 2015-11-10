@@ -12,44 +12,44 @@ var basicTests = []struct {
 	{
 		1,
 		[]Partition{
-			Partition{1},
+			{1},
 		},
 	},
 	{
 		2,
 		[]Partition{
-			Partition{2},
-			Partition{1, 1},
+			{2},
+			{1, 1},
 		},
 	},
 	{
 		3,
 		[]Partition{
-			Partition{3},
-			Partition{2, 1},
-			Partition{1, 1, 1},
+			{3},
+			{2, 1},
+			{1, 1, 1},
 		},
 	},
 	{
 		4,
 		[]Partition{
-			Partition{4},
-			Partition{3, 1},
-			Partition{2, 2},
-			Partition{2, 1, 1},
-			Partition{1, 1, 1, 1},
+			{4},
+			{3, 1},
+			{2, 2},
+			{2, 1, 1},
+			{1, 1, 1, 1},
 		},
 	},
 	{
 		5,
 		[]Partition{
-			Partition{5},
-			Partition{4, 1},
-			Partition{3, 2},
-			Partition{3, 1, 1},
-			Partition{2, 2, 1},
-			Partition{2, 1, 1, 1},
-			Partition{1, 1, 1, 1, 1},
+			{5},
+			{4, 1},
+			{3, 2},
+			{3, 1, 1},
+			{2, 2, 1},
+			{2, 1, 1, 1},
+			{1, 1, 1, 1, 1},
 		},
 	},
 }

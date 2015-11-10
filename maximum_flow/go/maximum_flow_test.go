@@ -17,7 +17,7 @@ var tests = []struct {
 			2,
 			true,
 			[]Edge{
-				Edge{0, 1, 5},
+				{0, 1, 5},
 			},
 		},
 		[]problem{
@@ -30,7 +30,7 @@ var tests = []struct {
 			2,
 			false,
 			[]Edge{
-				Edge{0, 1, 5},
+				{0, 1, 5},
 			},
 		},
 		[]problem{
@@ -43,8 +43,8 @@ var tests = []struct {
 			3,
 			true,
 			[]Edge{
-				Edge{0, 1, 5},
-				Edge{1, 2, 3},
+				{0, 1, 5},
+				{1, 2, 3},
 			},
 		},
 		[]problem{
@@ -61,8 +61,8 @@ var tests = []struct {
 			3,
 			false,
 			[]Edge{
-				Edge{0, 1, 5},
-				Edge{1, 2, 3},
+				{0, 1, 5},
+				{1, 2, 3},
 			},
 		},
 		[]problem{
@@ -79,9 +79,9 @@ var tests = []struct {
 			3,
 			true,
 			[]Edge{
-				Edge{0, 1, 5},
-				Edge{0, 2, 4},
-				Edge{1, 2, 3},
+				{0, 1, 5},
+				{0, 2, 4},
+				{1, 2, 3},
 			},
 		},
 		[]problem{
@@ -98,9 +98,9 @@ var tests = []struct {
 			3,
 			false,
 			[]Edge{
-				Edge{0, 1, 5},
-				Edge{0, 2, 4},
-				Edge{1, 2, 3},
+				{0, 1, 5},
+				{0, 2, 4},
+				{1, 2, 3},
 			},
 		},
 		[]problem{
@@ -119,14 +119,14 @@ var tests = []struct {
 			7,
 			true,
 			[]Edge{
-				Edge{0, 1, 3},
-				Edge{0, 2, 1},
-				Edge{1, 3, 3},
-				Edge{2, 3, 5},
-				Edge{2, 4, 4},
-				Edge{3, 6, 2},
-				Edge{4, 5, 2},
-				Edge{5, 6, 3},
+				{0, 1, 3},
+				{0, 2, 1},
+				{1, 3, 3},
+				{2, 3, 5},
+				{2, 4, 4},
+				{3, 6, 2},
+				{4, 5, 2},
+				{5, 6, 3},
 			},
 		},
 		[]problem{
@@ -142,14 +142,14 @@ var tests = []struct {
 			7,
 			false,
 			[]Edge{
-				Edge{0, 1, 3},
-				Edge{0, 2, 1},
-				Edge{1, 3, 3},
-				Edge{2, 3, 5},
-				Edge{2, 4, 4},
-				Edge{3, 6, 2},
-				Edge{4, 5, 2},
-				Edge{5, 6, 3},
+				{0, 1, 3},
+				{0, 2, 1},
+				{1, 3, 3},
+				{2, 3, 5},
+				{2, 4, 4},
+				{3, 6, 2},
+				{4, 5, 2},
+				{5, 6, 3},
 			},
 		},
 		[]problem{
