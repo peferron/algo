@@ -1,4 +1,4 @@
-package maximal_clique
+package clique
 
 import (
 	"reflect"

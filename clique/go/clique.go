@@ -1,4 +1,4 @@
-package maximal_clique
+package clique
 
 type Graph struct {
 	VertexCount int

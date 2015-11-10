@@ -1,4 +1,4 @@
-# Maximal clique
+# Maximal and maximum clique
 
 [https://en.wikipedia.org/wiki/Clique_problem](https://en.wikipedia.org/wiki/Clique_problem)
 
