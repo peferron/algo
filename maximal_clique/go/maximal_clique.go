@@ -1,30 +1,30 @@
 package maximal_clique
 
-func maximalClique(g Graph, start int) []int {
-	a := NewAdjacencyList(g)
-	clique := []int{start}
-
-	for x := range a {
-		if x != start && a.adjacent(x, clique) {
-			clique = append(clique, x)
-		}
-	}
-
-	return clique
+type Graph struct {
+	VertexCount int
+	Edges       []Edge
 }
 
-func (a AdjacencyList) adjacent(x int, vertices []int) bool {
-	for _, v := range vertices {
-		present := false
-		for _, y := range a[x] {
-			if y == v {
-				present = true
-				break
-			}
-		}
-		if !present {
-			return false
+type Edge struct {
+	X int
+	Y int
+}
+
+func maximalClique(g Graph, start int) []int {
+	adjacencyList := make([]BitVector, g.VertexCount)
+	for _, edge := range g.Edges {
+		adjacencyList[edge.X].Set(edge.Y)
+		adjacencyList[edge.Y].Set(edge.X)
+	}
+
+	var clique BitVector
+	clique.Set(start)
+
+	for x, neighbors := range adjacencyList {
+		if clique.Intersect(neighbors) == clique {
+			clique.Set(x)
 		}
 	}
-	return true
+
+	return clique.Slice()
 }
