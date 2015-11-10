@@ -10,7 +10,8 @@ type Edge struct {
 	Y int
 }
 
-func maximalClique(g Graph, start int) []int {
+// MaximalClique processes vertices in order and returns the resulting maximal clique in g.
+func MaximalClique(g Graph, vertices []int) []int {
 	adjacencyList := make([]BitVector, g.VertexCount)
 	for _, edge := range g.Edges {
 		adjacencyList[edge.X].Set(edge.Y)
@@ -18,13 +19,17 @@ func maximalClique(g Graph, start int) []int {
 	}
 
 	var clique BitVector
-	clique.Set(start)
-
-	for x, neighbors := range adjacencyList {
+	for _, x := range vertices {
+		neighbors := adjacencyList[x]
 		if clique.Intersect(neighbors) == clique {
+			// x is adjacent to all clique vertices. This means x is eligible to join the clique.
 			clique.Set(x)
 		}
 	}
 
 	return clique.Slice()
+}
+
+func MaximumClique(g Graph) []int {
+	return MaximalClique(g, verticesSortedByDecreasingDegree(g))
 }

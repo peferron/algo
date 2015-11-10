@@ -5,14 +5,15 @@ import (
 	"testing"
 )
 
-type subtest struct {
-	start  int
-	clique []int
+type maximalCliqueSubtest struct {
+	vertices []int
+	clique   []int
 }
 
 var tests = []struct {
-	graph    Graph
-	subtests []subtest
+	graph          Graph
+	maximalCliques []maximalCliqueSubtest
+	maximumClique  []int
 }{
 	// Graph with only one vertex.
 	{
@@ -20,9 +21,10 @@ var tests = []struct {
 			1,
 			[]Edge{},
 		},
-		[]subtest{
-			{0, []int{0}},
+		[]maximalCliqueSubtest{
+			{[]int{0}, []int{0}},
 		},
+		[]int{0},
 	},
 
 	// Example taken from https://en.wikipedia.org/wiki/Clique_problem#Definitions
@@ -36,26 +38,37 @@ var tests = []struct {
 				{3, 4}, {3, 5},
 			},
 		},
-		[]subtest{
-			{0, []int{0, 1, 4}},
-			{1, []int{0, 1, 4}},
-			{2, []int{1, 2}},
-			{3, []int{2, 3}},
-			{4, []int{0, 1, 4}},
-			{5, []int{3, 5}},
+		[]maximalCliqueSubtest{
+			{[]int{0, 1, 2, 3, 4, 5}, []int{0, 1, 4}},
+			{[]int{1, 0, 2, 3, 4, 5}, []int{0, 1, 4}},
+			{[]int{2, 0, 1, 3, 4, 5}, []int{1, 2}},
+			{[]int{3, 0, 1, 2, 4, 5}, []int{2, 3}},
+			{[]int{4, 0, 1, 2, 3, 5}, []int{0, 1, 4}},
+			{[]int{5, 0, 1, 2, 3, 4}, []int{3, 5}},
 		},
+		[]int{0, 1, 4},
 	},
 }
 
-func Test(t *testing.T) {
+func TestMaximalClique(t *testing.T) {
 	for testIndex, test := range tests {
-		for subtestIndex, subtest := range test.subtests {
-			clique := maximalClique(test.graph, subtest.start)
+		for subtestIndex, subtest := range test.maximalCliques {
+			clique := MaximalClique(test.graph, subtest.vertices)
 			if !reflect.DeepEqual(clique, subtest.clique) {
-				t.Fatalf("In test #%d subtest #%d, for graph %+v and start %d, "+
+				t.Fatalf("In test #%d subtest #%d, for graph %+v and vertices %v, "+
 					"expected maximal clique to be %v, was %v",
-					testIndex, subtestIndex, test.graph, subtest.start, subtest.clique, clique)
+					testIndex, subtestIndex, test.graph, subtest.vertices, subtest.clique, clique)
 			}
+		}
+	}
+}
+
+func TestMaximumClique(t *testing.T) {
+	for testIndex, test := range tests {
+		clique := MaximumClique(test.graph)
+		if !reflect.DeepEqual(clique, test.maximumClique) {
+			t.Fatalf("In test #%d, for graph %+v, expected maximum clique to be %v, was %v",
+				testIndex, test.graph, test.maximumClique, clique)
 		}
 	}
 }
