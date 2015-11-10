@@ -30,6 +30,8 @@ impl AdjacencyMatrix {
             }
         }
 
+        // This is how we would use the callback-based BFS commented out in adjacency_matrix.rs.
+
         // self.breadth_first_search(source, |Edge { x, y }| {
         //     parents[y] = x;
         //     // Return true to abort the BFS.
