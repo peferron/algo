@@ -24,13 +24,7 @@ impl BitVector {
     }
 
     pub fn to_vec(&self) -> Vec<usize> {
-        let mut vec = vec![];
-        for i in 0..64 {
-            if self.has(i) {
-                vec.push(i);
-            }
-        }
-        vec
+        (0..64).filter(|&i| self.has(i)).collect()
     }
 }
 
