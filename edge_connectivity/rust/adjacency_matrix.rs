@@ -8,14 +8,14 @@ pub struct AdjacencyMatrix {
 }
 
 impl AdjacencyMatrix {
-    fn new(size: usize) -> AdjacencyMatrix {
+    fn new(size: usize) -> Self {
         let row = vec![0; size];
         let rows = repeat(row).take(size).collect();
 
         AdjacencyMatrix { rows: rows }
     }
 
-    pub fn from_graph(g: &Graph) -> AdjacencyMatrix {
+    pub fn from_graph(g: &Graph) -> Self {
         let mut matrix = AdjacencyMatrix::new(g.vertex_count);
 
         for &Edge { x, y } in &g.edges {
