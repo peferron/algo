@@ -32,5 +32,5 @@ func MaximalClique(g Graph, vertices []int) []int {
 
 // MaximumClique returns a clique that is hopefully the maximum clique in g.
 func MaximumClique(g Graph) []int {
-	return MaximalClique(g, verticesSortedByDecreasingDegree(g))
+	return MaximalClique(g, VerticesSortedByDecreasingDegree(g))
 }

@@ -45,7 +45,7 @@ func (v vertices) xs() []int {
 	return xs
 }
 
-func verticesSortedByDecreasingDegree(g Graph) []int {
+func VerticesSortedByDecreasingDegree(g Graph) []int {
 	v := newVertices(g)
 	sort.Sort(v)
 	return v.xs()
