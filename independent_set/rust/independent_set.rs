@@ -33,8 +33,8 @@ pub fn maximum_independent_set(g: &Graph) -> Vec<usize> {
         degrees[y] += 1;
     }
 
-    let mut vertices_sorted_by_decreasing_degree: Vec<_> = (0..g.vertex_count).collect();
-    vertices_sorted_by_decreasing_degree.sort_by(|&x, &y| degrees[x].cmp(&degrees[y]));
+    let mut vertices_sorted_by_increasing_degree: Vec<_> = (0..g.vertex_count).collect();
+    vertices_sorted_by_increasing_degree.sort_by(|&x, &y| degrees[x].cmp(&degrees[y]));
 
-    maximal_independent_set(g, &vertices_sorted_by_decreasing_degree)
+    maximal_independent_set(g, &vertices_sorted_by_increasing_degree)
 }
