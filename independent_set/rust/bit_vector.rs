@@ -12,7 +12,7 @@ impl BitVector {
     }
 
     pub fn has(&self, i: usize) -> bool {
-        self.value&(1<<i) != 0
+        self.value & 1 << i != 0
     }
 
     pub fn intersect(&self, other: &Self) -> Self {
