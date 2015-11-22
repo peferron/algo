@@ -27,7 +27,7 @@ pub fn maximal_independent_set(g: &Graph, vertices: &Vec<usize>) -> Vec<usize> {
 // maximum_independent_set returns an independent set that is hopefully the maximum independent set
 // in g.
 pub fn maximum_independent_set(g: &Graph) -> Vec<usize> {
-    let mut degrees: Vec<_> = vec![0; g.vertex_count];
+    let mut degrees = vec![0; g.vertex_count];
     for &Edge { x, y } in &g.edges {
         degrees[x] += 1;
         degrees[y] += 1;
