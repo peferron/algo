@@ -12,11 +12,7 @@ type Edge struct {
 
 // MaximalClique processes vertices in order and returns the resulting maximal clique in g.
 func MaximalClique(g Graph, vertices []int) []int {
-	adjacencyList := make([]BitVector, g.VertexCount)
-	for _, edge := range g.Edges {
-		adjacencyList[edge.X].Set(edge.Y)
-		adjacencyList[edge.Y].Set(edge.X)
-	}
+	adjacencyList := adjacencyList(g)
 
 	var clique BitVector
 	for _, x := range vertices {
@@ -28,6 +24,16 @@ func MaximalClique(g Graph, vertices []int) []int {
 	}
 
 	return clique.Slice()
+}
+
+// adjacencyList returns the adjacency list of g.
+func adjacencyList(g Graph) []BitVector {
+	a := make([]BitVector, g.VertexCount)
+	for _, edge := range g.Edges {
+		a[edge.X].Set(edge.Y)
+		a[edge.Y].Set(edge.X)
+	}
+	return a
 }
 
 // MaximumClique returns a clique that is hopefully the maximum clique in g.
