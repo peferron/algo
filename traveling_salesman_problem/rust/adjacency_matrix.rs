@@ -18,9 +18,9 @@ impl AdjacencyMatrix {
     pub fn from_graph(g: &Graph) -> Self {
         let mut matrix = AdjacencyMatrix::new(g.vertex_count);
 
-        for &Edge { x, y, d } in &g.edges {
-            matrix[x][y] = d;
-            matrix[y][x] = d;
+        for &Edge { x, y, distance } in &g.edges {
+            matrix[x][y] = distance;
+            matrix[y][x] = distance;
         }
 
         matrix
@@ -28,6 +28,16 @@ impl AdjacencyMatrix {
 
     pub fn size(&self) -> usize {
         self.rows.len()
+    }
+
+    pub fn distance(&self, tour: &Vec<usize>) -> u32 {
+        // TODO: change to reduce
+        let mut distance = 0;
+        for i in 0..tour.len() {
+            let j = if i < tour.len() - 1 { i + 1 } else { 0 };
+            distance += self[tour[i]][tour[j]];
+        }
+        distance
     }
 }
 
