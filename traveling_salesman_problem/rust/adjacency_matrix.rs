@@ -31,13 +31,11 @@ impl AdjacencyMatrix {
     }
 
     pub fn distance(&self, tour: &Vec<usize>) -> u32 {
-        // TODO: change to reduce
-        let mut distance = 0;
-        for i in 0..tour.len() {
+        tour.iter().enumerate().fold(0, |distance, (i, &x)| {
             let j = if i < tour.len() - 1 { i + 1 } else { 0 };
-            distance += self[tour[i]][tour[j]];
-        }
-        distance
+            let y = tour[j];
+            distance + self[x][y]
+        })
     }
 }
 
