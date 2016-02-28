@@ -1,6 +1,6 @@
 const assert = require('assert');
 
-import {color} from './vertex_coloring.js';
+import {getVertexColoring} from './vertex_coloring.js';
 
 const tests = [
     {
@@ -79,7 +79,7 @@ function isValidColoring(coloring, graph) {
 }
 
 function runTest(test) {
-    const coloring = color(test.graph);
+    const coloring = getVertexColoring(test.graph);
     assert(isValidColoring(coloring, test.graph));
     assert(new Set(coloring).size <= test.colors);
 }

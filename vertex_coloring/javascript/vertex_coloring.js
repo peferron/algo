@@ -1,44 +1,56 @@
 import {AdjacencyList} from './adjacency_list.js';
 
 
-export function color(graph) {
+// getVertexColoring returns the vertex coloring of the graph, with colors are represented as
+// positive integers.
+export function getVertexColoring(graph) {
     const list = new AdjacencyList(graph);
 
-    const colors = new Array(graph.vertexCount).fill(-1);
+    // coloring[x] is the color of the vertex x.
+    const coloring = new Array(graph.vertexCount).fill(-1);
+
+    // neighboringColorsSets[x] is the set of colors adjacent to x.
+    // Caching these sets allows this algorithm to run in O(n²) time.
+    const neighboringColors = Array.from({length: graph.vertexCount}, () => new Set());
 
     while (true) {
-        const x = nextVertex(list, colors);
+        // At each iteration, Brélaz's heuristic selects the uncolored vertex with highest color
+        // degree.
+        const x = getUncoloredVertexWithHighestColorDegree(list, coloring, neighboringColors);
+
         if (x < 0) {
-            return colors;
+            // All vertices are colored. Done!
+            return coloring;
         }
-        colors[x] = lowestAvailableColor(x, list, colors);
+
+        // Color x.
+        const color = lowestAvailableColor(neighboringColors[x]);
+        coloring[x] = color;
+        list.a[x].forEach(y => neighboringColors[y].add(color));
     }
 }
 
-function nextVertex(list, colors) {
+// getUncoloredVertexWithHighestColorDegree returns the uncolored vertex adjacent to the most
+// different colors, or -1 if no uncolored vertex can be found.
+function getUncoloredVertexWithHighestColorDegree(list, coloring, neighboringColors) {
     return list.a.reduce((best, edges, x) => {
-        if (colors[x] >= 0) {
+        if (coloring[x] >= 0) {
+            // x is colored and not eligible.
             return best;
         }
+
         if (best < 0) {
             return x;
         }
-        return colorDegree(x, list, colors) > colorDegree(best, list, colors) ? x : best;
+
+        return neighboringColors[x].size > neighboringColors[best].size ? x : best;
     }, -1);
 }
 
-function colorDegree(x, list, colors) {
-    return neighboringColors(x, list, colors).size;
-}
-
-function neighboringColors(x, list, colors) {
-    return new Set(list.a[x].map(y => colors[y]).filter(color => color >= 0));
-}
-
-function lowestAvailableColor(x, list, colors) {
-    const unavailableColors = neighboringColors(x, list, colors);
+//
+function lowestAvailableColor(colors) {
     let i = 0;
-    while (unavailableColors.has(i)) {
+    while (colors.has(i)) {
         i++;
     }
     return i;
