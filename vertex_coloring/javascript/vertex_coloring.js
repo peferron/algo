@@ -47,7 +47,7 @@ function getUncoloredVertexWithHighestColorDegree(list, coloring, neighboringCol
     }, -1);
 }
 
-//
+// lowestAvailableColor returns the lowest color not present in colors.
 function lowestAvailableColor(colors) {
     let i = 0;
     while (colors.has(i)) {
