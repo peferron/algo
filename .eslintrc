@@ -1,0 +1,14 @@
+{
+    "parser": "babel-eslint",
+    "env": {
+        "node": true
+    },
+    "globals": {
+        "Set": false
+    },
+    extends: "eslint:recommended",
+    "rules": {
+        "no-console": 0,
+        "no-constant-condition": 0
+    }
+}
