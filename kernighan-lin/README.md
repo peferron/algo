@@ -4,4 +4,4 @@
 
 The Kernighan–Lin algorithm is a heuristic for [partitioning graphs](https://en.wikipedia.org/wiki/Graph_partition).
 
-Time complexity: O(n² log n).
+Time complexity: O(n³).
