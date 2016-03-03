@@ -1,6 +1,6 @@
 const assert = require('assert');
 
-import {bisect} from './kernighan-lin.js';
+import {bisect} from './graph_partition.js';
 
 const tests = [
     // {
