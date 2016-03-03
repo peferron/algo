@@ -1,4 +1,4 @@
-import {AdjacencyList} from './adjacency_list.js';
+import {getAdjacencyMatrix} from './adjacency_matrix.js';
 
 export function bisect(graph) {
     // This algorithm works by swapping vertices. If the graph has an odd number of vertices, we can
@@ -13,11 +13,13 @@ export function bisect(graph) {
         graph = {vertexCount: graph.vertexCount + 1, edges: graph.edges};
     }
 
-    const list = new AdjacencyList(graph);
+    const matrix = getAdjacencyMatrix(graph);
     const subsets = split(graph, 2);
 
+    // Experiments have shown that the number of iterations of this loop does not increase with n,
+    // and should be considered constant for time complexity analysis.
     while (true) {
-        const swaps = getSwaps(list, subsets);
+        const swaps = getSwaps(matrix, subsets);
         if (!swaps.length) {
             break;
         }
@@ -31,20 +33,38 @@ export function bisect(graph) {
     return subsets;
 }
 
-function getSwaps(list, subsets) {
-    const used = new Set();
+function getSwaps(matrix, subsets) {
+    const swapped = new Array(matrix.length).fill(false);
     const swaps = [];
     const subsetsCopy = subsets.slice();
 
+    // The loop below can be optimized to run in O(n² log n) instead of O(n³):
+    // 1. getCostDifferences runs in O(n²), and is called in each iteration so the total is O(n³).
+    //    Instead of calling it in each iteration, we could call it only once before the loop, and
+    //    then after each swap update only the cost differences of the neighbors of the swapped
+    //    vertices (+1 if the neighbor is now in a different subset, or -1 if the neighbor is now in
+    //    the same subset). This would bring the time complexity down to O(n) per iteration, for a
+    //    total of O(n²).
+    // 2. The nested forEach loop that finds the best pair of vertices to swap also runs in O(n²).
+    //    But it can be optimized to run in O(n log n). Recall that we want to select the pair that
+    //    optimizes the cost reduction. We can sort the cost differences of each subset's vertices
+    //    in decreasing order: Da1 >= Da2 >= ... and Db1 >= Db2 >= ..., in O(n log n) time. Then we
+    //    examine the pairs in order. If we come across a pair (Dai, Dbj) such that (Dai + Dbj) is
+    //    less than the gain seen so far in this iteration, then we do not need to examine any more
+    //    pairs. It is almost never required to examine all the pairs, so the time complexity is
+    //    O(n log n) per iteration, for a total of O(n² log n).
+
     while (true) {
-        const costDiffs = getCostDifferences(list, subsetsCopy);
+        const costDiffs = getCostDifferences(matrix, subsetsCopy);
 
         let bestSwap;
 
         subsetsCopy.forEach((subsetX, x) => {
             subsetsCopy.forEach((subsetY, y) => {
-                if (subsetX !== subsetY && !used.has(x) && !used.has(y)) {
-                    const costReduction = costDiffs[x] + costDiffs[y] - 2 * list.a[x].includes(y);
+                if (subsets[x] !== subsets[y] && !swapped[x] && !swapped[y]) {
+                    // Calculate the cost reduction that would result from swapping x and y.
+                    const costReduction = costDiffs[x] + costDiffs[y] - 2 * matrix[x][y];
+
                     if (!bestSwap || costReduction > bestSwap.costReduction) {
                         bestSwap = {x, y, costReduction};
                     }
@@ -56,8 +76,8 @@ function getSwaps(list, subsets) {
             break;
         }
 
-        used.add(bestSwap.x);
-        used.add(bestSwap.y);
+        swapped[bestSwap.x] = true;
+        swapped[bestSwap.y] = true;
 
         swapVertices(bestSwap.x, bestSwap.y, subsetsCopy);
 
@@ -98,9 +118,15 @@ function split(graph, count) {
     );
 }
 
-// getCostDifferences return the external cost minus internal cost of each vertex.
-function getCostDifferences(list, subsets) {
+// getCostDifferences return the external cost (number of edges going to a different subset) minus
+// the internal cost (number of edges staying in the same subset) of each vertex.
+function getCostDifferences(matrix, subsets) {
     return subsets.map((subset, x) =>
-        list.a[x].reduce((delta, y) => subsets[x] === subsets[y] ? delta - 1 : delta + 1, 0)
+        matrix[x].reduce((costDifference, connected, y) => {
+            if (!connected) {
+                return costDifference;
+            }
+            return subsets[x] === subsets[y] ? costDifference - 1 : costDifference + 1;
+        }, 0)
     );
 }
