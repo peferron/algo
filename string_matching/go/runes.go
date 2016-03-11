@@ -19,7 +19,6 @@ func Runes(s string) []Rune {
 	return runes
 }
 
-// Useful for debugging.
 func (r Rune) String() string {
 	return fmt.Sprintf("{%q, %d}", r.value, r.index)
 }

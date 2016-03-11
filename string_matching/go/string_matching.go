@@ -5,10 +5,6 @@ func Indexes(text, pattern string) []int {
 	return indexes(Runes(text), Runes(pattern))
 }
 
-// Separating Indexes and indexes might seem excessive. But if they were merged, it would be easy to
-// type by mistake text[i] (where text is a string) instead of textRunes[i] (where textRunes is a
-// slice of Runes). Separating these two functions makes the string variables out of scope from the
-// main algorithm, which reduces the risk of error.
 func indexes(text, pattern []Rune) []int {
 	patternTable := table(pattern)
 	matches := []int{}
