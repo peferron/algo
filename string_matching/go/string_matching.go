@@ -1,82 +1,82 @@
 package string_matching
 
-import (
-	"fmt"
-	"unicode/utf8"
-)
+// Indexes returns the indexes of all occurrences of pattern in text.
+func Indexes(text, pattern string) []int {
+	return indexes(Runes(text), Runes(pattern))
+}
 
-func Search(text, pattern string) []int {
-	table := createTable(pattern)
-
+// Separating Indexes and indexes might seem excessive. But if they were merged, it would be easy to
+// type by mistake text[i] (where text is a string) instead of textRunes[i] (where textRunes is a
+// slice of Runes). Separating these two functions makes the string variables out of scope from the
+// main algorithm, which reduces the risk of error.
+func indexes(text, pattern []Rune) []int {
+	patternTable := table(pattern)
 	matches := []int{}
 
-	textPosition := 0
-	patternPosition := 0
+	for textIndex, patternIndex := 0, 0; textIndex+patternIndex < len(text); {
+		textRune := text[textIndex+patternIndex]
+		patternRune := pattern[patternIndex]
 
-	for textPosition+patternPosition < len(text) {
-		textRune, textRuneWidth := utf8.DecodeRuneInString(text[textPosition+patternPosition:])
-		patternRune, _ := utf8.DecodeRuneInString(pattern[patternPosition:])
-
-		if textRune == patternRune {
-			if patternPosition == len(pattern)-textRuneWidth {
-				// Match found!
-				matches = append(matches, textPosition)
-				textPosition += textRuneWidth
-				patternPosition = 0
+		if textRune.value == patternRune.value {
+			if patternIndex == len(pattern)-1 {
+				// The current match is complete!
+				firstMatchingRune := text[textIndex]
+				matches = append(matches, firstMatchingRune.index)
+				// Look for another match starting at the next text index.
+				textIndex += 1
+				patternIndex = 0
 			} else {
-				// Check the next rune
-				patternPosition += textRuneWidth
+				// Keep growing the current match.
+				patternIndex += 1
 			}
+		} else if patternIndex == 0 {
+			// The current match failed on the first check.
+			// Look for a match starting at the next text index.
+			textIndex += 1
 		} else {
-			// For now, simulate a dumb table that always suggests going back to the beginning
-			tableOffset := table[patternPosition]
-			if tableOffset >= 0 {
-				textPosition += patternPosition - tableOffset
-				patternPosition = tableOffset
-			} else {
-				textPosition += textRuneWidth
-				patternPosition = 0
-			}
+			// The current match failed after some successful checks.
+			// Use the table to find out if there is a smaller match already underway that we should
+			// keep growing (smallerMatchLength > 0), or if we should just start from scratch at the
+			// position that just failed the check (smallerMatchLength == 0).
+			smallerMatchLength := patternTable[patternIndex]
+			textIndex += patternIndex - smallerMatchLength
+			patternIndex = smallerMatchLength
 		}
 	}
 
 	return matches
 }
 
-func createTable(pattern string) map[int]int {
-	runePositions := []int{}
-	table := []int{}
-	runeIndex := 0
+// table returns the partial match table of the string represented by runes.
+func table(runes []Rune) []int {
+	table := make([]int, len(runes))
 
-	for runePosition := range pattern {
-		switch runeIndex {
-		case 0:
-			table = append(table, -1)
-		case 1:
-			table = append(table, 0)
+	for i := range table {
+		switch i {
+		case 0, 1:
+			// table[i] is the length of the partial match that can be achieved using runes from 0
+			// to i-1. A partial match requires at least 2 runes (for example, 'AA'), so for i < 2
+			// there's no partial match possible.
+			// Note that the main algorithm doesn't even try accessing table[0], so any value would
+			// work there. We need to use 0 for table[1] though.
+			table[i] = 0
 		default:
-			previousRunePosition := runePositions[runeIndex-1]
-			previousRune, _ := utf8.DecodeRuneInString(pattern[previousRunePosition:])
-			previousTableValue := table[runeIndex-1]
-			correspondingPatternRunePosition := runePositions[previousTableValue]
-			correspondingPatternRune, _ := utf8.DecodeRuneInString(pattern[correspondingPatternRunePosition:])
-			if correspondingPatternRune == previousRune {
-				table = append(table, previousTableValue+1)
+			// There is already a match of length table[i-1] underway, and that's without using the
+			// rune at index i-1. The match is between these two substrings:
+			// - The substring [0...matchLength-1]
+			// - The substring [somewhere...i-2] (somewhere = i-1-matchLength, but we don't care)
+			// We can only grow the match if the runes following each of these substrings, i.e. the
+			// runes at indexes matchLength and i-1, are equal.
+			matchLength := table[i-1]
+			rune1 := runes[matchLength]
+			rune2 := runes[i-1]
+			if rune1.value == rune2.value {
+				table[i] = matchLength + 1
 			} else {
-				table = append(table, 0)
+				table[i] = 0
 			}
 		}
-
-		runePositions = append(runePositions, runePosition)
-		runeIndex++
 	}
 
-	fmt.Printf("Table for pattern %s: %+v", pattern, table)
-
-	tableMap := map[int]int{}
-	for runeIndex, tableValue := range table {
-		runePosition := runePositions[runeIndex]
-		tableMap[runePosition] = tableValue
-	}
-	return tableMap
+	return table
 }
