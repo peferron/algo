@@ -1,11 +1,11 @@
 # Generalized suffix tree
 
-[http://http://en.wikipedia.org/wiki/Generalized_suffix_tree](http://http://en.wikipedia.org/wiki/Generalized_suffix_tree)
+[http://en.wikipedia.org/wiki/Generalized_suffix_tree](http://en.wikipedia.org/wiki/Generalized_suffix_tree)
 
 * Space complexity: O(n).
 * Time complexity:
     * Construction: O(n).
-    * Find all z occurrences of a substring k : O(|k| + z).
+    * Find all z occurrences of a substring k: O(|k| + z).
     * Find the longest common substring: O(n).
     * Find the longest palindromic substring: O(n).
 

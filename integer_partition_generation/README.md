@@ -1,5 +1,7 @@
 # Integer partition generation
 
+[https://en.wikipedia.org/wiki/Partition_(number_theory)](https://en.wikipedia.org/wiki/Partition_%28number_theory%29)
+
 This algorithm is implemented following Steven Skiena's book [The Algorithm Design Manual](http://amzn.com/1848000693).
 
 I usually avoid copy/pasting excerpts from the book, however in this case I didn't find any great online resource, so here it is:

@@ -1,5 +1,7 @@
 # Bounded height priority queue
 
+[https://en.wikipedia.org/wiki/Priority_queue](https://en.wikipedia.org/wiki/Priority_queue)
+
 * Space complexity: O(n + p), where p is the number of possible key values.
 * Time complexity:
     * Insert: O(1).
