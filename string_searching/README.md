@@ -1,4 +1,4 @@
-# String matching
+# String searching
 
 [https://en.wikipedia.org/wiki/String_searching_algorithm](https://en.wikipedia.org/wiki/String_searching_algorithm)
 
