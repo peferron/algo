@@ -59,8 +59,8 @@ function unrank(m, n) {
     return insertFirst(first, unrank(m % groupLength, n - 1));
 }
 
-// addFirst returns a copy of the permutation p, inserting first in first position and relabelling
-// the remaining elements to become a permutation of the integers from 1 to p.length+1.
+// insertFirst returns a copy of the permutation p, inserting first in first position and
+// relabelling the remaining elements to become a permutation of the integers from 1 to p.length+1.
 // Example: 3 and {1, 3, 2} becomes {3, 1, 3, 2} after insertion and {3, 1, 4, 2} after relabelling.
 function insertFirst(first, p) {
     return [first].concat(p.map(function(v) {
