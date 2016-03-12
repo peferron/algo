@@ -17,6 +17,7 @@ var tests = []struct {
 	{"aaaaaa", "aaa", []int{0, 1, 2, 3}},
 	{"abcdabc", "b", []int{1, 5}},
 	{"aeaeax", "aeax", []int{2}},
+	{"abacababacababd", "abacababd", []int{6}},
 	{"abababc", "abc", []int{4}},
 	{"abababadc", "ababad", []int{2}},
 	{"just testing table generation", "participate in parachute", []int{}},
