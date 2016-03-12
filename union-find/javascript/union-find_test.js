@@ -45,7 +45,7 @@ var tests = [
             //   |
             //   2
 
-            [1, 2],
+            [1, 2]
             // 0 1 3 4
             //   |
             //   2
@@ -89,7 +89,7 @@ var tests = [
             //   |
             //   2
 
-            [3, 1],
+            [3, 1]
             // 0  1  4
             //   / \
             //  2   3
@@ -111,7 +111,7 @@ var tests = [
             //   |
             //   2
 
-            [2, 3],
+            [2, 3]
             // 0  1  4
             //   / \
             //  2   3
@@ -133,7 +133,7 @@ var tests = [
             //   |
             //   2
 
-            [3, 2],
+            [3, 2]
             // 0  1  4
             //   / \
             //  2   3
@@ -160,7 +160,7 @@ var tests = [
             //   | |
             //   2 4
 
-            [1, 3],
+            [1, 3]
             // 0 1
             //  / \
             // 2   3
@@ -217,7 +217,7 @@ var tests = [
             //     |     |
             //     4     8
 
-            [1, 5],
+            [1, 5]
             // 0  1
             //  / | \
             // 2  3  5
@@ -237,11 +237,9 @@ var tests = [
 function runTest(test) {
     var u = new UnionFind(test.size);
 
-    test.unions.forEach(u.union.apply.bind(u.union, u));
-    // The one-liner above can be replaced with:
-    // test.unions.forEach(function(tu) {
-    //     u.union(tu[0], tu[1]);
-    // });
+    test.unions.forEach(function(tu) {
+        u.union(tu[0], tu[1]);
+    });
 
     assert.deepEqual(u.parents, test.expect.parents);
     assert.deepEqual(u.ranks, test.expect.ranks);

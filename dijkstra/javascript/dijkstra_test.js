@@ -9,7 +9,7 @@ var tests = [
         graph: {
             vertexCount: 1,
             directed: false,
-            edges: [],
+            edges: []
         },
         problems: [
             {start: 0, end: 0, solution: [0]}
@@ -30,7 +30,7 @@ var tests = [
             vertexCount: 2,
             directed: false,
             edges: [
-                {x: 0, y: 1, weight: 7},
+                {x: 0, y: 1, weight: 7}
             ]
         },
         problems: [
@@ -42,7 +42,7 @@ var tests = [
             vertexCount: 2,
             directed: true,
             edges: [
-                {x: 0, y: 1, weight: 7},
+                {x: 0, y: 1, weight: 7}
             ]
         },
         problems: [
