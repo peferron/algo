@@ -33,7 +33,7 @@ func LongestPalindrome(s string) string {
 	longest := ""
 	depthFirstSearch(t.root, "", func(prefix string, starts starts) {
 		if len(prefix) > len(longest) && len(starts) == 2 &&
-			centered(starts[0], starts[1], len(s), len(prefix)) {
+			isPalindrome(starts[0], starts[1], len(s), len(prefix)) {
 			longest = prefix
 		}
 	})
@@ -58,34 +58,31 @@ func find(n *Node, sub string) *Node {
 }
 
 func depthFirstSearch(n *Node, prefix string, f callback) starts {
-	if n.Start >= 0 {
-		// It's a leaf.
-		if len(prefix) == 0 {
-			return starts{}
-		}
+	starts := starts{}
+
+	if len(n.Children) == 0 {
+		// Leaf node.
 		terminator := prefix[len(prefix)-1:]
 		index := strings.Index(Terminators, terminator)
-		return starts{index: []int{n.Start}}
+		starts[index] = []int{n.Start}
+	} else {
+		// Non-leaf node.
+		for edge, child := range n.Children {
+			childStarts := depthFirstSearch(child, prefix+edge, f)
+			merge(starts, childStarts)
+		}
 	}
 
-	starts := starts{}
-	for edge, child := range n.Children {
-		childstarts := depthFirstSearch(child, prefix+edge, f)
-		merge(starts, childstarts)
-	}
 	if f != nil {
 		f(prefix, starts)
 	}
+
 	return starts
 }
 
 func merge(dst, src map[int][]int) {
 	for k, v := range src {
-		if _, ok := dst[k]; ok {
-			dst[k] = append(dst[k], v...)
-		} else {
-			dst[k] = v
-		}
+		dst[k] = append(dst[k], v...)
 	}
 }
 
@@ -101,9 +98,10 @@ func reverse(s string) string {
 	return string(runes)
 }
 
-func centered(forwardStarts, reverseStarts []int, strLen, prefixLen int) bool {
+func isPalindrome(forwardStarts, reverseStarts []int, strLen, prefixLen int) bool {
 	for _, forwardStart := range forwardStarts {
 		for _, reverseStart := range reverseStarts {
+			// Finding one overlapping position is enough.
 			if forwardStart+prefixLen == strLen-reverseStart {
 				return true
 			}

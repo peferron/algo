@@ -39,7 +39,11 @@ func TestLongestCommonSubstring(t *testing.T) {
 			"a",
 		},
 		{
-			[]string{"ab", "xaby"},
+			[]string{"abc", "ddbc"},
+			"bc",
+		},
+		{
+			[]string{"ab", "xaby", "zaby"},
 			"ab",
 		},
 		{
