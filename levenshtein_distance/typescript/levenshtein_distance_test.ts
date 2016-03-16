@@ -1,4 +1,4 @@
-import {editDistance} from './approximate_string_matching';
+import {distance} from './levenshtein_distance';
 
 declare function require(name: string): any;
 const assert = require('assert');
@@ -48,8 +48,7 @@ const tests: Test[] = [
 ];
 
 function runTest(test: Test): void {
-    const distance = editDistance(test.a, test.b);
-    assert.strictEqual(distance, test.distance);
+    assert.strictEqual(distance(test.a, test.b), test.distance);
 }
 
 tests.forEach(runTest);

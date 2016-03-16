@@ -4,7 +4,7 @@
 // put a space here, you'll see." For this reason, I chose not to insert spaces in this
 // implementation, and deal with indexes explicitly instead.
 
-export function editDistance(a: string, b: string): number {
+export function distance(a: string, b: string): number {
     // table[i][j] is the edit distance between the first i characters of a, and the first j
     // characters of b. This means the table should have |a|+1 rows and |b|+1 columns.
     const rows = a.length + 1;
