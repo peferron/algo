@@ -20,7 +20,7 @@ export function distance(a: string, b: string): number {
         table[0][j] = j;
     }
 
-    // Fill the entire table using dynamic programming.
+    // Fill the rest of the table using dynamic programming.
     for (let i = 1; i < rows; i++) {
         for (let j = 1; j < columns; j++) {
             // Let's calculate table[i][j].
