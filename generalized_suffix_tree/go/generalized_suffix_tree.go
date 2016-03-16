@@ -18,18 +18,18 @@ func NewGST(a ...string) *Tree {
 	}
 	for i, s := range a {
 		terminator := Terminators[i : i+1]
-		insertString(root, s+terminator, i)
+		insertString(root, s+terminator)
 	}
 	return &Tree{root}
 }
 
-func insertString(n *Node, s string, index int) {
+func insertString(n *Node, s string) {
 	for i := range s {
-		insertSuffix(n, s[i:], index, i)
+		insertSuffix(n, s[i:], i)
 	}
 }
 
-func insertSuffix(n *Node, suffix string, index, start int) {
+func insertSuffix(n *Node, suffix string, start int) {
 	if len(suffix) == 0 {
 		return
 	}
@@ -44,7 +44,7 @@ func insertSuffix(n *Node, suffix string, index, start int) {
 		if p == len(edge) {
 			// The suffix contains the entire edge.
 			// Insert the trimmed suffix one level down.
-			insertSuffix(child, suffix[p:], index, start)
+			insertSuffix(child, suffix[p:], start)
 			return
 		}
 
@@ -59,7 +59,7 @@ func insertSuffix(n *Node, suffix string, index, start int) {
 		n.Children[edge[:p]] = mid
 
 		// Insert the trimmed suffix one level down.
-		insertSuffix(mid, suffix[p:], index, start)
+		insertSuffix(mid, suffix[p:], start)
 		return
 	}
 
