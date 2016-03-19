@@ -4,3 +4,7 @@
 
 * Suitable for finding shortest paths in weighted directed acyclic graphs with positive or negative weights.
 * Time complexity: O(n + m), where n is the number of vertices and m the number of edges.
+
+To find hortest paths in directed or undirected weighted graphs with positive weights only, see the module [dijkstra](../dijkstra).
+
+To find shortest paths in directed or undirected weighted graphs with positive or negative edge weights but no negative cycles, see the module [floyd-warshall](../floyd-warshall).
