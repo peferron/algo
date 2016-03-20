@@ -1,7 +1,9 @@
 package generalized_suffix_tree
 
+import "strings"
+
 type Tree struct {
-	root *Node
+	Root *Node
 }
 
 type Node struct {
@@ -9,7 +11,9 @@ type Node struct {
 	Children map[string]*Node
 }
 
-const Terminators = "$#%"
+const Terminators = "0123456789" // Can be any characters in any order.
+
+// Construction
 
 func NewGST(a ...string) *Tree {
 	root := &Node{
@@ -78,8 +82,43 @@ func commonPrefixLen(a, b string) int {
 	return i
 }
 
+// Operations
+
+type Callback func(string, map[int][]int)
+
+func (n *Node) DepthFirstSearch(prefix string, f Callback) map[int][]int {
+	starts := map[int][]int{}
+
+	if len(n.Children) == 0 {
+		// Leaf node.
+		terminator := prefix[len(prefix)-1:]
+		index := strings.Index(Terminators, terminator)
+		starts[index] = []int{n.Start}
+	} else {
+		// Non-leaf node.
+		for edge, child := range n.Children {
+			childStarts := child.DepthFirstSearch(prefix+edge, f)
+			merge(starts, childStarts)
+		}
+	}
+
+	if f != nil {
+		f(prefix, starts)
+	}
+
+	return starts
+}
+
+func merge(dst, src map[int][]int) {
+	for k, v := range src {
+		dst[k] = append(dst[k], v...)
+	}
+}
+
+// Debugging
+
 // func (t *Tree) Log() {
-// 	log(t.root, 0)
+// 	log(t.Root, 0)
 // }
 
 // func log(n *Node, indent int) {
