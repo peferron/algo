@@ -9,7 +9,7 @@ export function getVertexColoring(graph) {
     // coloring[x] is the color of the vertex x.
     const coloring = new Array(graph.vertexCount).fill(-1);
 
-    // neighboringColorsSets[x] is the set of colors adjacent to x.
+    // neighboringColors[x] is the set of colors adjacent to x.
     // Caching these sets allows this algorithm to run in O(n²) time.
     const neighboringColors = Array.from({length: graph.vertexCount}, () => new Set());
 
