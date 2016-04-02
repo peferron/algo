@@ -7,6 +7,7 @@ pub fn maximum_set_packing(subsets: &Vec<Vec<u8>>) -> Vec<usize> {
     let mut available_subsets_indexes = (0..subsets.len()).collect::<Vec<_>>();
 
     loop {
+        // Select the smallest subset that hasn't been used yet.
         // To find a minimum set packing, simply replace `min_by_key` with `max_by_key`.
         match available_subsets_indexes.iter().min_by_key(|i| subsets[**i].len()) {
             None => {
@@ -16,6 +17,7 @@ pub fn maximum_set_packing(subsets: &Vec<Vec<u8>>) -> Vec<usize> {
             Some(&smallest_available_subset_index) => {
                 packing.push(smallest_available_subset_index);
 
+                // Mark all intersected subsets as unavailable.
                 let bit_vector = &bit_vectors[smallest_available_subset_index];
                 available_subsets_indexes.retain(|i| !bit_vector.intersects(&bit_vectors[*i]));
             }
