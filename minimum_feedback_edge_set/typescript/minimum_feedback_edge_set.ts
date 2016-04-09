@@ -11,13 +11,12 @@ export function minimumFeedbackEdgeSet(graph: Graph): Edge[] {
     // Sort the vertices by increasing edge imbalance. Multiple vertices can have the same edge
     // imbalance, so we use the vertex number as a second sorting criteria.
     const imba = imbalances(graph);
-    const before = (x: number, y: number) => imba[x] < imba[y] || x < y;
+    const before = (x: number, y: number) => imba[x] < imba[y] || imba[x] === imba[y] && x < y;
 
     // Split the edges into two arrays, depending if they go left-to-right or right-to-left in the
     // vertex ordering.
     const ltr: Edge[] = [];
     const rtl: Edge[] = [];
-
     for (let edge of graph.edges) {
         const [x, y] = edge;
         if (before(x, y)) {

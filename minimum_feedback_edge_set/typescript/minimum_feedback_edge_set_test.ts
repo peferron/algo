@@ -46,7 +46,7 @@ const tests: Test[] = [
             [2, 1] // Could also be any of the two other edges.
         ]
     },
-     {
+    {
         graph: {
             vertexCount: 4,
             edges: [
