@@ -12,13 +12,17 @@ if [ -d "$dir" ]; then
     template="com.github.peferron.algo.$1.typescript"
     tmpdir=`mktemp -d 2>/dev/null || mktemp -d -t $template` || exit 1
 
-    if node_modules/typescript/bin/tsc --target ES6 --noImplicitAny --noEmitOnError --outDir "$tmpdir" "$dir"/*_test.ts; then
-        node_modules/babel/bin/babel-node.js "$tmpdir"/*_test.js
+    # Babel 6 resolves presets relatively to the input file
+    ln -s "$(pwd)"/node_modules "$tmpdir"/node_modules
+
+    if node_modules/.bin/tsc --target ES6 --noImplicitAny --noEmitOnError --outDir "$tmpdir" "$dir"/*_test.ts; then
+        node_modules/.bin/babel-node --presets es2015 "$tmpdir"/*_test.js
         rm "$tmpdir"/*.js
     else
         s=1
     fi
 
+    rm "$tmpdir"/node_modules
     rmdir "$tmpdir"
 fi
 
