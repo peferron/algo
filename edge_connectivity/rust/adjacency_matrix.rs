@@ -51,7 +51,7 @@ impl IndexMut<usize> for AdjacencyMatrix {
 
 // Breadth-first search.
 
-struct BreadthFirstSearch<'a> {
+pub struct BreadthFirstSearch<'a> {
     matrix: &'a AdjacencyMatrix,
     visited: Vec<bool>,
     queue: Vec<usize>,
