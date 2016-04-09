@@ -15,7 +15,8 @@ if [ -d "$dir" ]; then
     # Babel 6 resolves presets relatively to the input file
     ln -s "$(pwd)"/node_modules "$tmpdir"/node_modules
 
-    if node_modules/.bin/tsc --target ES6 --noImplicitAny --noEmitOnError --outDir "$tmpdir" "$dir"/*_test.ts; then
+    if node_modules/.bin/tsc --target ES6 --noImplicitAny --noImplicitReturns \
+        --noFallthroughCasesInSwitch --noEmitOnError --outDir "$tmpdir" "$dir"/*_test.ts; then
         node_modules/.bin/babel-node --presets es2015 "$tmpdir"/*_test.js
         rm "$tmpdir"/*.js
     else
