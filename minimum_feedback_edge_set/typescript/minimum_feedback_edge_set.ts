@@ -5,13 +5,15 @@ export interface Graph {
     edges: Edge[];
 }
 
+// minimumFeedbackEdgeSet returns an array of edges whose deletion turns graph into an acyclic
+// graph, and attempts to make this array as small as possible.
 export function minimumFeedbackEdgeSet(graph: Graph): Edge[] {
     // Sort the vertices by increasing edge imbalance. Multiple vertices can have the same edge
     // imbalance, so we use the vertex number as a second sorting criteria.
     const imba = imbalances(graph);
     const before = (x: number, y: number) => imba[x] < imba[y] || x < y;
 
-    // Split the edges into two sets, depending if they go left-to-right or right-to-left in the
+    // Split the edges into two arrays, depending if they go left-to-right or right-to-left in the
     // vertex ordering.
     const ltr: Edge[] = [];
     const rtl: Edge[] = [];
@@ -25,8 +27,8 @@ export function minimumFeedbackEdgeSet(graph: Graph): Edge[] {
         }
     }
 
-    // The smallest set is our approximation of the minimum feedback edge set. In most cases, the
-    // smallest set should be rtl.
+    // The smallest array is our approximation of the minimum feedback edge set. In most cases, the
+    // smallest array should be rtl.
     return ltr.length < rtl.length ? ltr : rtl;
 }
 
