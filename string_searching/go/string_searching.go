@@ -19,16 +19,16 @@ func indexes(text, pattern []Rune) []int {
 				firstMatchingRune := text[textIndex]
 				matches = append(matches, firstMatchingRune.index)
 				// Look for another match starting at the next text index.
-				textIndex += 1
+				textIndex++
 				patternIndex = 0
 			} else {
 				// Keep growing the current match.
-				patternIndex += 1
+				patternIndex++
 			}
 		} else if patternIndex == 0 {
 			// The current match failed on the first check.
 			// Look for a match starting at the next text index.
-			textIndex += 1
+			textIndex++
 		} else {
 			// The current match failed after some successful checks.
 			// Use the table to find out if there is a shorter match already underway that we should
@@ -62,7 +62,7 @@ func table(runes []Rune) []int {
 		// there, but we must use 0 for table[1] though.
 		case i < 2:
 			table[i] = 0
-			i += 1
+			i++
 
 		// There is already a match of length table[i-1] underway, and that's without using the rune
 		// at index i-1. The match is between:
@@ -72,8 +72,8 @@ func table(runes []Rune) []int {
 		// runes at indexes matchLength and i-1, are equal.
 		case runes[i-1].value == runes[matchLength].value:
 			table[i] = matchLength + 1
-			matchLength += 1
-			i += 1
+			matchLength++
+			i++
 
 		// The runes didn't match, which means we cannot extend the current match. However, there
 		// might be a shorter match that we can extend! Example:
@@ -102,7 +102,7 @@ func table(runes []Rune) []int {
 		// here because it's already 0, otherwise it would have matched the previous case.
 		default:
 			table[i] = 0
-			i += 1
+			i++
 		}
 	}
 
