@@ -3,4 +3,4 @@ language: node_js
 before_install:
   - sudo apt-get update
   - sudo apt-get install -y golang
-  - curl -sSf https://static.rust-lang.org/rustup.sh | sh -s -- --yes
+  - curl -sSf https://static.rust-lang.org/rustup.sh | sh -s -- --yes --channel=nightly
