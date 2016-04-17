@@ -10,8 +10,8 @@ impl<T> Number<T> for T where T: Copy + Debug + Div<Output = T> + Mul<Output = T
 
 #[derive(Copy, Clone)]
 pub struct Fraction<T> {
-    pub numerator: T,
-    pub denominator: T,
+    numerator: T,
+    denominator: T,
 }
 
 impl<T> Fraction<T> where T: Number<T> {
@@ -28,6 +28,10 @@ impl<T> Fraction<T> where T: Number<T> {
             numerator: numerator / gcd,
             denominator: denominator / gcd,
         }
+    }
+
+    pub fn to_raw<U>(&self) -> U where U: Div<Output = U> + From<T> {
+        U::from(self.numerator) / U::from(self.denominator)
     }
 }
 
@@ -75,9 +79,27 @@ impl<T> Neg for Fraction<T> where T: Number<T> {
     }
 }
 
+impl<T> One for Fraction<T> where T: Number<T> {
+    fn one() -> Self {
+        Fraction::new(T::one())
+    }
+}
+
 impl<T> PartialEq for Fraction<T> where T: Number<T> {
     fn eq(&self, rhs: &Fraction<T>) -> bool {
         self.numerator * rhs.denominator == self.denominator * rhs.numerator
+    }
+}
+
+impl<T> Rem for Fraction<T> where T: Number<T> {
+    type Output = Fraction<T>;
+
+    fn rem(self, rhs: Fraction<T>) -> Self {
+        let common_denominator = self.denominator * rhs.denominator;
+        let self_numerator_scaled = self.numerator * rhs.denominator;
+        let rhs_numerator_scaled = rhs.numerator * self.denominator;
+
+        Fraction::new_simplified(self_numerator_scaled % rhs_numerator_scaled, common_denominator)
     }
 }
 
@@ -90,5 +112,11 @@ impl<T> Sub for Fraction<T> where T: Number<T> {
         let rhs_numerator_scaled = rhs.numerator * self.denominator;
 
         Fraction::new_simplified(self_numerator_scaled - rhs_numerator_scaled, common_denominator)
+    }
+}
+
+impl<T> Zero for Fraction<T> where T: Number<T> {
+    fn zero() -> Self {
+        Fraction::new(T::zero())
     }
 }

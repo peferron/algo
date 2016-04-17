@@ -7,7 +7,7 @@ pub fn triangle_area(ax: i64, ay: i64, bx: i64, by: i64, cx: i64, cy: i64) -> f6
         cx, cy, 1,
     ]);
 
-    (matrix.determinant().abs() as f64) / 2.
+    matrix.determinant().abs() as f64 / 2.
 }
 
 // The triangle_area function can be generalized to the volume of a tetrahedron, and further to the
@@ -22,7 +22,7 @@ pub fn simplex_volume(points: Vec<Vec<i64>>) -> f64 {
     }
 
     let matrix = SquareMatrix::from_vec(&matrix_vec);
-    (matrix.determinant().abs() as f64) / (factorial(d) as f64)
+    matrix.determinant().abs() as f64 / factorial(d) as f64
 }
 
 fn factorial(n: usize) -> usize {

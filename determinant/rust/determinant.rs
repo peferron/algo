@@ -3,20 +3,23 @@ use square_matrix::SquareMatrix;
 
 impl<T> SquareMatrix<T> where T: Number<T> {
     pub fn determinant(&self) -> T {
-        let (upper, swaps) = self.lu_decomposition_upper();
-
-        let diag_fraction = upper.diagonal_product();
-        let diag = diag_fraction.numerator / diag_fraction.denominator;
+        let (upper, swaps) = self.to_fractions().lu_decomposition_upper();
+        let product = upper.diagonal_product().to_raw();
 
         if swaps % 2 == 0 {
-            diag
+            product
         } else {
-            -diag
+            -product
         }
     }
 
-    fn lu_decomposition_upper(&self) -> (SquareMatrix<Fraction<T>>, usize) {
-        let mut upper = self.to_fractions();
+    fn to_fractions(&self) -> SquareMatrix<Fraction<T>> {
+        let fractions = self.data.iter().map(|&v| Fraction::new(v)).collect();
+        SquareMatrix::from_vec(&fractions)
+    }
+
+    fn lu_decomposition_upper(&self) -> (SquareMatrix<T>, usize) {
+        let mut upper = self.clone();
         let mut swaps = 0;
 
         for j in 0..upper.order {
@@ -26,30 +29,15 @@ impl<T> SquareMatrix<T> where T: Number<T> {
         (upper, swaps)
     }
 
-    fn to_fractions(&self) -> SquareMatrix<Fraction<T>> {
-        let fractions = self.data.iter().map(|&v| Fraction::new(v)).collect();
-        SquareMatrix::from_vec(&fractions)
-    }
-}
-
-impl<T> SquareMatrix<Fraction<T>> where T: Number<T> {
-    fn diagonal_product(&self) -> Fraction<T> {
-        let mut product = self[(0, 0)]; // Let's assume that order > 0.
-        for i in 1..self.order {
-            product = product * self[(i, i)];
-        }
-        product
-    }
-
     fn eliminate_column(&mut self, column: usize) -> usize {
         // Eliminate elements in the column-th column, below the column-th row
         let mut swaps = 0;
         for i in (column + 1)..self.order {
-            if self[(i, column)].numerator == T::zero() {
+            if self[(i, column)] == T::zero() {
                 continue;
             }
 
-            if self[(column, column)].numerator == T::zero() {
+            if self[(column, column)] == T::zero() {
                 self.swap_rows(column, i);
                 swaps += 1;
                 continue;
@@ -68,5 +56,13 @@ impl<T> SquareMatrix<Fraction<T>> where T: Number<T> {
         for j in 0..self.order {
             self.data.swap(row_a * self.order + j, row_b * self.order + j);
         }
+    }
+
+    fn diagonal_product(&self) -> T {
+        let mut product = self[(0, 0)]; // Let's assume that order > 0.
+        for i in 1..self.order {
+            product = product * self[(i, i)];
+        }
+        product
     }
 }
