@@ -1,13 +1,12 @@
 #![feature(zero_one)]
 
-mod area;
+mod applications;
 mod determinant;
 mod fraction;
-mod singular;
 mod square_matrix;
 
 use square_matrix::SquareMatrix;
-use area::{triangle_area, simplex_volume};
+use applications::{triangle_area, simplex_volume, collinear, coplanar};
 
 #[test]
 fn test_determinant() {
@@ -98,3 +97,48 @@ fn test_singular() {
         1, 0,
     ]).is_singular(), false);
 }
+
+#[test]
+fn test_collinear() {
+    assert_eq!(collinear(
+        0, 0,
+        1, 0,
+        0, 1,
+    ), false);
+
+     assert_eq!(collinear(
+        0, 1,
+        2, 2,
+        6, 4,
+    ), true);
+}
+
+#[test]
+fn test_coplanar() {
+    assert_eq!(coplanar(vec![
+        vec![0, 0],
+        vec![1, 0],
+        vec![0, 1],
+    ]), false);
+
+    assert_eq!(coplanar(vec![
+        vec![0, 1],
+        vec![2, 2],
+        vec![6, 4],
+    ]), true);
+
+    assert_eq!(coplanar(vec![
+        vec![0, 1, 2],
+        vec![0, 2, 9],
+        vec![0, 12, -3],
+        vec![0, 0, 1],
+    ]), true);
+
+    assert_eq!(coplanar(vec![
+        vec![0, 1, 2],
+        vec![0, 2, 9],
+        vec![5, 12, -3],
+        vec![0, 0, 1],
+    ]), false);
+}
+
