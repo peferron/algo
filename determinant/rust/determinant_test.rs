@@ -173,7 +173,7 @@ fn test_plane_side() {
             vec![0, 1, 0],
         ],
         &vec![2, 3, 5],
-    ), PlaneSide::Below);
+    ), PlaneSide::B);
 
     assert_eq!(plane_side(
         &vec![
@@ -182,7 +182,7 @@ fn test_plane_side() {
             vec![0, 1, 0],
         ],
         &vec![2, 3, -5],
-    ), PlaneSide::Above);
+    ), PlaneSide::A);
 
     assert_eq!(plane_side(
         &vec![
@@ -191,7 +191,7 @@ fn test_plane_side() {
             vec![0, 1, 0],
         ],
         &vec![2, 3, 5],
-    ), PlaneSide::Above);
+    ), PlaneSide::A);
 
     assert_eq!(plane_side(
         &vec![
@@ -200,7 +200,7 @@ fn test_plane_side() {
             vec![0, -1, 0],
         ],
         &vec![2, 3, 5],
-    ), PlaneSide::Above);
+    ), PlaneSide::A);
 
         assert_eq!(plane_side(
         &vec![
@@ -209,7 +209,7 @@ fn test_plane_side() {
             vec![0, -1, 0],
         ],
         &vec![2, 3, 5],
-    ), PlaneSide::Below);
+    ), PlaneSide::B);
 
     assert_eq!(plane_side(
         &vec![

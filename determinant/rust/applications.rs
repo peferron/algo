@@ -67,7 +67,7 @@ pub fn coplanar(points: &Vec<Vec<i64>>) -> bool {
 }
 
 //
-// Side of a point relative to a line
+// Side of a point relative to a line or plane
 //
 
 #[derive(Debug, PartialEq)]
@@ -92,15 +92,13 @@ pub fn line_side(ax: i64, ay: i64, bx: i64, by: i64, cx: i64, cy: i64) -> LineSi
 
 #[derive(Debug, PartialEq)]
 pub enum PlaneSide {
-    Above,
-    Below,
+    A,
+    B,
     On,
 }
 
-// The line_side function can be generalized to answering if a point lies above, below, or on an
-// oriented plane defined by d points in d dimensions.
-// Note that "above" and "below" are not relative to the x-axis, but relative to the orientation of
-// the plane.
+// The line_side function can be generalized to answering if a point lies on one side, on the other
+// side, or on an oriented plane defined by d points in d dimensions.
 pub fn plane_side(plane: &Vec<Vec<i64>>, point: &Vec<i64>) -> PlaneSide {
     let mut points = plane.clone();
     points.push(point.clone());
@@ -108,9 +106,9 @@ pub fn plane_side(plane: &Vec<Vec<i64>>, point: &Vec<i64>) -> PlaneSide {
     let area = simplex_volume_signed(&points);
 
     if area > 0. {
-        PlaneSide::Above
+        PlaneSide::A
     } else if area < 0. {
-        PlaneSide::Below
+        PlaneSide::B
     } else {
         PlaneSide::On
     }
