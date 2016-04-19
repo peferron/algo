@@ -6,7 +6,8 @@ mod fraction;
 mod square_matrix;
 
 use square_matrix::SquareMatrix;
-use applications::{triangle_area, simplex_volume, collinear, coplanar};
+use applications::{triangle_area, simplex_volume, collinear, coplanar, line_side, LineSide,
+    plane_side, PlaneSide};
 
 #[test]
 fn test_determinant() {
@@ -59,25 +60,25 @@ fn test_triangle_area() {
 
 #[test]
 fn test_simplex_volume() {
-    assert_eq!(simplex_volume(vec![
+    assert_eq!(simplex_volume(&vec![
         vec![0, 0],
         vec![1, 0],
         vec![0, 1],
     ]), 0.5);
 
-    assert_eq!(simplex_volume(vec![
+    assert_eq!(simplex_volume(&vec![
         vec![-1, -2],
         vec![14, -2],
         vec![11, 2],
     ]), 30.);
 
-    assert_eq!(simplex_volume(vec![
+    assert_eq!(simplex_volume(&vec![
         vec![10, 20],
         vec![10, 29],
         vec![16, 20],
     ]), 27.);
 
-    assert_eq!(simplex_volume(vec![
+    assert_eq!(simplex_volume(&vec![
         vec![3, 2, 1],
         vec![1, 2, 4],
         vec![4, 0, 3],
@@ -115,26 +116,26 @@ fn test_collinear() {
 
 #[test]
 fn test_coplanar() {
-    assert_eq!(coplanar(vec![
+    assert_eq!(coplanar(&vec![
         vec![0, 0],
         vec![1, 0],
         vec![0, 1],
     ]), false);
 
-    assert_eq!(coplanar(vec![
+    assert_eq!(coplanar(&vec![
         vec![0, 1],
         vec![2, 2],
         vec![6, 4],
     ]), true);
 
-    assert_eq!(coplanar(vec![
+    assert_eq!(coplanar(&vec![
         vec![0, 1, 2],
         vec![0, 2, 9],
         vec![0, 12, -3],
         vec![0, 0, 1],
     ]), true);
 
-    assert_eq!(coplanar(vec![
+    assert_eq!(coplanar(&vec![
         vec![0, 1, 2],
         vec![0, 2, 9],
         vec![5, 12, -3],
@@ -142,3 +143,80 @@ fn test_coplanar() {
     ]), false);
 }
 
+#[test]
+fn test_line_side() {
+    assert_eq!(line_side(
+        1, 1,
+        2, 2,
+        0, 1,
+    ), LineSide::Left);
+
+    assert_eq!(line_side(
+        1, 1,
+        2, 2,
+        1, 0,
+    ), LineSide::Right);
+
+    assert_eq!(line_side(
+        1, 1,
+        2, 2,
+        3, 3,
+    ), LineSide::On);
+}
+
+#[test]
+fn test_plane_side() {
+    assert_eq!(plane_side(
+        &vec![
+            vec![0, 0, 0],
+            vec![1, 0, 0],
+            vec![0, 1, 0],
+        ],
+        &vec![2, 3, 5],
+    ), PlaneSide::Below);
+
+    assert_eq!(plane_side(
+        &vec![
+            vec![0, 0, 0],
+            vec![1, 0, 0],
+            vec![0, 1, 0],
+        ],
+        &vec![2, 3, -5],
+    ), PlaneSide::Above);
+
+    assert_eq!(plane_side(
+        &vec![
+            vec![0, 0, 0],
+            vec![-1, 0, 0],
+            vec![0, 1, 0],
+        ],
+        &vec![2, 3, 5],
+    ), PlaneSide::Above);
+
+    assert_eq!(plane_side(
+        &vec![
+            vec![0, 0, 0],
+            vec![1, 0, 0],
+            vec![0, -1, 0],
+        ],
+        &vec![2, 3, 5],
+    ), PlaneSide::Above);
+
+        assert_eq!(plane_side(
+        &vec![
+            vec![0, 0, 0],
+            vec![-1, 0, 0],
+            vec![0, -1, 0],
+        ],
+        &vec![2, 3, 5],
+    ), PlaneSide::Below);
+
+    assert_eq!(plane_side(
+        &vec![
+            vec![0, 0, 0],
+            vec![0, 1, 0],
+            vec![1, 0, 0],
+        ],
+        &vec![2, 3, 0],
+    ), PlaneSide::On);
+}
