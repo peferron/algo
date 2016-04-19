@@ -3,6 +3,7 @@
 mod area;
 mod determinant;
 mod fraction;
+mod singular;
 mod square_matrix;
 
 use square_matrix::SquareMatrix;
@@ -83,4 +84,17 @@ fn test_simplex_volume() {
         vec![4, 0, 3],
         vec![1, 1, 7],
     ]), 5./6.);
+}
+
+#[test]
+fn test_singular() {
+    assert_eq!(SquareMatrix::from_vec(&vec![
+        1, 1,
+        0, 0,
+    ]).is_singular(), true);
+
+    assert_eq!(SquareMatrix::from_vec(&vec![
+        1, 1,
+        1, 0,
+    ]).is_singular(), false);
 }
