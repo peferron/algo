@@ -1,4 +1,4 @@
-#![feature(zero_one)]
+#![feature(slice_patterns, zero_one)]
 
 mod applications;
 mod determinant;
@@ -218,6 +218,24 @@ fn test_plane_side() {
         ],
         &vec![2, 3, 0],
     ), PlaneSide::On);
+}
+
+#[test]
+fn test_circle_side() {
+    assert_eq!(circle_side(
+         [Point { x: 0, y: 0 }, Point { x: 1, y: 1 }, Point { x: 0, y: 2 }],
+         Point{ x: 0, y: 1 },
+    ), CircleSide::Inside);
+
+    assert_eq!(circle_side(
+         [Point { x: 0, y: 0 }, Point { x: 1, y: 1 }, Point { x: 0, y: 2 }],
+         Point{ x: 0, y: 3 },
+    ), CircleSide::Outside);
+
+    assert_eq!(circle_side(
+         [Point { x: 0, y: 0 }, Point { x: 1, y: 1 }, Point { x: 0, y: 2 }],
+         Point{ x: -1, y: 1 },
+    ), CircleSide::On);
 }
 
 #[test]

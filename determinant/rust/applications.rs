@@ -120,6 +120,39 @@ pub fn plane_side(plane: &Vec<Vec<i64>>, point: &Vec<i64>) -> PlaneSide {
     }
 }
 
+
+//
+// Side of a point relative to a circle
+//
+
+#[derive(Debug, PartialEq)]
+pub enum CircleSide {
+    Inside,
+    Outside,
+    On,
+}
+
+pub fn circle_side(circle: [Point; 3], point: Point) -> CircleSide {
+    let [c0, c1, c2] = circle;
+
+    let matrix = SquareMatrix::from_vec(&vec![
+        c0.x, c0.y, c0.x.pow(2) + c0.y.pow(2), 1,
+        c1.x, c1.y, c1.x.pow(2) + c1.y.pow(2), 1,
+        c2.x, c2.y, c2.x.pow(2) + c2.y.pow(2), 1,
+        point.x, point.y, point.x.pow(2) + point.y.pow(2), 1,
+    ]);
+
+    let det = matrix.determinant();
+
+    if det > 0 {
+        CircleSide::Inside
+    } else if det < 0 {
+        CircleSide::Outside
+    } else {
+        CircleSide::On
+    }
+}
+
 //
 // Intersection between line and line segment
 //
