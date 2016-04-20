@@ -6,7 +6,7 @@ mod fraction;
 mod square_matrix;
 
 use square_matrix::SquareMatrix;
-use applications::{triangle_area, simplex_volume, collinear, coplanar, line_side, LineSide,
+use applications::{Point, triangle_area, simplex_volume, collinear, coplanar, line_side, LineSide,
     plane_side, PlaneSide};
 
 #[test]
@@ -40,21 +40,21 @@ fn test_determinant() {
 #[test]
 fn test_triangle_area() {
     assert_eq!(triangle_area(
-        0, 0,
-        1, 0,
-        0, 1,
+        Point { x: 0, y: 0 },
+        Point { x: 1, y: 0 },
+        Point { x: 0, y: 1 },
     ), 0.5);
 
     assert_eq!(triangle_area(
-        -1, -2,
-        14, -2,
-        11, 2,
+         Point { x: -1, y: -2 },
+         Point { x: 14, y: -2 },
+         Point { x: 11, y: 2 },
     ), 30.);
 
     assert_eq!(triangle_area(
-        10, 20,
-        10, 29,
-        16, 20,
+         Point { x: 10, y: 20 },
+         Point { x: 10, y: 29 },
+         Point { x: 16, y: 20 },
     ), 27.);
 }
 
@@ -102,15 +102,15 @@ fn test_singular() {
 #[test]
 fn test_collinear() {
     assert_eq!(collinear(
-        0, 0,
-        1, 0,
-        0, 1,
+         Point { x: 0, y: 0 },
+         Point { x: 1, y: 0 },
+         Point { x: 0, y: 1 },
     ), false);
 
      assert_eq!(collinear(
-        0, 1,
-        2, 2,
-        6, 4,
+         Point { x: 0, y: 1 },
+         Point { x: 2, y: 2 },
+         Point { x: 6, y: 4 },
     ), true);
 }
 
@@ -146,21 +146,21 @@ fn test_coplanar() {
 #[test]
 fn test_line_side() {
     assert_eq!(line_side(
-        1, 1,
-        2, 2,
-        0, 1,
+         Point { x: 1, y: 1 },
+         Point { x: 2, y: 2 },
+         Point { x: 0, y: 1 },
     ), LineSide::Left);
 
     assert_eq!(line_side(
-        1, 1,
-        2, 2,
-        1, 0,
+         Point { x: 1, y: 1 },
+         Point { x: 2, y: 2 },
+         Point { x: 1, y: 0 },
     ), LineSide::Right);
 
     assert_eq!(line_side(
-        1, 1,
-        2, 2,
-        3, 3,
+         Point { x: 1, y: 1 },
+         Point { x: 2, y: 2 },
+         Point { x: 3, y: 3 },
     ), LineSide::On);
 }
 

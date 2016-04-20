@@ -1,6 +1,11 @@
 use fraction::Number;
 use square_matrix::SquareMatrix;
 
+pub struct Point {
+    pub x: i64,
+    pub y: i64,
+}
+
 //
 // Singularity
 //
@@ -15,15 +20,15 @@ impl<T> SquareMatrix<T> where T: Number<T> {
 // Area & volume
 //
 
-pub fn triangle_area(ax: i64, ay: i64, bx: i64, by: i64, cx: i64, cy: i64) -> f64 {
-    triangle_area_signed(ax, ay, bx, by, cx, cy).abs()
+pub fn triangle_area(a: Point, b: Point, c: Point) -> f64 {
+    triangle_area_signed(a, b, c).abs()
 }
 
-fn triangle_area_signed(ax: i64, ay: i64, bx: i64, by: i64, cx: i64, cy: i64) -> f64 {
+fn triangle_area_signed(a: Point, b: Point, c: Point) -> f64 {
     let matrix = SquareMatrix::from_vec(&vec![
-        ax, ay, 1,
-        bx, by, 1,
-        cx, cy, 1,
+        a.x, a.y, 1,
+        b.x, b.y, 1,
+        c.x, c.y, 1,
     ]);
 
     matrix.determinant() as f64 / 2.
@@ -56,8 +61,8 @@ fn factorial(n: usize) -> usize {
 // Collinearity & coplanarity
 //
 
-pub fn collinear(ax: i64, ay: i64, bx: i64, by: i64, cx: i64, cy: i64) -> bool {
-    triangle_area(ax, ay, bx, by, cx, cy) == 0.
+pub fn collinear(a: Point, b: Point, c: Point) -> bool {
+    triangle_area(a, b, c) == 0.
 }
 
 // Again, the collinear function can be generalized to determine if d+1 points are coplanar in d
@@ -79,8 +84,8 @@ pub enum LineSide {
 
 // Does c lie to the left, to the right, or on the directed line that passes through a before b?
 // Note that "left" and "right" are not relative to the x-axis, but to the direction of the line.
-pub fn line_side(ax: i64, ay: i64, bx: i64, by: i64, cx: i64, cy: i64) -> LineSide {
-    let area = triangle_area_signed(ax, ay, bx, by, cx, cy);
+pub fn line_side(a: Point, b: Point, c: Point) -> LineSide {
+    let area = triangle_area_signed(a, b, c);
     if area > 0. {
         LineSide::Left
     } else if area < 0. {
