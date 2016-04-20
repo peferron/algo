@@ -1,6 +1,7 @@
 use fraction::Number;
 use square_matrix::SquareMatrix;
 
+#[derive(Debug, Clone, Copy)]
 pub struct Point {
     pub x: i64,
     pub y: i64,
@@ -117,4 +118,12 @@ pub fn plane_side(plane: &Vec<Vec<i64>>, point: &Vec<i64>) -> PlaneSide {
     } else {
         PlaneSide::On
     }
+}
+
+//
+// Intersection between line and line segment
+//
+
+pub fn intersects(line: (Point, Point), segment: (Point, Point)) -> bool {
+    line_side(line.0, line.1, segment.0) != line_side(line.0, line.1, segment.1)
 }
