@@ -86,13 +86,10 @@ pub enum LineSide {
 // Does c lie to the left, to the right, or on the directed line that passes through a before b?
 // Note that "left" and "right" are not relative to the x-axis, but to the direction of the line.
 pub fn line_side(a: Point, b: Point, c: Point) -> LineSide {
-    let area = triangle_area_signed(a, b, c);
-    if area > 0. {
-        LineSide::Left
-    } else if area < 0. {
-        LineSide::Right
-    } else {
-        LineSide::On
+    match triangle_area_signed(a, b, c) {
+        area if area > 0. => LineSide::Left,
+        area if area < 0. => LineSide::Right,
+        _ => LineSide::On,
     }
 }
 
@@ -109,14 +106,10 @@ pub fn plane_side(plane: &Vec<Vec<i64>>, point: &Vec<i64>) -> PlaneSide {
     let mut points = plane.clone();
     points.push(point.clone());
 
-    let area = simplex_volume_signed(&points);
-
-    if area > 0. {
-        PlaneSide::A
-    } else if area < 0. {
-        PlaneSide::B
-    } else {
-        PlaneSide::On
+    match simplex_volume_signed(&points) {
+        area if area > 0. => PlaneSide::A,
+        area if area < 0. => PlaneSide::B,
+        _ => PlaneSide::On,
     }
 }
 
@@ -142,14 +135,10 @@ pub fn circle_side(circle: [Point; 3], point: Point) -> CircleSide {
         point.x, point.y, point.x.pow(2) + point.y.pow(2), 1,
     ]);
 
-    let det = matrix.determinant();
-
-    if det > 0 {
-        CircleSide::Inside
-    } else if det < 0 {
-        CircleSide::Outside
-    } else {
-        CircleSide::On
+    match matrix.determinant() {
+        d if d > 0 => CircleSide::Inside,
+        d if d < 0 => CircleSide::Outside,
+        _ => CircleSide::On,
     }
 }
 
