@@ -6,8 +6,7 @@ mod fraction;
 mod square_matrix;
 
 use square_matrix::SquareMatrix;
-use applications::{Point, triangle_area, simplex_volume, collinear, coplanar, line_side, LineSide,
-    plane_side, PlaneSide, intersects};
+use applications::*;
 
 #[test]
 fn test_determinant() {
@@ -224,27 +223,27 @@ fn test_plane_side() {
 #[test]
 fn test_intersects() {
     assert_eq!(intersects(
-         (Point { x: 0, y: 0 }, Point { x: 1, y: 1 }),
-         (Point { x: 2, y: 0 }, Point { x: 0, y: 2 }),
+         [Point { x: 0, y: 0 }, Point { x: 1, y: 1 }],
+         [Point { x: 2, y: 0 }, Point { x: 0, y: 2 }],
     ), true);
 
     assert_eq!(intersects(
-         (Point { x: 0, y: 0 }, Point { x: 1, y: 1 }),
-         (Point { x: 2, y: 0 }, Point { x: 2, y: 2 }),
+         [Point { x: 0, y: 0 }, Point { x: 1, y: 1 }],
+         [Point { x: 2, y: 0 }, Point { x: 2, y: 2 }],
     ), true);
 
     assert_eq!(intersects(
-         (Point { x: 0, y: 0 }, Point { x: 1, y: 1 }),
-         (Point { x: 2, y: 0 }, Point { x: 2, y: 1 }),
+         [Point { x: 0, y: 0 }, Point { x: 1, y: 1 }],
+         [Point { x: 2, y: 0 }, Point { x: 2, y: 1 }],
     ), false);
 
     assert_eq!(intersects(
-         (Point { x: 0, y: 0 }, Point { x: 1, y: 1 }),
-         (Point { x: 1, y: 1 }, Point { x: 2, y: 2 }),
+         [Point { x: 0, y: 0 }, Point { x: 1, y: 1 }],
+         [Point { x: 1, y: 1 }, Point { x: 2, y: 2 }],
     ), false);
 
     assert_eq!(intersects(
-         (Point { x: 0, y: 0 }, Point { x: 1, y: 1 }),
-         (Point { x: 2, y: 2 }, Point { x: 2, y: 2 }),
+         [Point { x: 0, y: 0 }, Point { x: 1, y: 1 }],
+         [Point { x: 2, y: 2 }, Point { x: 2, y: 2 }],
     ), false);
 }

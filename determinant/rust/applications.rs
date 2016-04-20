@@ -124,6 +124,6 @@ pub fn plane_side(plane: &Vec<Vec<i64>>, point: &Vec<i64>) -> PlaneSide {
 // Intersection between line and line segment
 //
 
-pub fn intersects(line: (Point, Point), segment: (Point, Point)) -> bool {
-    line_side(line.0, line.1, segment.0) != line_side(line.0, line.1, segment.1)
+pub fn intersects(line: [Point; 2], segment: [Point; 2]) -> bool {
+    line_side(line[0], line[1], segment[0]) != line_side(line[0], line[1], segment[1])
 }
