@@ -3,8 +3,8 @@ use square_matrix::SquareMatrix;
 
 #[derive(Debug, Clone, Copy)]
 pub struct Point {
-    pub x: i64,
-    pub y: i64,
+    pub x: i32,
+    pub y: i32,
 }
 
 //
@@ -21,27 +21,27 @@ impl<T> SquareMatrix<T> where T: Number<T> {
 // Area & volume
 //
 
-pub fn triangle_area(a: Point, b: Point, c: Point) -> f64 {
+pub fn triangle_area(a: Point, b: Point, c: Point) -> f32 {
     triangle_area_signed(a, b, c).abs()
 }
 
-fn triangle_area_signed(a: Point, b: Point, c: Point) -> f64 {
+fn triangle_area_signed(a: Point, b: Point, c: Point) -> f32 {
     let matrix = SquareMatrix::from_vec(&vec![
         a.x, a.y, 1,
         b.x, b.y, 1,
         c.x, c.y, 1,
     ]);
 
-    matrix.determinant() as f64 / 2.
+    matrix.determinant() as f32 / 2.
 }
 
 // The triangle_area function can be generalized to the volume of a tetrahedron, and further to the
 // volume of a simplex defined by d+1 points in d dimensions.
-pub fn simplex_volume(points: &Vec<Vec<i64>>) -> f64 {
+pub fn simplex_volume(points: &Vec<Vec<i32>>) -> f32 {
     simplex_volume_signed(points).abs()
 }
 
-fn simplex_volume_signed(points: &Vec<Vec<i64>>) -> f64 {
+fn simplex_volume_signed(points: &Vec<Vec<i32>>) -> f32 {
     let d = points.len() - 1;
 
     let mut matrix_vec = Vec::with_capacity((d + 1) * (d + 1));
@@ -51,7 +51,7 @@ fn simplex_volume_signed(points: &Vec<Vec<i64>>) -> f64 {
     }
 
     let matrix = SquareMatrix::from_vec(&matrix_vec);
-    matrix.determinant() as f64 / factorial(d) as f64
+    matrix.determinant() as f32 / factorial(d) as f32
 }
 
 fn factorial(n: usize) -> usize {
@@ -68,7 +68,7 @@ pub fn collinear(a: Point, b: Point, c: Point) -> bool {
 
 // Again, the collinear function can be generalized to determine if d+1 points are coplanar in d
 // dimensions.
-pub fn coplanar(points: &Vec<Vec<i64>>) -> bool {
+pub fn coplanar(points: &Vec<Vec<i32>>) -> bool {
     simplex_volume(points) == 0.
 }
 
@@ -102,7 +102,7 @@ pub enum PlaneSide {
 
 // The line_side function can be generalized to answering if a point lies on one side, on the other
 // side, or on an oriented plane defined by d points in d dimensions.
-pub fn plane_side(plane: &Vec<Vec<i64>>, point: &Vec<i64>) -> PlaneSide {
+pub fn plane_side(plane: &Vec<Vec<i32>>, point: &Vec<i32>) -> PlaneSide {
     let mut points = plane.clone();
     points.push(point.clone());
 
