@@ -1,4 +1,4 @@
-import {Point2D, giftWrap2D} from './convex_hull';
+import {Point2D, giftWrap2D, graham2D} from './convex_hull';
 
 declare function require(name: string): any;
 const assert = require('assert');
@@ -153,6 +153,6 @@ function runTest(test: Test, fn: (points: Point2D[]) => Point2D[]) {
     assert.deepEqual(actual, expected);
 }
 
-[giftWrap2D].forEach(fn => tests.forEach(test => runTest(test, fn)));
+[giftWrap2D, graham2D].forEach(fn => tests.forEach(test => runTest(test, fn)));
 
 console.log('All tests OK.');
