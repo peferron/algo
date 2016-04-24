@@ -1,3 +1,3 @@
 #!/bin/sh
 
-go vet `find . -type d -name "go"`
+go vet $(find . -type d -name "go")
