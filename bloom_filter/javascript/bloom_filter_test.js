@@ -62,5 +62,3 @@ function randomKey() {
 }
 
 testRandomSequences();
-
-console.log('All tests OK.');

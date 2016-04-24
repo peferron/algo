@@ -3,6 +3,11 @@
 dir="$1/javascript"
 
 if [ -d "$dir" ]; then
+    set -e
+
     printf "$dir: "
+
     node_modules/.bin/babel-node --presets es2015 "$dir"/*_test.js
+
+    printf "All tests OK.\n"
 fi

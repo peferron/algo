@@ -254,5 +254,3 @@ function runTest(test) {
 }
 
 tests.forEach(runTest);
-
-console.log('All tests OK.');

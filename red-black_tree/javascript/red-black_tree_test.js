@@ -151,5 +151,3 @@ function compareNumbers(a, b) {
 
 testBasicSequence();
 testRandomSequences();
-
-console.log('All tests OK.');

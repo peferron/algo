@@ -47,5 +47,3 @@ function testDepthFirstSearch() {
 testConstruct();
 testBreadthFirstSearch();
 testDepthFirstSearch();
-
-console.log('All tests OK.');

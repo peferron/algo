@@ -76,5 +76,3 @@ function clone(a) {
 
 testBasicInputs();
 testRandomInputs();
-
-console.log('All tests OK.');

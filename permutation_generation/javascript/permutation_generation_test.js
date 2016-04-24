@@ -87,5 +87,3 @@ function testAll() {
 testRank();
 testUnrank();
 testAll();
-
-console.log('All tests OK.');

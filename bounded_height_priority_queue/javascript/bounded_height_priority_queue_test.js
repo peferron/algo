@@ -38,5 +38,3 @@ function testBasicSequence() {
 }
 
 testBasicSequence();
-
-console.log('All tests OK.');

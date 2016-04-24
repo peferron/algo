@@ -125,5 +125,3 @@ function randomValue() {
 
 testBasicSequence();
 testRandomSequences();
-
-console.log('All tests OK.');

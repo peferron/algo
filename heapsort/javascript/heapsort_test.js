@@ -80,5 +80,3 @@ testBasicInputs(maxheap.slowHeapify);
 
 testRandomInputs(maxheap.fastHeapify);
 testRandomInputs(maxheap.slowHeapify);
-
-console.log('All tests OK.');
