@@ -1,10 +1,10 @@
-export interface Point2D {
+export interface Point {
     x: number;
     y: number;
 }
 
 // eql returns whether the points a and b are equal.
-const eql = (a: Point2D, b: Point2D) => a.x === b.x && a.y === b.y;
+const eql = (a: Point, b: Point) => a.x === b.x && a.y === b.y;
 
 enum Side {
     Left,
@@ -14,7 +14,7 @@ enum Side {
 
 // side returns whether point is to the left, the right, or on the directed line that passes through
 // lineFrom before lineTo.
-const side = (lineFrom: Point2D, lineTo: Point2D, point: Point2D) => {
+const side = (lineFrom: Point, lineTo: Point, point: Point) => {
     // The signed area of the triangle (a, b, c) is half the determinant of the following matrix:
     //     [ ax, ay, 1 ]
     //     [ bx, by, 1 ]
@@ -29,13 +29,13 @@ const side = (lineFrom: Point2D, lineTo: Point2D, point: Point2D) => {
     return determinant > 0 ? Side.Left : determinant < 0 ? Side.Right : Side.On;
 };
 
-// giftWrap2D returns the convex hull of the points, using the gift wrapping algorithm.
-export function giftWrap2D(points: Point2D[]): Point2D[] {
+// giftWrap returns the convex hull of the points, using the gift wrapping algorithm.
+export function giftWrap(points: Point[]): Point[] {
     if (points.length <= 3) {
         return points;
     }
 
-    const hull: Point2D[] = [];
+    const hull: Point[] = [];
 
     // Start with the left-most point.
     const start = points.reduce((best, p) => p.x < best.x ? p : best);
@@ -48,14 +48,14 @@ export function giftWrap2D(points: Point2D[]): Point2D[] {
 }
 
 // giftWrapNext return the next convex hull point, going clockwise from prev.
-const giftWrapNext = (points: Point2D[], prev: Point2D) =>
+const giftWrapNext = (points: Point[], prev: Point) =>
     // This could be optimized to use only one pass.
     points
         .filter(p => !eql(prev, p))
         .reduce((best, p) => side(prev, best, p) === Side.Left ? p : best);
 
-// graham2D returns the convex hull of the points, using the Graham scan algorithm.
-export function graham2D(points: Point2D[]): Point2D[] {
+// graham returns the convex hull of the points, using the Graham scan algorithm.
+export function graham(points: Point[]): Point[] {
     if (points.length <= 3) {
         return points;
     }
@@ -88,7 +88,7 @@ export function graham2D(points: Point2D[]): Point2D[] {
     // starting from ordered[2]. However, if we do that, at the end of the iteration start will be
     // present twice, as both the first and last element. We could add a hull.pop(), but it's
     // simpler to initialize hull to [ordered[0], ordered[1]] and keep start as the last element.
-    const hull: Point2D[] = [ordered[0], ordered[1]];
+    const hull: Point[] = [ordered[0], ordered[1]];
 
     for (let i = 2; i < ordered.length; i++) {
         hull.push(ordered[i]);
@@ -98,7 +98,7 @@ export function graham2D(points: Point2D[]): Point2D[] {
     return hull;
 }
 
-function removeClockwiseTurns(hull: Point2D[]) {
+function removeClockwiseTurns(hull: Point[]) {
     while (side(hull[hull.length - 3], hull[hull.length - 2], hull[hull.length - 1]) === Side.Right) {
         hull.splice(hull.length - 2, 1);
     }

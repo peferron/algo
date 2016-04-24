@@ -1,11 +1,11 @@
-import {Point2D, giftWrap2D, graham2D} from './convex_hull';
+import {Point, giftWrap, graham} from './convex_hull';
 
 declare function require(name: string): any;
 const assert = require('assert');
 
 interface Test {
-    points: Point2D[];
-    convexHull: Point2D[];
+    points: Point[];
+    convexHull: Point[];
 }
 
 const tests: Test[] = [
@@ -145,12 +145,12 @@ const tests: Test[] = [
     }
 ];
 
-const compare = (a: Point2D, b: Point2D) => a.x !== b.x ? a.x - b.x : a.y - b.y;
+const compare = (a: Point, b: Point) => a.x !== b.x ? a.x - b.x : a.y - b.y;
 
-function runTest(test: Test, fn: (points: Point2D[]) => Point2D[]) {
+function runTest(test: Test, fn: (points: Point[]) => Point[]) {
     const actual = fn(test.convexHull).sort(compare);
     const expected = test.convexHull.sort(compare);
     assert.deepEqual(actual, expected);
 }
 
-[giftWrap2D, graham2D].forEach(fn => tests.forEach(test => runTest(test, fn)));
+[giftWrap, graham].forEach(fn => tests.forEach(test => runTest(test, fn)));
