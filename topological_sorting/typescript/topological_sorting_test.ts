@@ -52,5 +52,3 @@ function deepEqual(a: any, b: any): boolean {
 }
 
 tests.forEach(runTest);
-
-console.log('All tests OK.');

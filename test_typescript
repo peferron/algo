@@ -2,29 +2,24 @@
 
 dir="$1/typescript"
 
-s=0
-trap "s=1" ERR
-
 if [ -d "$dir" ]; then
+    set -e
+
     printf "$dir: "
 
     # See http://unix.stackexchange.com/a/84980
     template="com.github.peferron.algo.$1.typescript"
-    tmpdir=`mktemp -d 2>/dev/null || mktemp -d -t $template` || exit 1
+    tmpdir=$(mktemp -d 2>/dev/null || mktemp -d -t $template)
+
+    trap 'rm -f "$tmpdir"/*.js; rm -f "$tmpdir"/node_modules; rmdir "$tmpdir"' EXIT
 
     # Babel 6 resolves presets relatively to the input file
     ln -s "$(pwd)"/node_modules "$tmpdir"/node_modules
 
-    if node_modules/.bin/tsc --target ES6 --noImplicitAny --noImplicitReturns \
-        --noFallthroughCasesInSwitch --noEmitOnError --outDir "$tmpdir" "$dir"/*_test.ts; then
-        node_modules/.bin/babel-node --presets es2015 "$tmpdir"/*_test.js
-        rm "$tmpdir"/*.js
-    else
-        s=1
-    fi
+    node_modules/.bin/tsc --target ES6 --noImplicitAny --noImplicitReturns \
+        --noFallthroughCasesInSwitch --noEmitOnError --outDir "$tmpdir" "$dir"/*_test.ts
 
-    rm "$tmpdir"/node_modules
-    rmdir "$tmpdir"
+    node_modules/.bin/babel-node --presets es2015 "$tmpdir"/*_test.js
+
+    printf "All tests OK.\n"
 fi
-
-exit $s

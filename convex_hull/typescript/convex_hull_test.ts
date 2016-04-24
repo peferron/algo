@@ -154,5 +154,3 @@ function runTest(test: Test, fn: (points: Point2D[]) => Point2D[]) {
 }
 
 [giftWrap2D, graham2D].forEach(fn => tests.forEach(test => runTest(test, fn)));
-
-console.log('All tests OK.');

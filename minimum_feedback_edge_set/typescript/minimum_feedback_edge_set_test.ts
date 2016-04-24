@@ -72,5 +72,3 @@ function runTest(test: Test) {
 }
 
 tests.forEach(runTest);
-
-console.log('All tests OK.');

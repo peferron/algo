@@ -77,5 +77,3 @@ function compareEdges(a: Edge, b: Edge): number {
 }
 
 tests.forEach(runTest);
-
-console.log('All tests OK.');
