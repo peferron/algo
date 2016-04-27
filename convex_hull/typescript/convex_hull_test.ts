@@ -1,4 +1,4 @@
-import {Point, giftWrap, graham} from './convex_hull';
+import {Point, giftWrap, graham, monotoneChain} from './convex_hull';
 
 declare function require(name: string): any;
 const assert = require('assert');
@@ -145,12 +145,12 @@ const tests: Test[] = [
     }
 ];
 
-const compare = (a: Point, b: Point) => a.x !== b.x ? a.x - b.x : a.y - b.y;
+const lexicographicalComparison = (a: Point, b: Point) => (a.x - b.x) || (a.y - b.y);
 
 function runTest(test: Test, fn: (points: Point[]) => Point[]) {
-    const actual = fn(test.convexHull).sort(compare);
-    const expected = test.convexHull.sort(compare);
+    const actual = fn(test.points).sort(lexicographicalComparison);
+    const expected = test.convexHull.sort(lexicographicalComparison);
     assert.deepEqual(actual, expected);
 }
 
-[giftWrap, graham].forEach(fn => tests.forEach(test => runTest(test, fn)));
+[giftWrap, graham, monotoneChain].forEach(fn => tests.forEach(test => runTest(test, fn)));

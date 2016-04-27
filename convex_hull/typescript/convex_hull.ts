@@ -99,7 +99,38 @@ export function graham(points: Point[]): Point[] {
 }
 
 function removeClockwiseTurns(hull: Point[]) {
-    while (side(hull[hull.length - 3], hull[hull.length - 2], hull[hull.length - 1]) === Side.Right) {
+    while (hull.length > 2 &&
+        side(hull[hull.length - 3], hull[hull.length - 2], hull[hull.length - 1]) !== Side.Left) {
         hull.splice(hull.length - 2, 1);
     }
+}
+
+// monotoneChain returns the convex hull of the points, using the monotone chain algorithm.
+export function monotoneChain(points: Point[]): Point[] {
+    const n = points.length;
+
+    if (n <= 3) {
+        return points;
+    }
+
+    // Sort the points lexicographically, i.e. by x first and y second.
+    const ordered = points.sort((a, b) => (a.x - b.x) || (a.y - b.y));
+
+    const lower = [ordered[0], ordered[1]];
+    for (let i = 2; i < n; i++) {
+        lower.push(ordered[i]);
+        removeClockwiseTurns(lower);
+    }
+
+    const upper = [ordered[n - 1], ordered[n - 2]];
+    for (let i = n - 3; i >= 0; i--) {
+        upper.push(ordered[i]);
+        removeClockwiseTurns(upper);
+    }
+
+    // The first and last points in ordered are present in both lower and upper. We need to make
+    // sure not to include them twice in the returned convex hull.
+    lower.pop();
+    upper.pop();
+    return lower.concat(upper);
 }
