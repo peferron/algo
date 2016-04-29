@@ -1,6 +1,5 @@
-language: node_js
+language: objective-c
 
 before_install:
-  - sudo apt-get update
-  - sudo apt-get install -y golang
+  - brew update && brew install go node
   - curl -sSf https://static.rust-lang.org/rustup.sh | sh -s -- --yes --channel=nightly
