@@ -1,10 +1,10 @@
 # algo [![Build Status](https://travis-ci.org/peferron/algo.svg?branch=master)](https://travis-ci.org/peferron/algo)
 
-This is just me fooling around and implementing various algorithms and data structures in [Go](http://golang.org), JavaScript, [TypeScript](http://www.typescriptlang.org), and [Rust](http://www.rust-lang.org).
+This is just me fooling around and implementing various algorithms and data structures in [Go](http://golang.org), [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript), [TypeScript](http://www.typescriptlang.org), [Rust](http://www.rust-lang.org), and [Swift](https://swift.org).
 
 Many of these problems appear in Steven Skiena's [Algorithm Design Manual](http://www.amazon.com/Algorithm-Design-Manual-Steven-Skiena/dp/1849967202), which I recommend.
 
-Modules do not share code and use built-in language features only. This makes each module easiest to reason about individually.
+Modules do not share code and use built-in language features only. This makes each module easiest to understand individually.
 
 ### Disclaimers
 
@@ -13,7 +13,7 @@ Modules do not share code and use built-in language features only. This makes ea
 - These modules are *definitely* not intended for production use (if you do, please send me a link to your post-mortem);
 - I don't have much experience with Rust, so there might be simpler & cleaner ways to do things;
 - Some older JS modules are written in ES 5;
-- Some older TS modules might not use features introduced in TS 1.6+.
+- Some older TS modules do not use features introduced in TS 1.6+.
 
 ### Testing a Go module
 
@@ -47,6 +47,14 @@ $ ./test_typescript biconnected_components
 
 ```shell
 $ ./test_rust edge_connectivity
+```
+
+### Testing a Swift module
+
+[Install Swift](https://swift.org/getting-started/#installing-swift). Then run:
+
+```shell
+$ ./test_swift rotating_calipers
 ```
 
 ### Testing all modules and languages

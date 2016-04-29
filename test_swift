@@ -1,0 +1,19 @@
+#!/bin/bash
+
+dir="$1/swift"
+
+if [ -d "$dir" ]; then
+    set -e
+
+    printf "$dir: "
+
+    template="com.github.peferron.algo.$1.swift"
+    tmpfile=$(mktemp -t $template)
+
+    trap 'rm "$tmpfile"' EXIT
+
+    cat "$dir"/*.swift > "$tmpfile"
+    swift "$tmpfile"
+
+    printf "All tests OK.\n"
+fi
