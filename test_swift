@@ -8,7 +8,7 @@ if [ -d "$dir" ]; then
     printf "$dir: "
 
     template="com.github.peferron.algo.$1.swift"
-    tmpfile=$(mktemp -t $template)
+    tmpfile=$(mktemp 2>/dev/null || mktemp -t $template)
 
     trap 'rm "$tmpfile"' EXIT
 
