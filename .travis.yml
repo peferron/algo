@@ -1,5 +1,5 @@
 language: objective-c
 
 before_install:
-  - brew update && brew install go node
+  - brew update && brew unlink go node && brew install go node
   - curl -sSf https://static.rust-lang.org/rustup.sh | sh -s -- --yes --channel=nightly
