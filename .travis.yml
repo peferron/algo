@@ -1,5 +1,7 @@
 language: objective-c
 
+osx_image: xcode7.3
+
 before_install:
   - brew update && brew unlink go node && brew install go node
   - curl -sSf https://static.rust-lang.org/rustup.sh | sh -s -- --yes --channel=nightly
