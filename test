@@ -14,10 +14,10 @@ for i in $(ls -d */); do
     module=${i%%/}
     if [ $module != "node_modules" ]; then
         printf "\n${blue}$module${nocolor}\n"
-        # ./test_go "$module"
-        # ./test_javascript "$module"
-        # ./test_typescript "$module"
-        # ./test_rust "$module"
+        ./test_go "$module"
+        ./test_javascript "$module"
+        ./test_typescript "$module"
+        ./test_rust "$module"
         ./test_swift "$module"
     fi
 done
