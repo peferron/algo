@@ -8,4 +8,4 @@ Two algorithms are implemented here:
 
 * A [triangle flipping](https://en.wikipedia.org/wiki/Delaunay_triangulation#Flip_algorithms) algorithm, that converts any triangulation into a [Delaunay triangulation](https://en.wikipedia.org/wiki/Delaunay_triangulation) in O(n²) time.
 
-It is possible to build Delaunay triangulations in O(n log n) time, but the algorithm is significantly more complicated, and not implemented here.
+Incremental algorithms exist that build Delaunay triangulations in O(n log n) time, but they are not implemented here.

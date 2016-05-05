@@ -63,7 +63,3 @@ public func triangulate(points: [Point]) -> [Edge] {
 
     return deduplicate(edges)
 }
-
-public func delaunize(triangulation: [Edge]) -> [Edge] {
-    return []
-}
