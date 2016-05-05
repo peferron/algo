@@ -12,11 +12,15 @@ if [ -d "$dir" ]; then
 
     trap 'rm "$tmpfile"' EXIT
 
-    if [ -f "$dir"/types.swift ]; then
-        cat "$dir"/types.swift >> "$tmpfile"
+    pushd "$dir" > /dev/null
+
+    if [ -f .files ]; then
+        cat $(cat .files) > "$tmpfile"
+    else
+        cat *.swift > "$tmpfile"
     fi
 
-    cat $(find "$dir" -name '*.swift' -a ! -name 'types.swift') >> "$tmpfile"
+    popd > /dev/null
 
     swift "$tmpfile"
 
