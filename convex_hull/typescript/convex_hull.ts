@@ -84,15 +84,15 @@ export function graham(points: Point[]): Point[] {
 
     for (const point of ordered) {
         hull.push(point);
-        removeClockwiseAndCollinearTurns(hull);
+        removeTurns(hull, direction => direction !== Direction.CounterClockwise);
     }
 
     return hull;
 }
 
-function removeClockwiseAndCollinearTurns(hull: Point[]) {
+function removeTurns(hull: Point[], test: (direction: Direction) => boolean) {
     while (hull.length > 2 &&
-        direction(hull[hull.length - 3], hull[hull.length - 2], hull[hull.length - 1]) !== Direction.CounterClockwise) {
+        test(direction(hull[hull.length - 3], hull[hull.length - 2], hull[hull.length - 1]))) {
         hull.splice(hull.length - 2, 1);
     }
 }
@@ -108,21 +108,17 @@ export function monotoneChain(points: Point[]): Point[] {
     // Sort the points lexicographically, i.e. by x first and y second.
     const ordered = points.sort((a, b) => (a.x - b.x) || (a.y - b.y));
 
-    const lower = [ordered[0], ordered[1]];
-    for (let i = 2; i < n; i++) {
-        lower.push(ordered[i]);
-        removeClockwiseAndCollinearTurns(lower);
-    }
-
-    const upper = [ordered[n - 1], ordered[n - 2]];
-    for (let i = n - 3; i >= 0; i--) {
-        upper.push(ordered[i]);
-        removeClockwiseAndCollinearTurns(upper);
+    // Construct the lower and upper hulls incrementally.
+    const lower: Point[] = [];
+    const upper: Point[] = [];
+    for (const point of ordered) {
+        lower.push(point);
+        removeTurns(lower, direction => direction !== Direction.CounterClockwise);
+        upper.push(point);
+        removeTurns(upper, direction => direction !== Direction.Clockwise);
     }
 
     // The first and last points in ordered are present in both lower and upper. We need to make
     // sure not to include them twice in the returned convex hull.
-    lower.pop();
-    upper.pop();
-    return lower.concat(upper);
+    return lower.slice(1, lower.length - 1).concat(upper);
 }
