@@ -82,10 +82,10 @@ export function graham(points: Point[]): Point[] {
 
     const hull: Point[] = [];
 
-    ordered.forEach(point => {
+    for (const point of ordered) {
         hull.push(point);
         removeClockwiseAndCollinearTurns(hull);
-    });
+    }
 
     return hull;
 }
