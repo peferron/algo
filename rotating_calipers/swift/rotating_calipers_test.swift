@@ -79,14 +79,16 @@ for test in tests {
     let actualPairs = antipodalPairs(test.polygon).sort(<)
     let expectedPairs = test.antipodalPairs.sort(<)
     guard actualPairs == expectedPairs else {
-        print("For test polygon \(test.polygon)\nexpected antipodal pairs to be " +
-            "\(expectedPairs)\nbut were \(actualPairs)")
+        print("For test polygon \(test.polygon)\n" +
+            "expected antipodal pairs to be \(expectedPairs)\n" +
+            "but were \(actualPairs)")
         exit(1)
     }
 
     let actualDiameter = diameter(test.polygon)
     guard actualDiameter == test.diameter else {
-        print("For test polygon \(test.polygon)\nexpected diameter to be \(test.diameter)\n" +
+        print("For test polygon \(test.polygon)\n" +
+            "expected diameter to be \(test.diameter)\n" +
             "but was \(actualDiameter)")
         exit(1)
     }
