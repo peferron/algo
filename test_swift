@@ -12,7 +12,12 @@ if [ -d "$dir" ]; then
 
     trap 'rm "$tmpfile"' EXIT
 
-    cat "$dir"/*.swift > "$tmpfile"
+    if [ -f "$dir"/types.swift ]; then
+        cat "$dir"/types.swift >> "$tmpfile"
+    fi
+
+    cat $(find "$dir" -name '*.swift' -a ! -name 'types.swift') >> "$tmpfile"
+
     swift "$tmpfile"
 
     printf "All tests OK.\n"
