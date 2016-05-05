@@ -22,8 +22,8 @@ func == <T: Equatable, U: Equatable>(lhs: [(T, U)], rhs: [(T, U)]) -> Bool {
 
 struct Test {
     let polygon: [Point]
-    let antipodalPairs: [(Point, Point)]
-    let diameter: (Point, Point)
+    let antipodalPairs: [Pair]
+    let diameter: Pair
 }
 
 let tests = [
@@ -94,13 +94,13 @@ let tests = [
     )
 ]
 
-func sortPair(pair: (Point, Point)) -> (Point, Point) {
+func sort(pair: Pair) -> Pair {
     return (min(pair.0, pair.1), max(pair.0, pair.1))
 }
 
-func sort(pairs: [(Point, Point)]) -> [(Point, Point)] {
+func sort(pairs: [Pair]) -> [Pair] {
     // First, sort the points inside each pair. Then sort the pairs.
-    return pairs.map(sortPair).sort { $0 < $1 }
+    return pairs.map(sort).sort { $0 < $1 }
 }
 
 for test in tests {
@@ -112,8 +112,8 @@ for test in tests {
         exit(1)
     }
 
-    let actualDiameter = sortPair(diameter(test.polygon))
-    let expectedDiameter = sortPair(test.diameter)
+    let actualDiameter = sort(diameter(test.polygon))
+    let expectedDiameter = sort(test.diameter)
     guard actualDiameter == expectedDiameter else {
         print("For test polygon \(test.polygon)\nexpected diameter to be \(expectedDiameter)\n" +
             "but was \(actualDiameter)")

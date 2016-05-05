@@ -8,6 +8,8 @@ public struct Point: Comparable, CustomStringConvertible {
     }
 }
 
+public typealias Pair = (Point, Point)
+
 // Lexicographical comparison.
 public func < (lhs: Point, rhs: Point) -> Bool {
     return lhs.x < rhs.x || lhs.x == rhs.x && lhs.y < rhs.y
@@ -15,9 +17,9 @@ public func < (lhs: Point, rhs: Point) -> Bool {
 
 // polygon must be provided in standard form, i.e. counter-clockwise order, distinct vertices, and
 // no collinear vertices.
-public func antipodalPairs(polygon: [Point]) -> [(Point, Point)] {
+public func antipodalPairs(polygon: [Point]) -> [Pair] {
     var (lower, upper) = lowerAndUpperHull(polygon)
-    var pairs = [(Point, Point)]()
+    var pairs = [Pair]()
     var l = 0
     var u = 0
 
@@ -102,14 +104,14 @@ func arc(polygon: [Point], fromIndex: Int, toIndex: Int) -> [Point] {
     return arc
 }
 
-public func diameter(polygon: [Point]) -> (Point, Point) {
+public func diameter(polygon: [Point]) -> Pair {
     let pairs = antipodalPairs(polygon)
     return pairs.reduce(pairs[0]) { (best, pair) in
         return distanceSquared(pair) > distanceSquared(best) ? pair : best
     }
 }
 
-func distanceSquared(pair: (Point, Point)) -> Int {
+func distanceSquared(pair: Pair) -> Int {
     let deltaX = abs(pair.0.x - pair.1.x)
     let deltaY = abs(pair.0.y - pair.1.y)
     return deltaX * deltaX + deltaY + deltaY
