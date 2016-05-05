@@ -100,7 +100,7 @@ func sort(pair: Pair) -> Pair {
 
 func sort(pairs: [Pair]) -> [Pair] {
     // First, sort the points inside each pair. Then sort the pairs.
-    return pairs.map(sort).sort { $0 < $1 }
+    return pairs.map(sort).sort(<)
 }
 
 for test in tests {
