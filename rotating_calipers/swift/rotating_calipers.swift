@@ -1,20 +1,5 @@
 // swiftlint:disable variable_name
 
-public struct Point: Comparable, CustomStringConvertible {
-    let x: Int
-    let y: Int
-    public var description: String {
-        return "(\(x),\(y))"
-    }
-}
-
-public typealias Pair = (Point, Point)
-
-// Lexicographical comparison.
-public func < (lhs: Point, rhs: Point) -> Bool {
-    return lhs.x < rhs.x || lhs.x == rhs.x && lhs.y < rhs.y
-}
-
 // polygon must be provided in standard form, i.e. counter-clockwise order, distinct vertices, and
 // no collinear vertices.
 public func antipodalPairs(polygon: [Point]) -> [Pair] {
@@ -44,10 +29,10 @@ public func antipodalPairs(polygon: [Point]) -> [Pair] {
         // caliper next? Will it be lower[0, 1], or upper[0, 1]? To find out, we need to compare
         // the slope of these two segments. The segment with the lowest slope will align with the
         // caliper first.
-        let lowerDeltaY =  lower[l + 1].y - lower[l].y
-        let lowerDeltaX = lower[l + 1].x - lower[l].x
-        let upperDeltaY = upper[u].y - upper[u + 1].y
-        let upperDeltaX = upper[u].x - upper[u + 1].x
+        let lowerDeltaY =  lower[l + 1].1 - lower[l].1
+        let lowerDeltaX = lower[l + 1].0 - lower[l].0
+        let upperDeltaY = upper[u].1 - upper[u + 1].1
+        let upperDeltaX = upper[u].0 - upper[u + 1].0
 
         // We want to find out if lowerDeltaY / lowerDeltaX < upperDeltaY / upperDeltaX.
         // This can cause issues with divisions by 0. We can get around that by multiplying both
@@ -112,7 +97,7 @@ public func diameter(polygon: [Point]) -> Pair {
 }
 
 func distanceSquared(pair: Pair) -> Int {
-    let deltaX = abs(pair.0.x - pair.1.x)
-    let deltaY = abs(pair.0.y - pair.1.y)
+    let deltaX = abs(pair.0.0 - pair.1.0)
+    let deltaY = abs(pair.0.1 - pair.1.1)
     return deltaX * deltaX + deltaY + deltaY
 }
