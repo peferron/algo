@@ -125,6 +125,7 @@ pub enum CircleSide {
     On,
 }
 
+// The points of the circle must be provided in counter-clockwise order.
 pub fn circle_side(circle: [Point; 3], point: Point) -> CircleSide {
     let [c0, c1, c2] = circle;
 
