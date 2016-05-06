@@ -2,6 +2,8 @@
 // swiftlint:disable variable_name
 
 class HalfEdge: CustomStringConvertible {
+    var dirty = true // Used during flipping.
+
     var origin: Point
     var twin: HalfEdge!
 
@@ -144,20 +146,29 @@ func doublyConnectedEdgeList(edges: [Edge]) -> [HalfEdge] {
     return halfEdges
 }
 
-public func delaunay(triangulation: [Edge]) -> [Edge] {
-    let halfEdges = doublyConnectedEdgeList(triangulation)
+func flipUntilDelaunay(halfEdges: [HalfEdge]) {
+    var dirty = halfEdges
 
-    // Iterate through quadrilaterals and flip them until they are all locally Delaunay.
-    var i = 0
-    while i < halfEdges.count {
-        let halfEdge = halfEdges[i]
+    while !dirty.isEmpty {
+        let halfEdge = dirty.removeLast()
+        halfEdge.dirty = false
+
         if halfEdge.locallyDelaunay {
-            i += 1
-        } else {
-            halfEdge.flip()
-            i = 0
+            continue
+        }
+
+        halfEdge.flip()
+
+        let neighbors = [halfEdge.next!, halfEdge.prev!, halfEdge.twin.next!, halfEdge.twin.prev!]
+        for neighbor in neighbors where !neighbor.dirty {
+            neighbor.dirty = true
+            dirty.append(neighbor)
         }
     }
+}
 
+public func delaunay(triangulation: [Edge]) -> [Edge] {
+    let halfEdges = doublyConnectedEdgeList(triangulation)
+    flipUntilDelaunay(halfEdges)
     return deduplicate(halfEdges.map { ($0.origin, $0.twin.origin) })
 }
