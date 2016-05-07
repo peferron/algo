@@ -99,24 +99,24 @@ func inCircumcircle(triangle: (Point, Point, Point), point: Point) -> Bool {
     ]) > 0
 }
 
-// Compare p1 and p2 based on the clockwise angle the rays origin->p1 and origin->p2 form relatively
+// Compare a and b based on the clockwise angle the rays origin->a and origin->b form relatively to
 // to the ray going straight up from origin (i.e. the "12 o'clock").
 // We can ignore some edges cases because we know that for this application:
-// - p1, p2 and origin are always distinct
-// - if p1, p2 and origin are collinear then origin must be the middle point
-func compareClockwise(p1: Point, lessThan p2: Point, origin: Point) -> Bool {
-    // Handle case where p1 and p2 are not on the same vertical half of the plane.
-    if p1.x >= origin.x && p2.x < origin.x {
+// - a, b and origin are always distinct
+// - if a, b and origin are collinear then origin must be the middle point
+func compareClockwise(a: Point, lessThan b: Point, origin: Point) -> Bool {
+    // Handle case where a and b are not on the same vertical half of the plane.
+    if a.x >= origin.x && b.x < origin.x {
         return true
     }
-    if p2.x >= origin.x && p1.x < origin.x {
+    if b.x >= origin.x && a.x < origin.x {
         return false
     }
 
-    switch direction(p1, origin, p2) {
+    switch direction(a, origin, b) {
     case .Collinear:
-        //  One of p1, p2 is on the "12 o'clock" and the other is on the "6 o'clock".
-        return p1.y > p2.y
+        //  One of a, b is on the "12 o'clock" and the other is on the "6 o'clock".
+        return a.y > b.y
 
     case .CounterClockwise:
         return true
@@ -132,11 +132,11 @@ func doublyConnectedEdgeList(edges: [Edge]) -> [HalfEdge] {
     // Create all half-edges without setting their 'next' property yet, and keep a mapping between
     // origins and half-edges.
     for edge in edges {
-        let a = HalfEdge(origin: edge.0)
-        let b = HalfEdge(origin: edge.1)
-        a.twin = b
-        b.twin = a
-        halfEdges += [a, b]
+        let he1 = HalfEdge(origin: edge.0)
+        let he2 = HalfEdge(origin: edge.1)
+        he1.twin = he2
+        he2.twin = he1
+        halfEdges += [he1, he2]
     }
 
     // Sort the half-edges by origin first, and then by clockwise order.
@@ -145,28 +145,28 @@ func doublyConnectedEdgeList(edges: [Edge]) -> [HalfEdge] {
             compareClockwise($0.twin.origin, lessThan: $1.twin.origin, origin: $0.origin)
     }
 
-    // For each pair (a, b) of half-edges with the same origin and in clockwise order, set the
-    // 'next' property of a.twin to b. Remarks:
+    // For each pair (he1, he2) of half-edges with the same origin and in clockwise order, set the
+    // 'next' property of he1.twin to he2. Remarks:
     // - We need to wrap and process the pair (last, first) of half-edges with the same origin.
     // - To avoid setting the 'next' property of half-edges that are on the outside of the convex
-    //   hull, we need to check that the two half-edges form a triangle, i.e. that a-b form a
+    //   hull, we need to check that the two half-edges form a triangle, i.e. that he1-he2 form a
     //   counter-clockwise turn.
     var first = halfEdges[0]
     for i in 0..<halfEdges.count {
-        let a = halfEdges[i]
-        var b: HalfEdge!
+        let he1 = halfEdges[i]
+        var he2: HalfEdge!
 
         if i == halfEdges.count - 1 {
-            b = first
-        } else if halfEdges[i + 1].origin == a.origin {
-            b = halfEdges[i + 1]
+            he2 = first
+        } else if halfEdges[i + 1].origin == he1.origin {
+            he2 = halfEdges[i + 1]
         } else {
-            b = first
+            he2 = first
             first = halfEdges[i + 1]
         }
 
-        if direction(a.twin.origin, a.origin, b.twin.origin) == .CounterClockwise {
-            a.twin.next = b
+        if direction(he1.twin.origin, he1.origin, he2.twin.origin) == .CounterClockwise {
+            he1.twin.next = he2
         }
     }
 
@@ -177,16 +177,16 @@ func flipUntilDelaunay(halfEdges: [HalfEdge]) {
     var dirty = halfEdges
 
     while !dirty.isEmpty {
-        let halfEdge = dirty.removeLast()
-        halfEdge.dirty = false
+        let he = dirty.removeLast()
+        he.dirty = false
 
-        if halfEdge.locallyDelaunay {
+        if he.locallyDelaunay {
             continue
         }
 
-        halfEdge.flip()
+        he.flip()
 
-        let neighbors = [halfEdge.next!, halfEdge.prev!, halfEdge.twin.next!, halfEdge.twin.prev!]
+        let neighbors = [he.next!, he.prev!, he.twin.next!, he.twin.prev!]
         for neighbor in neighbors where !neighbor.dirty {
             neighbor.dirty = true
             dirty.append(neighbor)
