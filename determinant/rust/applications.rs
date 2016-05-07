@@ -1,4 +1,3 @@
-use fraction::Number;
 use square_matrix::SquareMatrix;
 
 #[derive(Debug, Clone, Copy)]
@@ -11,9 +10,9 @@ pub struct Point {
 // Singularity
 //
 
-impl<T> SquareMatrix<T> where T: Number<T> {
+impl SquareMatrix<i32> {
     pub fn is_singular(&self) -> bool {
-        self.determinant() == T::zero()
+        self.determinant() == 0
     }
 }
 

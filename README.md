@@ -9,11 +9,11 @@ Modules do not share code and use built-in language features only. This makes ea
 ### Disclaimers
 
 - These modules are not optimized for performance;
-- These modules are not very well-tested;
-- These modules are *definitely* not intended for production use (if you do, please send me a link to your post-mortem);
+- These modules are not very well-tested, and *definitely* not intended for production use (if you do, please send me a link to your post-mortem);
 - I don't have much experience with Rust, so there might be simpler & cleaner ways to do things;
 - Some older JS modules are written in ES 5;
-- Some older TS modules do not use features introduced in TS 1.6+.
+- Some older TS modules do not use features introduced in TS 1.6+;
+- Generics are avoided in favor of concrete types for simplicity.
 
 ### Testing a Go module
 

@@ -1,10 +1,11 @@
-use fraction::{Fraction, Number};
+use std::num::Zero;
+use fraction::Fraction;
 use square_matrix::SquareMatrix;
 
-impl<T> SquareMatrix<T> where T: Number<T> {
-    pub fn determinant(&self) -> T {
+impl SquareMatrix<i32> {
+    pub fn determinant(&self) -> i32 {
         let (upper, swaps) = self.to_fractions().lu_decomposition_upper();
-        let product = upper.diagonal_product().to_raw();
+        let product = upper.diagonal_product().to_i32();
 
         if swaps % 2 == 0 {
             product
@@ -13,12 +14,14 @@ impl<T> SquareMatrix<T> where T: Number<T> {
         }
     }
 
-    fn to_fractions(&self) -> SquareMatrix<Fraction<T>> {
-        let fractions = self.data.iter().map(|&v| Fraction::new(v)).collect();
+    fn to_fractions(&self) -> SquareMatrix<Fraction> {
+        let fractions = self.data.iter().map(|&v| Fraction::from_i32(v)).collect();
         SquareMatrix::from_vec(&fractions)
     }
+}
 
-    fn lu_decomposition_upper(&self) -> (SquareMatrix<T>, usize) {
+impl SquareMatrix<Fraction> {
+    fn lu_decomposition_upper(&self) -> (SquareMatrix<Fraction>, usize) {
         let mut upper = self.clone();
         let mut swaps = 0;
 
@@ -33,11 +36,11 @@ impl<T> SquareMatrix<T> where T: Number<T> {
         // Eliminate elements in the column-th column, below the column-th row
         let mut swaps = 0;
         for i in (column + 1)..self.order {
-            if self[(i, column)] == T::zero() {
+            if self[(i, column)] == Fraction::zero() {
                 continue;
             }
 
-            if self[(column, column)] == T::zero() {
+            if self[(column, column)] == Fraction::zero() {
                 self.swap_rows(column, i);
                 swaps += 1;
                 continue;
@@ -58,7 +61,7 @@ impl<T> SquareMatrix<T> where T: Number<T> {
         }
     }
 
-    fn diagonal_product(&self) -> T {
+    fn diagonal_product(&self) -> Fraction {
         let mut product = self[(0, 0)]; // Let's assume that order > 0.
         for i in 1..self.order {
             product = product * self[(i, i)];

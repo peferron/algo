@@ -1,28 +1,23 @@
 use std::cmp::PartialEq;
 use std::fmt::{Debug, Formatter, Result};
+use std::num::Zero;
 use std::ops::{Div, Mul, Neg, Rem, Sub};
-use std::num::{One, Zero};
-
-pub trait Number<T> : Copy + Debug + Div<Output = T> + Mul<Output = T> +
-    Neg<Output = T> + One + PartialEq + Rem<Output = T> + Sub<Output = T> + Zero {}
-impl<T> Number<T> for T where T: Copy + Debug + Div<Output = T> + Mul<Output = T> +
-    Neg<Output = T> + One + PartialEq + Rem<Output = T> + Sub<Output = T> + Zero {}
 
 #[derive(Copy, Clone)]
-pub struct Fraction<T> {
-    numerator: T,
-    denominator: T,
+pub struct Fraction {
+    numerator: i32,
+    denominator: i32,
 }
 
-impl<T> Fraction<T> where T: Number<T> {
-    pub fn new(value: T) -> Self {
+impl Fraction {
+    pub fn from_i32(value: i32) -> Self {
         Fraction {
             numerator: value,
-            denominator: T::one(),
+            denominator: 1,
         }
     }
 
-    fn new_simplified(numerator: T, denominator: T) -> Self {
+    fn from_i32s(numerator: i32, denominator: i32) -> Self {
         let gcd = greatest_common_denominator(numerator, denominator);
         Fraction {
             numerator: numerator / gcd,
@@ -30,93 +25,87 @@ impl<T> Fraction<T> where T: Number<T> {
         }
     }
 
-    pub fn to_raw<U>(&self) -> U where U: Div<Output = U> + From<T> {
-        U::from(self.numerator) / U::from(self.denominator)
+    pub fn to_i32(self) -> i32 {
+        self.numerator / self.denominator
     }
 }
 
-fn greatest_common_denominator<T>(a: T, b: T) -> T where T: Number<T> {
-    if b == T::zero() {
+fn greatest_common_denominator(a: i32, b: i32) -> i32 {
+    if b == 0 {
         a
     } else {
         greatest_common_denominator(b, a % b)
     }
 }
 
-impl<T> Debug for Fraction<T> where T: Number<T> {
+impl Debug for Fraction {
     fn fmt(&self, f: &mut Formatter) -> Result {
         write!(f, "{:?}/{:?}", self.numerator, self.denominator)
     }
 }
 
-impl<T> Div for Fraction<T> where T: Number<T> {
-    type Output = Fraction<T>;
+impl Div for Fraction {
+    type Output = Fraction;
 
-    fn div(self, rhs: Fraction<T>) -> Self {
-        Fraction::new_simplified(
+    fn div(self, rhs: Fraction) -> Self {
+        Fraction::from_i32s(
             self.numerator * rhs.denominator,
             self.denominator * rhs.numerator,
         )
     }
 }
 
-impl<T> Mul for Fraction<T> where T: Number<T> {
-    type Output = Fraction<T>;
+impl Mul for Fraction {
+    type Output = Fraction;
 
-    fn mul(self, rhs: Fraction<T>) -> Self {
-        Fraction::new_simplified(
+    fn mul(self, rhs: Fraction) -> Self {
+        Fraction::from_i32s(
             self.numerator * rhs.numerator,
             self.denominator * rhs.denominator,
         )
     }
 }
 
-impl<T> Neg for Fraction<T> where T: Number<T> {
-    type Output = Fraction<T>;
+impl Neg for Fraction {
+    type Output = Fraction;
 
     fn neg(self) -> Self {
-        Fraction::new_simplified(-self.numerator, self.denominator)
+        Fraction::from_i32s(-self.numerator, self.denominator)
     }
 }
 
-impl<T> One for Fraction<T> where T: Number<T> {
-    fn one() -> Self {
-        Fraction::new(T::one())
-    }
-}
-
-impl<T> PartialEq for Fraction<T> where T: Number<T> {
-    fn eq(&self, rhs: &Fraction<T>) -> bool {
+impl PartialEq for Fraction {
+    fn eq(&self, rhs: &Fraction) -> bool {
         self.numerator * rhs.denominator == self.denominator * rhs.numerator
     }
 }
 
-impl<T> Rem for Fraction<T> where T: Number<T> {
-    type Output = Fraction<T>;
+impl Rem for Fraction {
+    type Output = Fraction;
 
-    fn rem(self, rhs: Fraction<T>) -> Self {
+    fn rem(self, rhs: Fraction) -> Self {
         let common_denominator = self.denominator * rhs.denominator;
         let self_numerator_scaled = self.numerator * rhs.denominator;
         let rhs_numerator_scaled = rhs.numerator * self.denominator;
 
-        Fraction::new_simplified(self_numerator_scaled % rhs_numerator_scaled, common_denominator)
+        Fraction::from_i32s(self_numerator_scaled % rhs_numerator_scaled, common_denominator)
     }
 }
 
-impl<T> Sub for Fraction<T> where T: Number<T> {
-    type Output = Fraction<T>;
+impl Sub for Fraction {
+    type Output = Fraction;
 
-    fn sub(self, rhs: Fraction<T>) -> Self {
+    fn sub(self, rhs: Fraction) -> Self {
         let common_denominator = self.denominator * rhs.denominator;
         let self_numerator_scaled = self.numerator * rhs.denominator;
         let rhs_numerator_scaled = rhs.numerator * self.denominator;
 
-        Fraction::new_simplified(self_numerator_scaled - rhs_numerator_scaled, common_denominator)
+        Fraction::from_i32s(self_numerator_scaled - rhs_numerator_scaled, common_denominator)
     }
 }
 
-impl<T> Zero for Fraction<T> where T: Number<T> {
+impl Zero for Fraction {
     fn zero() -> Self {
-        Fraction::new(T::zero())
+        Fraction::from_i32(0)
     }
 }
