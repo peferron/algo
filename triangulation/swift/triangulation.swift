@@ -18,16 +18,18 @@ func direction(a: Point, _ b: Point, _ c: Point) -> Direction {
 
 func deduplicate(edges: [Edge]) -> [Edge] {
     var deduplicated = [Edge]()
+
     for edge in edges.sort(<) {
         if deduplicated.isEmpty || deduplicated.last! != edge {
             deduplicated.append(edge)
         }
     }
+
     return deduplicated
 }
 
 public func triangulate(points: [Point]) -> [Edge] {
-    if points.count < 2 {
+    guard points.count > 1 else {
         return []
     }
 

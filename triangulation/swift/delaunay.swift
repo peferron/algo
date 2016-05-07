@@ -195,7 +195,7 @@ func flipUntilDelaunay(halfEdges: [HalfEdge]) {
 }
 
 public func delaunay(triangulation: [Edge]) -> [Edge] {
-    if triangulation.count < 5 {
+    guard triangulation.count > 4 else {
         return triangulation
     }
 
