@@ -1,5 +1,5 @@
 // We do not need to implement < for Point because Swift already compares tuples lexicographically.
-public typealias Point = (Int, Int)
+public typealias Point = (x: Int, y: Int)
 
 public typealias Edge = (Point, Point)
 

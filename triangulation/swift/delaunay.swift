@@ -92,10 +92,10 @@ func square(value: Int) -> Int {
 
 func inCircumcircle(triangle: (Point, Point, Point), point: Point) -> Bool {
     return determinant4x4([
-        triangle.0.0,   triangle.0.1,   square(triangle.0.0) + square(triangle.0.1),   1,
-        triangle.1.0,   triangle.1.1,   square(triangle.1.0) + square(triangle.1.1),   1,
-        triangle.2.0,   triangle.2.1,   square(triangle.2.0) + square(triangle.2.1),   1,
-        point.0,        point.1,        square(point.0) + square(point.1),             1,
+        triangle.0.x,   triangle.0.y,   square(triangle.0.x) + square(triangle.0.y),   1,
+        triangle.1.x,   triangle.1.y,   square(triangle.1.x) + square(triangle.1.y),   1,
+        triangle.2.x,   triangle.2.y,   square(triangle.2.x) + square(triangle.2.y),   1,
+        point.x,        point.y,        square(point.x) + square(point.y),             1,
     ]) > 0
 }
 
@@ -106,17 +106,17 @@ func inCircumcircle(triangle: (Point, Point, Point), point: Point) -> Bool {
 // - if p1, p2 and origin are collinear then origin must be the middle point
 func compareClockwise(p1: Point, lessThan p2: Point, origin: Point) -> Bool {
     // Handle case where p1 and p2 are not on the same vertical half of the plane.
-    if p1.0 >= origin.0 && p2.0 < origin.0 {
+    if p1.x >= origin.x && p2.x < origin.x {
         return true
     }
-    if p2.0 >= origin.0 && p1.0 < origin.0 {
+    if p2.x >= origin.x && p1.x < origin.x {
         return false
     }
 
     switch direction(p1, origin, p2) {
     case .Collinear:
         //  One of p1, p2 is on the "12 o'clock" and the other is on the "6 o'clock".
-        return p1.1 > p2.1
+        return p1.y > p2.y
 
     case .CounterClockwise:
         return true

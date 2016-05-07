@@ -12,7 +12,7 @@ func direction(a: Point, _ b: Point, _ c: Point) -> Direction {
     // If the signed area is > 0 then a-b-c is a counter-clockwise turn.
     // If the signed area is < 0 then a-b-c is a clockwise turn.
     // If the signed area is = 0 then a-b-c are collinear.
-    let det = a.0 * b.1 + b.0 * c.1 + c.0 * a.1 - c.0 * b.1 - a.0 * c.1 - b.0 * a.1
+    let det = a.x * b.y + b.x * c.y + c.x * a.y - c.x * b.y - a.x * c.y - b.x * a.y
     return det > 0 ? .CounterClockwise : det < 0 ? .Clockwise : .Collinear
 }
 
