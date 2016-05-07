@@ -195,6 +195,10 @@ func flipUntilDelaunay(halfEdges: [HalfEdge]) {
 }
 
 public func delaunay(triangulation: [Edge]) -> [Edge] {
+    if triangulation.count < 5 {
+        return triangulation
+    }
+
     let halfEdges = doublyConnectedEdgeList(triangulation)
     flipUntilDelaunay(halfEdges)
     return deduplicate(halfEdges.map { ($0.origin, $0.twin.origin) })

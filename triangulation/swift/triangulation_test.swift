@@ -12,6 +12,25 @@ struct DelaunayTest {
 
 let triangulateTests = [
     TriangulateTest(
+        points: [],
+        triangulation: []
+    ),
+    TriangulateTest(
+        points: [
+            (0, 0),
+        ],
+        triangulation: []
+    ),
+    TriangulateTest(
+        points: [
+            (0, 0),
+            (0, 1),
+        ],
+        triangulation: [
+            ((0, 0), (0, 1)),
+        ]
+    ),
+    TriangulateTest(
         points: [
             (0, 0),
             (2, 0),
@@ -21,6 +40,33 @@ let triangulateTests = [
             ((0, 0), (2, 0)),
             ((0, 0), (1, 1)),
             ((2, 0), (1, 1)),
+        ]
+    ),
+    TriangulateTest(
+        points: [
+            (0, 0),
+            (2, 0),
+            (1, 1),
+        ],
+        triangulation: [
+            ((0, 0), (2, 0)),
+            ((0, 0), (1, 1)),
+            ((2, 0), (1, 1)),
+        ]
+    ),
+    TriangulateTest(
+        points: [
+            (0, 0),
+            (1, 0),
+            (2, 0),
+            (1, 1),
+        ],
+        triangulation: [
+            ((0, 0), (1, 0)),
+            ((0, 0), (1, 1)),
+            ((1, 0), (1, 1)),
+            ((1, 0), (2, 0)),
+            ((1, 1), (2, 0)),
         ]
     ),
     TriangulateTest(
@@ -190,6 +236,64 @@ let triangulateTests = [
 ]
 
 let delaunayTests = [
+    DelaunayTest(
+        triangulation: [],
+        delaunay: []
+    ),
+    DelaunayTest(
+        triangulation: [
+            ((0, 0), (0, 1)),
+        ],
+        delaunay: [
+            ((0, 0), (0, 1)),
+        ]
+    ),
+    DelaunayTest(
+        triangulation: [
+            ((0, 0), (2, 0)),
+            ((0, 0), (1, 1)),
+            ((2, 0), (1, 1)),
+        ],
+        delaunay: [
+            ((0, 0), (2, 0)),
+            ((0, 0), (1, 1)),
+            ((2, 0), (1, 1)),
+        ]
+    ),
+    DelaunayTest(
+        triangulation: [
+            ((0, 0), (1, 0)),
+            ((0, 0), (1, 9)),
+            ((1, 0), (1, 9)),
+            ((1, 0), (2, 0)),
+            ((1, 9), (2, 0)),
+        ],
+        delaunay: [
+            ((0, 0), (1, 0)),
+            ((0, 0), (1, 9)),
+            ((1, 0), (1, 9)),
+            ((1, 0), (2, 0)),
+            ((1, 9), (2, 0)),
+        ]
+    ),
+    DelaunayTest(
+        triangulation: [
+            ((0, 0), (2, 0)),
+            ((0, 0), (1, 5)),
+            ((0, 0), (1, 6)),
+            ((2, 0), (1, 5)),
+            ((2, 0), (1, 6)),
+            ((1, 5), (1, 6)),
+        ],
+        delaunay: [
+            ((0, 0), (2, 0)),
+            ((0, 0), (1, 5)),
+            ((0, 0), (1, 6)),
+            ((2, 0), (1, 5)),
+            ((2, 0), (1, 6)),
+            ((1, 5), (1, 6)),
+        ]
+    ),
     DelaunayTest(
         triangulation: [
             ((0, 1), (2, 0)),

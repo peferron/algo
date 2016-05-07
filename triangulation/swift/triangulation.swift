@@ -27,6 +27,10 @@ func deduplicate(edges: [Edge]) -> [Edge] {
 }
 
 public func triangulate(points: [Point]) -> [Edge] {
+    if points.count < 2 {
+        return []
+    }
+
     // Sort the points lexicographically.
     let ordered = points.sort(<)
 
