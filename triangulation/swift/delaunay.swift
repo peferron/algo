@@ -186,8 +186,7 @@ func flipUntilDelaunay(halfEdges: [HalfEdge]) {
 
         he.flip()
 
-        let neighbors = [he.next!, he.prev!, he.twin.next!, he.twin.prev!]
-        for neighbor in neighbors where !neighbor.dirty {
+        for neighbor in [he.next!, he.prev!, he.twin.next!, he.twin.prev!] where !neighbor.dirty {
             neighbor.dirty = true
             dirty.append(neighbor)
         }
