@@ -99,6 +99,33 @@ func inCircumcircle(triangle: (Point, Point, Point), point: Point) -> Bool {
     ]) > 0
 }
 
+// Compare p1 and p2 based on the clockwise angle the rays origin->p1 and origin->p2 form relatively
+// to the ray going straight up from origin (i.e. the "12 o'clock").
+// We can ignore some edges cases because we know that for this application:
+// - p1, p2 and origin are always distinct
+// - if p1, p2 and origin are collinear then origin must be the middle point
+func compareClockwise(p1: Point, lessThan p2: Point, origin: Point) -> Bool {
+    // Handle case where p1 and p2 are not on the same vertical half of the plane.
+    if p1.0 >= origin.0 && p2.0 < origin.0 {
+        return true
+    }
+    if p2.0 >= origin.0 && p1.0 < origin.0 {
+        return false
+    }
+
+    switch direction(p1, origin, p2) {
+    case .Collinear:
+        //  One of p1, p2 is on the "12 o'clock" and the other is on the "6 o'clock".
+        return p1.1 > p2.1
+
+    case .CounterClockwise:
+        return true
+
+    case .Clockwise:
+        return false
+    }
+}
+
 func doublyConnectedEdgeList(edges: [Edge]) -> [HalfEdge] {
     var halfEdges = [HalfEdge]()
 
@@ -115,7 +142,7 @@ func doublyConnectedEdgeList(edges: [Edge]) -> [HalfEdge] {
     // Sort the half-edges by origin first, and then by clockwise order.
     halfEdges.sortInPlace {
         $0.origin < $1.origin || $0.origin == $1.origin &&
-            direction($0.origin, $0.twin.origin, $1.twin.origin) == .Clockwise
+            compareClockwise($0.twin.origin, lessThan: $1.twin.origin, origin: $0.origin)
     }
 
     // For each pair (a, b) of half-edges with the same origin and in clockwise order, set the
