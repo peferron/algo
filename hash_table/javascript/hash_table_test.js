@@ -40,11 +40,11 @@ function testRandomSequences() {
 }
 
 function testRandomSequence() {
-    var h = new HashTable(1000);
+    var h = new HashTable(100);
     var m = {};
     var a = [];
 
-    var count = Math.floor(Math.random() * 10000);
+    var count = Math.floor(Math.random() * 1000);
     for (var i = 0; i < count; i++) {
         randomOperation(h, m, a);
     }

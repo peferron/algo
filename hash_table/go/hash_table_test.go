@@ -52,11 +52,11 @@ func TestRandomSequences(t *testing.T) {
 }
 
 func testRandomSequence(t *testing.T) {
-	h := NewHashTable(1000)
+	h := NewHashTable(100)
 	m := map[string]int{}
 	a := []string{}
 
-	count := rand.Intn(10000)
+	count := rand.Intn(1000)
 	for i := 0; i < count; i++ {
 		randomOperation(h, m, &a)
 		if rand.Float32() < 0.2 {

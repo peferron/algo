@@ -55,7 +55,7 @@ function testRandomSequence() {
     var m = {};
     var a = [];
 
-    var count = Math.floor(Math.random() * 10000);
+    var count = Math.floor(Math.random() * 1000);
     for (var i = 0; i < count; i++) {
         randomOperation(t, m, a);
     }

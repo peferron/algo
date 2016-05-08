@@ -135,7 +135,7 @@ func testRandomSequence(t *testing.T) {
 	h := NewPairingHeap()
 	p := &testArray{}
 
-	count := rand.Intn(10000)
+	count := rand.Intn(1000)
 	var n *Node
 	for i := 0; i < count; i++ {
 		n = randomOperation(t, h, p, n)

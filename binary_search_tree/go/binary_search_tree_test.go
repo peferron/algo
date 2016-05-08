@@ -67,7 +67,7 @@ func testRandomSequence(t *testing.T) {
 	m := map[int]string{}
 	a := []int{}
 
-	count := rand.Intn(10000)
+	count := rand.Intn(1000)
 	for i := 0; i < count; i++ {
 		randomOperation(s, m, &a)
 	}
