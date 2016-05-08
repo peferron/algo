@@ -92,7 +92,7 @@ func arc(polygon: [Point], fromIndex: Int, toIndex: Int) -> [Point] {
 public func diameter(polygon: [Point]) -> Pair {
     let pairs = antipodalPairs(polygon)
     return pairs.reduce(pairs[0]) { (best, pair) in
-        return distanceSquared(pair) > distanceSquared(best) ? pair : best
+        distanceSquared(pair) > distanceSquared(best) ? pair : best
     }
 }
 
