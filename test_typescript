@@ -25,9 +25,9 @@ if [ -d "$dir" ]; then
         --noUnusedParameters \
         --forceConsistentCasingInFileNames \
         --target ES2017 \
-        --outDir "$tmpdir" "$dir"/*_test.ts
+        --outDir "$tmpdir" "$dir"/*test.ts
 
-    node_modules/.bin/babel-node --presets env "$tmpdir"/*_test.js
+    node_modules/.bin/babel-node --presets env "$tmpdir"/*test.js
 
     printf "All tests OK.\n"
 fi

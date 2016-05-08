@@ -9,10 +9,10 @@ command -v rerun >/dev/null 2>&1 || {
 
 cd $(dirname "${0}")
 
-[ -d "$1/go" ] && rerun -bcx --name "Tests for $1/go" --dir "$1/go" --pattern "**/*.go" -- ./test_go "$1" &
-[ -d "$1/javascript" ] && rerun -bcx --name "Tests for $1/javascript" --dir "$1/javascript" --pattern "**/*.js" -- ./test_javascript "$1" &
-[ -d "$1/typescript" ] && rerun -bcx --name "Tests for $1/typescript" --dir "$1/typescript" --pattern "**/*.ts" -- ./test_typescript "$1" &
-[ -d "$1/rust" ] && rerun -bcx --name "Tests for $1/rust" --dir "$1/rust" --pattern "**/*.rs" -- ./test_rust "$1" &
-[ -d "$1/swift" ] && rerun -bcx --name "Tests for $1/swift" --dir "$1/swift" --pattern "**/*.swift" -- ./test_swift "$1" &
+[ -d "$1/go" ] && rerun -bcx --name "Tests for $1/go" --dir "$1/go" --pattern "**/*.go" -- ./test_go \""$1"\" &
+[ -d "$1/javascript" ] && rerun -bcx --name "Tests for $1/javascript" --dir "$1/javascript" --pattern "**/*.js" -- ./test_javascript \""$1"\" &
+[ -d "$1/typescript" ] && rerun -bcx --name "Tests for $1/typescript" --dir "$1/typescript" --pattern "**/*.ts" -- ./test_typescript \""$1"\" &
+[ -d "$1/rust" ] && rerun -bcx --name "Tests for $1/rust" --dir "$1/rust" --pattern "**/*.rs" -- ./test_rust \""$1"\" &
+[ -d "$1/swift" ] && rerun -bcx --name "Tests for $1/swift" --dir "$1/swift" --pattern "**/*.swift" -- ./test_swift \""$1"\" &
 
 wait

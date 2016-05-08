@@ -11,8 +11,8 @@ if [ -d "$dir" ]; then
     template="com.github.peferron.algo.$1.rust"
     tmpdir=$(mktemp -d 2>/dev/null || mktemp -d -t "$template")
 
-    trap 'rm -f "$tmpdir"/*_test; rmdir "$tmpdir"' EXIT
+    trap 'rm -f "$tmpdir"/*test; rmdir "$tmpdir"' EXIT
 
-    rustc --test --out-dir "$tmpdir" "$dir"/*_test.rs
-    "$tmpdir"/*_test
+    rustc --test --out-dir "$tmpdir" "$dir"/*test.rs
+    "$tmpdir"/*test
 fi
