@@ -21,7 +21,7 @@ for fn in fns {
     }
 }
 
-for i in 0...10000 {
+for i in 0...1000 {
     var value: UInt64 = 0
     arc4random_buf(&value, sizeof(UInt64))
 
