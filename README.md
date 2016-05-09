@@ -15,7 +15,7 @@ Modules do not share code and use built-in language features only. This makes ea
 - Some older TS modules do not use features introduced in TS 1.6+;
 - Generics are avoided in favor of concrete types for simplicity.
 
-### Testing a Go module
+### Test a Go module
 
 [Install Go](http://golang.org/doc/install). Then run:
 
@@ -25,7 +25,7 @@ $ ./test_go mergesort
 
 (Replace `mergesort` by the module of your choice.)
 
-### Testing a JavaScript module
+### Test a JavaScript module
 
 [Install Node.js](http://nodejs.org) and run `npm install`. Then run:
 
@@ -33,7 +33,7 @@ $ ./test_go mergesort
 $ ./test_javascript mergesort
 ```
 
-### Testing a TypeScript module
+### Test a TypeScript module
 
 [Install Node.js](http://nodejs.org) and run `npm install`. Then run:
 
@@ -41,7 +41,7 @@ $ ./test_javascript mergesort
 $ ./test_typescript biconnected_components
 ```
 
-### Testing a Rust module
+### Test a Rust module
 
 [Install Rust](http://www.rust-lang.org). Then run:
 
@@ -49,7 +49,7 @@ $ ./test_typescript biconnected_components
 $ ./test_rust edge_connectivity
 ```
 
-### Testing a Swift module
+### Test a Swift module
 
 [Install Swift](https://swift.org/getting-started/#installing-swift). Then run:
 
@@ -57,7 +57,7 @@ $ ./test_rust edge_connectivity
 $ ./test_swift rotating_calipers
 ```
 
-### Testing all modules and languages
+### Test all modules and languages
 
 Install all the language-specific requirements above. Then run:
 
@@ -65,15 +65,14 @@ Install all the language-specific requirements above. Then run:
 $ ./test
 ```
 
-### Watching a module for source code changes
+### Test a module automatically after each source code change
 
 Install all the language-specific requirements above and [install rerun](https://github.com/alexch/rerun). Then run:
 
 ```shell
 $ ./watch mergesort
 ```
-Tests will run automatically after each source code change.
 
-### Contributing
+### Contribute
 
 Pull requests are welcome. Improvements to existing modules will be merged as soon as possible. Completely new modules will take longer—this repo is mostly a learning exercise, so I'll try to solve the problem on my own before merging.
