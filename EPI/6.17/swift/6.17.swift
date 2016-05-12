@@ -39,7 +39,7 @@ func isValidSubgrid(grid: [[Int]], row: Int, col: Int, rowCount: Int, colCount: 
 
     // Alternate version, shorter but slower since it doesn't return on the first duplicate and
     // allocates new arrays:
-    //     let subgrid = grid[row..<row + rowCount].map { $0[col..<col + colCount] }
-    //     let values = subgrid.flatMap { $0 }.filter { $0 != 0 }
-    //     return Set(values).count == values.count
+    //    let subgrid = grid[row..<row + rowCount].map { $0[col..<col + colCount] }
+    //    let values = subgrid.flatten().filter { $0 != 0 }
+    //    return Set(values).count == values.count
 }
