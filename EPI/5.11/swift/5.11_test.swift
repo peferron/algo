@@ -30,10 +30,12 @@ let tests: [(a: Rect, b: Rect, intersection: Rect?)] = [
 ]
 
 for test in tests {
-    let actual = intersection(test.a, test.b)
-    guard actual == nil ? test.intersection == nil : actual! == test.intersection! else {
-        print("For rectangles \(test.a) and \(test.b), " +
-            "expected intersection to be \(test.intersection), but was \(actual)")
-        exit(1)
+    for (a, b) in [(test.a, test.b), (test.b, test.a)] {
+        let actual = intersection(a, b)
+        guard actual == nil ? test.intersection == nil : actual! == test.intersection! else {
+            print("For rectangles \(a) and \(b), " +
+                "expected intersection to be \(test.intersection), but was \(actual)")
+            exit(1)
+        }
     }
 }
