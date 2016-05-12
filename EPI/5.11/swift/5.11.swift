@@ -1,6 +1,6 @@
 // swiftlint:disable variable_name
 
-// Rectangles are usually describes with words such as 'top', 'bottom' and so on, but it can be
+// Rectangles are usually described with words such as 'top', 'bottom' and so on, but it can be
 // confusing: math typically points the y-axis upwards, while computer graphics point it downwards.
 // Therefore, we define rectangles as an origin point and a size; the origin point plus the size
 // gives the diagonal point.
