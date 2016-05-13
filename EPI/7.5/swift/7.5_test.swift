@@ -1,5 +1,7 @@
 import Darwin
 
+let fns = [isPalindromeSimple, isPalindromeSmart]
+
 let tests: [(string: String, isPalindrome: Bool)] = [
     ("", true),
     (",!", true),
@@ -13,11 +15,13 @@ let tests: [(string: String, isPalindrome: Bool)] = [
     ("A woman, a plan, a canal, Panama", false),
 ]
 
-for test in tests {
-    var actual = isPalindrome(test.string)
-    guard actual == test.isPalindrome else {
-        print("For string \(test.string), expected isPalindrome to be \(test.isPalindrome), " +
-            "but was \(actual)")
-        exit(1)
+for fn in fns {
+    for test in tests {
+        var actual = fn(test.string)
+        guard actual == test.isPalindrome else {
+            print("For string \(test.string), expected isPalindrome to be \(test.isPalindrome), " +
+                "but was \(actual)")
+            exit(1)
+        }
     }
 }

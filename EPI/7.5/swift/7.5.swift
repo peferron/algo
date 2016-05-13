@@ -6,11 +6,12 @@ func isAlphanumeric(character: Character) -> Bool {
         "A" <= character && character <= "Z"
 }
 
-func caseInsensitiveEquals(a: Character, _ b: Character) -> Bool {
-    return String(a).lowercaseString == String(b).lowercaseString
+public func isPalindromeSimple(string: String) -> Bool {
+    let cleanedCharacters = string.lowercaseString.characters.filter(isAlphanumeric)
+    return cleanedCharacters == cleanedCharacters.reverse()
 }
 
-public func isPalindrome(string: String) -> Bool {
+public func isPalindromeSmart(string: String) -> Bool {
     guard string != "" else {
         return true
     }
@@ -33,7 +34,7 @@ public func isPalindrome(string: String) -> Bool {
             return true
         }
 
-        guard caseInsensitiveEquals(string[start], string[end]) else {
+        guard String(string[start]).lowercaseString == String(string[end]).lowercaseString else {
             return false
         }
 
