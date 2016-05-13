@@ -57,8 +57,8 @@ public func antipodalPairs(polygon: [Point]) -> [Pair] {
 }
 
 func lowerAndUpperHull(polygon: [Point]) -> ([Point], [Point]) {
-    // Tried going for a reduce, but it was unreadable. At the time of this writing, Swift doesn't
-    // seem to be able to destructure nested tuples.
+    // Tried going for a reduce, but it was unreadable. We can also do an enumerate + min/maxElement
+    // combo, but it requires two iterations.
     var lowerStart = 0
     var upperStart = 0
     for i in 1..<polygon.count {
