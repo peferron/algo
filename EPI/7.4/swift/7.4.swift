@@ -1,5 +1,3 @@
-// swiftlint:disable variable_name
-
 // "a" becomes "dd", "b" is removed.
 public func replaceAndRemove(inout characters: [Character], count: Int) -> Int {
     // The first pass removes "b" and counts "a".

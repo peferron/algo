@@ -1,5 +1,3 @@
-// swiftlint:disable variable_name
-
 let minus = UnicodeScalar("-").value
 let zero = UnicodeScalar("0").value
 

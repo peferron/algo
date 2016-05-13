@@ -1,5 +1,3 @@
-// swiftlint:disable variable_name
-
 typealias Pair = (row: Int, col: Int)
 
 // "Intuitive" algorithm. Turns out to be a mess, partially because I didn't correctly read the
