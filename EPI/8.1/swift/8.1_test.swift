@@ -1,5 +1,3 @@
-// swiftlint:disable variable_name
-
 import Darwin
 
 let tests = [

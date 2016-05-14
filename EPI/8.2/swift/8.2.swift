@@ -1,5 +1,3 @@
-// swiftlint:disable variable_name
-
 public class Node {
     var next: Node?
 }
