@@ -1,14 +1,10 @@
 // swiftlint:disable variable_name
 
 public func primes(max n: Int) -> [Int] {
-    guard n >= 2 else {
-        return []
-    }
-
     var eliminated = [Bool](count: n + 1, repeatedValue: false)
     var result = [Int]()
 
-    for i in 2...n {
+    for i in 2.stride(through: n, by: 1) {
         if eliminated[i] {
             continue
         }

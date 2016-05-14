@@ -27,10 +27,6 @@ func swap(inout array: [Character], _ i: Int, _ j: Int) {
 }
 
 func rangeOfNextWord(characters: [Character], startIndex: Int) -> Range<Int>? {
-    guard startIndex < characters.count else {
-        return nil
-    }
-
     let wordStartIndex = characters[startIndex..<characters.count].indexOf { $0 != " " }
     if wordStartIndex == nil {
         return nil

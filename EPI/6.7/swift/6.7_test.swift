@@ -4,6 +4,10 @@ let fns = [profitBruteforce, profitLinear]
 
 let tests: [(prices: [Int], profit: Int)] = [
     (
+        prices: [],
+        profit: 0
+    ),
+    (
         prices: [1],
         profit: 0
     ),
