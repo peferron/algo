@@ -7,55 +7,50 @@ public func spiralLines(matrix: [[Int]]) -> [Int] {
         return []
     }
 
-    var result = [Int]()
+    var path = [Int]()
     var start = (row: 0, col: 0)
     var count = (row: matrix.count, col: matrix[0].count)
 
     while count.row > 0 && count.col > 0 {
-        result += circle(matrix, start: start, count: count)
+        appendCircle(&path, matrix: matrix, start: start, count: count)
         start = (start.row + 1, start.col + 1)
         count = (count.row - 2, count.col - 2)
     }
 
-    return result
+    return path
 }
 
-func circle(matrix: [[Int]], start: Pair, count: Pair) -> [Int] {
+func appendCircle(inout path: [Int], matrix: [[Int]], start: Pair, count: Pair) {
     let end = (row: start.row + count.row - 1, col: start.col + count.col - 1)
 
-    var result = line(matrix, start: start, direction: (0, 1), count: count.col)
+    appendLine(&path, matrix: matrix, start: start, direction: (0, 1), count: count.col)
 
     let downStart = (row: start.row + 1, col: end.col)
-    result += line(matrix, start: downStart, direction: (1, 0), count: count.row - 1)
+    appendLine(&path, matrix: matrix, start: downStart, direction: (1, 0), count: count.row - 1)
 
     if count.row > 1 {
         let leftStart = (row: end.row, col: end.col - 1)
-        result += line(matrix, start: leftStart, direction: (0, -1), count: count.col - 1)
+        appendLine(&path, matrix: matrix, start: leftStart, direction: (0, -1), count: count.col - 1)
     }
 
     if count.col > 1 {
         let upStart = (row: end.row - 1, col: start.col)
-        result += line(matrix, start: upStart, direction: (-1, 0), count: count.row - 2)
+        appendLine(&path, matrix: matrix, start: upStart, direction: (-1, 0), count: count.row - 2)
     }
-
-    return result
 }
 
-func line(matrix: [[Int]], start: Pair, direction: Pair, count: Int) -> [Int] {
-    guard count > 0 else {
-        return []
+func appendLine(inout path: [Int], matrix: [[Int]], start: Pair, direction: Pair, count: Int) {
+    for i in 0.stride(to: count, by: 1) {
+        let row = start.row + direction.row * i
+        let col = start.col + direction.col * i
+        path.append(matrix[row][col])
     }
-    return (0..<count).map { matrix[start.row + direction.row * $0][start.col + direction.col * $0]}
 }
 
 // Game-like algorithm where a snake (or Pacman, or whatever) changes direction clockwise every time
 // it hits a wall, and the walls are closing in.
 public func spiralSnake(matrix: [[Int]]) -> [Int] {
     let size = (rows: matrix.count, cols: matrix.first?.count ?? 0)
-    guard size.rows > 0 && size.cols > 0 else {
-        return []
-    }
-
     var result = [Int]()
     var position = (row: 0, col: 0)
     var start = (row: 0, col: 0)
