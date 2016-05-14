@@ -17,10 +17,13 @@ public func mnemonicsIterative(number: String) -> [String] {
 }
 
 // combinations takes an array of choices for each position, and returns an array of all possible
-// combinations.
-func combinations<T>(choices: [[T]]) -> [[T]] {
+// combinations. We return a lazy collection for demonstration purposes; it's not very useful here,
+// since mnemonicsIterative will read the entire collection anyway. But we can easily imagine a
+// scenario where we only want to show e.g. the first 10 combinations, or want to compute
+// combinations chunk by chunk to avoid blocking the system when the number is long.
+func combinations<T>(choices: [[T]]) -> LazyMapCollection<Range<Int>, [T]> {
     let combinationCount = choices.reduce(1) { $0 * $1.count }
-    return (0..<combinationCount).map { combination(choices, index: $0) }
+    return (0..<combinationCount).lazy.map { combination(choices, index: $0) }
 }
 
 // combination takes an array of choices for each position, and returns the nth combination.
