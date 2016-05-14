@@ -69,15 +69,19 @@ public func spiralSnake(matrix: [[Int]]) -> [Int] {
         case (0, 1) where position.col == end.col:
             start.row += 1
             direction = (1, 0)
+
         case (1, 0) where position.row == end.row:
             end.col -= 1
             direction = (0, -1)
+
         case (0, -1) where position.col == start.col:
             end.row -= 1
             direction = (-1, 0)
+
         case (-1, 0) where position.row == start.row:
             start.col += 1
             direction = (0, 1)
+
         default:
             break
         }
