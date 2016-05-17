@@ -1,14 +1,19 @@
-import {Point, equal, KDTree} from './kd-tree';
+import {Point, Range, KDTree} from './kd-tree';
 
 declare function require(name: string): any;
 const assert = require('assert');
 
-interface Test {
+interface NearestNeighborTest {
     points: Point[];
     nearestNeighbors: {input: Point, output: Point}[];
 }
 
-const tests: Test[] = [
+interface RangeTest {
+    points: Point[];
+    ranges: {input: Range, output: Point[]}[];
+}
+
+const nearestNeighborTests: NearestNeighborTest[] = [
     {
         points: [
             [0, 0],
@@ -50,15 +55,81 @@ const tests: Test[] = [
     }
 ];
 
-function runTest(test: Test): void {
+const rangeTests: RangeTest[] = [
+    {
+        points: [
+            [0, 0],
+            [1, 2],
+            [3, 1],
+        ],
+        ranges: [
+            {
+                input: {origin: [-1, -2], diagonal: [1, -1]},
+                output: []
+            },
+            {
+                input: {origin: [0, 0], diagonal: [1, 2]},
+                output: [[1, 2], [0, 0]]
+            },
+            {
+                input: {origin: [0.5, 0.5], diagonal: [3.5, 2.5]},
+                output: [[1, 2], [3, 1]]
+            },
+            {
+                input: {origin: [2.5, 0], diagonal: [4, 1.5]},
+                output: [[3, 1]]
+            },
+            {
+                input: {origin: [-1, -1], diagonal: [10, 10]},
+                output: [[1, 2], [0, 0], [3, 1]]
+            },
+        ]
+    },
+    {
+        points: [
+            [0, 0, 0],
+            [1, 3, 0],
+            [2, 0, 0],
+            [3, 1, 7],
+            [5, 3, 6],
+            [5, 5, 5],
+        ],
+        ranges: [
+            {
+                input: {origin: [-1, 2, 0], diagonal: [3, 3, 1]},
+                output: [[1, 3, 0]]
+            },
+            {
+                input: {origin: [-1, 0, 5], diagonal: [10, 4, 8]},
+                output: [[3, 1, 7], [5, 3, 6]]
+            },
+        ]
+    }
+];
+
+function runNearestNeighborTest(test: NearestNeighborTest): void {
     const tree = new KDTree(test.points);
     for (const {input, output} of test.nearestNeighbors) {
         const actual = tree.nearestNeighbor(input);
-        if (!equal(actual, output)) {
-            throw new Error(`For points ${test.points.join(' ')}, expected nearest neighbor of ` +
+        if (JSON.stringify(actual) !== JSON.stringify(output)) {
+            throw new Error(`For points [${test.points.join(' ')}], expected nearest neighbor of ` +
                 `${input} to be ${output}, but was ${actual}`);
         }
     }
 }
 
-tests.forEach(runTest);
+
+function runRangeTest(test: RangeTest): void {
+    const tree = new KDTree(test.points);
+    for (const {input, output} of test.ranges) {
+        const actual = tree.inRange(input);
+        if (JSON.stringify(actual) !== JSON.stringify(output)) {
+            throw new Error(`For points [${test.points.join(' ')}] and range ` +
+                `{origin: ${input.origin}, diagonal: ${input.diagonal}}, expected points in ` +
+                `range to be [${output.join(' ')}], but were [${actual.join(' ')}]`);
+        }
+    }
+}
+
+nearestNeighborTests.forEach(runNearestNeighborTest);
+rangeTests.forEach(runRangeTest);

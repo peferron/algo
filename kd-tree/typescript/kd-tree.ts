@@ -1,11 +1,15 @@
 export type Point = number[];
+export interface Range {
+    origin: Point;
+    diagonal: Point;
+}
 
 const distance = (a: Point, b: Point) => a.reduce((dist, v, i) => dist + Math.pow(b[i] - v, 2), 0);
 
-const nearest = (a: Point, candidate1: Point, candidate2: Point) =>
-    distance(a, candidate1) < distance(a, candidate2) ? candidate1 : candidate2;
+const nearest = (p: Point, candidate1: Point, candidate2: Point) =>
+    distance(p, candidate1) < distance(p, candidate2) ? candidate1 : candidate2;
 
-export const equal = (a: Point, b: Point) => a.every((v, i) => v === b[i]);
+const inRange = (p: Point, r: Range) => p.every((v, i) => r.origin[i] <= v && v <= r.diagonal[i]);
 
 export class KDTree {
     axis: number;
@@ -52,5 +56,21 @@ export class KDTree {
         }
 
         return best;
+    }
+
+    inRange(range: Range): Point[] {
+        let points = inRange(this.point, range) ? [this.point] : [];
+
+        // Does range intersect the left side of the splitting plane?
+        if (this.left && range.origin[this.axis] <= this.point[this.axis]) {
+            points.push(...this.left.inRange(range));
+        }
+
+        // Does range intersect the right side of the splitting plane?
+        if (this.right && range.diagonal[this.axis] >= this.point[this.axis]) {
+            points.push(...this.right.inRange(range));
+        }
+
+        return points;
     }
 }

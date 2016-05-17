@@ -11,3 +11,4 @@ Average time complexities, where k is the number of dimensions and n the number 
 * Insertion: **O(log n)** average case, O(n) worst case. Inserting many points can unbalance the tree, leading to worst case operations.
 * Deletion: **O(log n)** average case, O(n) worst case.
 * Nearest neighbor search: **O(log n)** average case, O(n) worst case.
+* Range search: **O(n^(1-1/k) + m)** worst case, where m is the number of points in the range. In the planar case (d = 2), this means O(√n + m).
