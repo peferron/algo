@@ -1,4 +1,5 @@
 export type Point = number[];
+
 export interface Range {
     origin: Point;
     diagonal: Point;
@@ -26,11 +27,11 @@ export class KDTree {
 
         this.point = points[medianIndex];
 
-        const remainingLeft = points.slice(0, medianIndex);
-        this.left = remainingLeft.length ? new KDTree(remainingLeft, depth + 1) : null;
+        const leftPoints = points.slice(0, medianIndex);
+        this.left = leftPoints.length ? new KDTree(leftPoints, depth + 1) : null;
 
-        const remainingRight = points.slice(medianIndex + 1);
-        this.right = remainingRight.length ? new KDTree(remainingRight, depth + 1) : null;
+        const rightPoints = points.slice(medianIndex + 1);
+        this.right = rightPoints.length ? new KDTree(rightPoints, depth + 1) : null;
     }
 
     nearestNeighbor(point: Point): Point {

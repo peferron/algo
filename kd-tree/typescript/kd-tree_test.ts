@@ -1,16 +1,12 @@
 import {Point, Range, KDTree} from './kd-tree';
+import {Region, KDRegionTree} from './kd-region-tree';
 
 declare function require(name: string): any;
-const assert = require('assert');
+const inspect = require('util').inspect;
 
 interface NearestNeighborTest {
     points: Point[];
-    nearestNeighbors: {input: Point, output: Point}[];
-}
-
-interface RangeTest {
-    points: Point[];
-    ranges: {input: Range, output: Point[]}[];
+    cases: {input: Point, output: Point}[];
 }
 
 const nearestNeighborTests: NearestNeighborTest[] = [
@@ -20,7 +16,7 @@ const nearestNeighborTests: NearestNeighborTest[] = [
             [1, 2],
             [3, 1],
         ],
-        nearestNeighbors: [
+        cases: [
             {input: [0, 1], output: [0, 0]},
             {input: [0, 2], output: [1, 2]},
             {input: [2, 3], output: [1, 2]},
@@ -39,7 +35,7 @@ const nearestNeighborTests: NearestNeighborTest[] = [
             [5, 3, 6],
             [5, 5, 5],
         ],
-        nearestNeighbors: [
+        cases: [
             {input: [2, 0, 0], output: [2, 0, 0]},
             {input: [2, 1, 1], output: [2, 0, 0]},
             {input: [3, 1, 1], output: [2, 0, 0]},
@@ -55,6 +51,23 @@ const nearestNeighborTests: NearestNeighborTest[] = [
     }
 ];
 
+nearestNeighborTests.forEach(test => {
+    const tree = new KDTree(test.points);
+    for (const {input, output} of test.cases) {
+        const actual = tree.nearestNeighbor(input);
+        if (JSON.stringify(actual) !== JSON.stringify(output)) {
+            throw new Error(`For points ${inspect(test.points)}, ` +
+                `expected nearest neighbor of ${inspect(input)} to be ${inspect(output)}, ` +
+                `but was ${inspect(actual)}`);
+        }
+    }
+});
+
+interface RangeTest {
+    points: Point[];
+    cases: {input: Range, output: Point[]}[];
+}
+
 const rangeTests: RangeTest[] = [
     {
         points: [
@@ -62,7 +75,7 @@ const rangeTests: RangeTest[] = [
             [1, 2],
             [3, 1],
         ],
-        ranges: [
+        cases: [
             {
                 input: {origin: [-1, -2], diagonal: [1, -1]},
                 output: []
@@ -94,7 +107,7 @@ const rangeTests: RangeTest[] = [
             [5, 3, 6],
             [5, 5, 5],
         ],
-        ranges: [
+        cases: [
             {
                 input: {origin: [-1, 2, 0], diagonal: [3, 3, 1]},
                 output: [[1, 3, 0]]
@@ -107,29 +120,129 @@ const rangeTests: RangeTest[] = [
     }
 ];
 
-function runNearestNeighborTest(test: NearestNeighborTest): void {
+rangeTests.forEach(test => {
     const tree = new KDTree(test.points);
-    for (const {input, output} of test.nearestNeighbors) {
-        const actual = tree.nearestNeighbor(input);
-        if (JSON.stringify(actual) !== JSON.stringify(output)) {
-            throw new Error(`For points [${test.points.join(' ')}], expected nearest neighbor of ` +
-                `${input} to be ${output}, but was ${actual}`);
-        }
-    }
-}
-
-
-function runRangeTest(test: RangeTest): void {
-    const tree = new KDTree(test.points);
-    for (const {input, output} of test.ranges) {
+    for (const {input, output} of test.cases) {
         const actual = tree.inRange(input);
         if (JSON.stringify(actual) !== JSON.stringify(output)) {
-            throw new Error(`For points [${test.points.join(' ')}] and range ` +
-                `{origin: ${input.origin}, diagonal: ${input.diagonal}}, expected points in ` +
-                `range to be [${output.join(' ')}], but were [${actual.join(' ')}]`);
+            throw new Error(`For points ${inspect(test.points)}, ` +
+                `expected points in range ${inspect(input)} to be ${inspect(output)}, ` +
+                `but were ${inspect(actual)}`);
         }
     }
+});
+
+interface RegionTest {
+    points: Point[];
+    regions: Region[];
+    cases: {input: Point, output: Region}[];
 }
 
-nearestNeighborTests.forEach(runNearestNeighborTest);
-rangeTests.forEach(runRangeTest);
+const regionTests: RegionTest[] = [
+    {
+        points: [
+            [0, 0],
+            [1, 2],
+            [3, 1],
+        ],
+        regions: [
+            [[0, 0], [1, 2], [3, 1]],
+        ],
+        cases: [
+            {
+                input: [1, 1],
+                output: [[0, 0], [1, 2], [3, 1]]
+            },
+            {
+                input: [2, 2],
+                output: undefined
+            },
+            {
+                input: [2.5, 1.5],
+                output: undefined
+            },
+            {
+                // Points on a right-side boundary edge are considered outside.
+                input: [2, 1.5],
+                output: undefined
+            },
+            {
+                // Points on a left-side boundary edge are considered inside.
+                input: [0.5, 1],
+                output: [[0, 0], [1, 2], [3, 1]]
+            },
+        ]
+    },
+    {
+        points: [
+            [0, 2],
+            [3, 4],
+            [4, 0],
+            [5, 7],
+            [6, 5],
+            [8, 1],
+            [9, 6],
+            [11, 3],
+        ],
+        regions: [
+            [[0, 2], [3, 4], [4, 0], [6, 5], [5, 7]],
+            [[4, 0], [8, 1], [6, 5]],
+            [[8, 1], [11, 3], [9, 6], [6, 5]],
+        ],
+        cases: [
+            {
+                input: [2, 3],
+                output: undefined
+            },
+            {
+                input: [2, 3.5],
+                output: [[0, 2], [3, 4], [4, 0], [6, 5], [5, 7]]
+            },
+            {
+                input: [4, 1],
+                output: [[0, 2], [3, 4], [4, 0], [6, 5], [5, 7]]
+            },
+            {
+                input: [5, 5],
+                output: [[0, 2], [3, 4], [4, 0], [6, 5], [5, 7]]
+            },
+            {
+                input: [4.5, 1],
+                output: [[4, 0], [8, 1], [6, 5]]
+            },
+            {
+                input: [7, 0.5],
+                output: undefined
+            },
+            {
+                input: [7, 2],
+                output: [[4, 0], [8, 1], [6, 5]]
+            },
+            {
+                input: [7, 4],
+                output: [[8, 1], [11, 3], [9, 6], [6, 5]]
+            },
+            {
+                input: [10, 4],
+                output: [[8, 1], [11, 3], [9, 6], [6, 5]]
+            },
+            {
+                input: [10, 5],
+                output: undefined
+            },
+        ]
+    },
+];
+
+regionTests.forEach(test => {
+    const tree = new KDRegionTree(test.points, test.regions);
+    for (const {input, output} of test.cases) {
+        const actual = tree.region(input);
+        if (JSON.stringify(actual) !== JSON.stringify(output)) {
+            throw new Error(`For points ${inspect(test.points)} ` +
+                `and regions ${inspect(test.regions)}, ` +
+                `expected region of point ${inspect(input)} to be ${inspect(output)}, ` +
+                `but was ${inspect(actual)}`);
+        }
+    }
+});
