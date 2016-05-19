@@ -28,10 +28,14 @@ export class KDTree {
         this.point = points[medianIndex];
 
         const leftPoints = points.slice(0, medianIndex);
-        this.left = leftPoints.length ? new KDTree(leftPoints, depth + 1) : null;
+        if (leftPoints.length) {
+            this.left = new KDTree(leftPoints, depth + 1);
+        }
 
         const rightPoints = points.slice(medianIndex + 1);
-        this.right = rightPoints.length ? new KDTree(rightPoints, depth + 1) : null;
+        if (rightPoints.length) {
+            this.right = new KDTree(rightPoints, depth + 1);
+        }
     }
 
     nearestNeighbor(point: Point): Point {

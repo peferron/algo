@@ -51,7 +51,7 @@ const nearestNeighborTests: NearestNeighborTest[] = [
     }
 ];
 
-nearestNeighborTests.forEach(test => {
+for (const test of nearestNeighborTests) {
     const tree = new KDTree(test.points);
     for (const {input, output} of test.cases) {
         const actual = tree.nearestNeighbor(input);
@@ -61,7 +61,7 @@ nearestNeighborTests.forEach(test => {
                 `but was ${inspect(actual)}`);
         }
     }
-});
+}
 
 interface RangeTest {
     points: Point[];
@@ -120,7 +120,7 @@ const rangeTests: RangeTest[] = [
     }
 ];
 
-rangeTests.forEach(test => {
+for (const test of rangeTests) {
     const tree = new KDTree(test.points);
     for (const {input, output} of test.cases) {
         const actual = tree.inRange(input);
@@ -130,7 +130,7 @@ rangeTests.forEach(test => {
                 `but were ${inspect(actual)}`);
         }
     }
-});
+}
 
 interface RegionTest {
     points: Point[];
@@ -234,7 +234,7 @@ const regionTests: RegionTest[] = [
     },
 ];
 
-regionTests.forEach(test => {
+for (const test of regionTests) {
     const tree = new KDRegionTree(test.points, test.regions);
     for (const {input, output} of test.cases) {
         const actual = tree.region(input);
@@ -245,4 +245,4 @@ regionTests.forEach(test => {
                 `but was ${inspect(actual)}`);
         }
     }
-});
+}

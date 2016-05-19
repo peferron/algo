@@ -43,8 +43,8 @@ function inRegion(point: Point, region: Region): boolean {
     }, false);
 }
 
-// KDRegionTree is a variant of KDTree where the leaf nodes, instead of being null, hold the list of
-// regions they can potentially intersect with.
+// KDRegionTree is a variant of KDTree where the leaf nodes, instead of being undefined, hold the
+// list of regions they can potentially intersect with.
 export class KDRegionTree {
     axis: number;
     point: Point;
