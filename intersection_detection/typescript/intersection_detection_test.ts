@@ -1,5 +1,5 @@
 import {Point, Segment, intersection} from './intersection';
-import {intersections} from './intersections';
+import intersections from './intersections';
 
 declare function require(name: string): any;
 const inspect = require('util').inspect;

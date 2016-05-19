@@ -1,4 +1,5 @@
 import {Point, Segment, intersection} from './intersection';
+import MinHeap from './min_heap';
 
 // If two events happen at the same x-coordinate, the event with the lowest type value will be
 // processed first.
@@ -16,64 +17,48 @@ interface Event {
 }
 
 class Events {
-    private a: Event[];
-
-    constructor() {
-        this.a = [];
-    }
-
-    private sort() {
-        this.a.sort((e1, e2) =>
-            e1.point.x !== e2.point.x ? e1.point.x - e2.point.x : e1.type - e2.type
-        );
-    }
+    private heap = new MinHeap<Event>((e1, e2) =>
+        e1.point.x !== e2.point.x ? e1.point.x - e2.point.x : e1.type - e2.type
+    );
 
     insertEndpoints(segment: Segment): void {
         // By convention, we order segment points from left to right.
         const ordered = segment[0].x < segment[1].x ? segment : segment.reverse() as Segment;
 
-        this.a.push({
+        this.heap.insert({
             type: EventType.LeftEndpoint,
             point: ordered[0],
             segment: ordered
         });
 
-        this.a.push({
+        this.heap.insert({
             type: EventType.RightEndpoint,
             point: ordered[1],
             segment: ordered
         });
-
-        this.sort();
     }
 
     insertIntersection(below: Segment, above: Segment, minX: number): void {
         const point = intersection(below, above);
 
         if (point && point.x >= minX) {
-            this.a.push({
+            this.heap.insert({
                 type: EventType.Intersection,
                 point: point,
                 segments: {below, above}
             });
-
-            this.sort();
         }
     }
 
     removeIntersection(below: Segment, above: Segment): void {
-        const index = this.a.findIndex(e =>
-            e.type === EventType.Intersection &&
-            e.segments.below === below && e.segments.above === above
+        this.heap.removeElement(event =>
+            event.type === EventType.Intersection &&
+            event.segments.below === below && event.segments.above === above
         );
-
-        if (index >= 0) {
-            this.a.splice(index, 1);
-        }
     }
 
     removeNext(): Event {
-        return this.a.shift();
+        return this.heap.removeMin();
     }
 }
 
@@ -99,11 +84,7 @@ function y(segment: Segment, x: number): number {
 }
 
 class SweepLine {
-    private a: Segment[];
-
-    constructor() {
-        this.a = [];
-    }
+    private a: Segment[] = [];
 
     insert(segment: Segment): void {
         this.a.push(segment);
@@ -131,7 +112,7 @@ class SweepLine {
     }
 }
 
-export function intersections(segments: Segment[]): Point[] {
+export default function intersections(segments: Segment[]): Point[] {
     const events = new Events();
     for (const segment of segments) {
         events.insertEndpoints(segment);
