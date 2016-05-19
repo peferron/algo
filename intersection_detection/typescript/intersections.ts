@@ -1,5 +1,6 @@
 import {Point, Segment, intersection} from './intersection';
 import MinHeap from './min_heap';
+import BinarySearchTree from './binary_search_tree';
 
 // If two events happen at the same x-coordinate, the event with the lowest type value will be
 // processed first.
@@ -62,7 +63,13 @@ class Events {
     }
 }
 
-function compareY(s1: Segment, s2: Segment, x: number): number {
+const y = (segment: Segment, x: number) => {
+    const a = (segment[0].y - segment[1].y) / (segment[0].x - segment[1].x);
+    const b = segment[0].y - a * segment[0].x;
+    return a * x + b;
+};
+
+const compareY = (s1: Segment, s2: Segment, x: number) => {
     const vertical1 = s1[0].x === s1[1].x;
     const vertical2 = s2[0].x === s2[1].x;
     if (vertical1 && vertical2) {
@@ -75,40 +82,17 @@ function compareY(s1: Segment, s2: Segment, x: number): number {
         return 1;
     }
     return y(s1, x) - y(s2, x);
-}
+};
 
-function y(segment: Segment, x: number): number {
-    const a = (segment[0].y - segment[1].y) / (segment[0].x - segment[1].x);
-    const b = segment[0].y - a * segment[0].x;
-    return a * x + b;
-}
+class SweepLine extends BinarySearchTree<Segment> {
+    x: number;
 
-class SweepLine {
-    private a: Segment[] = [];
-
-    insert(segment: Segment): void {
-        this.a.push(segment);
-        this.a.sort((s1, s2) => compareY(s1, s2, segment[0].x));
-    }
-
-    swap(s1: Segment, s2: Segment): void {
-        const i1 = this.a.indexOf(s1);
-        const i2 = this.a.indexOf(s2);
-        this.a[i1] = s2;
-        this.a[i2] = s1;
-    }
-
-    remove(segment: Segment): void {
-        const index = this.a.indexOf(segment);
-        this.a.splice(index, 1);
+    constructor() {
+        super((a, b) => compareY(a, b, this.x));
     }
 
     neighbors(segment: Segment): {below: Segment, above: Segment} {
-        const index = this.a.indexOf(segment);
-        return {
-            below: this.a[index - 1],
-            above: this.a[index + 1]
-        };
+        return {below: this.predecessor(segment), above: this.successor(segment)};
     }
 }
 
@@ -126,6 +110,8 @@ export default function intersections(segments: Segment[]): Point[] {
         if (!event) {
             return intersections;
         }
+
+        line.x = event.point.x;
 
         switch (event.type) {
             case EventType.LeftEndpoint: {
