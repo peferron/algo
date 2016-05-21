@@ -2,7 +2,7 @@ import {Point, Segment, intersection} from './intersection';
 import intersections from './intersections';
 
 declare function require(name: string): any;
-const inspect = require('util').inspect;
+const inspect = (v: any) => require('util').inspect(v, {depth: null});
 
 interface IntersectionTest {
     s1: Segment;
