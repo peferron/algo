@@ -12,7 +12,7 @@ func Pack(itemSizes []int, binSize int) [][]int {
 
 	for _, itemSize := range decreasingItemSizes {
 		if i := firstAvailableBin(availableBinSizes, itemSize); i >= 0 {
-			// The i-th bin has enough space for the
+			// The i-th bin has enough space for this item.
 			availableBinSizes[i] -= itemSize
 			packing[i] = append(packing[i], itemSize)
 		} else {
