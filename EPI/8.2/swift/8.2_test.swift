@@ -3,7 +3,7 @@ import Darwin
 ({
     let a = Node()
 
-    let reversedHead = reverse(a)
+    let reversedHead = a.reverse()
 
     guard reversedHead === a && a.next == nil else {
         print("Failed test with 1 node")
@@ -16,7 +16,7 @@ import Darwin
     a.next = b
     b.next = c
 
-    let reversedHead = reverse(a)
+    let reversedHead = a.reverse()
 
     guard reversedHead === c && c.next === b && b.next === a && a.next === nil else {
         print("Failed test with 3 nodes")

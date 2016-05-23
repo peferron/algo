@@ -44,7 +44,7 @@ func toArray(head: Node) -> [Int] {
 }
 
 for test in tests {
-    let actual = toArray(merge(toList(test.a), toList(test.b)))
+    let actual = toArray(toList(test.a).merge(toList(test.b)))
     guard actual == test.merged else {
         print("For a \(test.a) and b \(test.b), expected merged to be \(test.merged), " +
             "but was \(actual)")

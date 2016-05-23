@@ -22,7 +22,7 @@ let tests: [(nexts: [Int?], cycleStartIndex: Int?)] = [
 
 for test in tests {
     let nodes = toNodes(test.nexts)
-    let actualCycleStart = cycleStart(nodes.first!)
+    let actualCycleStart = nodes.first!.cycleStart()
     let actual = actualCycleStart == nil ? nil : nodes.indexOf { $0 === actualCycleStart! }
 
     guard actual == nil && test.cycleStartIndex == nil ||

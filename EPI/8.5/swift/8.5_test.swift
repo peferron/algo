@@ -10,7 +10,7 @@ import Darwin
     b0.next = b1
     b1.next = b2
 
-    guard overlappingNode(a0, b0) == nil else {
+    guard a0.overlappingNode(b0) == nil && b0.overlappingNode(a0) == nil else {
         print("Failed test without overlap")
         exit(1)
     }
@@ -25,7 +25,7 @@ import Darwin
     let b0 = Node()
     b0.next = a2
 
-    guard overlappingNode(a0, b0)! === a2 else {
+    guard a0.overlappingNode(b0)! === a2 && b0.overlappingNode(a0) === a2 else {
         print("Failed test with overlap")
         exit(1)
     }

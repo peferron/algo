@@ -1,7 +1,25 @@
-// swiftlint:disable variable_name
-
 public class Node {
-    var next: Node?
+    public var next: Node?
+
+    public func overlappingNode(other: Node) -> Node? {
+        let (selfTail, selfCount) = self.tail()
+        let (otherTail, otherCount) = other.tail()
+
+        if selfTail !== otherTail {
+            return nil
+        }
+
+        var selfNode = self.next(max(selfCount - otherCount, 0))!
+        var otherNode = other.next(max(otherCount - selfCount, 0))!
+
+        while selfNode !== otherNode {
+            selfNode = selfNode.next!
+            otherNode = otherNode.next!
+        }
+
+        return selfNode
+    }
+
 
     func tail() -> (Node, Int) {
         var node = self
@@ -24,23 +42,4 @@ public class Node {
         }
         return node
     }
-}
-
-public func overlappingNode(a: Node, _ b: Node) -> Node? {
-    let (aTail, aCount) = a.tail()
-    let (bTail, bCount) = b.tail()
-
-    if aTail !== bTail {
-        return nil
-    }
-
-    var aNode = a.next(max(aCount - bCount, 0))!
-    var bNode = b.next(max(bCount - aCount, 0))!
-
-    while aNode !== bNode {
-        aNode = aNode.next!
-        bNode = bNode.next!
-    }
-
-    return aNode
 }
