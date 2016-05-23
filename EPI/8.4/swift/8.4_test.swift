@@ -1,6 +1,6 @@
 import Darwin
 
-func toNodes(nexts: [Int?]) -> [Node] {
+func nodes(nexts: [Int?]) -> [Node] {
     let nodes = (0..<nexts.count).map { _ in Node() }
     for (i, next) in nexts.enumerate() where next != nil {
         nodes[i].next = nodes[next!]
@@ -21,9 +21,9 @@ let tests: [(nexts: [Int?], cycleStartIndex: Int?)] = [
 ]
 
 for test in tests {
-    let nodes = toNodes(test.nexts)
-    let actualCycleStart = nodes.first!.cycleStart()
-    let actual = actualCycleStart == nil ? nil : nodes.indexOf { $0 === actualCycleStart! }
+    let n = nodes(test.nexts)
+    let actualCycleStart = n[0].cycleStart()
+    let actual = actualCycleStart == nil ? nil : n.indexOf { $0 === actualCycleStart! }
 
     guard actual == nil && test.cycleStartIndex == nil ||
         actual != nil && test.cycleStartIndex != nil && actual! == test.cycleStartIndex! else {

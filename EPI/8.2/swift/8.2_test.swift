@@ -1,24 +1,39 @@
 import Darwin
 
+func nodes(count: Int) -> [Node] {
+    let nodes = (0..<count).map { _ in Node() }
+    for i in 0..<count - 1 {
+        nodes[i].next = nodes[i + 1]
+    }
+    return nodes
+}
+
 ({
-    let a = Node()
+    let n = nodes(1)
+    let reversedHead = n[0].reverse()
 
-    let reversedHead = a.reverse()
-
-    guard reversedHead === a && a.next == nil else {
+    guard reversedHead === n[0] && n[0].next == nil else {
         print("Failed test with 1 node")
         exit(1)
     }
 })()
 
 ({
-    let (a, b, c) = (Node(), Node(), Node())
-    a.next = b
-    b.next = c
+    let n = nodes(2)
+    let reversedHead = n[0].reverse()
 
-    let reversedHead = a.reverse()
+    guard reversedHead === n[1] && n[1].next === n[0] && n[0].next === nil else {
+        print("Failed test with 2 nodes")
+        exit(1)
+    }
+})()
 
-    guard reversedHead === c && c.next === b && b.next === a && a.next === nil else {
+({
+    let n = nodes(3)
+    let reversedHead = n[0].reverse()
+
+    guard reversedHead === n[2] && n[2].next === n[1] && n[1].next === n[0] &&
+        n[0].next === nil else {
         print("Failed test with 3 nodes")
         exit(1)
     }
