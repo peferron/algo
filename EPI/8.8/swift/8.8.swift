@@ -13,14 +13,14 @@ public class Node {
         }
 
         node = node.next!
-        var parentOfNodeToRemove = self
+        var prevOfNodeToRemove = self
 
         while let next = node.next {
             node = next
-            parentOfNodeToRemove = parentOfNodeToRemove.next!
+            prevOfNodeToRemove = prevOfNodeToRemove.next!
         }
 
-        parentOfNodeToRemove.next =  parentOfNodeToRemove.next!.next
+        prevOfNodeToRemove.next =  prevOfNodeToRemove.next!.next
 
         return self
     }
