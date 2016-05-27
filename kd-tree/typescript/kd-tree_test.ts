@@ -51,7 +51,7 @@ const nearestNeighborTests: NearestNeighborTest[] = [
     }
 ];
 
-for (const test of nearestNeighborTests) {
+function runNearestNeighborTest(test: NearestNeighborTest) {
     const tree = new KDTree(test.points);
     for (const {input, output} of test.cases) {
         const actual = tree.nearestNeighbor(input);
@@ -62,6 +62,8 @@ for (const test of nearestNeighborTests) {
         }
     }
 }
+
+nearestNeighborTests.forEach(runNearestNeighborTest);
 
 interface RangeTest {
     points: Point[];
@@ -120,7 +122,7 @@ const rangeTests: RangeTest[] = [
     }
 ];
 
-for (const test of rangeTests) {
+function runRangeTest(test: RangeTest) {
     const tree = new KDTree(test.points);
     for (const {input, output} of test.cases) {
         const actual = tree.inRange(input);
@@ -131,6 +133,8 @@ for (const test of rangeTests) {
         }
     }
 }
+
+rangeTests.forEach(runRangeTest);
 
 interface RegionTest {
     points: Point[];
@@ -234,7 +238,7 @@ const regionTests: RegionTest[] = [
     },
 ];
 
-for (const test of regionTests) {
+function runRegionTest(test: RegionTest) {
     const tree = new KDRegionTree(test.points, test.regions);
     for (const {input, output} of test.cases) {
         const actual = tree.region(input);
@@ -246,3 +250,5 @@ for (const test of regionTests) {
         }
     }
 }
+
+regionTests.forEach(runRegionTest);

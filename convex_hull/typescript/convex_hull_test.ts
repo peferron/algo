@@ -153,4 +153,8 @@ function runTest(test: Test, fn: (points: Point[]) => Point[]) {
     assert.deepEqual(actual, expected);
 }
 
-[giftWrap, graham, monotoneChain].forEach(fn => tests.forEach(test => runTest(test, fn)));
+for (const fn of [giftWrap, graham, monotoneChain]) {
+    for (const test of tests) {
+        runTest(test, fn);
+    }
+}

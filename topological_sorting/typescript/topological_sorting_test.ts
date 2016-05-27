@@ -33,22 +33,20 @@ const tests: Test[] = [
     }
 ];
 
-function runTest(test: Test): void {
-    assert(contains(test.sorts, sort(test.graph)));
-}
-
-function contains(list: number[][], item: number[]): boolean {
-    return list.some(listItem => deepEqual(listItem, item));
-}
-
-function deepEqual(a: any, b: any): boolean {
+const deepEqual = (a: any, b: any) => {
     try {
         assert.deepEqual(a, b);
         return true;
     } catch (e) {
-        // Empty on purpose.
+        return false;
     }
-    return false;
+};
+
+const contains = (list: number[][], item: number[]) =>
+    list.some(listItem => deepEqual(listItem, item));
+
+function runTest(test: Test): void {
+    assert(contains(test.sorts, sort(test.graph)));
 }
 
 tests.forEach(runTest);

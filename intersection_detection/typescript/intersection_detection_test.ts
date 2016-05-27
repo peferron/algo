@@ -43,7 +43,7 @@ const intersectionTests: IntersectionTest[] = [
     },
 ];
 
-for (const test of intersectionTests) {
+function runIntersectionTest(test: IntersectionTest) {
     const actual = intersection(test.s1, test.s2);
     if (JSON.stringify(test.intersection) !== JSON.stringify(actual)) {
         throw new Error(`For segments ${inspect(test.s1)} and ${inspect(test.s2)}, ` +
@@ -52,12 +52,14 @@ for (const test of intersectionTests) {
     }
 }
 
+intersectionTests.forEach(runIntersectionTest);
+
 interface IntersectionsTest {
     segments: Segment[];
     intersections: Point[];
 }
 
-const intersectionsTest: IntersectionsTest[] = [
+const intersectionsTests: IntersectionsTest[] = [
     {
         segments: [
             [{x: 0, y: 0}, {x: 3, y: 3}],
@@ -121,7 +123,7 @@ const intersectionsTest: IntersectionsTest[] = [
     },
 ];
 
-for (const test of intersectionsTest) {
+function runIntersectionsTest(test: IntersectionsTest) {
     const actual = intersections(test.segments);
     if (JSON.stringify(actual) !== JSON.stringify(test.intersections)) {
         throw new Error(`For segments ${inspect(test.segments)}, ` +
@@ -129,3 +131,5 @@ for (const test of intersectionsTest) {
             `but were ${inspect(actual)}`);
     }
 }
+
+intersectionsTests.forEach(runIntersectionsTest);
