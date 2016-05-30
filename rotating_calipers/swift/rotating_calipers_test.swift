@@ -1,13 +1,7 @@
 import Darwin
 
-struct Test {
-    let polygon: [Point]
-    let antipodalPairs: [Pair]
-    let diameter: Pair
-}
-
-let tests = [
-    Test(
+let tests: [(polygon: [Point], antipodalPairs: [Pair], diameter: Pair)] = [
+    (
         polygon: [
             (0, 0),
             (2, 0),
@@ -20,7 +14,7 @@ let tests = [
         ],
         diameter: ((0, 0), (2, 0))
     ),
-    Test(
+    (
         polygon: [
             (0, 0),
             (2, 0),
@@ -35,7 +29,7 @@ let tests = [
         ],
         diameter: ((0, 0), (3, 2))
     ),
-    Test(
+    (
         polygon: [
             (0, 0),
             (3, 0),
@@ -51,7 +45,7 @@ let tests = [
         ],
         diameter: ((0, 0), (3, 2))
     ),
-    Test(
+    (
         polygon: [
             (8, 0),
             (13, 3),

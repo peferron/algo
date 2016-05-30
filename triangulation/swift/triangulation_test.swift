@@ -1,27 +1,17 @@
 import Darwin
 
-struct TriangulateTest {
-    let points: [Point]
-    let triangulation: [Edge]
-}
-
-struct DelaunayTest {
-    let triangulation: [Edge]
-    let delaunay: [Edge]
-}
-
-let triangulateTests = [
-    TriangulateTest(
+let triangulateTests: [(points: [Point], triangulation: [Edge])] = [
+    (
         points: [],
         triangulation: []
     ),
-    TriangulateTest(
+    (
         points: [
             (0, 0),
         ],
         triangulation: []
     ),
-    TriangulateTest(
+    (
         points: [
             (0, 0),
             (0, 1),
@@ -30,7 +20,7 @@ let triangulateTests = [
             ((0, 0), (0, 1)),
         ]
     ),
-    TriangulateTest(
+    (
         points: [
             (0, 0),
             (2, 0),
@@ -42,7 +32,7 @@ let triangulateTests = [
             ((2, 0), (1, 1)),
         ]
     ),
-    TriangulateTest(
+    (
         points: [
             (0, 0),
             (2, 0),
@@ -54,7 +44,7 @@ let triangulateTests = [
             ((2, 0), (1, 1)),
         ]
     ),
-    TriangulateTest(
+    (
         points: [
             (0, 0),
             (1, 0),
@@ -69,7 +59,7 @@ let triangulateTests = [
             ((1, 1), (2, 0)),
         ]
     ),
-    TriangulateTest(
+    (
         points: [
             (0, 0),
             (2, 0),
@@ -84,7 +74,7 @@ let triangulateTests = [
             ((2, 2), (0, 1)),
         ]
     ),
-    TriangulateTest(
+    (
         points: [
             (0, 0),
             (2, 0),
@@ -100,7 +90,7 @@ let triangulateTests = [
             ((1, 1), (0, 3)),
         ]
     ),
-    TriangulateTest(
+    (
         points: [
             (0, 0),
             (1, 0),
@@ -115,7 +105,7 @@ let triangulateTests = [
             ((1, 1), (1, 2)),
         ]
     ),
-    TriangulateTest(
+    (
         points: [
             (0, 3),
             (1, 2),
@@ -149,7 +139,7 @@ let triangulateTests = [
             ((2, 4), (3, 2)),
         ]
     ),
-    TriangulateTest(
+    (
         points: [
             // Additional complication compared to previous test case: the new point (1, 1) is
             // collinear with (1, 0) and (1, 2).
@@ -189,7 +179,7 @@ let triangulateTests = [
             ((2, 4), (3, 2)),
         ]
     ),
-    TriangulateTest(
+    (
         points: [
             // Additional complication compared to previous test case: the new point (1, 3) is
             // collinear with the start point (0, 3) and (2, 3).
@@ -235,12 +225,23 @@ let triangulateTests = [
     ),
 ]
 
-let delaunayTests = [
-    DelaunayTest(
+for test in triangulateTests {
+    let actual = triangulate(test.points).sort(<)
+    let expected = test.triangulation.sort(<)
+    guard actual == expected else {
+        print("For test points \(test.points)\n" +
+            "expected triangulation to be \(expected)\n" +
+            "but was \(actual)")
+        exit(1)
+    }
+}
+
+let delaunayTests: [(triangulation: [Edge], delaunay: [Edge])] = [
+    (
         triangulation: [],
         delaunay: []
     ),
-    DelaunayTest(
+    (
         triangulation: [
             ((0, 0), (0, 1)),
         ],
@@ -248,7 +249,7 @@ let delaunayTests = [
             ((0, 0), (0, 1)),
         ]
     ),
-    DelaunayTest(
+    (
         triangulation: [
             ((0, 0), (2, 0)),
             ((0, 0), (1, 1)),
@@ -260,7 +261,7 @@ let delaunayTests = [
             ((2, 0), (1, 1)),
         ]
     ),
-    DelaunayTest(
+    (
         triangulation: [
             ((0, 0), (1, 0)),
             ((0, 0), (1, 9)),
@@ -276,7 +277,7 @@ let delaunayTests = [
             ((1, 9), (2, 0)),
         ]
     ),
-    DelaunayTest(
+    (
         triangulation: [
             ((0, 0), (2, 0)),
             ((0, 0), (1, 5)),
@@ -294,7 +295,7 @@ let delaunayTests = [
             ((1, 5), (1, 6)),
         ]
     ),
-    DelaunayTest(
+    (
         triangulation: [
             ((0, 1), (2, 0)),
             ((2, 0), (3, 1)),
@@ -310,7 +311,7 @@ let delaunayTests = [
             ((2, 0), (2, 2)), // The horizontal edge is replaced with a vertical edge
         ]
     ),
-    DelaunayTest(
+    (
         triangulation: [
             ((0, 2), (2, 0)),
             ((2, 0), (3, 2)),
@@ -326,7 +327,7 @@ let delaunayTests = [
             ((0, 2), (3, 2)), // The vertical edge is replaced with a horizontal edge
         ]
     ),
-    DelaunayTest(
+    (
         triangulation: [
             ((0, 3), (1, 0)),
             ((0, 3), (1, 2)),
@@ -371,17 +372,6 @@ let delaunayTests = [
         ]
     ),
 ]
-
-for test in triangulateTests {
-    let actual = triangulate(test.points).sort(<)
-    let expected = test.triangulation.sort(<)
-    guard actual == expected else {
-        print("For test points \(test.points)\n" +
-            "expected triangulation to be \(expected)\n" +
-            "but was \(actual)")
-        exit(1)
-    }
-}
 
 for test in delaunayTests {
     let actual = delaunay(test.triangulation).sort(<)
