@@ -11,3 +11,7 @@ The module [levenshtein_distance](../levenshtein_distance) uses a very similar a
 [https://en.wikipedia.org/wiki/Shortest_common_supersequence_problem](https://en.wikipedia.org/wiki/Shortest_common_supersequence_problem)
 
 An algorithm that returns the shortest common supersequence of two sequences is also implemented here, as it can be easily obtained from their longest common subsequence, in O(m + n) additional time. This solution doesn't scale to more than two sequences though.
+
+# Limitations
+
+The JavaScript implementation accesses characters using `str[index]` and likely doesn't support Unicode properly.

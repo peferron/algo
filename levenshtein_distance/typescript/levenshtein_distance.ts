@@ -29,15 +29,14 @@ export function distance(a: string, b: string): number {
             // a[0...i-2] and b[0...j-2]. If a[i-1] and b[j-1] are identical then we can do a match,
             // which keeps the same edit distance as table[i-1][j-1]. If they are different then we
             // can do a substitution, which increases the edit distance by 1.
-            const matchOrSubstitution = table[i - 1][j - 1] +
-                (a.charAt(i - 1) === b.charAt(j - 1) ? 0 : 1);
+            const matchOrSubstitution = table[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1);
 
             // We can also delete b[j].
             const deletion = table[i][j - 1] + 1;
 
             // We can also insert a[i] after b[j]. (Depending on the point of view, we can also see
             // that as deleting a[i].)
-            const insertion = table[i-1][j] + 1;
+            const insertion = table[i - 1][j] + 1;
 
             // The final edit distance is the best of all these possible operations.
             table[i][j] = Math.min(matchOrSubstitution, deletion, insertion);

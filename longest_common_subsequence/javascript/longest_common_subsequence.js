@@ -23,7 +23,7 @@ function table(a, b) {
     // Fill the rest of the table using dynamic programming.
     for (let i = 1; i < rows; i++) {
         for (let j = 1; j < columns; j++) {
-            if (a.charAt(i - 1) === b.charAt(j - 1)) {
+            if (a[i - 1] === b[j - 1]) {
                 table[i][j] = table[i - 1][j - 1] + 1;
             } else {
                 table[i][j] = Math.max(table[i][j - 1], table[i - 1][j]);
@@ -42,7 +42,7 @@ function backtrack(table, a, b, i = a.length, j = b.length) {
     if (i === 0 || j === 0) {
         return '';
     }
-    if (a.charAt(i - 1) === b.charAt(j - 1)) {
+    if (a[i - 1] === b[j - 1]) {
         return backtrack(table, a, b, i - 1, j - 1) + a[i - 1];
     }
     if (table[i - 1][j] > table[i][j - 1]) {

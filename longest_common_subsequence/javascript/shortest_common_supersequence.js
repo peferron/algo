@@ -24,18 +24,14 @@ export function shortestCommonSupersequence(a, b) {
             break;
         }
 
-        const ai = a.charAt(i);
-        const bj = b.charAt(j);
-        const lcsk = lcs.charAt(k);
-
-        if (ai !== lcsk) {
-            scs += ai;
+        if (a[i] !== lcs[k]) {
+            scs += a[i];
             i += 1;
-        } else if (bj !== lcsk) {
-            scs += bj;
+        } else if (b[j] !== lcs[k]) {
+            scs += b[j];
             j += 1;
         } else {
-            scs += lcsk;
+            scs += lcs[k];
             i += 1;
             j += 1;
             k += 1;
