@@ -9,14 +9,17 @@ func Sort(a []int) []int {
 	return append(sortedNegative, sortedPositive...)
 }
 
-// sortAbs returns a copy of a, sorted in increasing absolute value order.
-func sortAbs(a []int) []int {
-	base := 10
-	d := maxDigits(a, base)
-	for n := 0; n < d; n++ {
-		a = concat(buckets(a, base, n))
+// splitSign returns two slices: one slice containing all negative elements of a, and one slice
+// containing all positive elements of a.
+func splitSign(a []int) (negative, positive []int) {
+	for _, v := range a {
+		if v < 0 {
+			negative = append(negative, v)
+		} else {
+			positive = append(positive, v)
+		}
 	}
-	return a
+	return
 }
 
 // reverse returns a reversed copy of a.
@@ -29,17 +32,14 @@ func reverse(a []int) []int {
 	return b
 }
 
-// splitSign returns two slices: one slice containing all negative elements of a, and one slice
-// containing all positive elements of a.
-func splitSign(a []int) (negative, positive []int) {
-	for _, v := range a {
-		if v < 0 {
-			negative = append(negative, v)
-		} else {
-			positive = append(positive, v)
-		}
+// sortAbs returns a copy of a, sorted in increasing absolute value order.
+func sortAbs(a []int) []int {
+	base := 10 // Arbitrary.
+	d := maxDigits(a, base)
+	for n := 0; n < d; n++ {
+		a = concat(buckets(a, base, n))
 	}
-	return
+	return a
 }
 
 // buckets returns a slice of b buckets, where the kth bucket contains all the elements of a whose
