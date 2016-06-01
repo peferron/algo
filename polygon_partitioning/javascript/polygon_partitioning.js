@@ -19,7 +19,7 @@ const inTriangle = (point, a, b, c) =>
     direction(b, c, point) === COUNTER_CLOCKWISE &&
     direction(c, a, point) === COUNTER_CLOCKWISE;
 
-function pop(set) {
+function deleteFirst(set) {
     const value = set.values().next().value;
     set.delete(value);
     return value;
@@ -108,7 +108,7 @@ function triangulatePoints(points) {
 
     // Stop clipping ears when the remaining polygon is a triangle.
     for (let n = points.length; n > 3; n--) {
-        const earPoint = pop(earPoints);
+        const earPoint = deleteFirst(earPoints);
         earPoint.delete();
 
         const diagonal = [earPoint.prev, earPoint.next];
