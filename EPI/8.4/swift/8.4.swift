@@ -5,7 +5,7 @@ public class Node {
     public func cycleStart() -> Node? {
         if let node = self.cycleAny() {
             let count = node.cycleCount()
-            return self.cycleStart(count)
+            return cycleStart(count)
         }
         return nil
     }
@@ -13,7 +13,7 @@ public class Node {
     // cycleAny returns any node of the cycle, or nil if there is no cycle.
     func cycleAny() -> Node? {
         var slow = self
-        var fast = self.next
+        var fast = next
 
         while let f = fast, fnn = f.next?.next {
             if slow === f {
@@ -28,12 +28,12 @@ public class Node {
 
     // cycleCount returns the number of nodes in the cycle containing the current node.
     func cycleCount() -> Int {
-        var next = self.next!
+        var node = next!
         var count = 1
 
-        while next !== self {
+        while node !== self {
             count += 1
-            next = next.next!
+            node = node.next!
         }
 
         return count

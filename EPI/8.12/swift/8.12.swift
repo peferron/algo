@@ -34,12 +34,12 @@ public class Node {
     }
 
     public func isPalindrome() -> Bool {
-        if self.next == nil {
+        if next == nil {
             return true
         }
 
         var firstHalf = self
-        var reversedSecondHalf = self.middle().next?.reverse()
+        var reversedSecondHalf = middle().next?.reverse()
 
         while reversedSecondHalf != nil {
             guard firstHalf.value == reversedSecondHalf!.value else {

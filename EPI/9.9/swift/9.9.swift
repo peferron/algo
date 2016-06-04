@@ -12,7 +12,7 @@ public class Node<T> {
     public func valuesByIncreasingDepth() -> [[T]] {
         var values = [[T]]()
 
-        self.breadthFirstSearch { depth, node in
+        breadthFirstSearch { depth, node in
             if values.count <= depth {
                 values.append([])
             }

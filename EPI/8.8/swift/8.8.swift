@@ -9,7 +9,7 @@ public class Node {
 
         if node.next == nil {
             // The index-th last node is the first node.
-            return self.next
+            return next
         }
 
         node = node.next!

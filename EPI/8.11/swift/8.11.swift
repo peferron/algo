@@ -3,7 +3,7 @@ public class Node {
 
     public func merge() {
         var lastMovedEven = self
-        var parentOfNextEven = self.next
+        var parentOfNextEven = next
 
         while let nextEven = parentOfNextEven?.next {
             // Move nextEven from after parentOfNextEven to after lastMovedEven.

@@ -2,7 +2,7 @@ public class Node {
     public var next: Node?
 
     public func overlappingNode(other: Node) -> Node? {
-        let (selfTail, selfCount) = self.tail()
+        let (selfTail, selfCount) = tail()
         let (otherTail, otherCount) = other.tail()
 
         if selfTail !== otherTail {
