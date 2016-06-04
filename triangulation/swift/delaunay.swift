@@ -13,7 +13,7 @@ class HalfEdge: CustomStringConvertible {
     // Since we only handle triangulations, we don't need to store a pointer to the previous
     // half-edge.
     var prev: HalfEdge? {
-        return self.next?.next
+        return next?.next
     }
 
     var locallyDelaunay: Bool {
