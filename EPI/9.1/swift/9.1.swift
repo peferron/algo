@@ -1,4 +1,4 @@
-public class Stack<T: Comparable> {
+public struct Stack<T: Comparable> {
     private var elements = [T]()
     private var maximums = [(element: T, count: Int)]()
 
@@ -10,7 +10,7 @@ public class Stack<T: Comparable> {
         return maximums.last!.element
     }
 
-    public func push(element: T) {
+    public mutating func push(element: T) {
         elements.append(element)
 
         let lastMax = maximums.last
@@ -21,7 +21,7 @@ public class Stack<T: Comparable> {
         }
     }
 
-    public func pop() -> T {
+    public mutating func pop() -> T {
         let popped = elements.removeLast()
 
         if let lastMax = maximums.last where lastMax.element == popped {

@@ -1,6 +1,6 @@
 import Darwin
 
-let stack = Stack<Int>()
+var stack = Stack<Int>()
 assert(stack.isEmpty)
 
 stack.push(10)
