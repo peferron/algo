@@ -5,6 +5,8 @@ export interface Point {
     y: number;
 }
 
+const equal = (a: Point, b: Point) => a.x === b.x && a.y === b.y;
+
 const free = ({x, y}: Point, pixels: boolean[][]) =>
     y >= 0 && y < pixels.length && x >= 0 && x < pixels[y].length && !pixels[y][x];
 
@@ -20,14 +22,6 @@ const freeNeighbors = (point: Point, pixels: boolean[][]) =>
 
 const euclideanDistance = (start: Point, end: Point) =>
     Math.sqrt(Math.pow(start.x - end.x, 2) + Math.pow(start.y - end.y, 2));
-
-const equal = (a: Point, b: Point) => a.x === b.x && a.y === b.y;
-
-const closest = (points: Point[], distances: HashMap<Point, number>) =>
-    points.reduce((closest, point) => {
-        const distance = distances.get(point);
-        return !isNaN(distance) && distance < distances.get(closest) ? point : closest;
-    });
 
 function path(end: Point, parents: HashMap<Point, Point>): Point[] {
     // Recursive alternative:
