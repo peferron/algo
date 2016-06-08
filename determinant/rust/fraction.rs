@@ -18,7 +18,7 @@ impl Fraction {
     }
 
     fn from_i32s(numerator: i32, denominator: i32) -> Self {
-        let gcd = greatest_common_denominator(numerator, denominator);
+        let gcd = greatest_common_divisor(numerator, denominator);
         Fraction {
             numerator: numerator / gcd,
             denominator: denominator / gcd,
@@ -30,11 +30,11 @@ impl Fraction {
     }
 }
 
-fn greatest_common_denominator(a: i32, b: i32) -> i32 {
+fn greatest_common_divisor(a: i32, b: i32) -> i32 {
     if b == 0 {
         a
     } else {
-        greatest_common_denominator(b, a % b)
+        greatest_common_divisor(b, a % b)
     }
 }
 
