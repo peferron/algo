@@ -59,8 +59,8 @@ function runTest(test: string) {
     const expectedPath = getPath(chars);
     const start = expectedPath[0];
     const end = expectedPath[expectedPath.length - 1];
-
     const actualPath = shortestPath(pixels, start, end);
+
     if (JSON.stringify(actualPath) !== JSON.stringify(expectedPath)) {
         console.log('For input:', test);
         console.log('expected path to be:', expectedPath);
