@@ -1,4 +1,4 @@
-import {Point, shortestPath} from './A*';
+import {Coordinates, Graph, shortestPath} from './A*';
 
 // . = free points
 // # = blocked points
@@ -39,32 +39,46 @@ const tests: string[] = [
 `,
 ];
 
-const getChars = (str: string) => str.trim().split('\n').map(line => line.split(''));
+function parse(test: string): {graph: Graph, path: number[]} {
+    const chars = test.trim().split('\n').map(line => line.split(''));
+    const coordinates: Coordinates[] = [];
+    const path: number[] = [];
 
-const getPixels = (chars: string[][]) => chars.map(line => line.map(char => char === '#'));
-
-const getPath = (chars: string[][]) => {
-    const path: {order: number, point: Point}[] = [];
     chars.forEach((line, y) => line.forEach((char, x) => {
-        if (/[0-9A-Z]/.test(char)) {
-            path.push({order: parseInt(char, 36), point: {x, y}});
+        if (char !== '#') {
+            coordinates.push({x, y});
+            if (/[0-9A-Z]/.test(char)) {
+                path[parseInt(char, 36)] = coordinates.length - 1;
+            }
         }
     }));
-    return path.sort((a, b) => a.order - b.order).map(item => item.point);
+
+    const adjacencyList = coordinates.map(a =>
+        coordinates
+            .map((b, bi) => {
+                const dx = Math.abs(a.x - b.x);
+                const dy = Math.abs(a.y - b.y);
+                return dx <= 1 && dy <= 1 && dx + dy > 0 ? bi : NaN;
+            })
+            .filter(bi => !isNaN(bi))
+    );
+
+    return {
+        graph: {coordinates, adjacencyList},
+        path
+    };
 }
 
 function runTest(test: string) {
-    const chars = getChars(test);
-    const pixels = getPixels(chars);
-    const expectedPath = getPath(chars);
+    const {graph, path: expectedPath} = parse(test);
     const start = expectedPath[0];
     const end = expectedPath[expectedPath.length - 1];
-    const actualPath = shortestPath(pixels, start, end);
+    const actualPath = shortestPath(graph, start, end);
 
     if (JSON.stringify(actualPath) !== JSON.stringify(expectedPath)) {
         console.log('For input:', test);
-        console.log('expected path to be:', expectedPath);
-        console.log('but was:', actualPath);
+        console.log('expected path to be:', expectedPath.map(point => graph.coordinates[point]));
+        console.log('but was:', actualPath.map(point => graph.coordinates[point]));
         throw new Error();
     }
 }

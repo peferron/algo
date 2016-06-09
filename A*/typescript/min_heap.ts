@@ -1,42 +1,4 @@
-export class HashSet<T> {
-    private set = new Set();
-
-    constructor(private hash: (element: T) => string = JSON.stringify) {
-    }
-
-    get size(): number {
-        return this.set.size;
-    }
-
-    add(element: T) {
-        this.set.add(this.hash(element));
-    }
-
-    delete(element: T) {
-        this.set.delete(this.hash(element));
-    }
-
-    has(element: T): boolean {
-        return this.set.has(this.hash(element));
-    }
-}
-
-export class HashMap<T, U> {
-    private map = new Map();
-
-    constructor(private hash: (element: T) => string = JSON.stringify) {
-    }
-
-    set(key: T, value: U) {
-        this.map.set(this.hash(key), value);
-    }
-
-    get(key: T): U {
-        return this.map.get(this.hash(key));
-    }
-}
-
-export class MinHeap<T> {
+export default class MinHeap<T> {
     private array: T[] = [];
 
     constructor(private compare: (a: T, b: T) => number) {

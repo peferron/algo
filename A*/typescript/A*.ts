@@ -1,65 +1,58 @@
-import {HashSet, HashMap, MinHeap} from './data_structures';
+import MinHeap from './min_heap';
 
-export interface Point {
+export interface Coordinates {
     x: number;
     y: number;
 }
 
-const equal = (a: Point, b: Point) => a.x === b.x && a.y === b.y;
+export interface Graph {
+    coordinates: Coordinates[];
+    adjacencyList: number[][];
+}
 
-const free = ({x, y}: Point, pixels: boolean[][]) =>
-    y >= 0 && y < pixels.length && x >= 0 && x < pixels[y].length && !pixels[y][x];
+const euclideanDistance = (a: Coordinates, b: Coordinates) =>
+    Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2));
 
-const allNeighbors = ({x, y}: Point) => [
-    // Side neighbors.
-    {x, y: y - 1}, {x: x - 1, y}, {x: x + 1, y}, {x, y: y + 1},
-    // Diagonal neighbors.
-    {x: x - 1, y: y - 1}, {x: x + 1, y: y - 1}, {x: x - 1, y: y + 1}, {x: x + 1, y: y + 1},
-];
+const path = (end: number, parents: Map<number, number>) => {
+    // Recursive one-liner:
+    // return isNaN(end) ? [] : [...path(parents.get(end), parents), end];
 
-const freeNeighbors = (point: Point, pixels: boolean[][]) =>
-    allNeighbors(point).filter(neighbor => free(neighbor, pixels));
-
-const euclideanDistance = (start: Point, end: Point) =>
-    Math.sqrt(Math.pow(start.x - end.x, 2) + Math.pow(start.y - end.y, 2));
-
-function path(end: Point, parents: HashMap<Point, Point>): Point[] {
-    // Recursive alternative:
-    // return end ? [...path(parents.get(end), parents), end] : [];
-
-    const path: Point[] = [];
-    while (end) {
+    const path: number[] = [];
+    while (!isNaN(end)) {
         path.push(end);
         end = parents.get(end);
     }
     return path.reverse();
-}
+};
 
-export function shortestPath(pixels: boolean[][], start: Point, end: Point): Point[] {
-    const processed = new HashSet<Point>();
-    const pendingSet = new HashSet<Point>();
-    const pendingHeap = new MinHeap<Point>((a, b) =>
-        distancesFromStartToEndThroughPoint.get(a) - distancesFromStartToEndThroughPoint.get(b));
-    const parents = new HashMap<Point, Point>();
-    const distancesFromStartToPoint = new HashMap<Point, number>();
-    const distancesFromStartToEndThroughPoint = new HashMap<Point, number>();
+export function shortestPath(graph: Graph, start: number, end: number): number[] {
+    const processed = new Set<number>();
+
+    const pendingSet = new Set<number>();
+    const pendingHeap = new MinHeap<number>((a, b) =>
+        distancesToEndViaPoint.get(a) - distancesToEndViaPoint.get(b));
+
+    const parents = new Map<number, number>();
+
+    const distancesToPoint = new Map<number, number>();
+    const distancesToEndViaPoint = new Map<number, number>();
 
     // Set the initial situation.
     pendingSet.add(start);
     pendingHeap.add(start);
-    distancesFromStartToPoint.set(start, 0);
+    distancesToPoint.set(start, 0);
 
     while (pendingSet.size) {
         const point = pendingHeap.deleteMin();
         pendingSet.delete(point);
 
-        if (equal(point, end)) {
+        if (point === end) {
             return path(end, parents);
         }
 
         processed.add(point);
 
-        for (const neighbor of freeNeighbors(point, pixels)) {
+        for (const neighbor of graph.adjacencyList[point]) {
             if (processed.has(neighbor)) {
                 continue;
             }
@@ -69,16 +62,15 @@ export function shortestPath(pixels: boolean[][], start: Point, end: Point): Poi
                 pendingHeap.add(neighbor);
             }
 
-            const oldDistanceFromStartToNeighbor = distancesFromStartToPoint.get(neighbor);
-            const newDistanceFromStartToNeighbor = distancesFromStartToPoint.get(point) +
-                euclideanDistance(point, neighbor);
+            const oldDistanceToNeighbor = distancesToPoint.get(neighbor);
+            const newDistanceToNeighbor = distancesToPoint.get(point) +
+                euclideanDistance(graph.coordinates[point], graph.coordinates[neighbor]);
 
-            if (isNaN(oldDistanceFromStartToNeighbor) ||
-                newDistanceFromStartToNeighbor < oldDistanceFromStartToNeighbor) {
+            if (isNaN(oldDistanceToNeighbor) || newDistanceToNeighbor < oldDistanceToNeighbor) {
                 parents.set(neighbor, point);
-                distancesFromStartToPoint.set(neighbor, newDistanceFromStartToNeighbor);
-                distancesFromStartToEndThroughPoint.set(neighbor,
-                    newDistanceFromStartToNeighbor + euclideanDistance(neighbor, end));
+                distancesToPoint.set(neighbor, newDistanceToNeighbor);
+                distancesToEndViaPoint.set(neighbor, newDistanceToNeighbor +
+                    euclideanDistance(graph.coordinates[neighbor], graph.coordinates[end]));
             }
         }
     }
