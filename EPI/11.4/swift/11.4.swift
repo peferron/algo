@@ -58,7 +58,7 @@ class Heap<T> {
         }
     }
 
-    func highestPriority() -> T? {
+    var highestPriority: T? {
         return array.first
     }
 
@@ -102,7 +102,7 @@ public func closest(stars: [Coordinates], count: Int) -> [Coordinates] {
         // heap containing all of them.
         if maxHeap.count < count {
             maxHeap.insert(star)
-        } else if further(maxHeap.highestPriority()!, than: star) {
+        } else if further(maxHeap.highestPriority!, than: star) {
             maxHeap.removeHighestPriority()
             maxHeap.insert(star)
         }
