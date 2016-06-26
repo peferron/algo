@@ -1,7 +1,7 @@
-public func firstIndexOf<T: Comparable>(element: T, inSortedArray array: [T]) -> Int {
+public func firstIndexOf<T: Comparable>(element: T, inSortedArray array: [T]) -> Int? {
     var low = 0
     var high = array.count - 1
-    var index = -1
+    var index: Int? = nil
 
     while low <= high {
         let mid = low + (high - low) / 2

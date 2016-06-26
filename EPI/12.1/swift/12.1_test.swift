@@ -1,15 +1,15 @@
 import Darwin
 
-let tests: [(array: [Int], element: Int, index: Int)] = [
+let tests: [(array: [Int], element: Int, index: Int?)] = [
     (
         array: [],
         element: 2,
-        index: -1
+        index: nil
     ),
     (
         array: [1],
         element: 2,
-        index: -1
+        index: nil
     ),
     (
         array: [1],
@@ -30,7 +30,7 @@ let tests: [(array: [Int], element: Int, index: Int)] = [
 
 for test in tests {
     let index = firstIndexOf(test.element, inSortedArray: test.array)
-    guard index == test.index else {
+    guard test.index == nil && index == nil || index! == test.index! else {
         print("For test array \(test.array) and element \(test.element), " +
             "expected index to be \(test.index), but was \(index)")
         exit(1)
