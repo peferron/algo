@@ -43,7 +43,7 @@ const tests = [
 ];
 
 function runTest(test: Test): void {
-    assert.deepEqual(test.solution, bipartiteMatching(test.graph));
+    assert.deepStrictEqual(test.solution, bipartiteMatching(test.graph));
 }
 
 tests.forEach(runTest);

@@ -87,7 +87,7 @@ function contains(list: number[][], item: number[]): boolean {
 
 function deepEqual(a: any, b: any): boolean {
     try {
-        assert.deepEqual(a, b);
+        assert.deepStrictEqual(a, b);
         return true;
     } catch (e) {
         // Empty on purpose.

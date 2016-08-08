@@ -68,7 +68,7 @@ const tests: Test[] = [
 
 function runTest(test: Test) {
     const set = minimumFeedbackEdgeSet(test.graph);
-    assert.deepEqual(set, test.set);
+    assert.deepStrictEqual(set, test.set);
 }
 
 tests.forEach(runTest);

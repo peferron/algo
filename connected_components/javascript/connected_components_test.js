@@ -53,7 +53,7 @@ const tests = [
 ];
 
 function runTest(test) {
-    assert.deepEqual(connectedComponents(test.graph), test.components);
+    assert.deepStrictEqual(connectedComponents(test.graph), test.components);
 }
 
 tests.forEach(runTest);

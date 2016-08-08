@@ -1,5 +1,6 @@
 import {triangulate, partition} from './polygon_partitioning';
 
+const assert = require('assert');
 const inspect = require('util').inspect;
 
 const triangulateTests = [
@@ -39,11 +40,10 @@ const triangulateTests = [
 
 for (const test of triangulateTests) {
     const actual = triangulate(test.polygon);
-    if (JSON.stringify(actual) !== JSON.stringify(test.diagonals)) {
-        throw new Error(`For polygon ${inspect(test.polygon)}, ` +
-            `expected triangulation diagonals to be ${inspect(test.diagonals)}, ` +
-            `but were ${inspect(actual)}`);
-    }
+    assert.deepStrictEqual(test.diagonals, actual,
+        `For polygon ${inspect(test.polygon)}, ` +
+        `expected triangulation diagonals to be ${inspect(test.diagonals)}, ` +
+        `but were ${inspect(actual)}`);
 }
 
 const partitionTests = [
@@ -77,9 +77,8 @@ const partitionTests = [
 
 for (const test of partitionTests) {
     const actual = partition(test.polygon);
-    if (JSON.stringify(actual) !== JSON.stringify(test.diagonals)) {
-        throw new Error(`For polygon ${inspect(test.polygon)}, ` +
-            `expected partition diagonals to be ${inspect(test.diagonals)}, ` +
-            `but were ${inspect(actual)}`);
-    }
+    assert.deepStrictEqual(test.diagonals, actual,
+        `For polygon ${inspect(test.polygon)}, ` +
+        `expected partition diagonals to be ${inspect(test.diagonals)}, ` +
+        `but were ${inspect(actual)}`);
 }

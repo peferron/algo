@@ -43,7 +43,7 @@ var tests = [
 ];
 
 function runTest(test) {
-    assert.deepEqual(grayCode(test.n), test.code);
+    assert.deepStrictEqual(grayCode(test.n), test.code);
 }
 
 tests.forEach(runTest);

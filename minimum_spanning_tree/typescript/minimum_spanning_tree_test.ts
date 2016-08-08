@@ -68,7 +68,7 @@ const compareEdges = (a: Edge, b: Edge) => (a.x !== b.x) ? a.x - b.x : a.y - b.y
 
 function runTest(test: Test): void {
     const mstEdges = minimumSpanningTreeEdges(test.graph).sort(compareEdges);
-    assert.deepEqual(mstEdges, test.mstEdges);
+    assert.deepStrictEqual(mstEdges, test.mstEdges);
 }
 
 tests.forEach(runTest);

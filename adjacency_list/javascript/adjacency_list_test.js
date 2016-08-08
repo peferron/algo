@@ -20,7 +20,7 @@ var graph = {
 
 function testConstruct() {
     var list = new AdjacencyList(graph);
-    assert.deepEqual(list.a, [
+    assert.deepStrictEqual(list.a, [
         [1, 4, 5],
         [0, 2, 4],
         [1, 3],
@@ -34,14 +34,14 @@ function testBreadthFirstSearch() {
     var list = new AdjacencyList(graph);
     var vertices = [];
     list.breadthFirstSearch(0, vertices.push.bind(vertices));
-    assert.deepEqual(vertices, [0, 1, 4, 5, 2, 3]);
+    assert.deepStrictEqual(vertices, [0, 1, 4, 5, 2, 3]);
 }
 
 function testDepthFirstSearch() {
     var list = new AdjacencyList(graph);
     var vertices = [];
     list.depthFirstSearch(0, vertices.push.bind(vertices));
-    assert.deepEqual(vertices, [0, 1, 2, 3, 4, 5]);
+    assert.deepStrictEqual(vertices, [0, 1, 2, 3, 4, 5]);
 }
 
 testConstruct();

@@ -241,8 +241,8 @@ function runTest(test) {
         u.union(tu[0], tu[1]);
     });
 
-    assert.deepEqual(u.parents, test.expect.parents);
-    assert.deepEqual(u.ranks, test.expect.ranks);
+    assert.deepStrictEqual(u.parents, test.expect.parents);
+    assert.deepStrictEqual(u.ranks, test.expect.ranks);
 
     for (var i = 0; i < test.size; i++) {
         var root = u.find(i);
@@ -250,7 +250,7 @@ function runTest(test) {
     }
 
     // find() has been run against each element, so the tree should be flat now.
-    assert.deepEqual(u.parents, test.expect.finds);
+    assert.deepStrictEqual(u.parents, test.expect.finds);
 }
 
 tests.forEach(runTest);

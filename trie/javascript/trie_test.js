@@ -8,7 +8,7 @@ function testBasicSequence() {
     var t = new Trie();
 
     assert(!t.has('abc'));
-    assert.deepEqual(t.all(), []);
+    assert.deepStrictEqual(t.all(), []);
 
     t.set('abc', 5);
     assert(!t.has('ab'));
@@ -23,7 +23,7 @@ function testBasicSequence() {
     t.set('abc', 7);
     assert(t.has('abc'));
     assert.strictEqual(t.get('abc'), 7);
-    assert.deepEqual(t.all(), [{key: 'abc', value: 7}]);
+    assert.deepStrictEqual(t.all(), [{key: 'abc', value: 7}]);
 
     t.set('def', 9);
     assert(t.has('abc'));
@@ -38,7 +38,7 @@ function testBasicSequence() {
     assert.strictEqual(t.get('def'), 9);
     assert(t.has('abcd'));
     assert.strictEqual(t.get('abcd'), 11);
-    assert.deepEqual(t.all(), [
+    assert.deepStrictEqual(t.all(), [
         {key: 'abc', value: 7},
         {key: 'abcd', value: 11},
         {key: 'def', value: 9}
@@ -80,7 +80,7 @@ function validate(t, m, a) {
     var all = t.all();
     assert.strictEqual(a.length, all.length);
     a.sort().forEach(function(k, i) {
-        assert.deepEqual(all[i], {key: k, value: m[k]});
+        assert.deepStrictEqual(all[i], {key: k, value: m[k]});
     });
 }
 

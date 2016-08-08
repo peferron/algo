@@ -150,7 +150,7 @@ const lexicographicalComparison = (a: Point, b: Point) => (a.x - b.x) || (a.y - 
 function runTest(test: Test, fn: (points: Point[]) => Point[]) {
     const actual = fn(test.points).sort(lexicographicalComparison);
     const expected = test.convexHull.sort(lexicographicalComparison);
-    assert.deepEqual(actual, expected);
+    assert.deepStrictEqual(actual, expected);
 }
 
 for (const fn of [giftWrap, graham, monotoneChain]) {

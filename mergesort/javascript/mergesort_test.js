@@ -27,7 +27,7 @@ function testBasicInputs() {
     tests.forEach(function(test) {
         var a = clone(test.in);
         sort(a);
-        assert.deepEqual(a, test.out);
+        assert.deepStrictEqual(a, test.out);
     });
 }
 

@@ -28,7 +28,7 @@ function testBasicInputs(maxHeapify) {
     tests.forEach(function(test) {
         var a = clone(test.in);
         sort(a, maxHeapify);
-        assert.deepEqual(a, test.out);
+        assert.deepStrictEqual(a, test.out);
     });
 }
 

@@ -59,7 +59,7 @@ const tests = [
 ];
 
 function runTest(test) {
-    assert.deepEqual(bisect(test.graph), test.subsets);
+    assert.deepStrictEqual(bisect(test.graph), test.subsets);
 }
 
 tests.forEach(runTest);

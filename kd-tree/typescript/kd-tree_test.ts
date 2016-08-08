@@ -2,6 +2,7 @@ import {Point, Range, KDTree} from './kd-tree';
 import {Region, KDRegionTree} from './kd-region-tree';
 
 declare function require(name: string): any;
+const assert = require('assert');
 const inspect = require('util').inspect;
 
 interface NearestNeighborTest {
@@ -55,11 +56,10 @@ function runNearestNeighborTest(test: NearestNeighborTest) {
     const tree = new KDTree(test.points);
     for (const {input, output} of test.cases) {
         const actual = tree.nearestNeighbor(input);
-        if (JSON.stringify(actual) !== JSON.stringify(output)) {
-            throw new Error(`For points ${inspect(test.points)}, ` +
-                `expected nearest neighbor of ${inspect(input)} to be ${inspect(output)}, ` +
-                `but was ${inspect(actual)}`);
-        }
+        assert.deepStrictEqual(output, actual,
+            `For points ${inspect(test.points)}, ` +
+            `expected nearest neighbor of ${inspect(input)} to be ${inspect(output)}, ` +
+            `but was ${inspect(actual)}`);
     }
 }
 
@@ -126,11 +126,10 @@ function runRangeTest(test: RangeTest) {
     const tree = new KDTree(test.points);
     for (const {input, output} of test.cases) {
         const actual = tree.inRange(input);
-        if (JSON.stringify(actual) !== JSON.stringify(output)) {
-            throw new Error(`For points ${inspect(test.points)}, ` +
-                `expected points in range ${inspect(input)} to be ${inspect(output)}, ` +
-                `but were ${inspect(actual)}`);
-        }
+        assert.deepStrictEqual(output, actual,
+            `For points ${inspect(test.points)}, ` +
+            `expected points in range ${inspect(input)} to be ${inspect(output)}, ` +
+            `but were ${inspect(actual)}`);
     }
 }
 
@@ -242,12 +241,11 @@ function runRegionTest(test: RegionTest) {
     const tree = new KDRegionTree(test.points, test.regions);
     for (const {input, output} of test.cases) {
         const actual = tree.region(input);
-        if (JSON.stringify(actual) !== JSON.stringify(output)) {
-            throw new Error(`For points ${inspect(test.points)} ` +
-                `and regions ${inspect(test.regions)}, ` +
-                `expected region of point ${inspect(input)} to be ${inspect(output)}, ` +
-                `but was ${inspect(actual)}`);
-        }
+        assert.deepStrictEqual(output, actual,
+            `For points ${inspect(test.points)} ` +
+            `and regions ${inspect(test.regions)}, ` +
+            `expected region of point ${inspect(input)} to be ${inspect(output)}, ` +
+            `but was ${inspect(actual)}`);
     }
 }
 

@@ -35,7 +35,7 @@ const tests: Test[] = [
 
 const deepEqual = (a: any, b: any) => {
     try {
-        assert.deepEqual(a, b);
+        assert.deepStrictEqual(a, b);
         return true;
     } catch (e) {
         return false;

@@ -59,7 +59,7 @@ function testRank() {
     tests.forEach(function(permutations) {
         permutations.forEach(function(p, m) {
             var m2 = permutation_generation.rank(p);
-            assert.strictEqual(m2, m, 'For p: ' + p + ', expected m to be ' + m + ' but was ' + m2);
+            assert.strictEqual(m2, m, `For p: ${p}, expected m to be: ${m}, but was: ${m2}`);
         });
     });
 }
@@ -69,8 +69,8 @@ function testUnrank() {
         permutations.forEach(function(p, m) {
             var n = p.length;
             var p2 = permutation_generation.unrank(m, n);
-            assert.deepEqual(p2, p, 'For m: ' + m + ' and n: ' + n + ', expected p to be ' + p +
-                ' but was ' + p2);
+            assert.deepStrictEqual(p2, p, `For m: ${m} and n: ${n}, ` +
+                `expected p to be: ${p}, but was ${p2}`);
         });
     });
 }
@@ -79,8 +79,8 @@ function testAll() {
     tests.forEach(function(permutations) {
         var n = permutations[0].length;
         var permutations2 = permutation_generation.all(n);
-        assert.deepEqual(permutations2, permutations, 'For n: ' + n +
-            ', expected permutations to be ' + permutations + ' but was ' + permutations2);
+        assert.deepStrictEqual(permutations2, permutations,
+            `For n: ${n}, expected permutations to be: ${permutations}, but was: ${permutations2}`);
     });
 }
 

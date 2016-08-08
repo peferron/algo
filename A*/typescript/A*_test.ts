@@ -1,31 +1,35 @@
 import {Coordinates, Graph, shortestPath} from './A*';
 
+declare function require(name: String): any;
+const assert = require('assert');
+const inspect = (v: any) => require('util').inspect(v, {depth: null});
+
 // . = free points
 // # = blocked points
 // [0-9A-Z] = shortest path
 const tests: string[] = [
-`
-01..
-..2.
-...3
-`,
-`
-0#..
-1#..
-.234
-`,
-`
-.210
-3#..
-4#..
-`,
-`
-.9ABCD
-8#####
-7#543.
-.6###2
-..#01.
-`,
+// `
+// 01..
+// ..2.
+// ...3
+// `,
+// `
+// 0#..
+// 1#..
+// .234
+// `,
+// `
+// .210
+// 3#..
+// 4#..
+// `,
+// `
+// .9ABCD
+// 8#####
+// 7#543.
+// .6###2
+// ..#01.
+// `,
 `
 ...10....
 .32......
@@ -75,12 +79,10 @@ function runTest(test: string) {
     const end = expectedPath[expectedPath.length - 1];
     const actualPath = shortestPath(graph, start, end);
 
-    if (JSON.stringify(actualPath) !== JSON.stringify(expectedPath)) {
-        console.log('For input:', test);
-        console.log('expected path to be:', expectedPath.map(point => graph.coordinates[point]));
-        console.log('but was:', actualPath.map(point => graph.coordinates[point]));
-        throw new Error();
-    }
+    assert.deepStrictEqual(expectedPath, actualPath,
+        'For input:' + test +
+        'expected path to be:\n' + inspect(expectedPath.map(point => graph.coordinates[point])) +
+        '\nbut was:\n' + inspect(actualPath.map(point => graph.coordinates[point])));
 }
 
 tests.forEach(runTest);

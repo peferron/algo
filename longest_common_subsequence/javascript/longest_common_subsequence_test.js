@@ -1,6 +1,8 @@
 import {longestCommonSubsequence} from './longest_common_subsequence.js';
 import {shortestCommonSupersequence} from './shortest_common_supersequence.js';
 
+const assert = require('assert');
+
 const tests = [
     {
         a: 'abc',
@@ -43,17 +45,16 @@ const tests = [
 
 function runTest(test, i) {
     const lcs = longestCommonSubsequence(test.a, test.b);
-    if (lcs !== test.longestCommonSubsequence) {
-        throw new Error(`In test #${i} with strings '${test.a}' and '${test.b}', expected longest` +
-            ` common subsequence to be '${test.longestCommonSubsequence}', but was '${lcs}'`);
-    }
+    assert.strictEqual(test.longestCommonSubsequence, lcs,
+        `In test #${i} with strings '${test.a}' and '${test.b}', ` +
+        `expected longest common subsequence to be '${test.longestCommonSubsequence}', ` +
+        `but was '${lcs}'`);
 
     const scs = shortestCommonSupersequence(test.a, test.b);
-    if (scs !== test.shortestCommonSupersequence) {
-        throw new Error(`In test #${i} with strings '${test.a}' and '${test.b}', expected ` +
-            `shortest common supersequence to be '${test.shortestCommonSupersequence}', ` +
-            `but was '${scs}'`);
-    }
+    assert.strictEqual(test.shortestCommonSupersequence, scs,
+        `In test #${i} with strings '${test.a}' and '${test.b}', ` +
+        `expected shortest common supersequence to be '${test.shortestCommonSupersequence}', ` +
+        `but was '${scs}'`);
 }
 
 tests.forEach(runTest);

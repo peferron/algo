@@ -77,7 +77,7 @@ var tests = [
 function runTest(test) {
     test.problems.forEach(function(problem) {
         var solution = dijkstra(test.graph, problem.start, problem.end);
-        assert.deepEqual(solution, problem.solution);
+        assert.deepStrictEqual(solution, problem.solution);
     });
 }
 

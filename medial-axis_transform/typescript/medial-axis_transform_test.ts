@@ -175,20 +175,16 @@ const pixelsToString = (pixels: boolean[][]) => '\n' + pixels.map(pixelsToLine).
 
 function runTest(test: Test) {
     const actualDistances = distancesToString(manhattanDistances(stringToPixels(test.input)));
-    if (actualDistances !== test.manhattanDistances) {
-        console.log('For input pixels:', test.input);
-        console.log('expected chessboard distances to be:', test.manhattanDistances);
-        console.log('but were:', actualDistances);
-        throw new Error();
-    }
+    assert.strictEqual(test.manhattanDistances, actualDistances,
+        'For input pixels:' + test.input +
+        'expected chessboard distances to be:' + test.manhattanDistances +
+        'but were:' + actualDistances);
 
     const actualSkeleton = pixelsToString(skeleton(stringToPixels(test.input)));
-    if (actualSkeleton !== test.skeleton) {
-        console.log('For input pixels:', test.input);
-        console.log('expected skeleton to be:', test.skeleton);
-        console.log('but was:', actualSkeleton);
-        throw new Error();
-    }
+    assert.strictEqual(test.skeleton, actualSkeleton,
+        'For input pixels:' + test.input +
+        'expected skeleton to be:' + test.skeleton +
+        'but was:' + actualSkeleton);
 }
 
 tests.forEach(runTest);

@@ -120,7 +120,7 @@ function compareNumbers(a, b) {
 
 function runTest(test) {
     const sorted = articulations(test.graph).sort(compareNumbers);
-    assert.deepEqual(sorted, test.articulations);
+    assert.deepStrictEqual(sorted, test.articulations);
 }
 
 tests.forEach(runTest);

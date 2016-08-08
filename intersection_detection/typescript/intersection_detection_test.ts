@@ -2,6 +2,7 @@ import {Point, Segment, intersection} from './intersection';
 import intersections from './intersections';
 
 declare function require(name: string): any;
+const assert = require('assert');
 const inspect = (v: any) => require('util').inspect(v, {depth: null});
 
 interface IntersectionTest {
@@ -45,11 +46,10 @@ const intersectionTests: IntersectionTest[] = [
 
 function runIntersectionTest(test: IntersectionTest) {
     const actual = intersection(test.s1, test.s2);
-    if (JSON.stringify(test.intersection) !== JSON.stringify(actual)) {
-        throw new Error(`For segments ${inspect(test.s1)} and ${inspect(test.s2)}, ` +
-            `expected intersection to be ${inspect(test.intersection)}, ` +
-            `but was ${inspect(actual)}`);
-    }
+    assert.deepStrictEqual(test.intersection, actual,
+        `For segments ${inspect(test.s1)} and ${inspect(test.s2)}, ` +
+        `expected intersection to be ${inspect(test.intersection)}, ` +
+        `but was ${inspect(actual)}`);
 }
 
 intersectionTests.forEach(runIntersectionTest);
@@ -125,11 +125,10 @@ const intersectionsTests: IntersectionsTest[] = [
 
 function runIntersectionsTest(test: IntersectionsTest) {
     const actual = intersections(test.segments);
-    if (JSON.stringify(actual) !== JSON.stringify(test.intersections)) {
-        throw new Error(`For segments ${inspect(test.segments)}, ` +
-            `expected intersections to be ${inspect(test.intersections)}, ` +
-            `but were ${inspect(actual)}`);
-    }
+    assert.deepStrictEqual(test.intersections, actual,
+        `For segments ${inspect(test.segments)}, ` +
+        `expected intersections to be ${inspect(test.intersections)}, ` +
+        `but were ${inspect(actual)}`);
 }
 
 intersectionsTests.forEach(runIntersectionsTest);

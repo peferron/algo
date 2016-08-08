@@ -36,7 +36,7 @@ function testBasicSequence() {
     t.set(2, 'two again again');
     t.set(9, 'nine');
 
-    assert.deepEqual(t.all(), [
+    assert.deepStrictEqual(t.all(), [
         {key: 2, value: 'two again again'},
         {key: 5, value: 'five'},
         {key: 7, value: 'seven'},
@@ -74,7 +74,7 @@ function validate(t, m, a) {
     var all = t.all();
     assert.strictEqual(a.length, all.length);
     a.sort(compareNumbers).forEach(function(k, i) {
-        assert.deepEqual(all[i], {key: k, value: m[k]});
+        assert.deepStrictEqual(all[i], {key: k, value: m[k]});
     });
 }
 
