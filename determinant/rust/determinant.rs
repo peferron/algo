@@ -1,4 +1,3 @@
-use std::num::Zero;
 use fraction::Fraction;
 use square_matrix::SquareMatrix;
 
@@ -36,11 +35,11 @@ impl SquareMatrix<Fraction> {
         // Eliminate elements in the column-th column, below the column-th row
         let mut swaps = 0;
         for i in (column + 1)..self.order {
-            if self[(i, column)] == Fraction::zero() {
+            if self[(i, column)] == Fraction::from_i32(0) {
                 continue;
             }
 
-            if self[(column, column)] == Fraction::zero() {
+            if self[(column, column)] == Fraction::from_i32(0) {
                 self.swap_rows(column, i);
                 swaps += 1;
                 continue;

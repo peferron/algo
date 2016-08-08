@@ -1,4 +1,4 @@
-#![feature(slice_patterns, zero_one)]
+#![feature(slice_patterns)]
 
 mod applications;
 mod determinant;

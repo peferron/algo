@@ -1,6 +1,5 @@
 use std::cmp::PartialEq;
 use std::fmt::{Debug, Formatter, Result};
-use std::num::Zero;
 use std::ops::{Div, Mul, Neg, Rem, Sub};
 
 #[derive(Copy, Clone)]
@@ -101,11 +100,5 @@ impl Sub for Fraction {
         let rhs_numerator_scaled = rhs.numerator * self.denominator;
 
         Fraction::from_i32s(self_numerator_scaled - rhs_numerator_scaled, common_denominator)
-    }
-}
-
-impl Zero for Fraction {
-    fn zero() -> Self {
-        Fraction::from_i32(0)
     }
 }
