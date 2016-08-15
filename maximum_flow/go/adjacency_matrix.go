@@ -51,7 +51,7 @@ func (a AdjacencyMatrix) BreadthFirstSearch(start int, callback func(Edge) bool)
 		x := queue[0]
 		queue = queue[1:]
 
-		for y := 0; y < len(a); y++ {
+		for y := range a {
 			if visited[y] || a[x][y] == 0 {
 				continue
 			}

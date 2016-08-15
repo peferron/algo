@@ -40,7 +40,7 @@ func label(l AdjacencyList) []int {
 		}
 	}
 
-	for i := 0; i < len(l); i++ {
+	for i := range l {
 		l.DepthFirstSearch(i, labelVertex)
 	}
 
