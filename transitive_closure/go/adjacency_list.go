@@ -2,8 +2,18 @@ package transitive_closure
 
 type AdjacencyList [][]int
 
-func (g AdjacencyList) DepthFirstSearch(start int, callback func(int)) {
-	discovered := make([]bool, len(g))
+func NewAdjacencyList(length int) AdjacencyList {
+	a := make(AdjacencyList, length)
+
+	for x := range a {
+		a[x] = []int{}
+	}
+
+	return a
+}
+
+func (a AdjacencyList) DepthFirstSearch(start int, callback func(int)) {
+	discovered := make([]bool, len(a))
 	stack := []int{start}
 
 	for len(stack) > 0 {
@@ -16,7 +26,7 @@ func (g AdjacencyList) DepthFirstSearch(start int, callback func(int)) {
 		}
 
 		discovered[x] = true
-		stack = append(stack, g[x]...)
+		stack = append(stack, a[x]...)
 		callback(x)
 	}
 }
