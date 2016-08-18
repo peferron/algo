@@ -2,17 +2,17 @@
 
 This is just me fooling around and implementing various algorithms and data structures in [Go](http://golang.org), [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript), [TypeScript](http://www.typescriptlang.org), [Rust](http://www.rust-lang.org), and [Swift](https://swift.org).
 
-Many of these problems appear in Steven Skiena's [Algorithm Design Manual](http://www.amazon.com/Algorithm-Design-Manual-Steven-Skiena/dp/1849967202), which I recommend.
+Many of these problems appear in Steven Skiena's [Algorithm Design Manual](http://www.amazon.com/Algorithm-Design-Manual-Steven-Skiena/dp/1849967202), which I heartily recommend.
 
 Modules do not share code and use built-in language features only. This makes each module easiest to understand individually.
 
 ### Disclaimers
 
-- These modules are not optimized for performance;
-- These modules are not very well-tested, and *definitely* not intended for production use (if you do, please send me a link to your post-mortem);
-- I don't have much experience with Rust, so there might be simpler & cleaner ways to do things;
-- Some older JS modules are written in ES 5;
-- Some older TS modules do not use features introduced in TS 1.6+;
+- These modules are not optimized for performance.
+- These modules are not very well-tested, and *definitely* not intended for production use. If you do it anyway, please share your post-mortem :)
+- I don't have much experience with Rust, so there might be simpler and cleaner ways to do things.
+- Some older JS modules are written in ES 5.
+- Some older TS modules do not use features introduced in TS 1.6+.
 - Generics are avoided in favor of concrete types for simplicity.
 
 ### Test a Go module
@@ -23,7 +23,7 @@ Modules do not share code and use built-in language features only. This makes ea
 $ ./test_go mergesort
 ```
 
-(Replace `mergesort` by the module of your choice.)
+(Replace `mergesort` with the name of the module of your choice.)
 
 ### Test a JavaScript module
 
@@ -75,4 +75,4 @@ $ ./watch mergesort
 
 ### Contribute
 
-Pull requests are welcome. Improvements to existing modules will be merged as soon as possible. Completely new modules will take longer—this repo is mostly a learning exercise, so I'll try to solve the problem on my own before merging.
+Pull requests are welcome. Improvements to existing modules will be merged as soon as possible. Completely new modules will take longer—this repo is a learning exercise, so I'll try to solve the problem on my own before merging.
