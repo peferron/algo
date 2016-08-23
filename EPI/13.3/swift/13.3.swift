@@ -18,8 +18,10 @@ public func constructible(letter: String, magazine: String) -> Bool {
     }
 
     for char in magazine.characters {
-        if let r = required[char] {
-            required[char] = r == 1 ? nil : r - 1
+        if let r = required[char] where r > 1 {
+            required[char] = r - 1
+        } else {
+            required.removeValueForKey(char)
             if required.isEmpty {
                 return true
             }
