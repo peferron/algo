@@ -14,7 +14,7 @@ pub fn maximum_flow(g: &Graph, source: usize, sink: usize) -> u32 {
 }
 
 impl AdjacencyMatrix {
-    // addAugmentingPath looks for an augmenting path from source to sink in the residual flow
+    // add_augmenting_path looks for an augmenting path from source to sink in the residual flow
     // graph.
     // If an augmenting path is found, addAugmentingPath updates the residual flow graph to reflect
     // the addition of the augmenting path, and returns the capacity of the augmenting path.
@@ -38,12 +38,12 @@ impl AdjacencyMatrix {
         //     y == sink
         // });
 
-        self.substract_path(&parents, sink)
+        self.subtract_path(&parents, sink)
     }
 
-    // substractPath substracts the path described by parents and end from the residual flow graph,
+    // subtract_path subtracts the path described by parents and end from the residual flow graph,
     // and returns the capacity of the path.
-    fn substract_path(&mut self, parents: &Vec<Option<usize>>, end: usize) -> Option<u32> {
+    fn subtract_path(&mut self, parents: &Vec<Option<usize>>, end: usize) -> Option<u32> {
         let capacity = self.path_capacity(parents, end);
 
         if let Some(c) = capacity {

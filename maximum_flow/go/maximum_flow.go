@@ -31,12 +31,12 @@ func (r AdjacencyMatrix) addAugmentingPath(source, sink int) int {
 		return edge.Y == sink
 	})
 
-	return r.substractPath(parents, sink)
+	return r.subtractPath(parents, sink)
 }
 
-// substractPath substracts the path described by parents and end from the residual flow graph r,
+// subtractPath subtracts the path described by parents and end from the residual flow graph r,
 // and returns the capacity of the path.
-func (r AdjacencyMatrix) substractPath(parents []int, end int) int {
+func (r AdjacencyMatrix) subtractPath(parents []int, end int) int {
 	capacity := r.pathCapacity(parents, end)
 
 	for _, edge := range edges(parents, end) {

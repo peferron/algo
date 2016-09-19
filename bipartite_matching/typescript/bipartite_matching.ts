@@ -72,17 +72,17 @@ function addAugmentingPath(residual: AdjacencyMatrix, source: number, sink: numb
         return false;
     }
 
-    substractPath(residual, parents, sink);
+    subtractPath(residual, parents, sink);
     return true;
 }
 
-function substractPath(residual: AdjacencyMatrix, parents: number[], end: number): void {
+function subtractPath(residual: AdjacencyMatrix, parents: number[], end: number): void {
     const p = parents[end];
     if (p < 0) {
         return;
     }
     residual.a[p][end] = false;
     residual.a[end][p] = true;
-    substractPath(residual, parents, p);
+    subtractPath(residual, parents, p);
 }
 
