@@ -12,7 +12,6 @@ func == <T: Equatable>(lhs: [[T]], rhs: [[T]]) -> Bool {
     return true
 }
 
-
 let tests: [(words: [String], anagrams: [[String]])] = [
     (
         words: [],
