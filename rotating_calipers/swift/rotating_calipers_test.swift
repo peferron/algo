@@ -70,8 +70,8 @@ let tests: [(polygon: [Point], antipodalPairs: [Pair], diameter: Pair)] = [
 
 
 for test in tests {
-    let actualPairs = antipodalPairs(test.polygon).sort(<)
-    let expectedPairs = test.antipodalPairs.sort(<)
+    let actualPairs = antipodalPairs(test.polygon).sorted(by: <)
+    let expectedPairs = test.antipodalPairs.sorted(by: <)
     guard actualPairs == expectedPairs else {
         print("For test polygon \(test.polygon)\n" +
             "expected antipodal pairs to be \(expectedPairs)\n" +

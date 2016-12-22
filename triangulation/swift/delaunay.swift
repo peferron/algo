@@ -28,8 +28,8 @@ class HalfEdge: CustomStringConvertible {
         let opposite1 = twin.prev!.origin
         let triangle2 = (twin.origin, twin.next!.origin, twin.prev!.origin)
         let opposite2 = prev!.origin
-        return !inCircumcircle(triangle1, point: opposite1) &&
-            !inCircumcircle(triangle2, point: opposite2)
+        return !inCircumcircle(triangle: triangle1, point: opposite1) &&
+            !inCircumcircle(triangle: triangle2, point: opposite2)
     }
 
     var description: String {
@@ -49,7 +49,7 @@ class HalfEdge: CustomStringConvertible {
 
         let n = next!
         let p = prev!
-        let t = twin
+        let t = twin!
         let tn = twin.next!
         let tp = twin.prev!
 
@@ -66,7 +66,7 @@ class HalfEdge: CustomStringConvertible {
     }
 }
 
-func determinant4x4(m: [Int]) -> Int {
+func determinant4x4(_ m: [Int]) -> Int {
     // Ugly and lifted from Stack Overflow, but:
     // - Calculating determinants is not the point of this module. For fancier calculation methods,
     //   see the `determinant` module.
@@ -86,7 +86,7 @@ func determinant4x4(m: [Int]) -> Int {
            m[4]  * m[1]  * m[10] * m[15]  +  m[0] * m[5]  * m[10] * m[15]
 }
 
-func square(value: Int) -> Int {
+func square(_ value: Int) -> Int {
     return value * value
 }
 
@@ -104,7 +104,7 @@ func inCircumcircle(triangle: (Point, Point, Point), point: Point) -> Bool {
 // We can ignore some edges cases because we know that for this application:
 // - a, b and origin are always distinct
 // - if a, b and origin are collinear then origin must be the middle point
-func compareClockwise(a: Point, lessThan b: Point, origin: Point) -> Bool {
+func compareClockwise(_ a: Point, lessThan b: Point, origin: Point) -> Bool {
     // Handle case where a and b are not on the same vertical half of the plane.
     if a.x >= origin.x && b.x < origin.x {
         return true
@@ -126,7 +126,7 @@ func compareClockwise(a: Point, lessThan b: Point, origin: Point) -> Bool {
     }
 }
 
-func doublyConnectedEdgeList(edges: [Edge]) -> [HalfEdge] {
+func doublyConnectedEdgeList(_ edges: [Edge]) -> [HalfEdge] {
     var halfEdges = [HalfEdge]()
 
     // Create all half-edges without setting their 'next' property yet, and keep a mapping between
@@ -140,7 +140,7 @@ func doublyConnectedEdgeList(edges: [Edge]) -> [HalfEdge] {
     }
 
     // Sort the half-edges by origin first, and then by clockwise order.
-    halfEdges.sortInPlace {
+    halfEdges.sort {
         $0.origin < $1.origin || $0.origin == $1.origin &&
             compareClockwise($0.twin.origin, lessThan: $1.twin.origin, origin: $0.origin)
     }
@@ -173,7 +173,7 @@ func doublyConnectedEdgeList(edges: [Edge]) -> [HalfEdge] {
     return halfEdges
 }
 
-func flipUntilDelaunay(halfEdges: [HalfEdge]) {
+func flipUntilDelaunay(_ halfEdges: [HalfEdge]) {
     var dirty = halfEdges
 
     while !dirty.isEmpty {
@@ -193,7 +193,7 @@ func flipUntilDelaunay(halfEdges: [HalfEdge]) {
     }
 }
 
-public func delaunay(triangulation: [Edge]) -> [Edge] {
+public func delaunay(_ triangulation: [Edge]) -> [Edge] {
     guard triangulation.count > 4 else {
         return triangulation
     }

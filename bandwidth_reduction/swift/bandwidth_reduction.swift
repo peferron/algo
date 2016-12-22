@@ -1,14 +1,16 @@
-func reduceBandwidth(matrix: [[Bool]]) -> [Int] {
+func reduceBandwidth(_ matrix: [[Bool]]) -> [Int] {
     let degs = degrees(matrix)
 
-    let sortedVertices = (0..<matrix.count).sort {
+    let sortedVertices = (0..<matrix.count).sorted {
         // As of Swift 2.2, sort is not stable. The second condition makes the sort stable for
         // easier testability.
-        degs[$0] < degs[$1] || degs[$0] == degs[$1] && $0 < $1
+        let d0 = degs[$0]
+        let d1 = degs[$1]
+        return d0 < d1 || d0 == d1 && $0 < $1
     }
 
     // Convenience function for getting the neighbors of a vertex in increasing degree order.
-    func sortedNeighbors(vertex: Int) -> [Int] {
+    func sortedNeighbors(_ vertex: Int) -> [Int] {
         return sortedVertices.filter { neighbor in
             vertex != neighbor && matrix[vertex][neighbor]
         }
@@ -53,9 +55,9 @@ func reduceBandwidth(matrix: [[Bool]]) -> [Int] {
     */
 }
 
-func degrees(matrix: [[Bool]]) -> [Int] {
+func degrees(_ matrix: [[Bool]]) -> [Int] {
     return (0..<matrix.count).map { vertex in
-        degree(vertex, matrix: matrix)
+        degree(vertex: vertex, matrix: matrix)
     }
 }
 

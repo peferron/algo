@@ -4,7 +4,7 @@ enum Direction {
     case Clockwise, CounterClockwise, Collinear
 }
 
-func direction(a: Point, _ b: Point, _ c: Point) -> Direction {
+func direction(_ a: Point, _ b: Point, _ c: Point) -> Direction {
     // The signed area of the triangle (a, b, c) is half the determinant of the following matrix:
     //     [ ax, ay, 1 ]
     //     [ bx, by, 1 ]
@@ -16,10 +16,10 @@ func direction(a: Point, _ b: Point, _ c: Point) -> Direction {
     return det > 0 ? .CounterClockwise : det < 0 ? .Clockwise : .Collinear
 }
 
-func deduplicate(edges: [Edge]) -> [Edge] {
+func deduplicate(_ edges: [Edge]) -> [Edge] {
     var deduplicated = [Edge]()
 
-    for edge in edges.sort(<) {
+    for edge in edges.sorted(by: <) {
         if deduplicated.isEmpty || deduplicated.last! != edge {
             deduplicated.append(edge)
         }
@@ -28,13 +28,13 @@ func deduplicate(edges: [Edge]) -> [Edge] {
     return deduplicated
 }
 
-public func triangulate(points: [Point]) -> [Edge] {
+public func triangulate(_ points: [Point]) -> [Edge] {
     guard points.count > 1 else {
         return []
     }
 
     // Sort the points lexicographically.
-    let ordered = points.sort(<)
+    let ordered = points.sorted(by: <)
 
     var edges = [Edge]()
 

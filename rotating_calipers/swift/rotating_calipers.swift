@@ -2,7 +2,7 @@
 
 // polygon must be provided in standard form, i.e. counter-clockwise order, distinct vertices, and
 // no collinear vertices.
-public func antipodalPairs(polygon: [Point]) -> [Pair] {
+public func antipodalPairs(_ polygon: [Point]) -> [Pair] {
     var (lower, upper) = lowerAndUpperHull(polygon)
     var pairs = [Pair]()
     var l = 0
@@ -56,7 +56,7 @@ public func antipodalPairs(polygon: [Point]) -> [Pair] {
     return pairs
 }
 
-func lowerAndUpperHull(polygon: [Point]) -> ([Point], [Point]) {
+func lowerAndUpperHull(_ polygon: [Point]) -> ([Point], [Point]) {
     // Tried going for a reduce, but it was unreadable. We can also do an enumerate + min/maxElement
     // combo, but it requires two iterations.
     var lowerStart = 0
@@ -70,8 +70,8 @@ func lowerAndUpperHull(polygon: [Point]) -> ([Point], [Point]) {
         }
     }
 
-    let lower = arc(polygon, fromIndex: lowerStart, toIndex: upperStart)
-    let upper = arc(polygon, fromIndex: upperStart, toIndex: lowerStart)
+    let lower = arc(polygon: polygon, fromIndex: lowerStart, toIndex: upperStart)
+    let upper = arc(polygon: polygon, fromIndex: upperStart, toIndex: lowerStart)
     return (lower, upper)
 }
 
@@ -89,14 +89,14 @@ func arc(polygon: [Point], fromIndex: Int, toIndex: Int) -> [Point] {
     return arc
 }
 
-public func diameter(polygon: [Point]) -> Pair {
+public func diameter(_ polygon: [Point]) -> Pair {
     let pairs = antipodalPairs(polygon)
     return pairs.reduce(pairs[0]) { (best, pair) in
         distanceSquared(pair) > distanceSquared(best) ? pair : best
     }
 }
 
-func distanceSquared(pair: Pair) -> Int {
+func distanceSquared(_ pair: Pair) -> Int {
     let deltaX = abs(pair.0.x - pair.1.x)
     let deltaY = abs(pair.0.y - pair.1.y)
     return deltaX * deltaX + deltaY + deltaY

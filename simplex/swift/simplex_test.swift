@@ -57,13 +57,13 @@ let tests: [(tableau: [[Float]], solution: [Float])] = [
     ),
 ]
 
-func equalApprox(a: Float, _ b: Float) -> Bool {
+func equalApprox(_ a: Float, _ b: Float) -> Bool {
     return abs(a - b) < 0.001
 }
 
-func equalApprox(a: [Float], _ b: [Float]) -> Bool {
+func equalApprox(_ a: [Float], _ b: [Float]) -> Bool {
     return a.count == b.count &&
-        !a.enumerate().contains { index, value in !equalApprox(value, b[index]) }
+        !a.enumerated().contains { index, value in !equalApprox(value, b[index]) }
 }
 
 for test in tests {

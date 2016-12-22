@@ -226,8 +226,8 @@ let triangulateTests: [(points: [Point], triangulation: [Edge])] = [
 ]
 
 for test in triangulateTests {
-    let actual = triangulate(test.points).sort(<)
-    let expected = test.triangulation.sort(<)
+    let actual = triangulate(test.points).sorted(by: <)
+    let expected = test.triangulation.sorted(by: <)
     guard actual == expected else {
         print("For test points \(test.points)\n" +
             "expected triangulation to be \(expected)\n" +
@@ -374,8 +374,8 @@ let delaunayTests: [(triangulation: [Edge], delaunay: [Edge])] = [
 ]
 
 for test in delaunayTests {
-    let actual = delaunay(test.triangulation).sort(<)
-    let expected = test.delaunay.sort(<)
+    let actual = delaunay(test.triangulation).sorted(by: <)
+    let expected = test.delaunay.sorted(by: <)
     guard actual == expected else {
         print("For test triangulation \(test.triangulation)\n" +
             "expected triangulation to be \(expected)\n" +

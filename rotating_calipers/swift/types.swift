@@ -3,7 +3,7 @@ public typealias Point = (x: Int, y: Int)
 
 public typealias Pair = (Point, Point)
 
-func canonical(pair: Pair) -> Pair {
+func canonical(_ pair: Pair) -> Pair {
     return pair.0 < pair.1 ? pair : (pair.1, pair.0)
 }
 
@@ -26,7 +26,7 @@ public func == (lhs: [Pair], rhs: [Pair]) -> Bool {
         return false
     }
 
-    for (index, value) in lhs.enumerate() {
+    for (index, value) in lhs.enumerated() {
         guard value == rhs[index] else {
             return false
         }

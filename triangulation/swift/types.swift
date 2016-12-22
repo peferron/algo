@@ -3,7 +3,7 @@ public typealias Point = (x: Int, y: Int)
 
 public typealias Edge = (Point, Point)
 
-func canonical(edge: Edge) -> Edge {
+func canonical(_ edge: Edge) -> Edge {
     return edge.0 < edge.1 ? edge : (edge.1, edge.0)
 }
 
@@ -30,7 +30,7 @@ public func == (lhs: [Edge], rhs: [Edge]) -> Bool {
         return false
     }
 
-    for (index, value) in lhs.enumerate() {
+    for (index, value) in lhs.enumerated() {
         guard value == rhs[index] else {
             return false
         }
