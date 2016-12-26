@@ -14,10 +14,10 @@ public func maxConcurrentEvents(_ events: [Event]) -> Int {
             (time: event.end, type: .End)
         ]}
         .sorted {
-            // If multiple boundaries share the same time, process Ends before Starts. That's
-            // because if one event ends at the same time another event starts, we do not consider
-            // these events to be overlapping.
-            $0.time < $1.time || $0.time == $1.time && $0.type == .End
+            // If multiple boundaries share the same time, process Start boundaries before End
+            // boundaries. That's because if one event ends at the same time another event starts,
+            // we consider these two events to overlap each other.
+            $0.time < $1.time || $0.time == $1.time && $0.type == .Start
         }
 
     var currentOverlap = 0

@@ -7,14 +7,18 @@ let tests: [(events: [Event], maxConcurrentEvents: Int)] = [
     ),
     (
         events: [(0, 1), (1, 2)],
-        maxConcurrentEvents: 1
-    ),
-    (
-        events: [(0, 2), (2, 4), (1, 3)],
         maxConcurrentEvents: 2
     ),
     (
-        events: [(0, 2), (1, 4), (1, 3)],
+        events: [(0, 1), (2, 3)],
+        maxConcurrentEvents: 1
+    ),
+    (
+        events: [(0, 2), (4, 5), (1, 3)],
+        maxConcurrentEvents: 2
+    ),
+    (
+        events: [(0, 2), (1, 4), (2, 3)],
         maxConcurrentEvents: 3
     ),
     (
