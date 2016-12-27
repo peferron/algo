@@ -28,4 +28,11 @@ public class Node {
 
         return tempHead.next!
     }
+
+    // Recursive implementation.
+    // public func merge(_ other: Node) -> Node {
+    //     let (first, second) = self.value < other.value ? (self, other) : (other, self)
+    //     first.next = first.next?.merge(second) ?? second
+    //     return first
+    // }
 }
