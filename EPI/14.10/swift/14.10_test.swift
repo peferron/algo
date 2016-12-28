@@ -1,5 +1,3 @@
-import Darwin
-
 ({
     var a = Node(value: 5, next: nil)
     let head = a.sort()
