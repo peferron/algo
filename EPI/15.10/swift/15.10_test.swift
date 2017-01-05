@@ -18,6 +18,7 @@ extension Node: CustomStringConvertible {
             "\(indentation))"
     }
 }
+
 func == (lhs: Node, rhs: Node) -> Bool {
     return lhs.value == rhs.value &&
         (lhs.left == nil && rhs.left == nil || lhs.left! == rhs.left!) &&
