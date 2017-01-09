@@ -57,8 +57,6 @@ let tests: [(grid: [[Int]], isValid: Bool)] = [
         ],
         isValid: true
     ),
-
-
 ]
 
 for test in tests {
