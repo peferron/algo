@@ -41,11 +41,13 @@ let reversedTests = tests.map { test in
     )
 }
 
-for test in tests + reversedTests {
-    let actual = traversalsCount(rows: test.rows, cols: test.cols)
-    guard actual == test.traversalsCount else {
-        print("For \(test.rows) rows and \(test.cols) cols, " +
-            "expected traversals count to be \(test.traversalsCount), but was \(actual)")
-        exit(1)
+for (fnIndex, fn) in [traversalsCountDynamicProgramming, traversalsCountMath].enumerated() {
+    for test in tests + reversedTests {
+        let actual = fn(test.rows, test.cols)
+        guard actual == test.traversalsCount else {
+            print("For \(test.rows) rows and \(test.cols) cols, using function #\(fnIndex), " +
+                "expected traversals count to be \(test.traversalsCount), but was \(actual)")
+            exit(1)
+        }
     }
 }
