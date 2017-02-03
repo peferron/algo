@@ -35,9 +35,9 @@ private func neighbors(_ coord: Coord, in maze: [[Status]]) -> [Coord] {
         (row, col + 1),
     ]
 
-    return potentialNeighbors.filter { (row, col) in
-        row >= 0 && row < maze.count &&
-        col >= 0 && col < maze[row].count &&
-        maze[row][col] == .Empty
+    return potentialNeighbors.filter { (r, c) in
+        r >= 0 && r < maze.count &&
+        c >= 0 && c < maze[r].count &&
+        maze[r][c] == .Empty
     }
 }
