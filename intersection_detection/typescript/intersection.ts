@@ -13,7 +13,7 @@ export function intersection(s1: Segment, s2: Segment): Point {
 
     if (a1 === a2 || !isFinite(a1) && !isFinite(a2)) {
         // The segments are parallel.
-        return;
+        return undefined;
     }
 
     let intX: number;
