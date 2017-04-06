@@ -1,5 +1,3 @@
-#![feature(slice_patterns)]
-
 mod applications;
 mod determinant;
 mod fraction;

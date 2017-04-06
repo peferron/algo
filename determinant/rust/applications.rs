@@ -126,7 +126,7 @@ pub enum CircleSide {
 
 // The points of the circle must be provided in counter-clockwise order.
 pub fn circle_side(circle: [Point; 3], point: Point) -> CircleSide {
-    let [c0, c1, c2] = circle;
+    let (c0, c1, c2) = (circle[0], circle[1], circle[2]);
 
     let matrix = SquareMatrix::from_vec(&vec![
         c0.x, c0.y, c0.x.pow(2) + c0.y.pow(2), 1,
