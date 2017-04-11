@@ -3,7 +3,10 @@ import contains from './17.5';
 declare function require(name: String): any;
 const assert = require('assert');
 
-const tests = [
+type Test = {grid: number[][], subTests: SubTest[]}
+type SubTest = {sequence: number[], contained: boolean}
+
+const tests: Test[] = [
     {
         grid: [],
         subTests: [
