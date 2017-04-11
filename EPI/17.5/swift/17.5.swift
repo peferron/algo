@@ -5,37 +5,47 @@ public func contains(grid: [[Int]], sequence: [Int]) -> Bool {
         return true
     }
 
-    // impossible[i][j] contains k if there is no path starting at (i, j) that retraces the sequence
+    // failed[i][j] contains k if there is no path starting at (i, j) that retraces the sequence
     // suffix of length k.
-    var impossible = grid.map { row in
+    var failed = grid.map { row in
         row.map { _ in Set<Int>() }
     }
 
     return grid.enumerated().contains { (i, row) in
         row.enumerated().contains { (j, _) in
-            contains(grid: grid, sequence: ArraySlice(sequence), start: (i, j), impossible: &impossible)
+            contains(grid: grid, sequence: ArraySlice(sequence), start: (i, j), failed: &failed)
         }
     }
 }
 
-private func contains(grid: [[Int]], sequence: ArraySlice<Int>, start: Cell, impossible: inout [[Set<Int>]]) -> Bool {
-    if impossible[start.i][start.j].contains(sequence.count) {
+private func contains(grid: [[Int]], sequence: ArraySlice<Int>, start: Cell,
+    failed: inout [[Set<Int>]]) -> Bool {
+
+    if failed[start.i][start.j].contains(sequence.count) {
         return false
     }
 
     if grid[start.i][start.j] == sequence.first! {
-        // The first element matches, but what about the rest?
+        // The first element matches, but what about the remaining elements?
         let remaining = sequence.dropFirst()
 
-        if remaining.isEmpty || neighbors(grid: grid, cell: start).contains { neighbor in
-            contains(grid: grid, sequence: remaining, start: neighbor, impossible: &impossible)
-        } {
+        if remaining.isEmpty {
+            // There are no remaining elements.
+            return true
+        }
+
+        let hasSuccessfulNeighbor = neighbors(grid: grid, cell: start).contains { neighbor in
+            contains(grid: grid, sequence: remaining, start: neighbor, failed: &failed)
+        }
+
+        if hasSuccessfulNeighbor {
+            // At least one neighbor can retrace the remaining elements.
             return true
         }
     }
 
     // Cache this failure.
-    impossible[start.i][start.j].insert(sequence.count)
+    failed[start.i][start.j].insert(sequence.count)
     return false
 }
 
