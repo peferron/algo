@@ -82,7 +82,7 @@ function runTest(test: string) {
     assert.deepStrictEqual(expectedPath, actualPath,
         'For input:' + test +
         'expected path to be:\n' + inspect(expectedPath.map(point => graph.coordinates[point])) +
-        '\nbut was:\n' + inspect(actualPath.map(point => graph.coordinates[point])));
+        '\nbut was:\n' + inspect(actualPath && actualPath.map(point => graph.coordinates[point])));
 }
 
 tests.forEach(runTest);

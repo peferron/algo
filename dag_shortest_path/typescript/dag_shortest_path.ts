@@ -1,6 +1,6 @@
 import {AdjacencyList, Graph, Edge} from './adjacency_list';
 
-export default function shortestPath(graph: Graph, start: number, end: number): number[] {
+export default function shortestPath(graph: Graph, start: number, end: number): number[] | undefined {
     if (!graph.directed) {
         throw new Error('This algorithm only supports directed graphs.');
     }
@@ -32,8 +32,9 @@ export default function shortestPath(graph: Graph, start: number, end: number): 
 
     if (distance[end] === Infinity) {
         // There is no path from start to end.
-        return null;
+        return undefined;
     }
+
     return path(parent, end);
 }
 

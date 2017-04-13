@@ -12,7 +12,7 @@ export default class MaxHeap {
         const index = this.values.length - 1;
 
         if (this.valueToIndexes.has(value)) {
-            this.valueToIndexes.get(value).add(index);
+            this.valueToIndexes.get(value)!.add(index);
         } else {
             this.valueToIndexes.set(value, new Set([index]));
         }
@@ -21,7 +21,7 @@ export default class MaxHeap {
     }
 
     public delete(value: number) {
-        const index = this.valueToIndexes.get(value).values().next().value;
+        const index = this.valueToIndexes.get(value)!.values().next().value;
         const lastIndex = this.values.length - 1;
 
         if (index !== lastIndex) {
@@ -29,7 +29,7 @@ export default class MaxHeap {
         }
 
         this.values.pop();
-        this.valueToIndexes.get(value).delete(lastIndex);
+        this.valueToIndexes.get(value)!.delete(lastIndex);
 
         if (index !== lastIndex) {
             this.bubbleDown(index);
@@ -76,11 +76,11 @@ export default class MaxHeap {
         this.values[aIndex] = b;
         this.values[bIndex] = a;
 
-        const aIndexes = this.valueToIndexes.get(a);
+        const aIndexes = this.valueToIndexes.get(a)!;
         aIndexes.delete(aIndex);
         aIndexes.add(bIndex);
 
-        const bIndexes = this.valueToIndexes.get(b);
+        const bIndexes = this.valueToIndexes.get(b)!;
         bIndexes.delete(bIndex);
         bIndexes.add(aIndex);
     }

@@ -41,7 +41,7 @@ export default class MinHeap<T> {
 
     deleteMin(): T {
         const min = this.array[0];
-        const last = this.array.pop();
+        const last = this.array.pop()!;
 
         if (this.array.length) {
             this.array[0] = last;

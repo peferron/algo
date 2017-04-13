@@ -5,7 +5,7 @@ export interface Point {
 
 export type Segment = [Point, Point];
 
-export function intersection(s1: Segment, s2: Segment): Point {
+export function intersection(s1: Segment, s2: Segment): Point | undefined {
     // Express segments as y = ax + b.
 
     const a1 = (s1[1].y - s1[0].y) / (s1[1].x - s1[0].x);

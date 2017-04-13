@@ -138,7 +138,7 @@ rangeTests.forEach(runRangeTest);
 interface RegionTest {
     points: Point[];
     regions: Region[];
-    cases: {input: Point, output: Region}[];
+    cases: {input: Point, output: Region | undefined}[];
 }
 
 const regionTests: RegionTest[] = [

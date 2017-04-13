@@ -17,7 +17,7 @@ export function skyline(buildings: Rectangle[]): Point[] {
     for (const building of buildings) {
         for (const x of [building.left, building.right]) {
             if (positionToBuildings.has(x)) {
-                positionToBuildings.get(x).push(building);
+                positionToBuildings.get(x)!.push(building);
             } else {
                 positionToBuildings.set(x, [building]);
             }
@@ -34,7 +34,7 @@ export function skyline(buildings: Rectangle[]): Point[] {
     const heap = new MaxHeap();
     heap.add(0);
     const points = xs.map(x => {
-        for (const building of positionToBuildings.get(x)) {
+        for (const building of positionToBuildings.get(x)!) {
             if (x === building.left) {
                 heap.add(building.height);
             } else {

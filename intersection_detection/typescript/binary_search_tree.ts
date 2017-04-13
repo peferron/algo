@@ -5,7 +5,7 @@ interface Node<T> {
 }
 
 export default class BinarySearchTree<T> {
-    private root: Node<T>;
+    private root: Node<T> | undefined;
 
     constructor(private compare: (a: T, b: T) => number) {
     }
@@ -14,7 +14,7 @@ export default class BinarySearchTree<T> {
         this.root = this.insertAt(this.root, element);
     }
 
-    private insertAt(root: Node<T>, element: T): Node<T> {
+    private insertAt(root: Node<T> | undefined, element: T): Node<T> {
         if (!root) {
             return {element};
         }
@@ -24,17 +24,18 @@ export default class BinarySearchTree<T> {
         } else {
             root.right = this.insertAt(root.right, element);
         }
+
         return root;
     }
 
     swap(a: T, b: T): void {
-        const nodeA = this.findAt(this.root, a);
-        const nodeB = this.findAt(this.root, b);
+        const nodeA = this.findAt(this.root, a)!;
+        const nodeB = this.findAt(this.root, b)!;
         nodeA.element = b;
         nodeB.element = a;
     }
 
-    private findAt(root: Node<T>, element: T): Node<T> {
+    private findAt(root: Node<T> | undefined, element: T): Node<T> | undefined {
         if (!root) {
             return undefined;
         }
@@ -45,14 +46,14 @@ export default class BinarySearchTree<T> {
 
         const comparison = this.compare(element, root.element);
         return comparison <= 0 && this.findAt(root.left, element) ||
-            comparison >= 0 && this.findAt(root.right, element);
+            comparison >= 0 && this.findAt(root.right, element) || undefined;
     }
 
     remove(element: T): void {
         this.root = this.removeAt(this.root, element);
     }
 
-    private removeAt(root: Node<T>, element: T): Node<T> {
+    private removeAt(root: Node<T> | undefined, element: T): Node<T> | undefined {
         if (!root) {
             return undefined;
         }
@@ -60,7 +61,7 @@ export default class BinarySearchTree<T> {
         if (root.element === element) {
             if (root.left && root.right) {
                 // Swap root with its predecessor. (We could also swap root with its successor.)
-                root.element = this.maxAt(root.left).element;
+                root.element = this.maxAt(root.left)!.element;
                 root.left = this.removeAt(root.left, root.element);
                 return root;
             }
@@ -77,20 +78,20 @@ export default class BinarySearchTree<T> {
         return root;
     }
 
-    private maxAt(root: Node<T>): Node<T> {
+    private maxAt(root: Node<T> | undefined): Node<T> | undefined {
         return root && this.maxAt(root.left) || root;
     }
 
-    private minAt(root: Node<T>): Node<T> {
+    private minAt(root: Node<T> | undefined): Node<T> | undefined {
         return root && this.minAt(root.left) || root;
     }
 
-    predecessor(element: T): T {
+    predecessor(element: T): T | undefined {
         const predecessor = this.predecessorAt(this.root, element);
         return predecessor && predecessor.element;
     }
 
-    private predecessorAt(root: Node<T>, element: T): Node<T> {
+    private predecessorAt(root: Node<T> | undefined, element: T): Node<T> | undefined {
         if (!root) {
             return undefined;
         }
@@ -107,12 +108,12 @@ export default class BinarySearchTree<T> {
         }
     }
 
-    successor(element: T): T {
+    successor(element: T): T | undefined {
         const successor = this.successorAt(this.root, element);
         return successor && successor.element;
     }
 
-    private successorAt(root: Node<T>, element: T): Node<T> {
+    private successorAt(root: Node<T> | undefined, element: T): Node<T> | undefined {
         if (!root) {
             return undefined;
         }

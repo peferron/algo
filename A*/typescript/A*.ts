@@ -20,17 +20,17 @@ const path = (end: number, parents: Map<number, number>) => {
     const path: number[] = [];
     while (!isNaN(end)) {
         path.push(end);
-        end = parents.get(end);
+        end = parents.get(end)!;
     }
     return path.reverse();
 };
 
-export function shortestPath(graph: Graph, start: number, end: number): number[] {
+export function shortestPath(graph: Graph, start: number, end: number): number[] | undefined {
     const processed = new Set<number>();
 
     const pendingSet = new Set<number>();
     const pendingHeap = new MinHeap<number>((a, b) =>
-        distancesToEndViaPoint.get(a) - distancesToEndViaPoint.get(b));
+        distancesToEndViaPoint.get(a)! - distancesToEndViaPoint.get(b)!);
 
     const parents = new Map<number, number>();
 
@@ -63,10 +63,11 @@ export function shortestPath(graph: Graph, start: number, end: number): number[]
             }
 
             const oldDistanceToNeighbor = distancesToPoint.get(neighbor);
-            const newDistanceToNeighbor = distancesToPoint.get(point) +
+            const newDistanceToNeighbor = distancesToPoint.get(point)! +
                 euclideanDistance(graph.coordinates[point], graph.coordinates[neighbor]);
 
-            if (isNaN(oldDistanceToNeighbor) || newDistanceToNeighbor < oldDistanceToNeighbor) {
+            if (oldDistanceToNeighbor === undefined ||
+                newDistanceToNeighbor < oldDistanceToNeighbor) {
                 parents.set(neighbor, point);
                 distancesToPoint.set(neighbor, newDistanceToNeighbor);
                 distancesToEndViaPoint.set(neighbor, newDistanceToNeighbor +

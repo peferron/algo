@@ -54,7 +54,7 @@ class Events {
     removeIntersection(below: Segment, above: Segment): void {
         this.heap.removeElement(event =>
             event.type === EventType.Intersection &&
-            event.segments.below === below && event.segments.above === above
+            event.segments!.below === below && event.segments!.above === above
         );
     }
 
@@ -91,7 +91,7 @@ class SweepLine extends BinarySearchTree<Segment> {
         super((a, b) => compareY(a, b, this.x));
     }
 
-    neighbors(segment: Segment): {below: Segment, above: Segment} {
+    neighbors(segment: Segment): {below?: Segment, above?: Segment} {
         return {below: this.predecessor(segment), above: this.successor(segment)};
     }
 }
@@ -116,9 +116,9 @@ export default function intersections(segments: Segment[]): Point[] {
         switch (event.type) {
             case EventType.LeftEndpoint: {
                 // Step 1: insert the segment into the sweep line.
-                line.insert(event.segment);
+                line.insert(event.segment!);
 
-                const {below, above} = line.neighbors(event.segment);
+                const {below, above} = line.neighbors(event.segment!);
 
                 // Step 2: below and above are not neighbors anymore. Remove their intersection
                 // event.
@@ -128,17 +128,17 @@ export default function intersections(segments: Segment[]): Point[] {
 
                 // Step 3: add intersection events for the segment and its neighbors.
                 if (below) {
-                    events.insertIntersection(below, event.segment, event.point.x);
+                    events.insertIntersection(below, event.segment!, event.point.x);
                 }
                 if (above) {
-                    events.insertIntersection(event.segment, above, event.point.x);
+                    events.insertIntersection(event.segment!, above, event.point.x);
                 }
 
                 break;
             }
 
             case EventType.RightEndpoint: {
-                const {below, above} = line.neighbors(event.segment);
+                const {below, above} = line.neighbors(event.segment!);
 
                 // Step 1: the neighbors of the segment are now neighbors of each other. Add their
                 // intersection event.
@@ -147,7 +147,7 @@ export default function intersections(segments: Segment[]): Point[] {
                 }
 
                 // Step 2: remove the segment from the sweep line.
-                line.remove(event.segment);
+                line.remove(event.segment!);
 
                 break;
             }
@@ -156,24 +156,24 @@ export default function intersections(segments: Segment[]): Point[] {
                 // Step 1: add the intersection point to the list.
                 intersections.push(event.point);
 
-                const {below} = line.neighbors(event.segments.below);
-                const {above} = line.neighbors(event.segments.above);
+                const {below} = line.neighbors(event.segments!.below);
+                const {above} = line.neighbors(event.segments!.above);
 
                 // Step 2: swap the positions of the intersecting segments in the sweep line.
-                line.swap(event.segments.below, event.segments.above);
+                line.swap(event.segments!.below, event.segments!.above);
 
                 // Step 3: before the swap, the line order from bottom to top was
-                // [below, event.segments.below, event.segments.above, above]. But after the swap it
-                // has changed to [below, event.segments.above, event.segments.below, above].
+                // [below, event.segments!.below, event.segments!.above, above]. But after the swap
+                // it changed to [below, event.segments!.above, event.segments!.below, above].
                 // Ex-neighbors need to have their intersection event removed, and new neighbors
                 // need to have their intersection event inserted.
                 if (below) {
-                    events.removeIntersection(below, event.segments.below);
-                    events.insertIntersection(below, event.segments.above, event.point.x);
+                    events.removeIntersection(below, event.segments!.below);
+                    events.insertIntersection(below, event.segments!.above, event.point.x);
                 }
                 if (above) {
-                    events.removeIntersection(event.segments.above, above);
-                    events.insertIntersection(event.segments.below, above, event.point.x);
+                    events.removeIntersection(event.segments!.above, above);
+                    events.insertIntersection(event.segments!.below, above, event.point.x);
                 }
 
                 break;

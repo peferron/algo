@@ -26,7 +26,7 @@ export class AdjacencyMatrix {
         const queue = [start];
 
         while (queue.length) {
-            const x = queue.shift();
+            const x = queue.shift()!;
 
             for (let y = 0; y < this.a.length; y++) {
                 if (visited[y] || !this.a[x][y]) {

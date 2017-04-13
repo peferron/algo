@@ -77,7 +77,7 @@ export class KDRegionTree {
             rightRegions;
     }
 
-    region(point: Point): Region {
+    region(point: Point): Region | undefined {
         const child = point[this.axis] < this.point[this.axis] ? this.left : this.right;
 
         if (child instanceof KDRegionTree) {

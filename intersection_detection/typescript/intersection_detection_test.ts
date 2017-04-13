@@ -8,7 +8,7 @@ const inspect = (v: any) => require('util').inspect(v, {depth: null});
 interface IntersectionTest {
     s1: Segment;
     s2: Segment;
-    intersection: Point;
+    intersection: Point | undefined;
 }
 
 const intersectionTests: IntersectionTest[] = [

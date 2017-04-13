@@ -41,7 +41,7 @@ export default class MinHeap<T> {
 
     removeMin(): T {
         const min = this.a[0];
-        const last = this.a.pop();
+        const last = this.a.pop()!;
 
         if (this.a.length) {
             this.a[0] = last;
@@ -60,7 +60,7 @@ export default class MinHeap<T> {
         if (index === this.a.length - 1) {
             this.a.pop();
         } else {
-            this.a[index] = this.a.pop();
+            this.a[index] = this.a.pop()!;
             this.bubbleDown(index);
         }
     }

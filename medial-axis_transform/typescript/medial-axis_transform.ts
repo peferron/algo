@@ -54,9 +54,6 @@ export function manhattanDistances(pixels: boolean[][]): number[][] {
 }
 
 export function skeleton(pixels: boolean[][]): boolean[][] {
-    const rows = pixels.length;
-    const cols = pixels[0].length;
-
     const distances = manhattanDistances(pixels);
     const distance = (r: number, c: number) => get(distances, r, c, 0);
 
