@@ -16,8 +16,19 @@ if [ -d "$dir" ]; then
     # Babel 6 resolves presets relatively to the input file
     ln -s "$(pwd)"/node_modules "$tmpdir"/node_modules
 
-    node_modules/.bin/tsc --target ES6 --noImplicitAny --noImplicitReturns \
-        --noFallthroughCasesInSwitch --noEmitOnError --outDir "$tmpdir" "$dir"/*_test.ts
+    node_modules/.bin/tsc \
+        --alwaysStrict \
+        --forceConsistentCasingInFileNames \
+        --noEmitOnError \
+        --noFallthroughCasesInSwitch \
+        --noImplicitAny \
+        --noImplicitReturns \
+        --noImplicitThis \
+        --noUnusedLocals \
+        --noUnusedParameters \
+        --strictNullChecks \
+        --target ES6 \
+        --outDir "$tmpdir" "$dir"/*_test.ts
 
     node_modules/.bin/babel-node --presets es2015 "$tmpdir"/*_test.js
 
