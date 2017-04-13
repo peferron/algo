@@ -1,7 +1,7 @@
 type Cell = {i: number, j: number};
 
 export default function contains(grid: number[][], seq: number[]): boolean {
-    if (!seq.length) {
+    if (seq.length === 0) {
         return true;
     }
 
