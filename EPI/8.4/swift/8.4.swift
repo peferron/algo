@@ -15,7 +15,7 @@ public class Node {
         var slow = self
         var fast = next
 
-        while let f = fast, fnn = f.next?.next {
+        while let f = fast, let fnn = f.next?.next {
             if slow === f {
                 return slow
             }
@@ -40,7 +40,7 @@ public class Node {
     }
 
     // cycleStart returns the node at the start of the cycle containing cycleCount nodes.
-    func cycleStart(cycleCount: Int) -> Node {
+    func cycleStart(_ cycleCount: Int) -> Node {
         // Use two cursors separated by cycleCount nodes. They will point to the same node after the
         // second cursor completes a full cycle.
         var firstCursor = self
