@@ -4,7 +4,7 @@ func == <T: Equatable>(lhs: [[T]], rhs: [[T]]) -> Bool {
     guard lhs.count == rhs.count else {
         return false
     }
-    for (i, array) in lhs.enumerate() {
+    for (i, array) in lhs.enumerated() {
         guard array == rhs[i] else {
             return false
         }
@@ -39,7 +39,7 @@ let tests: [(words: [String], anagrams: [[String]])] = [
 ]
 
 for test in tests {
-    let actual = anagrams(test.words).sort { $0.first! < $1.first! }
+    let actual = anagrams(test.words).sorted { $0.first! < $1.first! }
     guard actual == test.anagrams else {
         print("For test words \(test.words), expected anagrams to be \(test.anagrams), " +
             "but were \(actual)")

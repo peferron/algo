@@ -1,8 +1,8 @@
-public func anagrams(words: [String]) -> [[String]] {
+public func anagrams(_ words: [String]) -> [[String]] {
     var sortedWordToAnagrams = [String: [String]]()
 
     for word in words {
-        let sortedWord = String(word.characters.sort(<))
+        let sortedWord = String(word.characters.sorted(by: <))
 
         if sortedWordToAnagrams[sortedWord] == nil {
             sortedWordToAnagrams[sortedWord] = [word]
