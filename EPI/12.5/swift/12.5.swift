@@ -1,4 +1,4 @@
-public func root(value: Int) -> Int {
+public func root(_ value: Int) -> Int {
     var low = 0
     var high = value
 
