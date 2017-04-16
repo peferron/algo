@@ -1,16 +1,16 @@
 // "a" becomes "dd", "b" is removed.
-public func replaceAndRemove(inout characters: [Character], count: Int) -> Int {
+public func replaceAndRemove(characters: inout [Character], count: Int) -> Int {
     // The first pass removes "b" and counts "a".
-    let (aCount, bCount) = removeB(&characters, count: count)
+    let (aCount, bCount) = removeB(characters: &characters, count: count)
 
     // After the first pass, there are (count - bCount) characters that still matter.
     // The second pass goes backwards from there, replacing "a" with "dd".
-    replaceA(&characters, count: count - bCount, aCount: aCount)
+    replaceA(characters: &characters, count: count - bCount, aCount: aCount)
 
     return count - bCount + aCount
 }
 
-func removeB(inout characters: [Character], count: Int) -> (Int, Int) {
+func removeB(characters: inout [Character], count: Int) -> (Int, Int) {
     var aCount = 0
     var bCount = 0
 
@@ -29,10 +29,10 @@ func removeB(inout characters: [Character], count: Int) -> (Int, Int) {
     return (aCount, bCount)
 }
 
-func replaceA(inout characters: [Character], count: Int, aCount: Int) {
+func replaceA(characters: inout [Character], count: Int, aCount: Int) {
     var remainingACount = aCount
 
-    for i in (0..<count).reverse() {
+    for i in (0..<count).reversed() {
         let character = characters[i]
         if character == "a" {
             characters[i + remainingACount] = "d"

@@ -22,9 +22,9 @@ for test in tests {
 
     var actualCharacters = beforeCharacters
     if afterCount > beforeCount {
-        actualCharacters += [Character](count: afterCount - beforeCount, repeatedValue: " ")
+        actualCharacters += [Character](repeating: " ", count: afterCount - beforeCount)
     }
-    let actualCount = replaceAndRemove(&actualCharacters, count: beforeCount)
+    let actualCount = replaceAndRemove(characters: &actualCharacters, count: beforeCount)
     var actualString = String(actualCharacters.prefix(actualCount))
 
     guard actualCount == afterCount && actualString == test.after else {
