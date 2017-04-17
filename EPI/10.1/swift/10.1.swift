@@ -22,11 +22,11 @@ enum Status {
     case Balanced(height: Int)
 }
 
-func status(tree: Node?) -> Status {
+func status(_ tree: Node?) -> Status {
     if let t = tree {
         if case let .Balanced(leftHeight) = status(t.left),
-           case let .Balanced(rightHeight) = status(t.right)
-           where abs(leftHeight - rightHeight) <= 1 {
+           case let .Balanced(rightHeight) = status(t.right),
+           abs(leftHeight - rightHeight) <= 1 {
             return .Balanced(height: 1 + max(leftHeight, rightHeight))
         }
         return .Unbalanced
