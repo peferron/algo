@@ -1,4 +1,4 @@
-public func canFormPalindrome(string: String) -> Bool {
+public func canFormPalindrome(_ string: String) -> Bool {
     var oddCharacters = Set<Character>()
 
     for character in string.characters {
