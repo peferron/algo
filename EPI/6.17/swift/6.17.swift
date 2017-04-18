@@ -1,17 +1,17 @@
 public func isValid(grid: [[Int]]) -> Bool {
     for i in 0..<9 {
-        guard isValidSubgrid(grid, row: i, col: 0, rowCount: 1, colCount: 9) &&
-            isValidSubgrid(grid, row: 0, col: i, rowCount: 9, colCount: 1) else {
+        guard isValid(grid, row: i, col: 0, rowCount: 1, colCount: 9) &&
+            isValid(grid, row: 0, col: i, rowCount: 9, colCount: 1) else {
             return false
         }
     }
 
     // We could merge this check in the previous loop like this:
-    //     isValidSubgrid(grid, row: 3 * (i / 3), col: 3 * (i % 3), rowCount: 3, colCount: 3)
+    //     isValid(grid, row: 3 * (i / 3), col: 3 * (i % 3), rowCount: 3, colCount: 3)
     // But it's serious code golfing.
-    for row in 0.stride(to: 9, by: 3) {
-        for col in 0.stride(to: 9, by: 3) {
-            guard isValidSubgrid(grid, row: row, col: col, rowCount: 3, colCount: 3) else {
+    for row in stride(from: 0, to: 9, by: 3) {
+        for col in stride(from: 0, to: 9, by: 3) {
+            guard isValid(grid, row: row, col: col, rowCount: 3, colCount: 3) else {
                 return false
             }
         }
@@ -20,7 +20,7 @@ public func isValid(grid: [[Int]]) -> Bool {
     return true
 }
 
-func isValidSubgrid(grid: [[Int]], row: Int, col: Int, rowCount: Int, colCount: Int) -> Bool {
+func isValid(_ grid: [[Int]], row: Int, col: Int, rowCount: Int, colCount: Int) -> Bool {
     var set = Set<Int>()
 
     for i in row..<row + rowCount {

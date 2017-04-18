@@ -60,7 +60,7 @@ let tests: [(grid: [[Int]], isValid: Bool)] = [
 ]
 
 for test in tests {
-    var actual = isValid(test.grid)
+    let actual = isValid(grid: test.grid)
     guard actual == test.isValid else {
         print("For grid \(test.grid), expected isValid to be \(test.isValid), but was \(actual)")
         exit(1)
