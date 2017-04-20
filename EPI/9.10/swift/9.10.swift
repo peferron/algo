@@ -10,7 +10,7 @@ public struct Queue<T> {
         self.capacity = capacity
     }
 
-    public mutating func enqueue(element: T) {
+    public mutating func enqueue(_ element: T) {
         if count == capacity {
             increaseCapacity()
         }
@@ -35,7 +35,7 @@ public struct Queue<T> {
     mutating func increaseCapacity() {
         let countAtEndOfArray = capacity - firstIndex
         let countAtStartOfArray = count - countAtEndOfArray
-        array.appendContentsOf(array[0..<countAtStartOfArray])
+        array.append(contentsOf: array[0..<countAtStartOfArray])
         capacity *= 2
     }
 }
