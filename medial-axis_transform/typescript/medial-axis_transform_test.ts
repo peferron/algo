@@ -1,6 +1,6 @@
 import {manhattanDistances, skeleton} from './medial-axis_transform';
 
-declare function require(name: String): any;
+declare function require(name: string): any;
 const assert = require('assert');
 
 interface Test {
