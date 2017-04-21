@@ -1,6 +1,6 @@
 import maxArea from './18.9';
 
-declare function require(name: String): any;
+declare function require(name: string): any;
 const assert = require('assert');
 const inspect = (v: any) => require('util').inspect(v, {depth: null});
 

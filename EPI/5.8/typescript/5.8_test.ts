@@ -1,6 +1,6 @@
 import reverse from './5.8';
 
-declare function require(name: String): any;
+declare function require(name: string): any;
 const assert = require('assert');
 
 const tests: {number: number, reversed: number}[] = [

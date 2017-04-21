@@ -1,6 +1,6 @@
 import isPalindromePermutation from './13.2';
 
-declare function require(name: String): any;
+declare function require(name: string): any;
 const assert = require('assert');
 
 const tests: {string: string, isPalindromePermutation: boolean}[] = [

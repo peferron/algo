@@ -1,6 +1,6 @@
 import selectInPlace from './6.12';
 
-declare function require(name: String): any;
+declare function require(name: string): any;
 const assert = require('assert');
 
 let different = false;

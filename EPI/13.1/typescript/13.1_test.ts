@@ -1,6 +1,6 @@
 import groupAnagrams from './13.1';
 
-declare function require(name: String): any;
+declare function require(name: string): any;
 const assert = require('assert');
 const inspect = (v: any) => require('util').inspect(v, {depth: null});
 

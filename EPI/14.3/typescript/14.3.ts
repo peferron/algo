@@ -3,7 +3,7 @@ export interface Occurrence {
     count: number;
 }
 
-export default function occurrences(string: String): Occurrence[] {
+export default function occurrences(string: string): Occurrence[] {
     const counts = new Map<string, number>();
 
     for (const char of string) {

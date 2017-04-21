@@ -1,6 +1,6 @@
 import sqrt from './12.5';
 
-declare function require(name: String): any;
+declare function require(name: string): any;
 const assert = require('assert');
 
 const tests: {n: number, sqrt: number}[] = [
