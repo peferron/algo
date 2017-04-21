@@ -3,14 +3,14 @@
 public func lookAndSay(index n: Int) -> String {
     var sequence: [Character] = ["1"]
 
-    for _ in 1.stride(through: n, by: 1) {
+    for _ in stride(from: 1, through: n, by: 1) {
         sequence = next(sequence)
     }
 
     return String(sequence)
 }
 
-func next(sequence: [Character]) -> [Character] {
+func next(_ sequence: [Character]) -> [Character] {
     var nextSequence = [Character]()
     var streakCount = 1
     var streakCharacter = sequence.first!
