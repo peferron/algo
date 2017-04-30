@@ -25,8 +25,8 @@ export default class SpellingCorrector {
     }
 
     correct(word: string): string {
-        return this.candidates(word.toLowerCase()).reduce((best, c) =>
-            (this.counts.get(c) || 0) > this.counts.get(best)! ? c : best
+        return this.candidates(word.toLowerCase()).reduce((best, candidate) =>
+            this.counts.get(candidate)! > this.counts.get(best)! ? candidate : best
         );
     }
 }

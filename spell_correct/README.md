@@ -4,7 +4,7 @@ Reimplementation of Peter Norvig's classic [spelling corrector](http://norvig.co
 
 This implementation is not trying to be fast, and involves some code golfing. :)
 
-It does not index strings directly, which means it supports Unicode. Here's an emoticon spelling corrector:
+It does not access strings by index, which means it supports Unicode. Here's an emoticon spelling corrector:
 
 ```js
 const emoticonCorrector = new SpellingCorrector('()/\\_¯¯°━┻╯□ツ︵）💕', 2);
