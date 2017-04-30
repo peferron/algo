@@ -17,16 +17,13 @@ if [ -d "$dir" ]; then
     ln -s "$(pwd)"/node_modules "$tmpdir"/node_modules
 
     node_modules/.bin/tsc \
-        --alwaysStrict \
-        --forceConsistentCasingInFileNames \
+        --strict \
         --noEmitOnError \
         --noFallthroughCasesInSwitch \
-        --noImplicitAny \
         --noImplicitReturns \
-        --noImplicitThis \
         --noUnusedLocals \
         --noUnusedParameters \
-        --strictNullChecks \
+        --forceConsistentCasingInFileNames \
         --target ES6 \
         --outDir "$tmpdir" "$dir"/*_test.ts
 
