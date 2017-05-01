@@ -1,4 +1,4 @@
-import SpellingCorrector from './spell_correct';
+import SpellingCorrector from './spelling_corrector';
 
 declare function require(name: string): any;
 const assert = require('assert');
