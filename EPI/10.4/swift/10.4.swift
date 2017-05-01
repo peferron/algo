@@ -33,14 +33,14 @@ public class Node {
         return node
     }
 
-    public func lca(other: Node) -> Node? {
+    public func lca(_ other: Node) -> Node? {
         let selfDepth = depth()
         let otherDepth = other.depth()
 
-        var selfAncestor = ancestor(max(0, selfDepth - otherDepth))
-        var otherAncestor = other.ancestor(max(0, otherDepth - selfDepth))
+        var selfAncestor = ancestor(depth: max(0, selfDepth - otherDepth))
+        var otherAncestor = other.ancestor(depth: max(0, otherDepth - selfDepth))
 
-        while let sa = selfAncestor, oa = otherAncestor {
+        while let sa = selfAncestor, let oa = otherAncestor {
             if sa === oa {
                 return sa
             }
