@@ -13,7 +13,7 @@ public class Node: Hashable {
         right?.parent = self
     }
 
-    public func lca(other: Node) -> Node? {
+    public func lca(_ other: Node) -> Node? {
         var ancestors = Set<Node>()
         var selfAncestor: Node? = self
         var otherAncestor: Node? = other
