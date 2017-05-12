@@ -14,7 +14,7 @@ public func path(from start: Coord, to end: Coord, in maze: inout [[Status]]) ->
     // Mark the start vertex as visited.
     maze[start.row][start.col] = .Blocked
 
-    for neighbor in neighbors(start, in: maze) {
+    for neighbor in neighbors(start, in: maze) where maze[neighbor.row][neighbor.col] == .Empty {
         if let p = path(from: neighbor, to: end, in: &maze) {
             // A recursive call has found the end vertex.
             return [start] + p
@@ -37,7 +37,6 @@ private func neighbors(_ coord: Coord, in maze: [[Status]]) -> [Coord] {
 
     return potentialNeighbors.filter { (r, c) in
         r >= 0 && r < maze.count &&
-        c >= 0 && c < maze[r].count &&
-        maze[r][c] == .Empty
+        c >= 0 && c < maze[r].count
     }
 }
