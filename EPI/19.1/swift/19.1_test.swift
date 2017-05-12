@@ -15,6 +15,20 @@ func == (lhs: [Coord], rhs: [Coord]) -> Bool {
 let tests: [(maze: [[Int]], subTests: [(start: Coord, end: Coord, path: [Coord]?)])] = [
     (
         maze: [
+            [0],
+        ],
+        subTests: [
+            (
+                start: (0, 0),
+                end: (0, 0),
+                path: [
+                    (0, 0),
+                ]
+            ),
+        ]
+    ),
+    (
+        maze: [
             [0, 1],
             [0, 0],
         ],
