@@ -1,17 +1,17 @@
 // swiftlint:disable variable_name
 
-func isAlphanumeric(character: Character) -> Bool {
+func isAlphanumeric(_ character: Character) -> Bool {
     return "0" <= character && character <= "9" ||
         "a" <= character && character <= "z" ||
         "A" <= character && character <= "Z"
 }
 
-public func isPalindromeSimple(string: String) -> Bool {
-    let cleanedCharacters = string.lowercaseString.characters.filter(isAlphanumeric)
-    return cleanedCharacters == cleanedCharacters.reverse()
+public func isPalindromeSimple(_ string: String) -> Bool {
+    let cleanedCharacters = string.lowercased().characters.filter(isAlphanumeric)
+    return cleanedCharacters == cleanedCharacters.reversed()
 }
 
-public func isPalindromeSmart(string: String) -> Bool {
+public func isPalindromeSmart(_ string: String) -> Bool {
     guard string != "" else {
         return true
     }
@@ -19,26 +19,26 @@ public func isPalindromeSmart(string: String) -> Bool {
     // Iterate from both ends of the string towards the center. Non-alphanumeric characters are
     // skipped, and alphanumeric characters are compared case-insensitively.
     var start = string.startIndex
-    var end = string.endIndex.predecessor()
+    var end = string.index(before: string.endIndex)
 
     while true {
         while start < end && !isAlphanumeric(string[start]) {
-            start = start.successor()
+            start = string.index(after: start)
         }
 
         while start < end && !isAlphanumeric(string[end]) {
-            end = end.predecessor()
+            end = string.index(before: end)
         }
 
         guard start < end else {
             return true
         }
 
-        guard String(string[start]).lowercaseString == String(string[end]).lowercaseString else {
+        guard String(string[start]).lowercased() == String(string[end]).lowercased() else {
             return false
         }
 
-        start = start.successor()
-        end = end.predecessor()
+        start = string.index(after: start)
+        end = string.index(before: end)
     }
 }
