@@ -20,7 +20,7 @@ for (const f of [isPalindromeSimple, isPalindromeSmart]) {
     for (const test of tests) {
         const actual = f(test.s);
         assert.strictEqual(actual, test.isPalindrome, `For test string ${test.s}, ` +
-            `using test function ${f.name}, expected isPalindrome to be ${test.isPalindrome}, ` +
+            `using function ${f.name}, expected isPalindrome to be ${test.isPalindrome}, ` +
             `but was ${actual}`);
     }
 }
