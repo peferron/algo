@@ -1,4 +1,4 @@
-public func squareRoot(value: Float, tolerance: Float) -> Float {
+public func squareRoot(_ value: Float, tolerance: Float) -> Float {
     let toleranceSquared = tolerance * tolerance
     var (low, high) = value < 1 ? (value, 1) : (1, value)
 
