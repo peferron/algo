@@ -1,3 +1,14 @@
+/*
+ * PUBLIC SERVICE ANNOUNCEMENT
+ *
+ * Re-reading this code 4 months later, I have absolutely no idea how I could ever write this.
+ * It only solves the problem for the values used as examples in the book (2, 3 and 7), and manages
+ * to still be overcomplicated.
+ *
+ * Look at the TypeScript version instead.
+ *
+ */
+
 public typealias Combination = (safeties: Int, goals: Int, touchdowns: Int)
 
 public func combinations(score: Int) -> [Combination] {
