@@ -5,7 +5,7 @@ public class Node<T: Hashable> {
 
     public convenience init?(inorder: [T], preorder: [T]) {
         var inorderIndexes = [T: Int]()
-        for (index, value) in inorder.enumerate() {
+        for (index, value) in inorder.enumerated() {
             inorderIndexes[value] = index
         }
 
