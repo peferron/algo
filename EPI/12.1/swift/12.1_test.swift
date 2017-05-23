@@ -32,7 +32,7 @@ for test in tests {
     let index = firstIndexOf(test.element, inSortedArray: test.array)
     guard test.index == nil && index == nil || index! == test.index! else {
         print("For test array \(test.array) and element \(test.element), " +
-            "expected index to be \(test.index), but was \(index)")
+            "expected index to be \(test.index!), but was \(index!)")
         exit(1)
     }
 }
