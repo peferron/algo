@@ -20,7 +20,7 @@ public func spiralLines(matrix: [[Int]]) -> [Int] {
     return path
 }
 
-func appendCircle(inout path: [Int], matrix: [[Int]], start: Pair, count: Pair) {
+func appendCircle(_ path: inout [Int], matrix: [[Int]], start: Pair, count: Pair) {
     let end = (row: start.row + count.row - 1, col: start.col + count.col - 1)
 
     appendLine(&path, matrix: matrix, start: start, direction: (0, 1), count: count.col)
@@ -39,8 +39,8 @@ func appendCircle(inout path: [Int], matrix: [[Int]], start: Pair, count: Pair) 
     }
 }
 
-func appendLine(inout path: [Int], matrix: [[Int]], start: Pair, direction: Pair, count: Int) {
-    for i in 0.stride(to: count, by: 1) {
+func appendLine(_ path: inout [Int], matrix: [[Int]], start: Pair, direction: Pair, count: Int) {
+    for i in stride(from: 0, to: count, by: 1) {
         let row = start.row + direction.row * i
         let col = start.col + direction.col * i
         path.append(matrix[row][col])
