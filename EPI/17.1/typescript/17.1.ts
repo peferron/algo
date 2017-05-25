@@ -8,12 +8,9 @@ export default function combinations(score: number, plays: number[]): number {
     return combinationsRec(score, plays, 0, cache);
 }
 
-function combinationsRec(
-    score: number,
-    plays: number[],
-    firstPlayIndex: number,
-    cache: Map<number, number>[]
-): number {
+function combinationsRec(score: number, plays: number[], firstPlayIndex: number,
+    cache: Map<number, number>[]): number {
+
     const firstPlay = plays[firstPlayIndex];
     let remainingScore = score;
     let result = 0;
