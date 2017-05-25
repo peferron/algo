@@ -1,9 +1,9 @@
-export default function firestIndexOf<T>(array: T[], element: T): number {
+export default function firstIndexOf<T>(array: T[], element: T): number {
     let left = 0;
     let right = array.length - 1;
 
     while (right >= left) {
-        const mid = Math.floor(left - (right - left) / 2);
+        const mid = Math.floor(left + (right - left) / 2);
         if (array[mid] >= element) {
             right = mid - 1;
         } else {
