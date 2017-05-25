@@ -1,4 +1,4 @@
-public func wellFormed(string: String) -> Bool {
+public func wellFormed(_ string: String) -> Bool {
     var opened = [Character]()
 
     for character in string.characters {
@@ -6,15 +6,15 @@ public func wellFormed(string: String) -> Bool {
         case "{", "[", "(":
             opened.append(character)
         case "}":
-            guard let last = opened.popLast() where last == "{" else {
+            guard let last = opened.popLast(), last == "{" else {
                 return false
             }
         case "]":
-            guard let last = opened.popLast() where last == "[" else {
+            guard let last = opened.popLast(), last == "[" else {
                 return false
             }
         case ")":
-            guard let last = opened.popLast() where last == "(" else {
+            guard let last = opened.popLast(), last == "(" else {
                 return false
             }
         default:
