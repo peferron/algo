@@ -8,11 +8,11 @@ let romanValues: [Character: Int] = [
     "I": 1,
 ]
 
-public func toInt(roman roman: String) -> Int {
+public func toInt(roman: String) -> Int {
     var max = 0
     var sum = 0
 
-    for character in roman.characters.reverse() {
+    for character in roman.characters.reversed() {
         let value = romanValues[character]!
         if value < max {
             sum -= value
@@ -24,12 +24,12 @@ public func toInt(roman roman: String) -> Int {
 
     return sum
 
-    // Alternative below, that takes 40s to compile with Swift 2.2. Can be made faster by splitting
+    // Alternative below, that takes 25s to compile with Swift 3.1. Can be made faster by splitting
     // the chain into pieces, but hopefully it'll be fixed in a future version of the compiler.
     // return roman
     //     .characters
     //     .lazy
-    //     .reverse()
+    //     .reversed()
     //     .map { romanValues[$0]! }
     //     .reduce((sum: 0, max: 0)) { (acc, value) in
     //         value < acc.max ? (acc.sum - value, acc.max) : (acc.sum + value, value)
