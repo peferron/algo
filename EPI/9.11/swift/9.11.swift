@@ -6,7 +6,7 @@ struct Stack<T> {
         return array.count
     }
 
-    mutating func push(element: T) {
+    mutating func push(_ element: T) {
         array.append(element)
     }
 
@@ -23,7 +23,7 @@ public struct Queue<T> {
         return enqueueStack.count + dequeueStack.count
     }
 
-    public mutating func enqueue(element: T) {
+    public mutating func enqueue(_ element: T) {
         enqueueStack.push(element)
     }
 
