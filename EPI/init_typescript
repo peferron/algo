@@ -1,0 +1,34 @@
+#!/bin/bash
+
+set -e
+
+number=$1
+
+scriptdir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+dir="$scriptdir"/"$number"/typescript
+
+if [ -d "$dir" ]; then
+    echo "$dir already exists."
+    exit 1
+fi
+
+mkdir -p "$dir"
+
+touch "$dir"/"$number".ts
+
+echo 'import  from './7.9';
+
+declare function require(name: string): any;
+const assert = require('assert');
+// const inspect = (v: any) => require('util').inspect(v, {depth: null});
+
+const tests: {}[] = [
+
+];
+
+for (const test of tests) {
+    const actual = ;
+    assert.strictEqual(actual, test., `For ${test.}, ` +
+        `expected  to be ${test.}, but was ${actual}`);
+}
+' > "$dir"/"$number"_test.ts
