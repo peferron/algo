@@ -17,8 +17,8 @@ public class Node<T: Equatable> {
     }
 }
 
-func areSymmetric<T>(a: Node<T>?, _ b: Node<T>?) -> Bool {
-    if let na = a, let nb = b where na.value == nb.value &&
+func areSymmetric<T>(_ a: Node<T>?, _ b: Node<T>?) -> Bool {
+    if let na = a, let nb = b, na.value == nb.value &&
         areSymmetric(na.left, nb.right) && areSymmetric(na.right, nb.left) {
         return true
     }
