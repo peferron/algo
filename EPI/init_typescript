@@ -16,19 +16,18 @@ mkdir -p "$dir"
 
 touch "$dir"/"$number".ts
 
-echo 'import  from './7.9';
+echo "import %FUNCTION from './$number';
 
 declare function require(name: string): any;
 const assert = require('assert');
 // const inspect = (v: any) => require('util').inspect(v, {depth: null});
 
-const tests: {}[] = [
-
+const tests: {%INPUT: , %OUTPUT: }[] = [
+    {%INPUT: , %OUTPUT: },
 ];
 
 for (const test of tests) {
-    const actual = ;
-    assert.strictEqual(actual, test., `For ${test.}, ` +
-        `expected  to be ${test.}, but was ${actual}`);
-}
-' > "$dir"/"$number"_test.ts
+    const actual = %FUNCTION(test.%INPUT);
+    assert.strictEqual(actual, test.%OUTPUT, \`For %INPUT \${test.%INPUT}, \` +
+        \`expected %OUTPUT to be \${test.%OUTPUT}, but was \${actual}\`);
+}" > "$dir"/"$number"_test.ts
