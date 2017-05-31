@@ -1,53 +1,53 @@
 // swiftlint:disable variable_name
 
 class Heap<T> {
-    let higherPriority: (T, than: T) -> Bool
+    let higherPriority: (T, T) -> Bool
     private var array = [T]()
 
-    init(higherPriority: (T, than: T) -> Bool) {
+    init(higherPriority: @escaping (T, T) -> Bool) {
         self.higherPriority = higherPriority
     }
 
-    private func parentIndex(i: Int) -> Int? {
+    private func parentIndex(_ i: Int) -> Int? {
         return i > 0 ? (i - 1) / 2 : nil
     }
 
-    private func swap(i: Int, _ j: Int) {
+    private func swap(_ i: Int, _ j: Int) {
         (array[i], array[j]) = (array[j], array[i])
     }
 
-    private func bubbleUp(i: Int) {
-        if let pi = parentIndex(i) where higherPriority(array[i], than: array[pi]) {
+    private func bubbleUp(_ i: Int) {
+        if let pi = parentIndex(i), higherPriority(array[i], array[pi]) {
             swap(i, pi)
             bubbleUp(pi)
         }
     }
 
-    func insert(element: T) {
+    func insert(_ element: T) {
         array.append(element)
         bubbleUp(array.count - 1)
     }
 
-    private func leftChildIndex(i: Int) -> Int? {
+    private func leftChildIndex(_ i: Int) -> Int? {
         let lci = i * 2 + 1
         return lci < array.count ? lci : nil
     }
 
-    private func rightChildIndex(i: Int) -> Int? {
+    private func rightChildIndex(_ i: Int) -> Int? {
         let rci = i * 2 + 2
         return rci < array.count ? rci : nil
     }
 
-    private func bubbleDown(i: Int) {
+    private func bubbleDown(_ i: Int) {
         if let lci = leftChildIndex(i) {
             let priorityChildIndex: Int
-            if let rci = rightChildIndex(i) where higherPriority(array[rci], than: array[lci]) {
+            if let rci = rightChildIndex(i), higherPriority(array[rci], array[lci]) {
                 priorityChildIndex = rci
             } else {
                 priorityChildIndex = lci
             }
 
-            if higherPriority(array[priorityChildIndex], than: array[i]) {
+            if higherPriority(array[priorityChildIndex], array[i]) {
                 swap(priorityChildIndex, i)
                 bubbleDown(priorityChildIndex)
             }
@@ -69,16 +69,16 @@ class Heap<T> {
     }
 }
 
-public func merge<T: Comparable>(sequences: [[T]]) -> [T] {
+public func merge<T: Comparable>(_ sequences: [[T]]) -> [T] {
     // Indexes of the first unmerged element of each sequence.
-    var currentIndexes = [Int](count: sequences.count, repeatedValue: 0)
+    var currentIndexes = [Int](repeating: 0, count: sequences.count)
 
     // Convenience function to get the first unmerged element of the sequence at the given index.
     let currentElement = { sequences[$0][currentIndexes[$0]] }
 
     // First, we insert the first element of each sequence into the heap.
     let minHeap = Heap { currentElement($0) < currentElement($1) }
-    for (sequenceIndex, sequence) in sequences.enumerate() where !sequence.isEmpty {
+    for (sequenceIndex, sequence) in sequences.enumerated() where !sequence.isEmpty {
         minHeap.insert(sequenceIndex)
     }
 
