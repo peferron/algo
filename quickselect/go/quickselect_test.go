@@ -3,7 +3,6 @@ package quickselect
 import (
 	"math/rand"
 	"sort"
-
 	"testing"
 )
 
@@ -48,7 +47,6 @@ var basicTests = []struct {
 
 func TestBasicInputs(t *testing.T) {
 	for i, test := range basicTests {
-
 		if v := Select(test.a, test.k); v != test.expected {
 			t.Errorf("In test #%d with a = %v and k = %d, expected result to be %d, was %d",
 				i, test.a, test.k, test.expected, v)
