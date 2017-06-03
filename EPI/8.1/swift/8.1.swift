@@ -6,13 +6,13 @@ public class Node {
         self.value = value
     }
 
-    public func merge(other: Node) -> Node {
+    public func merge(_ other: Node) -> Node {
         let tempHead = Node(value: 0)
         var tail = tempHead
         var remainingSelf: Node? = self
         var remainingOther: Node? = other
 
-        while let rs = remainingSelf, ro = remainingOther {
+        while let rs = remainingSelf, let ro = remainingOther {
             if rs.value < ro.value {
                 tail.next = rs
                 remainingSelf = rs.next

@@ -18,7 +18,7 @@ let tests = [
     ),
 ]
 
-func toList(values: [Int]) -> Node {
+func toList(_ values: [Int]) -> Node {
     let first = Node(value: values.first!)
     var previous = first
 
@@ -31,7 +31,7 @@ func toList(values: [Int]) -> Node {
     return first
 }
 
-func toArray(head: Node) -> [Int] {
+func toArray(_ head: Node) -> [Int] {
     var values = [Int]()
     var current: Node? = head
 
