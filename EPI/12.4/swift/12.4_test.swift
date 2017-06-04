@@ -2,6 +2,10 @@ import Darwin
 
 let tests: [(array: [Int], index: Int)] = [
     (
+        array: [0],
+        index: 0
+    ),
+    (
         array: [0, 1, 2, 3, 4],
         index: 0
     ),

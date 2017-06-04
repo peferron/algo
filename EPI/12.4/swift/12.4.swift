@@ -1,4 +1,4 @@
-public func indexOfSmallest<T: Comparable>(array: [T]) -> Int {
+public func indexOfSmallest<T: Comparable>(_ array: [T]) -> Int {
     var low = 0
     var high = array.count - 1
 
