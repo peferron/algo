@@ -9,8 +9,8 @@ func nodes(count: Int) -> [Node] {
 }
 
 ({
-    let a = nodes(4)
-    let b = nodes(3)
+    let a = nodes(count: 4)
+    let b = nodes(count: 3)
 
     guard a[0].overlappingNode(b[0]) == nil && b[0].overlappingNode(a[0]) == nil else {
         print("Failed test without overlap")
@@ -19,8 +19,8 @@ func nodes(count: Int) -> [Node] {
 })()
 
 ({
-    let a = nodes(4)
-    let b = nodes(2)
+    let a = nodes(count: 4)
+    let b = nodes(count: 2)
     b[1].next = a[2]
 
     guard a[0].overlappingNode(b[0])! === a[2] && b[0].overlappingNode(a[0]) === a[2] else {

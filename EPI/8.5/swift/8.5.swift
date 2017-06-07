@@ -1,7 +1,7 @@
 public class Node {
     public var next: Node?
 
-    public func overlappingNode(other: Node) -> Node? {
+    public func overlappingNode(_ other: Node) -> Node? {
         let (selfTail, selfCount) = tail()
         let (otherTail, otherCount) = other.tail()
 
@@ -9,8 +9,8 @@ public class Node {
             return nil
         }
 
-        var selfNode = self.next(max(selfCount - otherCount, 0))!
-        var otherNode = other.next(max(otherCount - selfCount, 0))!
+        var selfNode = self.next(count: max(selfCount - otherCount, 0))!
+        var otherNode = other.next(count: max(otherCount - selfCount, 0))!
 
         while selfNode !== otherNode {
             selfNode = selfNode.next!
