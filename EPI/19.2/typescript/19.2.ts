@@ -22,6 +22,6 @@ function neighbors(grid: boolean[][], {row, col}: Cell): Cell[] {
         {row, col: col - 1},
     ].filter(({row: r, col: c}) =>
         r >= 0 && r < grid.length &&
-        c >= 0 && c < grid[row].length
+        c >= 0 && c < grid[r].length
     );
 }
