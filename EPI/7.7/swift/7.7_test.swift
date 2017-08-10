@@ -11,8 +11,8 @@ let tests: [(number: String, mnemonics: [String])] = [
 
 for fn in fns {
     for test in tests {
-        var actual = fn(test.number).sort(<)
-        var expected = test.mnemonics.sort(<)
+        var actual = fn(test.number).sorted(by: <)
+        var expected = test.mnemonics.sorted(by: <)
         guard actual == expected else {
             print("For number \(test.number), expected mnemonics to be \(expected), " +
                 "but was \(actual)")
