@@ -1,8 +1,12 @@
 {
   "compilerOptions": {
-    "noImplicitAny": true,
-    "noImplicitReturns": true,
+    "strict": true,
+    "noEmitOnError": true,
     "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "forceConsistentCasingInFileNames": true,
     "target": "ES6"
   }
 }
