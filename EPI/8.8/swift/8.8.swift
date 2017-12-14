@@ -1,7 +1,7 @@
 public class Node {
     public var next: Node?
 
-    public func removeLast(index: Int) -> Node? {
+    public func removeLast(_ index: Int) -> Node? {
         var node = self
         for _ in 0..<index {
             node = node.next!
