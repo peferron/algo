@@ -3,7 +3,7 @@ import {List, firstOverlappingNode} from './8.5';
 declare function require(name: string): any;
 const assert = require('assert');
 
-const make = (length: number) => Array.from({length}, index => ({index} as List));
+const make = (length: number) => Array.from({length}, (_, index) => ({index} as List));
 const link = (...nodes: List[]) => nodes.forEach((n, i) => n.next = nodes[i + 1]);
 
 {
