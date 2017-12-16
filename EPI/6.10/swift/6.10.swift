@@ -1,11 +1,11 @@
 // swiftlint:disable variable_name
 
-func swap(inout array: [Int], _ i: Int, _ j: Int) {
+func swap(_ array: inout [Int], _ i: Int, _ j: Int) {
     (array[i], array[j]) = (array[j], array[i])
 }
 
 // O(n) time and O(n) space, since we copy the permutation array.
-public func permuteSwap(inout array: [Int], permutation: [Int]) {
+public func permuteSwap(array: inout [Int], permutation: [Int]) {
     var p = permutation
     var i = 0
     while i < array.count {
@@ -21,7 +21,7 @@ public func permuteSwap(inout array: [Int], permutation: [Int]) {
 }
 
 // O(n) time and O(1) space, but we need to be able to temporarily mutate permutation.
-public func permuteCycles(inout array: [Int], inout permutation: [Int]) {
+public func permuteCycles(array: inout [Int], permutation: inout [Int]) {
     for i in 0..<array.count {
         var current = i
         while permutation[current] >= 0 {

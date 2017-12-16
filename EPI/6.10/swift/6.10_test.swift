@@ -9,7 +9,7 @@ let tests: [(arrayBefore: [Int], permutation: [Int], arrayAfter: [Int])] = [
 
 for test in tests {
     var actual = test.arrayBefore
-    permuteSwap(&actual, permutation: test.permutation)
+    permuteSwap(array: &actual, permutation: test.permutation)
     guard actual == test.arrayAfter else {
         print("For array \(test.arrayBefore) and permutation \(test.permutation), " +
             "expected final array to be \(test.arrayAfter), but was \(actual)")
@@ -20,7 +20,7 @@ for test in tests {
 for test in tests {
     var actual = test.arrayBefore
     var permutation = test.permutation
-    permuteCycles(&actual, permutation: &permutation)
+    permuteCycles(array: &actual, permutation: &permutation)
     guard actual == test.arrayAfter else {
         print("For array \(test.arrayBefore) and permutation \(test.permutation), " +
             "expected final array to be \(test.arrayAfter), but was \(actual)")
