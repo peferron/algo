@@ -81,7 +81,7 @@ let tests: [(problem: [[Int?]], solution: [[Int]])] = [
 ]
 
 for test in tests {
-    var actual = solve(test.problem)
+    let actual = solve(test.problem)
     guard actual == test.solution else {
         print("For test problem \(test.problem), expected solution to be \(test.solution), " +
             "but was \(actual)")
