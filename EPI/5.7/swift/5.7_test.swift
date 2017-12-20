@@ -4,6 +4,7 @@ let fns = [powerBruteforce, powerSmartRecursive, powerSmartIterative]
 
 let tests: [(base: Double, exponent: Int, result: Double)] = [
     (base: 0, exponent: 0, result: 1),
+    (base: 0, exponent: 1, result: 0),
     (base: 1, exponent: 0, result: 1),
     (base: 1, exponent: 1, result: 1),
     (base: 1, exponent: 2, result: 1),
@@ -17,7 +18,7 @@ let tests: [(base: Double, exponent: Int, result: Double)] = [
 
 for fn in fns {
     for test in tests {
-        let actual = fn(base: test.base, exponent: test.exponent)
+        let actual = fn(test.base, test.exponent)
         guard actual == test.result else {
             print("For base \(test.base) and exponent \(test.exponent), " +
                 "expected result to be \(test.result), but was \(actual)")

@@ -1,5 +1,5 @@
 // O(exponent).
-public func powerBruteforce(base base: Double, exponent: Int) -> Double {
+public func powerBruteforce(base: Double, exponent: Int) -> Double {
     if exponent < 0 {
         return powerBruteforce(base: 1 / base, exponent: -exponent)
     }
@@ -14,7 +14,7 @@ public func powerBruteforce(base base: Double, exponent: Int) -> Double {
 }
 
 // O(log exponent).
-public func powerSmartRecursive(base base: Double, exponent: Int) -> Double {
+public func powerSmartRecursive(base: Double, exponent: Int) -> Double {
     switch exponent {
     case Int.min..<0:
         return powerSmartRecursive(base: 1 / base, exponent: -exponent)
@@ -33,7 +33,7 @@ public func powerSmartRecursive(base base: Double, exponent: Int) -> Double {
 }
 
 // O(log exponent).
-public func powerSmartIterative(base base: Double, exponent: Int) -> Double {
+public func powerSmartIterative(base: Double, exponent: Int) -> Double {
     var b = base
     var e = exponent
 
