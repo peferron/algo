@@ -28,7 +28,8 @@ func == (lhs: Node, rhs: Node) -> Bool {
 func test(actual: Node?, expected: Node?) {
     guard actual == nil && expected == nil ||
         actual != nil && expected != nil && actual! == expected! else {
-        print("Expected tree to be \(expected), but was \(actual)")
+        print("Expected tree to be \(String(describing: expected)), " +
+            "but was \(String(describing: actual))")
         exit(1)
     }
 }
