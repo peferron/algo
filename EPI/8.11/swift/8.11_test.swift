@@ -1,6 +1,6 @@
 import Darwin
 
-func nodes(count: Int) -> [Node] {
+func nodes(_ count: Int) -> [Node] {
     let nodes = (0..<count).map { _ in Node() }
     for i in 0..<count - 1 {
         nodes[i].next = nodes[i + 1]
