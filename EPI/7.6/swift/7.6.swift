@@ -1,10 +1,10 @@
 // swiftlint:disable variable_name
 
-public func reverseWordsSimple(inout characters: [Character]) {
-    characters = characters.split(" ").reverse().joinWithSeparator([" "]).flatMap { $0 }
+public func reverseWordsSimple(_ characters: inout [Character]) {
+    characters = characters.split(separator: " ").reversed().joined(separator: [" "]).flatMap { $0 }
 }
 
-public func reverseWordsSmart(inout characters: [Character]) {
+public func reverseWordsSmart(_ characters: inout [Character]) {
     // In the first pass, reverse the characters of the string ("ab cd" -> "dc ba").
     reverse(&characters, range: 0..<characters.count)
 
@@ -12,27 +12,27 @@ public func reverseWordsSmart(inout characters: [Character]) {
     var readIndex = 0
     while let wordRange = rangeOfNextWord(characters, startIndex: readIndex) {
         reverse(&characters, range: wordRange)
-        readIndex = wordRange.endIndex
+        readIndex = wordRange.upperBound
     }
 }
 
-func reverse(inout characters: [Character], range: Range<Int>) {
+func reverse(_ characters: inout [Character], range: Range<Int>) {
     for i in 0..<range.count / 2 {
-        swap(&characters, range.startIndex + i, range.endIndex - 1 - i)
+        swap(&characters, range.lowerBound + i, range.upperBound - 1 - i)
     }
 }
 
-func swap(inout array: [Character], _ i: Int, _ j: Int) {
+func swap(_ array: inout [Character], _ i: Int, _ j: Int) {
     (array[i], array[j]) = (array[j], array[i])
 }
 
-func rangeOfNextWord(characters: [Character], startIndex: Int) -> Range<Int>? {
-    let wordStartIndex = characters[startIndex..<characters.count].indexOf { $0 != " " }
+func rangeOfNextWord(_ characters: [Character], startIndex: Int) -> Range<Int>? {
+    let wordStartIndex = characters[startIndex..<characters.count].index { $0 != " " }
     if wordStartIndex == nil {
         return nil
     }
 
-    let spaceStartIndex = characters[wordStartIndex!..<characters.count].indexOf(" ")
+    let spaceStartIndex = characters[wordStartIndex!..<characters.count].index(of: " ")
     if spaceStartIndex == nil {
         return wordStartIndex!..<characters.count
     }

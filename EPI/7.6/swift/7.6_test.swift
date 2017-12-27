@@ -12,7 +12,7 @@ let tests: [(before: String, after: String)] = [
 
 for fn in fns {
     for test in tests {
-        var actualCharacters = [Character](test.before.characters)
+        var actualCharacters = [Character](test.before)
         fn(&actualCharacters)
         let actualString = String(actualCharacters)
         guard actualString == test.after else {
