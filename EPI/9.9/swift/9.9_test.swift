@@ -4,7 +4,7 @@ func == <T: Equatable>(lhs: [[T]], rhs: [[T]]) -> Bool {
     guard lhs.count == rhs.count else {
         return false
     }
-    for (index, values) in lhs.enumerate() {
+    for (index, values) in lhs.enumerated() {
         guard rhs[index] == values else {
             return false
         }
