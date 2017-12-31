@@ -21,11 +21,11 @@ public class Node<T> {
         var previous: Node? = nil
 
         while let c = current {
-            if let p = previous, let l = c.left where p === l {
+            if let p = previous, let l = c.left, p === l {
                 // Coming back up from the left child.
                 values.append(c.value)
                 current = c.right ?? c.parent
-            } else if let p = previous, let r = c.right where p === r {
+            } else if let p = previous, let r = c.right, p === r {
                 // Coming back up from the right child.
                 current = c.parent
             } else {
