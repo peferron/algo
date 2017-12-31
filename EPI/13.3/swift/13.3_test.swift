@@ -39,7 +39,7 @@ let tests: [(letter: String, magazine: String, constructible: Bool)] = [
 ]
 
 for test in tests {
-    let actual = constructible(test.letter, magazine: test.magazine)
+    let actual = constructible(letter: test.letter, magazine: test.magazine)
     guard actual == test.constructible else {
         print("For test letter '\(test.letter)' and magazine '\(test.magazine)', " +
             "expected constructible to be \(test.constructible), but was \(actual)")

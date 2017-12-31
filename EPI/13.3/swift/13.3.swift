@@ -9,7 +9,7 @@ public func constructible(letter: String, magazine: String) -> Bool {
 
     var required = [Character : Int]()
 
-    for char in letter.characters where !ignored.contains(char) {
+    for char in letter where !ignored.contains(char) {
         required[char] = (required[char] ?? 0) + 1
     }
 
@@ -17,11 +17,11 @@ public func constructible(letter: String, magazine: String) -> Bool {
         return true
     }
 
-    for char in magazine.characters {
-        if let r = required[char] where r > 1 {
+    for char in magazine {
+        if let r = required[char], r > 1 {
             required[char] = r - 1
         } else {
-            required.removeValueForKey(char)
+            required.removeValue(forKey: char)
             if required.isEmpty {
                 return true
             }
