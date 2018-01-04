@@ -15,7 +15,7 @@ public struct ISBNCache {
         self.cache = [String: CachedValue](minimumCapacity: capacity)
     }
 
-    public mutating func lookup(ISBN: String) -> Int? {
+    public mutating func lookup(_ ISBN: String) -> Int? {
         if let price = cache[ISBN]?.price {
             // Removing then inserting is the easiest way to bump the ISBN to newest, but it also
             // performs unnecessary work and could be optimized.
@@ -27,7 +27,7 @@ public struct ISBNCache {
         return nil
     }
 
-    public mutating func insert(ISBN: String, price: Int) {
+    public mutating func insert(_ ISBN: String, price: Int) {
         if cache[ISBN] != nil {
             return
         }
@@ -46,9 +46,9 @@ public struct ISBNCache {
         self.oldestISBN = self.oldestISBN ?? ISBN
     }
 
-    public mutating func remove(ISBN: String) {
+    public mutating func remove(_ ISBN: String) {
         if let value = cache[ISBN] {
-            cache.removeValueForKey(ISBN)
+            cache.removeValue(forKey: ISBN)
 
             if let olderISBN = value.olderISBN {
                 cache[olderISBN]!.newerISBN = value.newerISBN
