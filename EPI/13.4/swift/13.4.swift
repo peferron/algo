@@ -28,9 +28,7 @@ public struct ISBNCache {
     }
 
     public mutating func insert(_ ISBN: String, price: Int) {
-        if cache[ISBN] != nil {
-            return
-        }
+        self.remove(ISBN)
 
         // Remove oldest ISBN if necessary.
         if cache.count >= capacity {
