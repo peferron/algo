@@ -33,22 +33,26 @@ public class Node {
         return slow
     }
 
-    public func isPalindrome() -> Bool {
-        if next == nil {
-            return true
-        }
+    func equals(_ other: Node) -> Bool {
+        var a: Node? = self
+        var b: Node? = other
 
-        var firstHalf = self
-        var reversedSecondHalf = middle().next?.reverse()
-
-        while reversedSecondHalf != nil {
-            guard firstHalf.value == reversedSecondHalf!.value else {
+        while let ax = a, let bx = b {
+            if ax.value != bx.value {
                 return false
             }
-            firstHalf = firstHalf.next!
-            reversedSecondHalf = reversedSecondHalf!.next
+            a = ax.next
+            b = bx.next
         }
 
         return true
+    }
+
+    public func isPalindrome() -> Bool {
+        let firstHalf = self
+        let reversedSecondHalf = middle().reverse()
+        let result = reversedSecondHalf.equals(firstHalf)
+        let _ = reversedSecondHalf.reverse()
+        return result
     }
 }

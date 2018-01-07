@@ -4,6 +4,10 @@ let tests = [
     (list: [0], isPalindrome: true),
     (list: [0, 1], isPalindrome: false),
     (list: [0, 0], isPalindrome: true),
+    (list: [1, 2, 1], isPalindrome: true),
+    (list: [1, 2, 2], isPalindrome: false),
+    (list: [1, 5, 2, 2, 5, 1], isPalindrome: true),
+    (list: [1, 5, 2, 3, 5, 1], isPalindrome: false),
     (list: [0, 1, 0, 3, 1, 1, 0], isPalindrome: false),
     (list: [0, 1, 0, 3, 0, 1, 0], isPalindrome: true),
 ]
@@ -16,11 +20,30 @@ func toList(_ values: [Int]) -> Node {
     return nodes[0]
 }
 
+func toArray(_ list: Node) -> [Int] {
+    var curr: Node? = list;
+    var array = [Int]()
+    while let c = curr {
+        array.append(c.value)
+        curr = c.next
+    }
+    return array
+}
+
 for test in tests {
-    let actual = toList(test.list).isPalindrome()
-    guard actual == test.isPalindrome else {
+    let list = toList(test.list)
+    let isPalindrome = list.isPalindrome()
+
+    guard isPalindrome == test.isPalindrome else {
         print("For list \(test.list), expected isPalindrome to be \(test.isPalindrome), " +
-            "but was \(actual)")
+            "but was \(isPalindrome)")
+        exit(1)
+    }
+
+    let values = toArray(list);
+
+    guard values == test.list else {
+        print("For list \(test.list), expected final list to be unchanged, but was \(values)")
         exit(1)
     }
 }

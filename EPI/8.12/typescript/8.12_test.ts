@@ -9,6 +9,10 @@ function toList(values: number[]): Node {
     return nodes[0];
 }
 
+function toArray(list: Node): number[] {
+    return [list.value, ...(list.next ? toArray(list.next) : [])];
+}
+
 const tests: {list: number[], isPalindrome: boolean}[] = [
     {list: [1], isPalindrome: true},
     {list: [1, 1], isPalindrome: true},
@@ -21,7 +25,14 @@ const tests: {list: number[], isPalindrome: boolean}[] = [
 ];
 
 for (const test of tests) {
-    const actual = isPalindrome(toList(test.list));
+    const list = toList(test.list);
+    const actual = isPalindrome(list);
+
     assert.strictEqual(actual, test.isPalindrome, `For list ${test.list}, ` +
         `expected isPalindrome to be ${test.isPalindrome}, but was ${actual}`);
+
+    const values = toArray(list);
+
+    assert.deepStrictEqual(values, test.list, `For list ${test.list}, ` +
+        `expected final list to be unchanged, but was ${values}`);
 }
