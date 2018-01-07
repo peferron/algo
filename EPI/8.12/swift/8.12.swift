@@ -25,7 +25,7 @@ public class Node {
         var slow = self
         var fast = self
 
-        while let sn = slow.next, fnn = fast.next?.next {
+        while let sn = slow.next, let fnn = fast.next?.next {
             slow = sn
             fast = fnn
         }

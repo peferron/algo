@@ -8,7 +8,7 @@ let tests = [
     (list: [0, 1, 0, 3, 0, 1, 0], isPalindrome: true),
 ]
 
-func toList(values: [Int]) -> Node {
+func toList(_ values: [Int]) -> Node {
     let nodes = values.map(Node.init)
     for i in 0..<values.count - 1 {
         nodes[i].next = nodes[i + 1]
