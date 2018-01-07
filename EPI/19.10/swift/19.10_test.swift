@@ -117,7 +117,8 @@ for test in tests {
         guard actual == nil && subTest.shortestPath == nil ||
             actual != nil && subTest.shortestPath != nil && actual! == subTest.shortestPath! else {
             print("For graph \(test.graph), expected shortestPath from \(subTest.start) " +
-                "to \(subTest.end) to be \(subTest.shortestPath), but was \(actual)")
+                "to \(subTest.end) to be \(String(describing: subTest.shortestPath)), " +
+                    "but was \(String(describing: actual))")
             exit(1)
         }
     }
