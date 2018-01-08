@@ -21,9 +21,6 @@ public func shortestProductionSequenceLength(from src: String, to dst: String, i
 }
 
 private func adjacent(_ str1: String, _ str2: String) -> Bool {
-    let chars1 = str1.characters
-    let chars2 = str2.characters
-
-    return chars1.count == chars2.count &&
-        zip(chars1, chars2).filter { (char1, char2) in char1 != char2 }.count == 1
+    return str1.count == str2.count &&
+        zip(str1, str2).filter { (char1, char2) in char1 != char2 }.count == 1
 }

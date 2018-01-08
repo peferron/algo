@@ -52,8 +52,8 @@ for test in tests {
     guard actual == nil && test.shortestLength == nil ||
         actual != nil && test.shortestLength != nil && actual! == test.shortestLength! else {
         print("For src \(test.src), dst \(test.dst), and dict \(test.dict), " +
-            "expected length of shortest production sequence to be \(test.shortestLength), " +
-            "but was \(actual)")
+            "expected length of shortest production sequence to be " +
+            "\(String(describing: test.shortestLength)), but was \(String(describing: actual))")
         exit(1)
     }
 }
