@@ -1,12 +1,12 @@
 let minus = UnicodeScalar("-").value
 let zero = UnicodeScalar("0").value
 
-public func toString(number: Int) -> String {
+public func toString(_ number: Int) -> String {
     let s = toString(UInt(abs(number)))
     return number >= 0 ? s : "-" + s
 }
 
-public func toString(number: UInt) -> String {
+public func toString(_ number: UInt) -> String {
     if number == 0 {
         return "0"
     }
@@ -15,14 +15,14 @@ public func toString(number: UInt) -> String {
     var n = number
 
     while n > 0 {
-        s += String(UnicodeScalar(zero + UInt32(n % 10)))
+        s += String(UnicodeScalar(zero + UInt32(n % 10))!)
         n /= 10
     }
 
-    return String(s.characters.reverse())
+    return String(s.reversed())
 }
 
-public func toInt(string: String) -> Int {
+public func toInt(_ string: String) -> Int {
     var negative = false
     var n = 0
 
