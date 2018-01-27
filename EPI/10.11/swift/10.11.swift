@@ -18,7 +18,7 @@ public class Node<T> {
     }
 }
 
-func reconstruct<T>(preorder: ArraySlice<T?>) -> (root: Node<T>?, count: Int) {
+func reconstruct<T>(_ preorder: ArraySlice<T?>) -> (root: Node<T>?, count: Int) {
     if preorder.isEmpty || preorder.first! == nil {
         return (nil, 1)
     }
