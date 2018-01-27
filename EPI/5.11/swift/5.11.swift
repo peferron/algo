@@ -27,7 +27,7 @@ public struct Rect {
     }
 }
 
-public func intersection(a: Rect, _ b: Rect) -> Rect? {
+public func intersection(_ a: Rect, _ b: Rect) -> Rect? {
     let intersection = Rect(
         origin: (
             x: max(a.origin.x, b.origin.x),

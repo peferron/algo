@@ -34,7 +34,8 @@ for test in tests {
         let actual = intersection(a, b)
         guard actual == nil ? test.intersection == nil : actual! == test.intersection! else {
             print("For rectangles \(a) and \(b), " +
-                "expected intersection to be \(test.intersection), but was \(actual)")
+                "expected intersection to be \(String(describing: test.intersection)), " +
+                "but was \(String(describing: actual))")
             exit(1)
         }
     }
