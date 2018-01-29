@@ -1,5 +1,5 @@
 // TO(n) where n is the number of digits of number in base 10.
-public func isPalindromeReverse(number: Int) -> Bool {
+public func isPalindromeReverse(_ number: Int) -> Bool {
     if number < 0 {
         return false
     }
@@ -7,7 +7,7 @@ public func isPalindromeReverse(number: Int) -> Bool {
     return reverse(number) == number
 }
 
-func reverse(number: Int) -> Int {
+func reverse(_ number: Int) -> Int {
     var n = number
     var r = 0
 
@@ -22,7 +22,7 @@ func reverse(number: Int) -> Int {
 // Also O(n). Compared to isPalindromeReverse, the advantage is that it returns false on the first
 // failed comparison, but the disadvantage is that calling the log10 function is expensive. Both
 // functions perform roughly the same when benchmarked against random integers.
-public func isPalindromeLog(number: Int) -> Bool {
+public func isPalindromeLog(_ number: Int) -> Bool {
     if number <= 0 {
         return number == 0
     }
