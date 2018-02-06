@@ -39,7 +39,7 @@ let tests: [(prices: [Int], profit: Int)] = [
 
 for fn in fns {
     for test in tests {
-        var actual = fn(test.prices)
+        let actual = fn(test.prices)
         guard actual == test.profit else {
             print("For prices \(test.prices), expected profit to be \(test.profit), " +
                 "but was \(actual)")
