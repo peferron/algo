@@ -1,1 +1,0 @@
-# Paint a Boolean matrix
