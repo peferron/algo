@@ -1,7 +1,7 @@
 // Bit array implementation. Fails if set contains more elements than the number of bits in an Int.
 public func powerSet(_ set: [Int]) -> [[Int]] {
     // A bit array with all n bits set to 1 has a value of 2^n - 1.
-    let max = Int(pow(2, Double(set.count))) - 1
+    let max = 1 << set.count - 1
 
     // Iterating from 0 to max will give us all the different subsets of set.
     return (0...max).map { bitArray in

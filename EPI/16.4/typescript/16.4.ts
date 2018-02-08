@@ -1,5 +1,5 @@
 export default function powerSet<T>(set: T[]): T[][] {
-    const length = Math.pow(2, set.length);
+    const length = 1 << set.length;
     return Array.from({length}, (_, i) => subset(set, i));
 }
 
