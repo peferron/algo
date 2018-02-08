@@ -1,6 +1,12 @@
 import Darwin
 
-let fns = [parityBruteforceReduce, parityBruteforceLoop, parityBruteforceDropLowestBit, parityXor]
+let fns = [
+    parityBruteforceReduce,
+    parityBruteforceLoop,
+    parityBruteforceDropLowestBit,
+    parityXor,
+    parityLookupTable
+]
 
 let tests: [(value: UInt64, parity: UInt)] = [
     (value: 0, parity: 0),
@@ -21,9 +27,9 @@ for fn in fns {
     }
 }
 
-for i in 0...1000 {
+for _ in 0...1000 {
     var value: UInt64 = 0
-    arc4random_buf(&value, sizeof(UInt64))
+    arc4random_buf(&value, MemoryLayout<UInt64>.size)
 
     let parities = fns.map { $0(value) }
     guard Set(parities).count == 1 else {

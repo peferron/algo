@@ -36,3 +36,31 @@ public func parityXor(value: UInt64) -> UInt {
     v ^= v >> 1
     return UInt(v & 1)
 }
+
+// O(n/m) where n is the size of the value type and m the size of the lookup table value type.
+
+private func buildLookupTable() -> [UInt] {
+    let length = 1 << 16;
+    var table = [UInt](repeating: 0, count: length)
+    var parity: UInt = 0
+
+    for i in 0..<length {
+        let grayCode = i ^ (i >> 1)
+        table[grayCode] = parity
+        parity ^= 1
+    }
+
+    return table
+}
+
+private let lookupTable = buildLookupTable()
+private let lookupMask: UInt64 = 1 << 16 - 1
+
+public func parityLookupTable(value: UInt64) -> UInt {
+    // Swift compiler complains about the expression being too complex; we need to break it down.
+    var parity = lookupTable[Int(value & lookupMask)]
+    parity ^= lookupTable[Int((value >> 16) & lookupMask)]
+    parity ^= lookupTable[Int((value >> 32) & lookupMask)]
+    parity ^= lookupTable[Int((value >> 48) & lookupMask)]
+    return parity
+}
