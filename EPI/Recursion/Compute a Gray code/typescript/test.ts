@@ -1,9 +1,10 @@
-import grayCode from './main';
+import {grayCodeRecursive, grayCodeIterative} from './main';
 
 declare function require(name: string): any;
 const assert = require('assert');
+const inspect = (v: any) => require('util').inspect(v, {depth: null});
 
-const toBinString = (values: number[]) => values.map(v => v.toString(2));
+const toBinString = (values: number[]) => inspect(values.map(v => v.toString(2)));
 
 const tests: {bits: number, grayCode: number[]}[] = [
     {
@@ -43,8 +44,12 @@ const tests: {bits: number, grayCode: number[]}[] = [
     },
 ];
 
-for (const test of tests) {
-    const actual = grayCode(test.bits);
-    assert.deepStrictEqual(actual, test.grayCode, `For bits ${test.bits}, ` +
-        `expected gray code to be ${toBinString(test.grayCode)}, but was ${toBinString(actual)}`);
+for (const fn of [grayCodeRecursive, grayCodeIterative]) {
+    for (const test of tests) {
+        const actual = fn(test.bits);
+        assert.deepStrictEqual(actual, test.grayCode,
+            `Using function ${fn.name}, for bits ${test.bits}, ` +
+            `expected gray code to be ${toBinString(test.grayCode)}, ` +
+            `but was ${toBinString(actual)}`);
+    }
 }
