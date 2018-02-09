@@ -2,10 +2,10 @@
 
 set -e
 
-number=$1
+problem="$1"
 
 scriptdir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-dir="$scriptdir"/"$number"/typescript
+dir="$scriptdir"/"$problem"/typescript
 
 if [ -d "$dir" ]; then
     echo "$dir already exists."
@@ -14,9 +14,9 @@ fi
 
 mkdir -p "$dir"
 
-touch "$dir"/"$number".ts
+touch "$dir"/main.ts
 
-echo "import %FUNCTION from './$number';
+echo "import %FUNCTION from './main';
 
 declare function require(name: string): any;
 const assert = require('assert');
@@ -30,4 +30,4 @@ for (const test of tests) {
     const actual = %FUNCTION(test.%INPUT);
     assert.strictEqual(actual, test.%OUTPUT, \`For %INPUT \${test.%INPUT}, \` +
         \`expected %OUTPUT to be \${test.%OUTPUT}, but was \${actual}\`);
-}" > "$dir"/"$number"_test.ts
+}" > "$dir"/test.ts
