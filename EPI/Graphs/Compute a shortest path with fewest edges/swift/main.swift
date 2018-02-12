@@ -26,6 +26,10 @@ public func shortestPath(from start: Int, to end: Int, in graph: Graph) -> [Int]
     distances[start] = Distance(length: 0, count: 0)
 
     while let x = unvisitedVertexWithLowestDistance(visited: visited, distances: distances) {
+        if x == end {
+            break
+        }
+
         for (y, distance) in list[x] {
             let distanceToYThroughX = distances[x]! + distance
 

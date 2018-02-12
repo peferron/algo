@@ -21,23 +21,17 @@ const compare = (a: Distance, b: Distance) =>
     a.distance !== b.distance ? a.distance - b.distance : a.count - b.count;
 
 export function getShortestPath(graph: Graph, from: Vertex, to: Vertex): Vertex[] | undefined {
-    const parents = dijkstra(graph, from);
-    const path = getPath(parents, to);
-    return path[0] === from ? path : undefined;
-}
-
-function dijkstra(graph: Graph, source: Vertex): Vertex[] {
     const a = getAdjacencyList(graph);
     const distances = new Array(a.length).fill({distance: Infinity, count: Infinity});
     const parents = new Array<Vertex>(a.length);
     const visited = new Array(a.length).fill(false);
-    distances[source] = {distance: 0, count: 0};
+    distances[from] = {distance: 0, count: 0};
 
     while (true) {
         const x = getClosestUnvisitedVertex(distances, visited);
 
-        if (x === undefined) {
-            return parents;
+        if (x === undefined || x === to) {
+            break;
         }
 
         visited[x] = true;
@@ -52,6 +46,8 @@ function dijkstra(graph: Graph, source: Vertex): Vertex[] {
             }
         }
     }
+
+    return getPath(parents, from, to);
 }
 
 function getClosestUnvisitedVertex(distances: Distance[], visited: boolean[]): Vertex | undefined {
@@ -75,14 +71,20 @@ function getAdjacencyList(graph: Graph): Edge[][] {
     return a;
 }
 
-function getPath(parents: Vertex[], to: Vertex): Vertex[] {
-    const path: Vertex[] = [];
-    let x = to;
+function getPath(parents: Vertex[], from: Vertex, to: Vertex): Vertex[] | undefined {
+    const path = [to];
 
-    while (x !== undefined) {
-        path.push(x);
-        x = parents[x];
+    while (true) {
+        const last = path[path.length - 1];
+
+        if (last === from) {
+            return path.reverse();
+        }
+
+        if (last === undefined) {
+            return undefined;
+        }
+
+        path.push(parents[last]);
     }
-
-    return path.reverse();
 }
