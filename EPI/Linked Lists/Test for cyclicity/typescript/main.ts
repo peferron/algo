@@ -3,17 +3,24 @@ export interface Node {
 }
 
 export function getFirstNodeInCycle(list: Node): Node | undefined {
-    const node = getNodeInCycle(list);
-    return node && getFirstNode(list, getCycleLength(node));
+    const node = getAnyNodeInCycle(list);
+
+    if (!node) {
+        return undefined;
+    }
+
+    const length = getCycleLength(node);
+    return getFirstNodeInCycleWithLength(list, length);
 }
 
-function getNodeInCycle(list: Node): Node | undefined {
+function getAnyNodeInCycle(list: Node): Node | undefined {
     let slow = list;
     let fast = list;
 
     while (fast.next && fast.next.next) {
         slow = slow.next!;
         fast = fast.next.next;
+
         if (slow === fast) {
             return slow;
         }
@@ -24,28 +31,26 @@ function getNodeInCycle(list: Node): Node | undefined {
 
 function getCycleLength(node: Node): number {
     let length = 1;
-    let n = node.next!;
 
-    while (n !== node) {
+    for (let n = node.next!; n !== node; n = n.next!) {
         length += 1;
-        n = n.next!;
     }
 
     return length;
 }
 
-function getFirstNode(list: Node, cycleLength: number): Node {
-    let first = list;
-    let second = list;
+function getFirstNodeInCycleWithLength(list: Node, cycleLength: number): Node {
+    let slow = list;
+    let fast = list;
 
     for (let i = 0; i < cycleLength; i += 1) {
-        second = second.next!;
+        fast = fast.next!;
     }
 
-    while (first !== second) {
-        first = first.next!;
-        second = second.next!;
+    while (slow !== fast) {
+        slow = slow.next!;
+        fast = fast.next!;
     }
 
-    return first;
+    return slow;
 }
