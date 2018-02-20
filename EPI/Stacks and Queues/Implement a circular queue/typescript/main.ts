@@ -1,11 +1,10 @@
 export default class CircularQueue<T> {
     private _size = 0;
-    private d = 0;
-    private e = 0;
+    private start = 0;
 
     private array: (T | undefined)[];
 
-    constructor(capacity: number) {
+    constructor(capacity = 0) {
         this.array = new Array(capacity);
     }
 
@@ -15,11 +14,10 @@ export default class CircularQueue<T> {
 
     enqueue(element: T): void {
         if (this._size === this.array.length) {
-            this.grow();
+            this.increaseCapacity();
         }
 
-        this.array[this.e] = element;
-        this.e = (this.e + 1) % this.array.length;
+        this.array[(this.start + this.size) % this.array.length] = element;
         this._size += 1;
     }
 
@@ -28,22 +26,21 @@ export default class CircularQueue<T> {
             return undefined;
         }
 
-        const element = this.array[this.d];
-        this.array[this.d] = undefined; // Let the element be GC'ed.
-        this.d = (this.d + 1) % this.array.length;
+        const element = this.array[this.start];
+        this.array[this.start] = undefined; // Let the element be garbage-collected.
+        this.start = (this.start + 1) % this.array.length;
         this._size -= 1;
         return element;
     }
 
-    private grow(): void {
-        const newArray = new Array(this.array.length * 2);
+    private increaseCapacity(): void {
+        const newArray = new Array(Math.max(10, this.array.length * 2));
 
-        for (let i = 0; i < this.array.length; i += 1) {
-            newArray[i] = this.array[(this.d + i) % this.array.length];
+        for (let i = 0; i < this._size; i += 1) {
+            newArray[i] = this.array[(this.start + i) % this.array.length];
         }
 
-        this.d = 0;
-        this.e = this.array.length;
+        this.start = 0;
         this.array = newArray;
     }
 }
