@@ -6,10 +6,12 @@ export default function permutations<T>(array: T[]): T[][] {
     const result: T[][] = [];
 
     for (const [i, v] of array.entries()) {
-        const remaining = array.filter((_, j) => i !== j);
-        const remainingPermutations = permutations(remaining);
-        const permutationsStartingWithV = remainingPermutations.map(p => [v, ...p]);
-        result.push(...permutationsStartingWithV);
+        // Append all permutations ending with v.
+        const others = array.filter((_, j) => i !== j);
+        for (const p of permutations(others)) {
+            p.push(v);
+            result.push(p);
+        }
     }
 
     return result;
