@@ -2,7 +2,7 @@ export default function maxArea(heights: number[]): number {
     let maxArea = 0;
     const stack = [{index: -1, height: 0}];
 
-    [...heights, 0].forEach((h, i) => {
+    for (const [i, h] of [...heights, 0].entries()) {
         while (stack.length > 1 && h <= stack[stack.length - 1].height) {
             const {height} = stack.pop()!;
             const right = i - 1;
@@ -12,7 +12,7 @@ export default function maxArea(heights: number[]): number {
         }
 
         stack.push({index: i, height: h});
-    });
+    }
 
     return maxArea;
 }
