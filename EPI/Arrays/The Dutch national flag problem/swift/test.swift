@@ -45,7 +45,7 @@ let tests: [(arrayBefore: [Int], pivotIndex: Int, arrayAfter: [Int])] = [
 
 for test in tests {
     var actual = test.arrayBefore
-    dutchInPlace(&actual, pivotIndex: test.pivotIndex)
+    dutchInPlace(array: &actual, pivotIndex: test.pivotIndex)
     guard actual == test.arrayAfter else {
         print("For array \(test.arrayBefore) and pivot index \(test.pivotIndex), " +
             "expected final array to be \(test.arrayAfter), but was \(actual)")

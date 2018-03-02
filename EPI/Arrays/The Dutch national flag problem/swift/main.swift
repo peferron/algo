@@ -1,6 +1,6 @@
 // swiftlint:disable variable_name
 
-public func dutchInPlace(inout array: [Int], pivotIndex: Int) {
+public func dutchInPlace(array: inout [Int], pivotIndex: Int) {
     let pivot = array[pivotIndex]
     var lowerCount = 0
     var equalCount = 0
@@ -24,6 +24,6 @@ public func dutchInPlace(inout array: [Int], pivotIndex: Int) {
     }
 }
 
-func swap(inout array: [Int], _ i: Int, _ j: Int) {
+func swap(_ array: inout [Int], _ i: Int, _ j: Int) {
     (array[i], array[j]) = (array[j], array[i])
 }
