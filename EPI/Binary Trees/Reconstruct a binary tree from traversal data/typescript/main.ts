@@ -1,39 +1,27 @@
 export interface Node<T> {
     value: T;
-    left?: Node<T>;
-    right?: Node<T>;
+    left?: this;
+    right?: this;
 }
 
 export function reconstruct<T>(inOrder: T[], preOrder: T[]): Node<T> | undefined {
-    return reconstructRec(inOrder, 0, preOrder, 0).root;
+    return rec(inOrder, 0, undefined, preOrder, 0).root;
 }
 
-function reconstructRec<T>(inOrder: T[], i: number, preOrder: T[], p: number,
-    nextInOrderAncestorValue?: T): {root?: Node<T>, size: number} {
+function rec<T>(inOrder: T[], inOrderStart: number, inOrderExcludedValue: T | undefined,
+    preOrder: T[], preOrderStart: number): {size: number, root?: Node<T>} {
 
-    if (i >= inOrder.length || p >= preOrder.length) {
+    if (inOrder[inOrderStart] === inOrderExcludedValue) {
         return {size: 0};
     }
 
-    const rootValue = preOrder[p];
-
-    // Move past the root.
-    p += 1;
-
-    const left = inOrder[i] !== rootValue ?
-        reconstructRec(inOrder, i, preOrder, p, rootValue) :
-        {size: 0};
-
-    // Move past the left subtree.
-    i += left.size + 1;
-    p += left.size;
-
-    const right = i < inOrder.length && inOrder[i] !== nextInOrderAncestorValue ?
-        reconstructRec(inOrder, i, preOrder, p, nextInOrderAncestorValue) :
-        {size: 0};
+    const rootValue = preOrder[preOrderStart];
+    const left = rec(inOrder, inOrderStart, rootValue, preOrder, preOrderStart + 1);
+    const right = rec(inOrder, inOrderStart + 1 + left.size, inOrderExcludedValue,
+        preOrder, preOrderStart + 1 + left.size);
 
     return {
-        root: {value: rootValue, left: left.root, right: right.root},
-        size: 1 + left.size + right.size
+        size: 1 + left.size + right.size,
+        root: {value: rootValue, left: left.root, right: right.root}
     };
 }

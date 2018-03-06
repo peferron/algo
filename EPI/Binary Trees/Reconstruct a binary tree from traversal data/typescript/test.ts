@@ -1,49 +1,81 @@
-import {reconstruct} from './main';
+import {Node, reconstruct} from './main';
 
 declare function require(name: string): any;
 const assert = require('assert');
+const inspect = (v: any) => require('util').inspect(v, {depth: null});
 
-{
-    const root = reconstruct([], []);
-    assert.strictEqual(root, undefined);
+const trimUndefined = <T>(tree: Node<T> | undefined) => {
+    if (!tree) {
+        return undefined;
+    }
+
+    const copy: Node<T> = {value: tree.value};
+
+    if (tree.left) {
+        copy.left = trimUndefined(tree.left);
+    }
+
+    if (tree.right) {
+        copy.right = trimUndefined(tree.right);
+    }
+
+    return copy;
 }
 
-{
-    const root = reconstruct([4, 2, 1, 5, 3, 6], [1, 2, 4, 3, 5, 6]);
-    assert.strictEqual(root!.value, 1);
-        assert.strictEqual(root!.left!.value, 2);
-            assert.strictEqual(root!.left!.left!.value, 4);
-                assert.strictEqual(root!.left!.left!.left, undefined);
-                assert.strictEqual(root!.left!.left!.right, undefined);
-            assert.strictEqual(root!.left!.right, undefined);
-        assert.strictEqual(root!.right!.value, 3);
-                assert.strictEqual(root!.right!.left!.value, 5);
-                    assert.strictEqual(root!.right!.left!.left, undefined);
-                    assert.strictEqual(root!.right!.left!.right, undefined);
-                assert.strictEqual(root!.right!.right!.value, 6);
-                    assert.strictEqual(root!.right!.right!.left, undefined);
-                    assert.strictEqual(root!.right!.right!.right, undefined);
-}
+const tests: {inOrder: number[], preOrder: number[], tree: Node<number> | undefined}[] = [
+    {
+        inOrder: [],
+        preOrder: [],
+        tree: undefined
+    },
+    {
+        inOrder: [4, 2, 1, 5, 3, 6],
+        preOrder: [1, 2, 4, 3, 5, 6],
+        tree: {
+            value: 1,
+            left: {
+                value: 2,
+                left: {value: 4}
+            },
+            right: {
+                value: 3,
+                left: {value: 5},
+                right: {value: 6}
+            }
+        }
+    },
+    {
+        inOrder: [5, 1, 0, 4, 7, 2, 3, 8, 6],
+        preOrder: [7, 1, 5, 4, 0, 2, 3, 6, 8],
+        tree: {
+            value: 7,
+            left: {
+                value: 1,
+                left: {value: 5},
+                right: {
+                    value: 4,
+                    left: {value: 0}
+                }
+            },
+            right: {
+                value: 2,
+                right: {
+                    value: 3,
+                    right: {
+                        value: 6,
+                        left: {
+                            value: 8
+                        }
+                    }
+                }
+            }
+        }
+    },
+];
 
-{
-    const root = reconstruct([5, 1, 0, 4, 7, 2, 3, 8, 6], [7, 1, 5, 4, 0, 2, 3, 6, 8]);
-    assert.strictEqual(root!.value, 7);
-        assert.strictEqual(root!.left!.value, 1);
-            assert.strictEqual(root!.left!.left!.value, 5);
-                //assert.strictEqual(root!.left!.left!.left, undefined);
-                //assert.strictEqual(root!.left!.left!.right, undefined);
-            assert.strictEqual(root!.left!.right!.value, 4);
-                assert.strictEqual(root!.left!.right!.left!.value, 0);
-                    //assert.strictEqual(root!.left!.right!.left!.left, undefined);
-                    //assert.strictEqual(root!.left!.right!.left!.right, undefined);
-                //assert.strictEqual(root!.left!.right!.right!.right, undefined);
-        assert.strictEqual(root!.right!.value, 2);
-            //assert.strictEqual(root!.right!.left, undefined);
-            assert.strictEqual(root!.right!.right!.value, 3);
-                assert.strictEqual(root!.right!.right!.right!.value, 6);
-                    //assert.strictEqual(root!.right!.right!.right!.left, undefined);
-                    //assert.strictEqual(root!.right!.right!.right!.right, undefined);
-                assert.strictEqual(root!.right!.right!.right!.left!.value, 8);
-                    //assert.strictEqual(root!.right!.right!.right!.left!.left, undefined);
-                    //assert.strictEqual(root!.right!.right!.right!.left!.right, undefined);
+for (const test of tests) {
+    const actual = trimUndefined(reconstruct(test.inOrder, test.preOrder));
+    assert.deepStrictEqual(actual, test.tree,
+        `For in-order traversal ${test.inOrder} and pre-order traversal ${test.preOrder}, ` +
+        `expected tree to be ${inspect(test.tree)}, but was ${inspect(actual)}`);
 }
