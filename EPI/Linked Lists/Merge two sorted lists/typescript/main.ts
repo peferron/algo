@@ -1,13 +1,13 @@
 export interface List<T> {
     value: T;
-    next?: List<T>;
+    next?: this;
 }
 
 export function mergeIter<T>(a: List<T>, b: List<T>): List<T> {
+    const tmpHead: {next?: List<T>} = {};
+    let tail = tmpHead;
     let remainingA: List<T> | undefined = a;
     let remainingB: List<T> | undefined = b;
-    let tmpHead: {next?: List<T>} = {};
-    let tail = tmpHead;
 
     while (remainingA && remainingB) {
         if (remainingA.value <= remainingB.value) {
@@ -21,8 +21,7 @@ export function mergeIter<T>(a: List<T>, b: List<T>): List<T> {
         tail = tail.next;
     }
 
-    tail!.next = remainingA || remainingB;
-
+    tail.next = remainingA || remainingB;
     return tmpHead.next!;
 }
 
