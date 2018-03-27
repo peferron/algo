@@ -7,6 +7,11 @@ let tests: [(kSorted: [Int], k: Int, sorted: [Int])] = [
         sorted: []
     ),
     (
+        kSorted: [2],
+        k: 10,
+        sorted: [2]
+    ),
+    (
         kSorted: [3, -1, 2, 6, 4, 5, 8],
         k: 2,
         sorted: [-1, 2, 3, 4, 5, 6, 8]
