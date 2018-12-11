@@ -5,6 +5,7 @@ let tests: [(path: String, normalized: String)] = [
     ("a", "a"),
     ("/a", "/a"),
     ("a/", "a/"),
+    ("/a/../", "/"),
     ("/a/.", "/a"),
     ("a/..", "."),
     ("./a", "a"),
@@ -14,7 +15,7 @@ let tests: [(path: String, normalized: String)] = [
 ]
 
 for test in tests {
-    let normalized = normalize(test.path)
+    let normalized = normalize(path: test.path)
     guard normalized == test.normalized else {
         print("For path '\(test.path)', expected normalized to be '\(test.normalized)', " +
             "but was '\(normalized)'")

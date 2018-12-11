@@ -1,8 +1,8 @@
 public func normalize(path: String) -> String {
-    let items = path.characters.split("/", allowEmptySlices: true).map(String.init)
+    let items = path.split(separator: "/", omittingEmptySubsequences: false).map(String.init)
     var normalizedItems = [String]()
 
-    for (index, item) in items.enumerate() {
+    for (index, item) in items.enumerated() {
         switch item {
             case "":
                 if index == 0 || index == items.count - 1 {
@@ -13,7 +13,7 @@ public func normalize(path: String) -> String {
                 break
 
             case "..":
-                if let last = normalizedItems.last where last != ".." {
+                if let last = normalizedItems.last, last != ".." {
                     normalizedItems.removeLast()
                 } else {
                     normalizedItems.append(item)
@@ -24,5 +24,5 @@ public func normalize(path: String) -> String {
         }
     }
 
-    return normalizedItems.isEmpty ? "." : String(normalizedItems.joinWithSeparator("/"))
+    return normalizedItems.isEmpty ? "." : String(normalizedItems.joined(separator: "/"))
 }
