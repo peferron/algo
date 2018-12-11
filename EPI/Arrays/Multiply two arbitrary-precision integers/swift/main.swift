@@ -1,6 +1,6 @@
 // swiftlint:disable variable_name
 
-public func product(a: [Int], _ b: [Int]) -> [Int] {
+public func product(_ a: [Int], _ b: [Int]) -> [Int] {
     let negative = a[0] * b[0] < 0
 
     // We do not know in advance how many digits product will have. At most, it will have as many
@@ -10,7 +10,7 @@ public func product(a: [Int], _ b: [Int]) -> [Int] {
     // array, which take O(n) time each. To avoid that, we fill the product array in reverse order
     // (least significant digits at the beginning of the array), and then reverse the array before
     // returning it.
-    var product = [Int](count: a.count + b.count, repeatedValue: 0)
+    var product = [Int](repeating: 0, count: a.count + b.count)
 
     for ai in 0..<a.count {
         let av = abs(a[a.count - 1 - ai])
@@ -35,5 +35,6 @@ public func product(a: [Int], _ b: [Int]) -> [Int] {
         product[product.count - 1] *= -1
     }
 
-    return product.reverse()
+    product.reverse()
+    return product
 }

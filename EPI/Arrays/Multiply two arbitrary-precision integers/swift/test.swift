@@ -40,7 +40,7 @@ let tests: [(a: [Int], b: [Int], product: [Int])] = [
 
 for test in tests {
     for (a, b) in [(test.a, test.b), (test.b, test.a)] {
-        var actual = product(a, b)
+        let actual = product(a, b)
         guard actual == test.product else {
             print("For numbers \(a) and \(b), expected product to be \(test.product), " +
                 "but was \(actual)")
