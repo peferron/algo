@@ -1,10 +1,10 @@
 // swiftlint:disable variable_name
 
 class Heap<T> {
-    let higherPriority: (T, than: T) -> Bool
+    let higherPriority: (T, T) -> Bool
     private var array = [T]()
 
-    init(higherPriority: (T, than: T) -> Bool) {
+    init(higherPriority: @escaping (T, T) -> Bool) {
         self.higherPriority = higherPriority
     }
 
@@ -12,46 +12,46 @@ class Heap<T> {
         return array.count
     }
 
-    private func parentIndex(i: Int) -> Int? {
+    private func parentIndex(_ i: Int) -> Int? {
         return i > 0 ? (i - 1) / 2 : nil
     }
 
-    private func swap(i: Int, _ j: Int) {
+    private func swap(_ i: Int, _ j: Int) {
         (array[i], array[j]) = (array[j], array[i])
     }
 
-    private func bubbleUp(i: Int) {
-        if let pi = parentIndex(i) where higherPriority(array[i], than: array[pi]) {
+    private func bubbleUp(_ i: Int) {
+        if let pi = parentIndex(i), higherPriority(array[i], array[pi]) {
             swap(i, pi)
             bubbleUp(pi)
         }
     }
 
-    func insert(element: T) {
+    func insert(_ element: T) {
         array.append(element)
         bubbleUp(array.count - 1)
     }
 
-    private func leftChildIndex(i: Int) -> Int? {
+    private func leftChildIndex(_ i: Int) -> Int? {
         let lci = i * 2 + 1
         return lci < array.count ? lci : nil
     }
 
-    private func rightChildIndex(i: Int) -> Int? {
+    private func rightChildIndex(_ i: Int) -> Int? {
         let rci = i * 2 + 2
         return rci < array.count ? rci : nil
     }
 
-    private func bubbleDown(i: Int) {
+    private func bubbleDown(_ i: Int) {
         if let lci = leftChildIndex(i) {
             let priorityChildIndex: Int
-            if let rci = rightChildIndex(i) where higherPriority(array[rci], than: array[lci]) {
+            if let rci = rightChildIndex(i), higherPriority(array[rci], array[lci]) {
                 priorityChildIndex = rci
             } else {
                 priorityChildIndex = lci
             }
 
-            if higherPriority(array[priorityChildIndex], than: array[i]) {
+            if higherPriority(array[priorityChildIndex], array[i]) {
                 swap(priorityChildIndex, i)
                 bubbleDown(priorityChildIndex)
             }
@@ -79,12 +79,12 @@ class Heap<T> {
 
 public typealias Coordinates = (x: Int, y: Int, z: Int)
 
-func squareDistanceFromOrigin(coordinates: Coordinates) -> Int {
+func squareDistanceFromOrigin(_ coordinates: Coordinates) -> Int {
     let (x, y, z) = coordinates
     return x * x + y * y + z * z
 }
 
-func further(a: Coordinates, than b: Coordinates) -> Bool {
+func further(_ a: Coordinates, than b: Coordinates) -> Bool {
     return squareDistanceFromOrigin(a) > squareDistanceFromOrigin(b)
 }
 
@@ -103,7 +103,7 @@ public func closest(stars: [Coordinates], count: Int) -> [Coordinates] {
         if maxHeap.count < count {
             maxHeap.insert(star)
         } else if further(maxHeap.highestPriority!, than: star) {
-            maxHeap.removeHighestPriority()
+            _ = maxHeap.removeHighestPriority()
             maxHeap.insert(star)
         }
     }

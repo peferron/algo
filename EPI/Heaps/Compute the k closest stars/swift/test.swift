@@ -4,7 +4,7 @@ func == (lhs: [Coordinates], rhs: [Coordinates]) -> Bool {
     guard lhs.count == rhs.count else {
         return false
     }
-    for (index, element) in lhs.enumerate() {
+    for (index, element) in lhs.enumerated() {
         guard rhs[index] == element else {
             return false
         }
@@ -65,7 +65,7 @@ let tests: [(stars: [Coordinates], k: Int, closest: [Coordinates])] = [
 ]
 
 for test in tests {
-    let actual = closest(test.stars, count: test.k)
+    let actual = closest(stars: test.stars, count: test.k)
     guard actual == test.closest else {
         print("For test stars \(test.stars) and k \(test.k), " +
             "expected k closest stars to be \(test.closest), but were \(actual)")
