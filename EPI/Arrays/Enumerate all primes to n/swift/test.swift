@@ -10,7 +10,7 @@ let tests: [(max: Int, primes: [Int])] = [
 ]
 
 for test in tests {
-    var actual = primes(max: test.max)
+    let actual = primes(max: test.max)
     guard actual == test.primes else {
         print("For max \(test.max), expected primes to be \(test.primes), but was \(actual)")
         exit(1)
