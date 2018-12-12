@@ -17,7 +17,8 @@
   "homepage": "https://github.com/peferron/algo",
   "dependencies": {
     "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "typescript": "^2.6.2"
+    "babel-preset-env": "^1.7.0",
+    "npm": "^6.5.0",
+    "typescript": "^3.2.2"
   }
 }
