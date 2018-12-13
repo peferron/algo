@@ -8,7 +8,7 @@ public class Node {
         self.right = right
     }
 
-    func inorder(depth: Int = 0, _ process: (Node, Int) -> Void) {
+    func inorder(_ depth: Int = 0, _ process: (Node, Int) -> Void) {
         left?.inorder(depth + 1, process)
         process(self, depth)
         right?.inorder(depth + 1, process)
