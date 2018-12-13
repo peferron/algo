@@ -1,7 +1,7 @@
-public func minMax<T: Comparable>(elements: [T]) -> (min: T, max: T) {
+public func minMax<T: Comparable>(_ elements: [T]) -> (min: T, max: T) {
     var result = (min: elements[0], max: elements[0])
 
-    for i in 1.stride(to: elements.count, by: 2) {
+    for i in stride(from: 1, to: elements.count, by: 2) {
         let pair: (min: T, max: T)
 
         if i == elements.count - 1 {
