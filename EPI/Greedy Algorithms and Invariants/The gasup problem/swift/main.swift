@@ -1,26 +1,5 @@
 public typealias City = (gas: Int, distanceToNextCity: Int)
 
-// public func indexOfAmpleCity(_ cities: [City]) -> Int? {
-//     let totalGas = cities.reduce(0) { $0 + $1.gas }
-//     let totalDistance = cities.reduce(0) { $0 + $1.distanceToNextCity }
-//     let mpg = totalDistance / totalGas
-
-//     let start = 0
-//     let end = 0
-//     let extraGas = 0
-
-//     while end < {
-//         // Can the next city be reached?
-//         let availableGas = extraGas + cities[end].gas
-//         let requiredGas = cities[end].distanceToNextCity / mpg
-
-//         if requiredGas > availableGas {
-//             // Yes, the next city can be reached!
-//             end += 1
-//         }
-//     }
-// }
-
 public func indexOfAmpleCity(_ cities: [City]) -> Int {
     // The problem assumes that the total amount of gas is exactly the amount required to go around
     // the road once. This means we can derive the vehicle MPG from the road information.
