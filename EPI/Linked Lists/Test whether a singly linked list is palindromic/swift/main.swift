@@ -33,16 +33,16 @@ public class Node {
         return slow
     }
 
-    func equals(_ other: Node) -> Bool {
-        var a: Node? = self
-        var b: Node? = other
+    func startsWith(_ prefix: Node) -> Bool {
+        var currSelf: Node? = self
+        var currPrefix: Node? = prefix
 
-        while let ax = a, let bx = b {
-            if ax.value != bx.value {
+        while currPrefix != nil {
+            if currSelf?.value != currPrefix!.value {
                 return false
             }
-            a = ax.next
-            b = bx.next
+            currSelf = currSelf!.next
+            currPrefix = currPrefix!.next
         }
 
         return true
@@ -51,7 +51,10 @@ public class Node {
     public func isPalindrome() -> Bool {
         let firstHalf = self
         let reversedSecondHalf = middle().reverse()
-        let result = reversedSecondHalf.equals(firstHalf)
+        // If the list has an even number of elements, the second half has 1 more element than the
+        // first half, so testing equality doesn't work; we need to test instead that head is a
+        // prefix of tail.
+        let result = reversedSecondHalf.startsWith(firstHalf)
         let _ = reversedSecondHalf.reverse()
         return result
     }

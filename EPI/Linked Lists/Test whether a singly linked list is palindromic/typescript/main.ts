@@ -6,7 +6,9 @@ export interface Node {
 export function isPalindrome(head: Node): boolean {
     const mid = middle(head);
     const tail = reverse(mid);
-    const result = areEqual(head, tail);
+    // If the list has an even number of elements, tail has 1 more element than head, so testing
+    // equality doesn't work; we need to test instead that head is a prefix of tail.
+    const result = startsWith(tail, head);
     reverse(tail);
     return result;
 }
@@ -37,17 +39,17 @@ function reverse(list: Node): Node {
     return prev!;
 }
 
-function areEqual(a: Node, b: Node): boolean {
-    let currA: Node | undefined = a;
-    let currB: Node | undefined = b;
+function startsWith(list: Node, prefix: Node): boolean {
+    let currList: Node | undefined = list;
+    let currPrefix: Node | undefined = prefix;
 
-    while (currA && currB) {
-        if (currA.value !== currB!.value) {
+    while (currPrefix) {
+        if (!currList || currList.value !== currPrefix.value) {
             return false;
         }
 
-        currA = currA.next;
-        currB = currB.next;
+        currList = currList.next;
+        currPrefix = currPrefix.next;
     }
 
     return true;
