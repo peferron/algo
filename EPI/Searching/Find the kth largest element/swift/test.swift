@@ -28,7 +28,7 @@ let tests: [(array: [Int], k: Int, element: Int)] = [
 
 for test in tests {
     var copy = test.array
-    let element = largestInPlace(&copy, k: test.k)
+    let element = largestInPlace(array: &copy, k: test.k)
     guard element == test.element else {
         print("For test array \(test.array) and k \(test.k), " +
             "expected kth largest element to be \(test.element), but was \(element)")

@@ -2,7 +2,7 @@
 
 import Darwin
 
-public func largestInPlace<T: Comparable>(inout array: [T], k: Int) -> T {
+public func largestInPlace<T: Comparable>(array: inout [T], k: Int) -> T {
     var low = 0
     var high = array.count - 1
 
@@ -20,11 +20,11 @@ public func largestInPlace<T: Comparable>(inout array: [T], k: Int) -> T {
     }
 }
 
-func random(from from: Int, through: Int) -> Int {
+func random(from: Int, through: Int) -> Int {
     return from + Int(arc4random_uniform(UInt32(through - from) + 1))
 }
 
-func partition<T: Comparable>(inout array: [T], low: Int, high: Int, pivotIndex: Int) -> Int {
+func partition<T: Comparable>(_ array: inout [T], low: Int, high: Int, pivotIndex: Int) -> Int {
     let pivot = array[pivotIndex]
 
     swap(&array, pivotIndex, low)
@@ -42,6 +42,6 @@ func partition<T: Comparable>(inout array: [T], low: Int, high: Int, pivotIndex:
     return newPivotIndex
 }
 
-func swap<T>(inout array: [T], _ i: Int, _ j: Int) {
+func swap<T>(_ array: inout [T], _ i: Int, _ j: Int) {
     (array[i], array[j]) = (array[j], array[i])
 }
