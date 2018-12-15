@@ -3,21 +3,22 @@ export default function getProductionLength(from: string, to: string, dict: Set<
         return -1;
     }
 
+    if (from === to) {
+        return 1;
+    }
+
     const queue = [{string: from, length: 1}];
-    const visited = new Set<string>();
 
-    while (queue.length > 0) {
-        const {string: x, length: l} = queue.shift()!;
+    for (let i = 0; i < queue.length; i += 1) {
+        const q = queue[i];
 
-        if (x === to) {
-            return l;
-        }
-
-        visited.add(x);
-
-        for (const y of dict) {
-            if (!visited.has(y) && areAdjacent(x, y)) {
-                queue.push({string: y, length: l + 1});
+        for (const d of dict) {
+            if (areAdjacent(q.string, d)) {
+                if (d === to) {
+                    return q.length + 1;
+                }
+                queue.push({string: d, length: q.length + 1});
+                dict.delete(d);
             }
         }
     }
@@ -26,24 +27,23 @@ export default function getProductionLength(from: string, to: string, dict: Set<
 }
 
 function areAdjacent(a: string, b: string): boolean {
-    const aChars = [...a];
-    const bChars = [...b];
+    const aIter = a[Symbol.iterator]();
+    const bIter = b[Symbol.iterator]();
+    let diffs = 0;
 
-    if (aChars.length !== bChars.length) {
-        return false;
-    }
+    while (true) {
+        const aNext = aIter.next();
+        const bNext = bIter.next();
 
-    let diff = false;
+        if (aNext.done || bNext.done) {
+            return aNext.done === bNext.done;
+        }
 
-    for (let i = 0; i < aChars.length; i += 1) {
-        if (aChars[i] !== bChars[i]) {
-            if (diff) {
+        if (aNext.value !== bNext.value) {
+            diffs += 1;
+            if (diffs > 1) {
                 return false;
             }
-
-            diff = true;
         }
     }
-
-    return true;
 }

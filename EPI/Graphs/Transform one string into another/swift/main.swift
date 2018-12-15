@@ -10,10 +10,9 @@ public func shortestProductionSequenceLength(from src: String, to dst: String, i
             return distance
         }
 
-        dict.remove(string)
-
         for neighbor in dict where adjacent(string, neighbor) {
             queue.append((neighbor, distance + 1))
+            dict.remove(neighbor)
         }
     }
 
