@@ -57,10 +57,8 @@ private let lookupTable = buildLookupTable()
 private let lookupMask: UInt64 = 1 << 16 - 1
 
 public func parityLookupTable(value: UInt64) -> UInt {
-    // Swift compiler complains about the expression being too complex; we need to break it down.
-    var parity = lookupTable[Int(value & lookupMask)]
-    parity ^= lookupTable[Int((value >> 16) & lookupMask)]
-    parity ^= lookupTable[Int((value >> 32) & lookupMask)]
-    parity ^= lookupTable[Int((value >> 48) & lookupMask)]
-    return parity
+    var v = value;
+    v ^= v >> 32
+    v ^= v >> 16
+    return lookupTable[Int(v & lookupMask)]
 }
