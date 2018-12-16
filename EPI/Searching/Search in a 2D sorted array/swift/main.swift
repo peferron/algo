@@ -1,4 +1,4 @@
-public func contains<T: Comparable>(matrix matrix: [[T]], element: T) -> Bool {
+public func contains<T: Comparable>(matrix: [[T]], element: T) -> Bool {
     guard matrix.count > 0 && matrix[0].count > 0 else {
         return false
     }
