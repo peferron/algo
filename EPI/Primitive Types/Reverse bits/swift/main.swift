@@ -19,7 +19,7 @@ let table: [UInt16] = [
 
 // O(n/L) where n is the number of bits of the number type, and L the number of bits covered by the
 // table.
-public func reverse(number: UInt16) -> UInt16 {
+public func reverse(_ number: UInt16) -> UInt16 {
     var n = number
     var reverse: UInt16 = 0
 
