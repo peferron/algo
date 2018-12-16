@@ -8,6 +8,21 @@ let tests: [(matrix: [[Int]], element: Int, contains: Bool)] = [
     ),
     (
         matrix: [
+            [],
+        ],
+        element: 0,
+        contains: false
+    ),
+    (
+        matrix: [
+            [],
+            [],
+        ],
+        element: 0,
+        contains: false
+    ),
+    (
+        matrix: [
             [0, 3, 6],
         ],
         element: -1,
@@ -105,8 +120,8 @@ let tests: [(matrix: [[Int]], element: Int, contains: Bool)] = [
     (
         matrix: [
             [0, 1, 5, 7],
-            [3, 2, 5, 8],
-            [6, 2, 9, 10],
+            [3, 4, 5, 8],
+            [6, 6, 9, 10],
         ],
         element: -1,
         contains: false
@@ -114,10 +129,10 @@ let tests: [(matrix: [[Int]], element: Int, contains: Bool)] = [
     (
         matrix: [
             [0, 1, 5, 7],
-            [3, 2, 5, 8],
-            [6, 2, 9, 10],
+            [3, 4, 5, 8],
+            [6, 6, 9, 10],
         ],
-        element: 2,
+        element: 4,
         contains: true
     ),
     (
