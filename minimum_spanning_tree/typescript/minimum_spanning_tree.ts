@@ -28,8 +28,8 @@ function lightestCrossEdge(list: AdjacencyList, mstVertices: boolean[]): Edge | 
 
     for (const edges of list.a) {
         for (const edge of edges) {
-            if (mstVertices[edge.x] !== mstVertices[edge.y] &&
-                (!best || best.weight > edge.weight)) {
+            const isCrossEdge = mstVertices[edge.x] !== mstVertices[edge.y];
+            if (isCrossEdge && (!best || best.weight > edge.weight)) {
                 best = edge;
             }
         }
