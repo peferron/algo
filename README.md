@@ -8,11 +8,11 @@ Modules do not share code and use built-in language features only. This makes ea
 
 ### Disclaimers
 
-- These modules are not optimized for performance.
+- These modules are optimized for readability instead of performance, and often do not achieve the best time or space complexities.
 - These modules are not very well-tested, and *definitely* not intended for production use. If you do it anyway, please share your post-mortem :)
 - I don't have much experience with Rust, so there might be simpler and cleaner ways to do things.
 - Some older TS modules do not use features introduced in TS 1.6+.
-- Generics are avoided in favor of concrete types for simplicity.
+- Generics are avoided in favor of concrete types for readability.
 
 ### Test a Go module
 
