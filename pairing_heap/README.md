@@ -7,5 +7,5 @@
     * Insert: O(1).
     * Find-min: O(1).
     * Delete-min: amortized O(log n).
-    * Decrease-key: amortized O(2^(2*sqrt(log log n)). Very good in practice.
+    * Decrease-key: amortized O(2^(2*sqrt(log log n)), which is o(log n) and very good in practice.
     * Merge: O(1).
