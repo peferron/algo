@@ -6,6 +6,6 @@
 * Time complexity: O(n³).
 * Space complexity: O(n²).
 
-To find shortest paths in weighted directed acyclic graphs with positive or negative weights, see the module [dag_shortest_path](../dag_shortest_path).
+To find shortest paths in weighted directed acyclic graphs with positive or negative weights, see module [dag_shortest_path](../dag_shortest_path).
 
-To find hortest paths in directed or undirected weighted graphs with positive weights only, see the module [dijkstra](../dijkstra).
+To find hortest paths in directed or undirected weighted graphs with positive weights only, see module [dijkstra](../dijkstra).
