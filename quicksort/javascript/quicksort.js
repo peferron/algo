@@ -40,7 +40,7 @@ function swap(a, i, j) {
 }
 
 function medianPivot(a, start, end) {
-    var mid = Math.floor((end - start) / 2);
+    var mid = start + Math.floor((end - start) / 2);
 
     if (between(a[start], a[mid], a[end])) {
         return start;
@@ -52,7 +52,7 @@ function medianPivot(a, start, end) {
 }
 
 function between(a, x, y) {
-    return x <= a && a <= y || y <= a && a <= y;
+    return x <= a && a <= y || y <= a && a <= x;
 }
 
 /* randomPivot is an alternative to medianPivot, but medianPivot is recommended.
