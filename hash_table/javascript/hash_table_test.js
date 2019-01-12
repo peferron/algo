@@ -1,16 +1,13 @@
-'use strict';
-
-var assert = require('assert');
-
-var HashTable = require('./hash_table.js');
+import assert from 'assert';
+import HashTable from './hash_table';
 
 function testBasicSequence() {
-    var h = new HashTable(10);
+    const h = new HashTable(10);
 
-    assert(!h.has('abc'));
+    assert.ok(!h.has('abc'));
 
     h.set('abc', 5);
-    assert(h.has('abc'));
+    assert.ok(h.has('abc'));
     assert.strictEqual(h.get('abc'), 5);
 
     // Check that deleting a non-existing key doesn't crash.
@@ -18,34 +15,34 @@ function testBasicSequence() {
     h.del('zzz');
 
     h.set('abc', 7);
-    assert(h.has('abc'));
+    assert.ok(h.has('abc'));
     assert.strictEqual(h.get('abc'), 7);
 
     h.set('def', 9);
-    assert(h.has('abc'));
+    assert.ok(h.has('abc'));
     assert.strictEqual(h.get('abc'), 7);
-    assert(h.has('def'));
+    assert.ok(h.has('def'));
     assert.strictEqual(h.get('def'), 9);
 
     h.del('abc');
-    assert(!h.has('abc'));
-    assert(h.has('def'));
+    assert.ok(!h.has('abc'));
+    assert.ok(h.has('def'));
     assert.strictEqual(h.get('def'), 9);
 }
 
 function testRandomSequences() {
-    for (var i = 0; i < 100; i++) {
+    for (let i = 0; i < 100; i += 1) {
         testRandomSequence();
     }
 }
 
 function testRandomSequence() {
-    var h = new HashTable(100);
-    var m = {};
-    var a = [];
+    const h = new HashTable(100);
+    const m = new Map();
+    const a = [];
+    const count = Math.floor(Math.random() * 1000);
 
-    var count = Math.floor(Math.random() * 1000);
-    for (var i = 0; i < count; i++) {
+    for (let i = 0; i < count; i += 1) {
         randomOperation(h, m, a);
     }
 
@@ -53,14 +50,14 @@ function testRandomSequence() {
 }
 
 function validate(h, m, a) {
-    a.forEach(function(k) {
-        assert(h.has(k));
-        assert.strictEqual(m[k], h.get(k));
-    });
+    for (const k of a) {
+        assert.ok(h.has(k));
+        assert.strictEqual(m.get(k), h.get(k));
+    }
 }
 
 function randomOperation(h, m, a) {
-    var r = Math.random();
+    const r = Math.random();
     if (r < 0.2) {
         delRandom(h, m, a);
     } else {
@@ -69,29 +66,30 @@ function randomOperation(h, m, a) {
 }
 
 function setRandom(h, m, a) {
-    var k = randomKey();
-    var v = randomValue();
+    const k = randomKey();
+    const v = randomValue();
     h.set(k, v);
-    if (!m.hasOwnProperty(k)) {
+    if (!m.has(k)) {
         a.push(k);
     }
-    m[k] = v;
+    m.set(k, v);
 }
 
 function delRandom(h, m, a) {
     if (!a.length) {
         return;
     }
-    var i = Math.floor(Math.random() * a.length);
-    var k = a[i];
+    const i = Math.floor(Math.random() * a.length);
+    const k = a[i];
     h.del(k);
-    delete m[k];
+    m.delete(k);
     a.splice(i, 1);
 }
 
 function randomKey() {
-    var l = Math.floor(1 + Math.random() * 10);
-    return (Math.PI * Math.random()).toString(36).substr(2, l);
+    // This random string generator is not uniform at all, but it doesn't matter for this test.
+    const length = Math.floor(1 + Math.random() * 10);
+    return (Math.PI + Math.random()).toString(36).substr(2, length);
 }
 
 function randomValue() {

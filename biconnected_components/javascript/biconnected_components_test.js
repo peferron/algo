@@ -1,41 +1,40 @@
-const assert = require('assert');
-
-import {articulations} from './biconnected_components.js';
+import assert from 'assert';
+import articulations from './biconnected_components';
 
 const tests = [
     {
         graph: {
             vertexCount: 0,
             directed: false,
-            edges: []
+            edges: [],
         },
-        articulations: []
+        articulations: [],
     },
     {
         graph: {
             vertexCount: 1,
             directed: false,
-            edges: []
+            edges: [],
         },
-        articulations: []
+        articulations: [],
     },
     {
         graph: {
             vertexCount: 2,
             directed: false,
-            edges: []
+            edges: [],
         },
-        articulations: []
+        articulations: [],
     },
     {
         graph: {
             vertexCount: 2,
             directed: false,
             edges: [
-                [0, 1]
-            ]
+                [0, 1],
+            ],
         },
-        articulations: []
+        articulations: [],
     },
     {
         graph: {
@@ -43,10 +42,10 @@ const tests = [
             directed: false,
             edges: [
                 [0, 1],
-                [1, 2]
-            ]
+                [1, 2],
+            ],
         },
-        articulations: [1]
+        articulations: [1],
     },
     {
         graph: {
@@ -55,10 +54,10 @@ const tests = [
             edges: [
                 [0, 1],
                 [0, 2],
-                [1, 2]
-            ]
+                [1, 2],
+            ],
         },
-        articulations: []
+        articulations: [],
     },
     {
         graph: {
@@ -68,10 +67,10 @@ const tests = [
                 [0, 1],
                 [0, 2],
                 [1, 2],
-                [2, 3]
-            ]
+                [2, 3],
+            ],
         },
-        articulations: [2]
+        articulations: [2],
     },
     {
         graph: {
@@ -83,10 +82,10 @@ const tests = [
                 [1, 3],
                 [2, 3],
                 [2, 4],
-                [3, 4]
-            ]
+                [3, 4],
+            ],
         },
-        articulations: [1]
+        articulations: [1],
     },
     {
         // See an illustration of this example at:
@@ -107,19 +106,15 @@ const tests = [
                 [5, 7],
                 [5, 8],
                 [7, 8],
-                [8, 9]
-            ]
+                [8, 9],
+            ],
         },
-        articulations: [1, 5, 8]
-    }
+        articulations: [1, 5, 8],
+    },
 ];
 
-function compareNumbers(a, b) {
-    return a - b;
-}
-
 function runTest(test) {
-    const sorted = articulations(test.graph).sort(compareNumbers);
+    const sorted = articulations(test.graph).sort((a, b) => a - b);
     assert.deepStrictEqual(sorted, test.articulations);
 }
 

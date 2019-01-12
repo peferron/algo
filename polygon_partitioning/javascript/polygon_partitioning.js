@@ -67,10 +67,10 @@ class Point {
     }
 
     static link(points) {
-        points.forEach((point, i) => {
+        for (const [i, point] of points.entries()) {
             point.prev = points[(i - 1 + points.length) % points.length];
             point.next = points[(i + 1) % points.length];
-        });
+        }
     }
 
     static from(polygon) {
@@ -94,8 +94,7 @@ class Point {
     }
 }
 
-// polygon must be a simple polygon without holes, expressed as an array of points sorted in
-// counter-clockwise order.
+// polygon must be a simple polygon without holes, expressed as an array of points sorted in counter-clockwise order.
 export function triangulate(polygon) {
     const points = Point.from(polygon);
     triangulatePoints(points);
@@ -107,7 +106,7 @@ function triangulatePoints(points) {
     const earPoints = new Set(points.filter(p => p.isEar(reflexPoints)));
 
     // Stop clipping ears when the remaining polygon is a triangle.
-    for (let n = points.length; n > 3; n--) {
+    for (let n = points.length; n > 3; n -= 1) {
         const earPoint = deleteFirst(earPoints);
         earPoint.delete();
 
@@ -132,8 +131,7 @@ function triangulatePoints(points) {
     Point.link(points);
 }
 
-// polygon must be a simple polygon without holes, expressed as an array of points sorted in
-// counter-clockwise order.
+// polygon must be a simple polygon without holes, expressed as an array of points sorted in counter-clockwise order.
 export function partition(polygon) {
     const points = Point.from(polygon);
     triangulatePoints(points);
@@ -142,16 +140,15 @@ export function partition(polygon) {
 }
 
 function removeNonEssentialDiagonals(points) {
-    // General note: there are n-3 diagonals in total for n points, and a diagonal belongs to only 2
-    // points, so iterating through the diagonals of a point takes amortized constant time.
+    // General note: there are n-3 diagonals in total for n points, and a diagonal belongs to only 2 points, so
+    // iterating through the diagonals of a point takes amortized constant time.
 
     const essential = (diagonal, point) => {
         const diagonals = [...point.diagonals];
         const i = diagonals.indexOf(diagonal);
         const prevDiagonal = diagonals[i - 1] || [point, point.prev];
         const nextDiagonal = diagonals[i + 1] || [point, point.next];
-        return direction(point.opposite(prevDiagonal), point, point.opposite(nextDiagonal)) ===
-            CLOCKWISE;
+        return direction(point.opposite(prevDiagonal), point, point.opposite(nextDiagonal)) === CLOCKWISE;
     };
 
     const essentialDiagonals = new Set();

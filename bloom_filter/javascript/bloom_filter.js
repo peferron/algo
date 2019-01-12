@@ -1,55 +1,47 @@
-'use strict';
+import BitVector from './bit_vector';
+import hash from './hash';
 
-module.exports = BloomFilter;
+export default class BloomFilter {
+    constructor(elementCount, acceptableFalsePositiveRate) {
+        const size = optimalSize(elementCount, acceptableFalsePositiveRate);
+        this.bitVector = new BitVector(size.bitCount);
+        this.hashFunctions = getHashFunctions(size.hashCount, size.bitCount);
+    }
 
-var BitVector = require('./bit_vector.js');
-var hash = require('./hash.js');
+    add(key) {
+        for (const f of this.hashFunctions) {
+            const h = f(key, 32);
+            this.bitVector.set(h);
+        }
+    }
 
-function BloomFilter(elementCount, acceptableFalsePositiveRate) {
-    var size = optimalSize(elementCount, acceptableFalsePositiveRate);
-    this.bitVector = new BitVector(size.bitCount);
-    this.hashFunctions = getHashFunctions(size.hashCount, size.bitCount);
+    has(key) {
+        return this.hashFunctions.every(f => {
+            const h = f(key, 32);
+            return this.bitVector.has(h);
+        });
+    }
 }
 
-BloomFilter.prototype.add = function(key) {
-    this.hashFunctions.forEach(function(f) {
-        var h = f(key, 32);
-        this.bitVector.set(h);
-    }.bind(this));
-};
-
-BloomFilter.prototype.has = function(key) {
-    return this.hashFunctions.every(function(f) {
-        var h = f(key, 32);
-        return this.bitVector.has(h);
-    }.bind(this));
-};
-
 function optimalSize(elementCount, acceptableFalsePositiveRate) {
-    var bitCount = Math.ceil(
-        -elementCount * Math.log(acceptableFalsePositiveRate) / Math.pow(Math.log(2), 2)
-    );
-    var hashCount = Math.round(
-        bitCount / elementCount * Math.log(2)
-    );
-    return {
-        bitCount: bitCount,
-        hashCount: hashCount
-    };
+    const bitCount = Math.ceil(-elementCount * Math.log(acceptableFalsePositiveRate) / Math.pow(Math.log(2), 2));
+    const hashCount = Math.round(bitCount / elementCount * Math.log(2));
+    return {bitCount, hashCount};
 }
 
 function getHashFunctions(count, modulo) {
-    var a = [];
-    for (var i = 31; a.length < count; i++) {
+    const a = [];
+    for (let i = 31; a.length < count; i += 1) {
         if (isPrime(i)) {
-            a.push(hash.bind(null, i, modulo));
+            a.push(str => hash(i, modulo, str));
         }
     }
     return a;
 }
 
+// A sieve would be faster, but that's not the subject here, so let's keep things simple.
 function isPrime(n) {
-    for (var i = 2; i <= Math.sqrt(n); i++) {
+    for (let i = 2; i <= Math.sqrt(n); i += 1) {
         if (n % i === 0) {
             return false;
         }

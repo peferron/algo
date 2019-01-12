@@ -1,40 +1,37 @@
-'use strict';
-
-var assert = require('assert');
-
-var Queue = require('./bounded_height_priority_queue.js');
+import assert from 'assert';
+import Queue from './bounded_height_priority_queue';
 
 function testBasicSequence() {
-    var q = new Queue(10);
+    const q = new Queue(10);
 
-    assert(q.empty());
+    assert.ok(q.empty());
 
     q.insert(7, 'seven');
-    assert(!q.empty());
+    assert.ok(!q.empty());
     assert.strictEqual(q.deleteMin(), 'seven');
-    assert(q.empty());
+    assert.ok(q.empty());
 
     q.insert(3, 'three');
-    assert(!q.empty());
+    assert.ok(!q.empty());
 
     q.insert(8, 'eight');
-    assert(!q.empty());
+    assert.ok(!q.empty());
 
     q.insert(3, 'three again');
-    assert(!q.empty());
+    assert.ok(!q.empty());
 
-    var m1 = q.deleteMin();
-    assert(!q.empty());
+    const m1 = q.deleteMin();
+    assert.ok(!q.empty());
 
-    var m2 = q.deleteMin();
-    assert(!q.empty());
+    const m2 = q.deleteMin();
+    assert.ok(!q.empty());
 
-    assert(m1 === 'three' && m2 === 'three again' || m1 === 'three again' && m2 === 'three');
+    assert.ok(m1 === 'three' && m2 === 'three again' || m1 === 'three again' && m2 === 'three');
 
     assert.strictEqual(q.deleteMin(), 'eight');
-    assert(q.empty());
+    assert.ok(q.empty());
 
-    assert(typeof q.deleteMin() === 'undefined');
+    assert.strictEqual(q.deleteMin(), undefined);
 }
 
 testBasicSequence();

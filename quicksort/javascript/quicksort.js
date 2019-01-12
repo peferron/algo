@@ -1,46 +1,43 @@
-'use strict';
-
-module.exports = function(a) {
+export default function sort(a) {
     if (!a) {
         return;
     }
-    sort(a, 0, a.length - 1);
-};
+    sortRec(a, 0, a.length - 1);
+}
 
-function sort(a, start, end) {
+function sortRec(a, start, end) {
     if (end < start + 1) {
         return;
     }
-    var p = partition(a, start, end);
-    sort(a, start, p - 1);
-    sort(a, p + 1, end);
+    const p = partition(a, start, end);
+    sortRec(a, start, p - 1);
+    sortRec(a, p + 1, end);
 }
 
 function partition(a, start, end) {
-    var p = medianPivot(a, start, end);
-
+    const p = medianPivot(a, start, end);
     swap(a, p, end);
+    let firstHigh = start;
 
-    var firstHigh = start;
-    for (var i = start; i < end; i++) {
+    for (let i = start; i < end; i += 1) {
         if (a[i] < a[end]) {
             swap(a, firstHigh, i);
-            firstHigh++;
+            firstHigh += 1;
         }
     }
-    swap(a, firstHigh, end);
 
+    swap(a, firstHigh, end);
     return firstHigh;
 }
 
 function swap(a, i, j) {
-    var t = a[i];
+    const t = a[i];
     a[i] = a[j];
     a[j] = t;
 }
 
 function medianPivot(a, start, end) {
-    var mid = start + Math.floor((end - start) / 2);
+    const mid = start + Math.floor((end - start) / 2);
 
     if (between(a[start], a[mid], a[end])) {
         return start;

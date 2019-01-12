@@ -17,7 +17,7 @@ while IFS= read -r module; do
     ./test_typescript "$module"
     ./test_rust "$module"
     ./test_swift "$module"
-done < <(find EPI -type d -depth 2; find * -type d -depth 0 | grep -vxE '(EPI|node_modules)')
+done < <(find * -type d -depth 0 | grep -vxE 'node_modules')
 
 if [ $s -eq 0 ]; then
     printf "\n${green}All tests OK.${nocolor}\n"

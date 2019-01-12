@@ -1,39 +1,31 @@
-/* jshint loopfunc: true */
+export default class AdjacencyList {
+    constructor(graph) {
+        this.a = constructAdjacencyList(graph);
+    }
 
-'use strict';
+    breadthFirstSearch(start, earlyCallback) {
+        breadthFirstSearch(this.a, start, earlyCallback);
+    }
 
-module.exports = AdjacencyList;
-
-function AdjacencyList(graph) {
-    this.a = constructAdjacencyList(graph);
+    depthFirstSearch(start, earlyCallback) {
+        depthFirstSearch(this.a, start, earlyCallback);
+    }
 }
-
-AdjacencyList.prototype.breadthFirstSearch = function(start, earlyCallback) {
-    breadthFirstSearch(this.a, start, earlyCallback);
-};
-
-AdjacencyList.prototype.depthFirstSearch = function(start, earlyCallback) {
-    depthFirstSearch(this.a, start, earlyCallback);
-};
 
 function constructAdjacencyList(graph) {
-    var a = initAdjacencyList(graph.vertexCount);
-    graph.edges.forEach(function(edge) {
-        insertEdge(a, edge[0], edge[1], graph.directed);
-    });
-    return a;
-}
+    // new Array(vertexCount).fill([]) does not work because it reuses the same array instance for every element.
+    const a = Array.from({length: graph.vertexCount}, () => []);
 
-function initAdjacencyList(vertexCount) {
-    var a = new Array(vertexCount);
-    for (var i = 0; i < vertexCount; i++) {
-        a[i] = [];
+    for (const [x, y] of graph.edges) {
+        insertEdge(a, x, y, graph.directed);
     }
+
     return a;
 }
 
 function insertEdge(a, x, y, directed) {
     a[x].push(y);
+
     if (!directed) {
         insertEdge(a, y, x, true);
     }
@@ -44,53 +36,38 @@ function breadthFirstSearch(a, start, earlyCallback) {
         return;
     }
 
-    var processed = new Array(a.length);
-    var queue = [];
+    const processed = new Array(a.length);
+    const queue = [];
 
     earlyCallback(start);
     processed[start] = true;
     queue.push(start);
 
     while (queue.length) {
-        var x = queue.shift();
-        var edges = a[x];
-        edges.forEach(function(y) {
+         // Use shift() for simplicity, but it can take linear time.
+        const x = queue.shift();
+        for (const y of a[x]) {
             if (processed[y]) {
-                return;
+                continue;
             }
             earlyCallback(y);
             processed[y] = true;
             queue.push(y);
-        });
+        }
     }
 }
 
 function depthFirstSearch(a, start, earlyCallback) {
-    var processed = new Array(a.length);
+    const processed = new Array(a.length);
 
-    function dfs(x) {
+    const dfs = x => {
         if (processed[x]) {
             return;
         }
         earlyCallback(x);
         processed[x] = true;
-        var edges = a[x];
-        edges.forEach(dfs);
-    }
+        a[x].forEach(dfs);
+    };
 
     dfs(start);
 }
-
-// List.prototype.log = function() {
-//     log(this.a);
-// };
-
-// function log(a) {
-//     a.forEach(function(edges, x) {
-//         var str = 'Vertex ' + x + ': ';
-//         edges.forEach(function(y) {
-//             str += y + ' ';
-//         });
-//         console.log(str);
-//     });
-// }

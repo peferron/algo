@@ -1,30 +1,27 @@
-'use strict';
-
-var assert = require('assert');
-
-var BloomFilter = require('./bloom_filter.js');
+import assert from 'assert';
+import BloomFilter from './bloom_filter';
 
 function testRandomSequences() {
-    for (var i = 0; i < 100; i++) {
+    for (let i = 0; i < 100; i += 1) {
         testRandomSequence();
     }
 }
 
 function testRandomSequence() {
-    var b = new BloomFilter(1000, 0.1);
-    var m = {};
+    const b = new BloomFilter(1000, 0.1);
+    const m = new Map();
+    const count = Math.floor(Math.random() * 1000);
 
-    var count = Math.floor(Math.random() * 1000);
-    for (var i = 0; i < count; i++) {
-        var key = randomKey();
-        if (m.hasOwnProperty(key)) {
+    for (let i = 0; i < count; i += 1) {
+        const key = randomKey();
+        if (m.has(key)) {
             continue;
         }
         if (Math.random() > 0.5) {
-            m[key] = true;
+            m.set(key, true);
             b.add(key);
         } else {
-            m[key] = false;
+            m.set(key, false);
         }
     }
 
@@ -32,33 +29,32 @@ function testRandomSequence() {
 }
 
 function validate(b, m) {
-    var attempts = 0;
-    var errors = 0;
-    for (var key in m) {
-        if (m.hasOwnProperty(key)) {
-            // There cannot be false negatives.
-            if (m[key]) {
-                assert(b.has(key));
-                continue;
-            }
+    let attempts = 0;
+    let errors = 0;
 
+    for (const [key, added] of m.entries()) {
+        if (added) {
+            // There cannot be false negatives.
+            assert.ok(b.has(key));
+        } else {
             // But there can be false positives.
-            attempts++;
+            attempts += 1;
             if (b.has(key)) {
-                errors++;
+                errors += 1;
             }
         }
     }
 
     // The false positives should stay below the acceptable rate.
     if (attempts) {
-        assert(errors / attempts < 0.1);
+        assert.ok(errors / attempts < 0.1);
     }
 }
 
 function randomKey() {
-    var l = Math.floor(1 + Math.random() * 10);
-    return (Math.PI * Math.random()).toString(36).substr(2, l);
+    // This random string generator is not uniform at all, but it doesn't matter for this test.
+    const maxLength = Math.floor(1 + Math.random() * 10);
+    return (Math.PI + Math.random()).toString(36).substr(2, maxLength);
 }
 
 testRandomSequences();

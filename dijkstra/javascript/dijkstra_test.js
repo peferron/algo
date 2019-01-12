@@ -1,54 +1,51 @@
-'use strict';
+import assert from 'assert';
+import dijkstra from './dijkstra';
 
-var assert = require('assert');
-
-var dijkstra = require('./dijkstra.js');
-
-var tests = [
+const tests = [
     {
         graph: {
             vertexCount: 1,
             directed: false,
-            edges: []
+            edges: [],
         },
         problems: [
-            {start: 0, end: 0, solution: [0]}
-        ]
+            {start: 0, end: 0, solution: [0]},
+        ],
     },
     {
         graph: {
             vertexCount: 2,
             directed: false,
-            edges: []
+            edges: [],
         },
         problems: [
-            {start: 0, end: 1, solution: null}
-        ]
+            {start: 0, end: 1, solution: undefined},
+        ],
     },
     {
         graph: {
             vertexCount: 2,
             directed: false,
             edges: [
-                {x: 0, y: 1, weight: 7}
-            ]
+                {x: 0, y: 1, weight: 7},
+            ],
         },
         problems: [
-            {start: 0, end: 1, solution: [0, 1]}
-        ]
+            {start: 0, end: 1, solution: [0, 1]},
+        ],
     },
     {
         graph: {
             vertexCount: 2,
             directed: true,
             edges: [
-                {x: 0, y: 1, weight: 7}
-            ]
+                {x: 0, y: 1, weight: 7},
+            ],
         },
         problems: [
             {start: 0, end: 1, solution: [0, 1]},
-            {start: 1, end: 0, solution: null}
-        ]
+            {start: 1, end: 0, solution: undefined},
+        ],
     },
     {
         graph: {
@@ -63,22 +60,21 @@ var tests = [
                 {x: 2, y: 3, weight: 11},
                 {x: 2, y: 5, weight: 2},
                 {x: 3, y: 4, weight: 6},
-                {x: 4, y: 5, weight: 9}
-            ]
+                {x: 4, y: 5, weight: 9},
+            ],
         },
         problems: [
-            // See an animated illustration of this example at:
-            // http://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
-            {start: 0, end: 4, solution: [0, 2, 5, 4]}
-        ]
-    }
+            // See an animated illustration of this example at: http://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
+            {start: 0, end: 4, solution: [0, 2, 5, 4]},
+        ],
+    },
 ];
 
 function runTest(test) {
-    test.problems.forEach(function(problem) {
-        var solution = dijkstra(test.graph, problem.start, problem.end);
+    for (const problem of test.problems) {
+        const solution = dijkstra(test.graph, problem.start, problem.end);
         assert.deepStrictEqual(solution, problem.solution);
-    });
+    }
 }
 
 tests.forEach(runTest);

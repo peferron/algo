@@ -1,38 +1,36 @@
-'use strict';
-
-exports.fastHeapify = function(a) {
-    var end = a.length - 1;
-    for (var i = parent(end); i >= 0; i--) {
+export function fastHeapify(a) {
+    const end = a.length - 1;
+    for (let i = parent(end); i >= 0; i -= 1) {
         bubbleDown(a, i, end);
     }
     return new Heap(a, end);
-};
+}
 
-exports.slowHeapify = function(a) {
-    var end = a.length - 1;
-    for (var i = 1; i <= end; i++) {
+export function slowHeapify(a) {
+    const end = a.length - 1;
+    for (let i = 1; i <= end; i += 1) {
         bubbleUp(a, i, end);
     }
     return new Heap(a, end);
-};
-
-function Heap(a, end) {
-    this.a = a;
-    this.end = end;
 }
 
-Heap.prototype.deleteMax = function() {
-    var maxValue = this.a[0];
+class Heap {
+    constructor(a, end) {
+        this.a = a;
+        this.end = end;
+    }
 
-    this.a[0] = this.a[this.end];
-    this.end--;
-    bubbleDown(this.a, 0, this.end);
-
-    return maxValue;
-};
+    deleteMax() {
+        const maxValue = this.a[0];
+        this.a[0] = this.a[this.end];
+        this.end -= 1;
+        bubbleDown(this.a, 0, this.end);
+        return maxValue;
+    }
+}
 
 function bubbleUp(a, i) {
-    var p = parent(i);
+    const p = parent(i);
     if (p >= 0 && a[p] < a[i]) {
         swap(a, p, i);
         bubbleUp(a, p);
@@ -40,14 +38,14 @@ function bubbleUp(a, i) {
 }
 
 function bubbleDown(a, i, end) {
-    var max = i;
+    let max = i;
 
-    var l = leftChild(i);
+    const l = leftChild(i);
     if (l <= end && a[l] > a[max]) {
         max = l;
     }
 
-    var r = rightChild(i);
+    const r = rightChild(i);
     if (r <= end && a[r] > a[max]) {
         max = r;
     }
@@ -59,7 +57,7 @@ function bubbleDown(a, i, end) {
 }
 
 function swap(a, i, j) {
-    var t = a[i];
+    const t = a[i];
     a[i] = a[j];
     a[j] = t;
 }
@@ -75,4 +73,3 @@ function leftChild(i) {
 function rightChild(i) {
     return 2 * i + 2;
 }
-

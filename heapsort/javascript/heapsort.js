@@ -1,15 +1,11 @@
-'use strict';
-
-module.exports = sort;
-
-function sort(a, maxHeapify) {
+export default function sort(a, maxHeapify) {
     if (!a) {
         return;
     }
 
-    var h = maxHeapify(a);
+    const h = maxHeapify(a);
 
-    for (var i = a.length - 1; i >= 0; i--) {
+    for (let i = a.length - 1; i >= 0; i -= 1) {
         a[i] = h.deleteMax();
     }
 }

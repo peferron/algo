@@ -4,13 +4,40 @@
         "node": true,
         "es6": true
     },
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module"
+    },
     "globals": {
         "Set": false
     },
-    extends: "eslint:recommended",
+    "extends": "eslint:recommended",
     "rules": {
-        "no-console": 0,
-        "no-constant-condition": 0,
-        "semi": [2, "always"]
+        "strict": "error",
+        "no-constant-condition": "off",
+        "semi": [2, "always"],
+        "no-useless-computed-key": "error",
+        "no-useless-constructor": "error",
+        "no-useless-rename": "error",
+        "no-var": "error",
+        "object-shorthand": "error",
+        "prefer-arrow-callback": "error",
+        "prefer-const": "error",
+        "prefer-numeric-literals": "error",
+        "prefer-rest-params": "error",
+        "prefer-spread": "error",
+        "prefer-template": "error",
+        "comma-dangle": ["error", "always-multiline"],
+        "quotes": ["error", "single"],
+        "arrow-parens": ["error", "as-needed"],
+        "max-len": ["error", {"code": 120}],
+        "no-plusplus": "error",
+        "no-multiple-empty-lines": ["error", {"max": 1, "maxEOF": 0}],
+        "lines-between-class-members": ["error", "always"],
+        "object-curly-spacing": "error",
+        "brace-style": "error",
+        "no-trailing-spaces": "error",
+        "array-bracket-spacing": "error",
+        "comma-spacing": "error"
     }
 }

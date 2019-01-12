@@ -1,22 +1,19 @@
-'use strict';
+import assert from 'assert';
+import grayCode from './gray_code';
 
-var assert = require('assert');
-
-var grayCode = require('./gray_code.js');
-
-var tests = [
+const tests = [
     {
         n: 0,
         code: [
-            []
-        ]
+            [],
+        ],
     },
     {
         n: 1,
         code: [
             [],
-            [1]
-        ]
+            [1],
+        ],
     },
     {
         n: 2,
@@ -24,8 +21,8 @@ var tests = [
             [],
             [1],
             [1, 2],
-            [2]
-        ]
+            [2],
+        ],
     },
     {
         n: 3,
@@ -37,9 +34,9 @@ var tests = [
             [2, 3],
             [1, 2, 3],
             [1, 3],
-            [3]
-        ]
-    }
+            [3],
+        ],
+    },
 ];
 
 function runTest(test) {

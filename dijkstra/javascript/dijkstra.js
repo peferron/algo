@@ -1,68 +1,55 @@
-/* jshint loopfunc: true */
+import AdjacencyList from './adjacency_list';
 
-'use strict';
+export default function dijkstra(graph, start, end) {
+    const list = new AdjacencyList(graph);
+    const n = list.a.length;
+    const visited = new Array(n).fill(false);
+    const distances = new Array(n).fill(Infinity);
+    const parents = new Array(n).fill(-1);
 
-var AdjacencyList = require('./adjacency_list.js');
-
-module.exports = function(graph, start, end) {
-    var list = new AdjacencyList(graph);
-    return dijkstra(list, start, end);
-};
-
-function dijkstra(list, start, end) {
-    var n = list.a.length;
-
-    var visited = new Array(n);
-    var distances = new Array(n);
-    var parents = new Array(n);
-    for (var i = 0; i < n; i++) {
-        visited[i] = false;
-        distances[i] = Infinity;
-        parents[i] = -1;
-    }
     distances[start] = 0;
+    let x = start;
 
-    var x = start;
     while (x >= 0) {
         if (x === end) {
             return path(end, parents);
         }
 
-        var dx = distances[x];
-        list.a[x].forEach(function(edge) {
-            var dy = dx + edge.weight;
-            if (dy < distances[edge.y]) {
-                distances[edge.y] = dy;
-                parents[edge.y] = x;
+        const dx = distances[x];
+
+        for (const {y, weight} of list.a[x]) {
+            const dy = dx + weight;
+            if (dy < distances[y]) {
+                distances[y] = dy;
+                parents[y] = x;
             }
-        });
+        }
 
         visited[x] = true;
         x = best(distances, visited);
     }
 
-    return null;
+    return undefined;
 }
 
-// path returns an array containing all the ancestors of x, sorted from x's oldest ancestor to x
-// itself.
+// path returns an array containing all the ancestors of x, sorted from x's oldest ancestor to x itself.
 function path(x, parents) {
-    if (x < 0) {
-        return [];
-    }
-    return path(parents[x], parents).concat([x]);
+    // The recursive implementation is the simplest, but a loop of pushes followed by a reverse would be faster.
+    return x < 0 ? [] : [...path(parents[x], parents), x];
 }
 
 // best returns the best vertex to visit, or -1 if none.
 function best(distances, visited) {
     // The best vertex to visit is the unvisited vertex with the lowest initialized distance.
-    var bestIndex = -1;
-    var minDistance = Infinity;
-    distances.forEach(function(distance, i) {
-        if (!visited[i] && distance < minDistance) {
-            bestIndex = i;
+    let bestIndex = -1;
+    let minDistance = Infinity;
+
+    for (const [x, distance] of distances.entries()) {
+        if (!visited[x] && distance < minDistance) {
+            bestIndex = x;
             minDistance = distance;
         }
-    });
+    }
+
     return bestIndex;
 }

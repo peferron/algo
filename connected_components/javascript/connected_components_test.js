@@ -1,41 +1,40 @@
-const assert = require('assert');
-
-import {connectedComponents} from './connected_components.js';
+import assert from 'assert';
+import connectedComponents from './connected_components';
 
 const tests = [
     {
         graph: {
             vertexCount: 0,
             directed: false,
-            edges: []
+            edges: [],
         },
-        components: []
+        components: [],
     },
     {
         graph: {
             vertexCount: 1,
             directed: false,
-            edges: []
+            edges: [],
         },
-        components: [0]
+        components: [0],
     },
     {
         graph: {
             vertexCount: 2,
             directed: false,
-            edges: []
+            edges: [],
         },
-        components: [0, 1]
+        components: [0, 1],
     },
     {
         graph: {
             vertexCount: 2,
             directed: false,
             edges: [
-                [0, 1]
-            ]
+                [0, 1],
+            ],
         },
-        components: [0, 0]
+        components: [0, 0],
     },
     {
         graph: {
@@ -45,11 +44,11 @@ const tests = [
                 [0, 2],
                 [2, 3],
                 [2, 5],
-                [1, 4]
-            ]
+                [1, 4],
+            ],
         },
-        components: [0, 1, 0, 0, 1, 0, 2]
-    }
+        components: [0, 1, 0, 0, 1, 0, 2],
+    },
 ];
 
 function runTest(test) {

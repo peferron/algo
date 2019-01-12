@@ -1,46 +1,45 @@
-import {longestCommonSubsequence} from './longest_common_subsequence.js';
-import {shortestCommonSupersequence} from './shortest_common_supersequence.js';
-
-const assert = require('assert');
+import assert from 'assert';
+import longestCommonSubsequence from './longest_common_subsequence';
+import shortestCommonSupersequence from './shortest_common_supersequence';
 
 const tests = [
     {
         a: 'abc',
         b: '',
         longestCommonSubsequence: '',
-        shortestCommonSupersequence: 'abc'
+        shortestCommonSupersequence: 'abc',
     },
     {
         a: 'a',
         b: 'a',
         longestCommonSubsequence: 'a',
-        shortestCommonSupersequence: 'a'
+        shortestCommonSupersequence: 'a',
     },
     {
         a: 'abcd',
         b: 'bxd',
         longestCommonSubsequence: 'bd',
-        shortestCommonSupersequence: 'abcxd'
+        shortestCommonSupersequence: 'abcxd',
     },
     {
         a: 'ab1cd',
         b: 'b23cd',
         longestCommonSubsequence: 'bcd',
-        shortestCommonSupersequence: 'ab123cd'
+        shortestCommonSupersequence: 'ab123cd',
     },
     {
         a: 'azemlrkdflmgkjsdfml',
         b: 'qlmzeirjqlmfilmfkjqfmlsife',
         longestCommonSubsequence: 'zerflmkjfml',
-        shortestCommonSupersequence: 'aqlmzemlirkdjqlmfilmgfkjsdqfmlsife'
+        shortestCommonSupersequence: 'aqlmzemlirkdjqlmfilmgfkjsdqfmlsife',
     },
     {
         // Wikipedia
         a: 'XMJYAUZ',
         b: 'MZJAWXU',
         longestCommonSubsequence: 'MJAU',
-        shortestCommonSupersequence: 'XMZJYAWXUZ'
-    }
+        shortestCommonSupersequence: 'XMZJYAWXUZ',
+    },
 ];
 
 function runTest(test, i) {

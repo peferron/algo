@@ -1,13 +1,12 @@
+import assert from 'assert';
+import {inspect} from 'util';
 import {closestPairBruteForce, closestPairDivideAndConquer, distance} from './closest_pair';
-
-const assert = require('assert');
-const inspect = require('util').inspect;
 
 const fns = [closestPairBruteForce, closestPairDivideAndConquer];
 
 function comparePoints(p1, p2) {
-    for (let dimension = 0; dimension < p1.length; dimension++) {
-        let delta = p1[dimension] - p2[dimension];
+    for (let dimension = 0; dimension < p1.length; dimension += 1) {
+        const delta = p1[dimension] - p2[dimension];
         if (delta !== 0) {
             return delta;
         }
@@ -24,34 +23,34 @@ const staticTests = [
             [2],
             [6],
             [5],
-            [-2]
+            [-2],
         ],
         closestPair: [
             [5],
-            [6]
-        ]
+            [6],
+        ],
     },
     {
         points: [
             [0, 0],
-            [0, 1]
+            [0, 1],
         ],
         closestPair: [
             [0, 0],
-            [0, 1]
-        ]
+            [0, 1],
+        ],
     },
     {
         points: [
             [0, 0],
             [4, 3],
             [1, 5],
-            [2, 3]
+            [2, 3],
         ],
         closestPair: [
             [4, 3],
-            [2, 3]
-        ]
+            [2, 3],
+        ],
     },
     {
         points: [
@@ -59,24 +58,24 @@ const staticTests = [
             [3, 2, 1],
             [2, 3, 4],
             [2, -1, -1],
-            [-3, 0, 0]
+            [-3, 0, 0],
         ],
         closestPair: [
             [0, 0, 1],
-            [2, -1, -1]
-        ]
+            [2, -1, -1],
+        ],
     },
     {
         points: [
             [-216, -202, -268],
             [83, -46, 336],
             [216, 442, -252],
-            [237, -280, -9]
+            [237, -280, -9],
         ],
         closestPair: [
             [83, -46, 336],
-            [237, -280, -9]
-        ]
+            [237, -280, -9],
+        ],
     },
     {
         points: [
@@ -84,12 +83,12 @@ const staticTests = [
             [-280, 77, -398],
             [83, -46, 336],
             [216, 442, -252],
-            [237, -280, -9]
+            [237, -280, -9],
         ],
         closestPair: [
             [-280, 77, -398],
-            [-216, -202, -268]
-        ]
+            [-216, -202, -268],
+        ],
     },
     {
         points: [
@@ -97,12 +96,12 @@ const staticTests = [
             [189, 428, 300],
             [301, -427, -161],
             [462, 115, -20],
-            [484, -253, 281]
+            [484, -253, 281],
         ],
         closestPair: [
             [167, 439, 223],
-            [189, 428, 300]
-        ]
+            [189, 428, 300],
+        ],
     },
     {
         points: [
@@ -125,25 +124,29 @@ const staticTests = [
             [496, -22],
             [69, -334],
             [90, 178],
-            [90, 298]
+            [90, 298],
         ],
         closestPair: [
             [-260, 270],
-            [-246, 257]
-        ]
-    }
+            [-246, 257],
+        ],
+    },
 ];
 
 function runStaticTest(fn, test) {
     const actual = fn(test.points).sort(comparePoints);
     const expected = test.closestPair.sort(comparePoints);
-    assert.deepEqual(actual, expected,
+    assert.deepStrictEqual(actual, expected,
         `For static test points ${inspect(test.points)} using ${inspect(fn)}, ` +
         `expected closest pair to be ${inspect(expected)}, but was ${inspect(actual)}`);
 }
 
 function runStaticTests() {
-    fns.forEach(fn => staticTests.forEach(test => runStaticTest(fn, test)));
+    for (const fn of fns) {
+        for (const test of staticTests) {
+            runStaticTest(fn, test);
+        }
+    }
 }
 
 // Random tests.
@@ -162,8 +165,8 @@ function runRandomTest() {
     const pairs = fns.map(fn => fn(points));
     const distances = pairs.map(pair => distance(...pair));
 
-    for (let i = 0; i < fns.length - 1; i++) {
-        for (let j = i + 1; j < fns.length; j++) {
+    for (let i = 0; i < fns.length - 1; i += 1) {
+        for (let j = i + 1; j < fns.length; j += 1) {
             const di = distances[i];
             const dj = distances[j];
             assert.strictEqual(di, dj, `For random test points ${inspect(points)}, ` +
@@ -174,7 +177,7 @@ function runRandomTest() {
 }
 
 function runRandomTests() {
-    for (var i = 0; i < 50; i++) {
+    for (let i = 0; i < 50; i += 1) {
         runRandomTest();
     }
 }
@@ -183,4 +186,3 @@ function runRandomTests() {
 
 runStaticTests();
 runRandomTests();
-

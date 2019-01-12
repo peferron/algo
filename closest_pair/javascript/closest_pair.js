@@ -12,8 +12,8 @@ export function distance(p1, p2) {
 function allPairs(points) {
     const pairs = [];
 
-    for (let i = 0; i < points.length - 1; i++) {
-        for (let j = i + 1; j < points.length; j++) {
+    for (let i = 0; i < points.length - 1; i += 1) {
+        for (let j = i + 1; j < points.length; j += 1) {
             pairs.push([points[i], points[j]]);
         }
     }
@@ -33,14 +33,14 @@ export function closestPairBruteForce(points) {
     return closest(allPairs(points));
 }
 
-// findPairs1D returns the pairs of points that are potentially less than maxDistance apart, based
-// on their distance along dimension.
+// findPairs1D returns the pairs of points that are potentially less than maxDistance apart, based on their distance
+// along dimension.
 function findPairs1D(points, maxDistance, dimension) {
     const sortedPoints = points.sort((p1, p2) => p1[dimension] - p2[dimension]);
     const pairs = [];
 
-    for (let i = 0; i < sortedPoints.length - 1; i++) {
-        for (let j = i + 1; j < sortedPoints.length; j++) {
+    for (let i = 0; i < sortedPoints.length - 1; i += 1) {
+        for (let j = i + 1; j < sortedPoints.length; j += 1) {
             const pi = points[i];
             const pj = points[j];
             const d = Math.abs(pi[dimension] - pj[dimension]);
@@ -56,8 +56,8 @@ function findPairs1D(points, maxDistance, dimension) {
     return pairs;
 }
 
-// findPairs returns the pairs of points that are potentially less than maxDistance apart, based on
-// their distance along dimension, dimension + 1, ..., last dimension.
+// findPairs returns the pairs of points that are potentially less than maxDistance apart, based on their distance along
+// dimension, dimension + 1, ..., last dimension.
 function findPairs(points, maxDistance, dimension) {
     if (points.length < 4) {
         return allPairs(points);
@@ -84,20 +84,19 @@ function findPairs(points, maxDistance, dimension) {
         Math.abs(p[dimension] - midPoint[dimension]) < maxDistance
     );
 
-    // Project the slab points on the median hyperplane and solve the problem recursively in the
-    // slab.
+    // Project the slab points on the median hyperplane and solve the problem recursively in the slab.
     const slabPairs = findPairs(slabPoints, maxDistance, dimension + 1);
 
     return [...leftPairs, ...rightPairs, ...slabPairs];
 }
 
-// closestPair1D returns the closest pair of points, in the special case where the points are
-// one-dimensional. The points must be pre-sorted.
+// closestPair1D returns the closest pair of points, in the special case where the points are one-dimensional. The
+// points must be pre-sorted.
 function closestPair1D(sortedPoints) {
     let closestPair;
     let closestDistance = Infinity;
 
-    for (let i = 0; i < sortedPoints.length - 1; i++) {
+    for (let i = 0; i < sortedPoints.length - 1; i += 1) {
         const p1 = sortedPoints[i];
         const p2 = sortedPoints[i + 1];
         const d = distance(p1, p2);
@@ -111,8 +110,7 @@ function closestPair1D(sortedPoints) {
     return closestPair;
 }
 
-// closestPairDivideAndConquer returns the closest pair of points, using a divide-and-conquer
-// algorithm.
+// closestPairDivideAndConquer returns the closest pair of points, using a divide-and-conquer algorithm.
 export function closestPairDivideAndConquer(points) {
     const sortedPoints = points.sort((p1, p2) => p1[0] - p2[0]);
 
@@ -124,8 +122,8 @@ export function closestPairDivideAndConquer(points) {
     return closestPairDivideAndConquerRecursive(sortedPoints);
 }
 
-// closestPairDivideAndConquerRecursive returns the closest pair of points. The points must be
-// at least two-dimensional, and pre-sorted along their first dimension.
+// closestPairDivideAndConquerRecursive returns the closest pair of points. The points must be at least two-dimensional,
+// and pre-sorted along their first dimension.
 function closestPairDivideAndConquerRecursive(sortedPoints) {
     if (sortedPoints.length < 4) {
         return closestPairBruteForce(sortedPoints);

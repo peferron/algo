@@ -12,7 +12,7 @@ func Sort(a []int) {
 
 func smallest(a []int, start int) int {
 	s := start
-	for i := start; i < len(a); i++ {
+	for i := start + 1; i < len(a); i++ {
 		if a[i] < a[s] {
 			s = i
 		}

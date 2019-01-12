@@ -1,8 +1,7 @@
-import {longestCommonSubsequence} from './longest_common_subsequence.js';
+import longestCommonSubsequence from './longest_common_subsequence';
 
-export function shortestCommonSupersequence(a, b) {
+export default function shortestCommonSupersequence(a, b) {
     const lcs = longestCommonSubsequence(a, b);
-
     let i = 0; // position in a
     let j = 0; // position in b
     let k = 0; // position in lcs

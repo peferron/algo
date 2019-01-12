@@ -1,16 +1,13 @@
-'use strict';
-
-var assert = require('assert');
-
-var Tree = require('./red-black_tree.js');
+import assert from 'assert';
+import Tree, {RED, BLACK} from './red-black_tree';
 
 function testBasicSequence() {
-    var t = new Tree();
+    const t = new Tree();
 
-    assert(!t.has(2));
+    assert.ok(!t.has(2));
 
     t.set(2, 'two');
-    assert(t.has(2));
+    assert.ok(t.has(2));
     assert.strictEqual(t.get(2), 'two');
 
     // Check that deleting a non-existing key doesn't crash.
@@ -18,18 +15,18 @@ function testBasicSequence() {
     t.del(10);
 
     t.set(2, 'two again');
-    assert(t.has(2));
+    assert.ok(t.has(2));
     assert.strictEqual(t.get(2), 'two again');
 
     t.set(5, 'five');
-    assert(t.has(2));
+    assert.ok(t.has(2));
     assert.strictEqual(t.get(2), 'two again');
-    assert(t.has(5));
+    assert.ok(t.has(5));
     assert.strictEqual(t.get(5), 'five');
 
     t.del(2);
-    assert(!t.has(2));
-    assert(t.has(5));
+    assert.ok(!t.has(2));
+    assert.ok(t.has(5));
     assert.strictEqual(t.get(5), 'five');
 
     t.set(7, 'seven');
@@ -40,23 +37,23 @@ function testBasicSequence() {
         {key: 2, value: 'two again again'},
         {key: 5, value: 'five'},
         {key: 7, value: 'seven'},
-        {key: 9, value: 'nine'}
+        {key: 9, value: 'nine'},
     ]);
 }
 
 function testRandomSequences() {
-    for (var i = 0; i < 100; i++) {
+    for (let i = 0; i < 100; i += 1) {
         testRandomSequence();
     }
 }
 
 function testRandomSequence() {
-    var t = new Tree();
-    var m = {};
-    var a = [];
+    const t = new Tree();
+    const m = new Map();
+    const a = [];
+    const count = Math.floor(Math.random() * 1000);
 
-    var count = Math.floor(Math.random() * 1000);
-    for (var i = 0; i < count; i++) {
+    for (let i = 0; i < count; i += 1) {
         randomOperation(t, m, a);
     }
 
@@ -64,29 +61,28 @@ function testRandomSequence() {
 }
 
 function validate(t, m, a) {
-    assert(isRedBlackTree(t));
+    assert.ok(isRedBlackTree(t));
 
-    a.forEach(function(k) {
-        assert(t.has(k));
-        assert.strictEqual(m[k], t.get(k));
-    });
+    for (const k of a) {
+        assert.ok(t.has(k));
+        assert.strictEqual(m.get(k), t.get(k));
+    }
 
-    var all = t.all();
+    const all = t.all();
     assert.strictEqual(a.length, all.length);
-    a.sort(compareNumbers).forEach(function(k, i) {
-        assert.deepStrictEqual(all[i], {key: k, value: m[k]});
-    });
+    a.sort((x, y) => x - y);
+
+    for (const [i, k] of a.entries()) {
+        assert.deepStrictEqual(all[i], {key: k, value: m.get(k)});
+    }
 }
 
 function isRedBlackTree(t) {
-    if (t && t.color === 'red') {
-        return false;
-    }
-    return blackHeight(t.root) >= 0;
+    return !t.root || t.root.color === BLACK && blackHeight(t.root) >= 0;
 }
 
 function red(n) {
-    return n && n.color === 'red';
+    return n && n.color === RED;
 }
 
 function blackHeight(n) {
@@ -96,8 +92,8 @@ function blackHeight(n) {
     if (red(n) && (red(n.left) || red(n.right))) {
         return -1;
     }
-    var l = blackHeight(n.left);
-    var r = blackHeight(n.right);
+    const l = blackHeight(n.left);
+    const r = blackHeight(n.right);
     if (l < 0 || r < 0 || l !== r) {
         return -1;
     }
@@ -108,7 +104,7 @@ function blackHeight(n) {
 }
 
 function randomOperation(t, m, a) {
-    var r = Math.random();
+    const r = Math.random();
     if (r < 0.2) {
         delRandom(t, m, a);
     } else {
@@ -117,23 +113,23 @@ function randomOperation(t, m, a) {
 }
 
 function setRandom(t, m, a) {
-    var k = randomKey();
-    var v = randomValue();
+    const k = randomKey();
+    const v = randomValue();
     t.set(k, v);
-    if (!m.hasOwnProperty(k)) {
+    if (!m.has(k)) {
         a.push(k);
     }
-    m[k] = v;
+    m.set(k, v);
 }
 
 function delRandom(t, m, a) {
     if (!a.length) {
         return;
     }
-    var i = Math.floor(Math.random() * a.length);
-    var k = a[i];
+    const i = Math.floor(Math.random() * a.length);
+    const k = a[i];
     t.del(k);
-    delete m[k];
+    m.delete(k);
     a.splice(i, 1);
 }
 
@@ -142,11 +138,7 @@ function randomKey() {
 }
 
 function randomValue() {
-    return (Math.PI * Math.random()).toString(36).substr(2, 6);
-}
-
-function compareNumbers(a, b) {
-    return a - b;
+    return Math.floor(Math.random() * 1e9);
 }
 
 testBasicSequence();

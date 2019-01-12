@@ -1,19 +1,16 @@
-'use strict';
-
-var assert = require('assert');
-
-var Trie = require('./trie.js');
+import assert from 'assert';
+import Trie from './trie';
 
 function testBasicSequence() {
-    var t = new Trie();
+    const t = new Trie();
 
-    assert(!t.has('abc'));
+    assert.ok(!t.has('abc'));
     assert.deepStrictEqual(t.all(), []);
 
     t.set('abc', 5);
-    assert(!t.has('ab'));
-    assert(!t.has('abcd'));
-    assert(t.has('abc'));
+    assert.ok(!t.has('ab'));
+    assert.ok(!t.has('abcd'));
+    assert.ok(t.has('abc'));
     assert.strictEqual(t.get('abc'), 5);
 
     // Check that deleting a non-existing key doesn't crast.
@@ -21,50 +18,50 @@ function testBasicSequence() {
     t.del('zzz');
 
     t.set('abc', 7);
-    assert(t.has('abc'));
+    assert.ok(t.has('abc'));
     assert.strictEqual(t.get('abc'), 7);
     assert.deepStrictEqual(t.all(), [{key: 'abc', value: 7}]);
 
     t.set('def', 9);
-    assert(t.has('abc'));
+    assert.ok(t.has('abc'));
     assert.strictEqual(t.get('abc'), 7);
-    assert(t.has('def'));
+    assert.ok(t.has('def'));
     assert.strictEqual(t.get('def'), 9);
 
     t.set('abcd', 11);
-    assert(t.has('abc'));
+    assert.ok(t.has('abc'));
     assert.strictEqual(t.get('abc'), 7);
-    assert(t.has('def'));
+    assert.ok(t.has('def'));
     assert.strictEqual(t.get('def'), 9);
-    assert(t.has('abcd'));
+    assert.ok(t.has('abcd'));
     assert.strictEqual(t.get('abcd'), 11);
     assert.deepStrictEqual(t.all(), [
         {key: 'abc', value: 7},
         {key: 'abcd', value: 11},
-        {key: 'def', value: 9}
+        {key: 'def', value: 9},
     ]);
 
     t.del('abc');
-    assert(!t.has('abc'));
-    assert(t.has('def'));
+    assert.ok(!t.has('abc'));
+    assert.ok(t.has('def'));
     assert.strictEqual(t.get('def'), 9);
-    assert(t.has('abcd'));
+    assert.ok(t.has('abcd'));
     assert.strictEqual(t.get('abcd'), 11);
 }
 
 function testRandomSequences() {
-    for (var i = 0; i < 100; i++) {
+    for (let i = 0; i < 100; i += 1) {
         testRandomSequence();
     }
 }
 
 function testRandomSequence() {
-    var t = new Trie();
-    var m = {};
-    var a = [];
+    const t = new Trie();
+    const m = new Map();
+    const a = [];
 
-    var count = Math.floor(Math.random() * 1000);
-    for (var i = 0; i < count; i++) {
+    const count = Math.floor(Math.random() * 1000);
+    for (let i = 0; i < count; i += 1) {
         randomOperation(t, m, a);
     }
 
@@ -72,20 +69,22 @@ function testRandomSequence() {
 }
 
 function validate(t, m, a) {
-    a.forEach(function(k) {
-        assert(t.has(k));
-        assert.strictEqual(m[k], t.get(k));
-    });
+    for (const k of a) {
+        assert.ok(t.has(k));
+        assert.strictEqual(m.get(k), t.get(k));
+    }
 
-    var all = t.all();
+    const all = t.all();
     assert.strictEqual(a.length, all.length);
-    a.sort().forEach(function(k, i) {
-        assert.deepStrictEqual(all[i], {key: k, value: m[k]});
-    });
+    a.sort();
+
+    for (const [i, k] of a.entries()) {
+        assert.deepStrictEqual(all[i], {key: k, value: m.get(k)});
+    }
 }
 
 function randomOperation(t, m, a) {
-    var r = Math.random();
+    const r = Math.random();
     if (r < 0.2) {
         delRandom(t, m, a);
     } else {
@@ -94,29 +93,30 @@ function randomOperation(t, m, a) {
 }
 
 function setRandom(t, m, a) {
-    var k = randomKey();
-    var v = randomValue();
+    const k = randomKey();
+    const v = randomValue();
     t.set(k, v);
-    if (!m.hasOwnProperty(k)) {
+    if (!m.has(k)) {
         a.push(k);
     }
-    m[k] = v;
+    m.set(k, v);
 }
 
 function delRandom(t, m, a) {
     if (!a.length) {
         return;
     }
-    var i = Math.floor(Math.random() * a.length);
-    var k = a[i];
+    const i = Math.floor(Math.random() * a.length);
+    const k = a[i];
     t.del(k);
-    delete m[k];
+    m.delete(k);
     a.splice(i, 1);
 }
 
 function randomKey() {
-    var l = Math.floor(1 + Math.random() * 10);
-    return (Math.PI * Math.random()).toString(36).substr(2, l);
+    // This random string generator is not uniform at all, but it doesn't matter for this test.
+    const maxLength = Math.floor(1 + Math.random() * 10);
+    return (Math.PI + Math.random()).toString(36).substr(2, maxLength);
 }
 
 function randomValue() {

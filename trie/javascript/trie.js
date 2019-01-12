@@ -1,71 +1,62 @@
-'use strict';
+// alphabetSize, charToIndex and indexToChar are hardcoded here to keep the code short, however they could easily be be
+// passed as arguments to the Trie constructor.
+const alphabetSize = 36; // 0-9 and a-z
+const charToIndex = char => parseInt(char, alphabetSize);
+const indexToChar = index => index.toString(alphabetSize);
 
-module.exports = Trie;
-
-// alphabetSize, charToIndex and indexToChar are hardcoded here to keep the code short, however they
-// could easily be be passed as arguments to the Trie constructor.
-var alphabetSize = 36; // 0-9 and a-z
-function charToIndex(char) { return parseInt(char, alphabetSize); }
-function indexToChar(index) { return index.toString(alphabetSize); }
-
-function Trie() {
-    this.root = new Node();
-}
-
-Trie.prototype.has = function(key) {
-    var n = find(this.root, key);
-    return n && n.hasValue();
-};
-
-Trie.prototype.get = function(key) {
-    var n = find(this.root, key);
-    if (n && n.hasValue()) {
-        return n.value;
+export default class Trie {
+    constructor() {
+        this.root = new Node();
     }
-};
 
-Trie.prototype.set = function(key, value) {
-    set(this.root, key, value);
-};
+    has(key) {
+        const n = find(this.root, key);
+        return n && n.hasValue();
+    }
 
-Trie.prototype.del = function(key) {
-    del(this.root, key);
-};
+    get(key) {
+        const n = find(this.root, key);
+        return n && n.hasValue() ? n.value : undefined;
+    }
 
-Trie.prototype.all = function() {
-    var a = [];
-    preOrder(this.root, '', function(key, value) {
-        a.push({key: key, value: value});
-    });
-    return a;
-};
+    set(key, value) {
+        set(this.root, key, value);
+    }
 
-// Trie.prototype.log = function() {
-//     log(this.root, 0);
-// };
+    del(key) {
+        del(this.root, key);
+    }
 
-function Node() {
-    this.children = new Array(alphabetSize);
+    all() {
+        const a = [];
+        preOrder(this.root, '', (key, value) => {
+            a.push({key, value});
+        });
+        return a;
+    }
 }
 
-Node.prototype.hasValue = function() {
-    return this.hasOwnProperty('value');
-};
+class Node {
+    constructor() {
+        this.children = new Array(alphabetSize);
+    }
 
-Node.prototype.delValue = function() {
-    delete this.value;
-};
+    hasValue() {
+        return this.hasOwnProperty('value');
+    }
+
+    delValue() {
+        delete this.value;
+    }
+}
 
 function find(n, key) {
     if (!key) {
         return n;
     }
-    var i = charToIndex(key[0]);
-    var child = n.children[i];
-    if (!child) {
-        return null;
-    }
-    return find(child, key.substring(1));
+    const i = charToIndex(key[0]);
+    const child = n.children[i];
+    return child && find(child, key.substring(1));
 }
 
 function set(n, key, value) {
@@ -73,8 +64,8 @@ function set(n, key, value) {
         n.value = value;
         return;
     }
-    var i = charToIndex(key[0]);
-    var child = n.children[i];
+    const i = charToIndex(key[0]);
+    let child = n.children[i];
     if (!child) {
         child = new Node();
         n.children[i] = child;
@@ -83,8 +74,8 @@ function set(n, key, value) {
 }
 
 function del(n, key) {
-    var i = charToIndex(key[0]);
-    var child = n.children[i];
+    const i = charToIndex(key[0]);
+    const child = n.children[i];
     if (!child) {
         return;
     }
@@ -93,10 +84,10 @@ function del(n, key) {
         return;
     }
     // Delete this child.
-    if (isEmpty(child.children)) {
-        n.children[i] = null;
-    } else {
+    if (child.children.some(x => x !== undefined)) {
         child.delValue();
+    } else {
+        n.children[i] = undefined;
     }
 }
 
@@ -104,17 +95,11 @@ function preOrder(n, key, callback) {
     if (n.hasValue()) {
         callback(key, n.value);
     }
-    n.children.forEach(function(child, i) {
+    for (const [i, child] of n.children.entries()) {
         if (child) {
             preOrder(child, key + indexToChar(i), callback);
         }
-    });
-}
-
-function isEmpty(a) {
-    return a.every(function(x) {
-        return !x;
-    });
+    }
 }
 
 // function log(n, indent) {

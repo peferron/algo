@@ -1,20 +1,16 @@
-'use strict';
-
-module.exports = sort;
-
-function sort(a) {
+export default function sort(a) {
     if (!a) {
         return;
     }
-    for (var i = 0; i < a.length - 1; i++) {
-        var j = smallest(a, i);
+    for (let i = 0; i < a.length - 1; i += 1) {
+        const j = smallest(a, i);
         swap(a, i, j);
     }
 }
 
 function smallest(a, start) {
-    var s = start;
-    for (var i = start; i < a.length; i++) {
+    let s = start;
+    for (let i = start + 1; i < a.length; i += 1) {
         if (a[i] < a[s]) {
             s = i;
         }
@@ -23,7 +19,7 @@ function smallest(a, start) {
 }
 
 function swap(a, i, j) {
-    var t = a[i];
+    const t = a[i];
     a[i] = a[j];
     a[j] = t;
 }

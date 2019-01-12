@@ -1,55 +1,51 @@
-'use strict';
+export const RED = 'red';
+export const BLACK = 'black';
 
-module.exports = Tree;
-
-var RED = 'red';
-var BLACK = 'black';
-
-function Tree() {
-    this.root = null;
-}
-
-Tree.prototype.has = function(key) {
-    return find(this.root, key) !== null;
-};
-
-Tree.prototype.get = function(key) {
-    var n = find(this.root, key);
-    if (n) {
-        return n.value;
+export default class Tree {
+    constructor() {
+        this.root = undefined;
     }
-};
 
-Tree.prototype.set = function(key, value) {
-    this.root = insert(this.root, key, value);
-    this.root.color = BLACK;
-};
+    has(key) {
+        return find(this.root, key) !== undefined;
+    }
 
-Tree.prototype.del = function(key) {
-    this.root = del(this.root, key);
-    if (this.root) {
+    get(key) {
+        const n = find(this.root, key);
+        if (n) {
+            return n.value;
+        }
+    }
+
+    set(key, value) {
+        this.root = insert(this.root, key, value);
         this.root.color = BLACK;
     }
-};
 
-Tree.prototype.all = function() {
-    var a = [];
-    inOrder(this.root, function(n) {
-        a.push({key: n.key, value: n.value});
-    });
-    return a;
-};
+    del(key) {
+        this.root = del(this.root, key);
+        if (this.root) {
+            this.root.color = BLACK;
+        }
+    }
 
-// Tree.prototype.log = function() {
-//     log(this.root);
-// };
+    all() {
+        const a = [];
+        inOrder(this.root, n => {
+            a.push({key: n.key, value: n.value});
+        });
+        return a;
+    }
+}
 
-function Node(key, value) {
-    this.key = key;
-    this.value = value;
-    this.color = RED;
-    this.left = null;
-    this.right = null;
+class Node {
+    constructor(key, value) {
+        this.key = key;
+        this.value = value;
+        this.color = RED;
+        this.left = undefined;
+        this.right = undefined;
+    }
 }
 
 function flipColors(n) {
@@ -67,7 +63,7 @@ function flipColor(n) {
 }
 
 function rotateLeft(n) {
-    var r = n.right;
+    const r = n.right;
     n.right = r.left;
     r.left = n;
     r.color = n.color;
@@ -76,7 +72,7 @@ function rotateLeft(n) {
 }
 
 function rotateRight(n) {
-    var l = n.left;
+    const l = n.left;
     n.left = l.right;
     l.right = n;
     l.color = n.color;
@@ -131,7 +127,7 @@ function fixUp(n) {
 
 function deleteMin(n) {
     if (!n.left) {
-        return null;
+        return undefined;
     }
     if (!red(n.left) && !red(n.left.left)) {
         n = moveRedLeft(n);
@@ -142,25 +138,20 @@ function deleteMin(n) {
 
 function find(n, key) {
     if (!n) {
-        return null;
+        return undefined;
     }
     if (n.key === key) {
         return n;
     }
-    if (key < n.key) {
-        return find(n.left, key);
-    }
-    return find(n.right, key);
+    const child = key < n.key ? n.left : n.right;
+    return find(child, key);
 }
 
 function findMin(n) {
     if (!n) {
         return null;
     }
-    if (!n.left) {
-        return n;
-    }
-    return findMin(n.left);
+    return n.left ? findMin(n.left) : n;
 }
 
 function insert(p, key, value) {
@@ -179,9 +170,8 @@ function insert(p, key, value) {
 
 function del(n, key) {
     if (!n) {
-        return null;
+        return undefined;
     }
-
     if (key < n.key) {
         if (n.left && !red(n.left) && !red(n.left.left)) {
             n = moveRedLeft(n);
@@ -189,18 +179,17 @@ function del(n, key) {
         n.left = del(n.left, key);
         return fixUp(n);
     }
-
     if (red(n.left)) {
         n = rotateRight(n);
     }
     if (key === n.key && !n.right) {
-        return null;
+        return undefined;
     }
     if (n.right && !red(n.right) && !red(n.right.left)) {
         n = moveRedRight(n);
     }
     if (key === n.key) {
-        var min = findMin(n.right);
+        const min = findMin(n.right);
         n.key = min.key;
         n.value = min.value;
         n.right = deleteMin(n.right);

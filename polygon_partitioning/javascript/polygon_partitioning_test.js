@@ -1,7 +1,6 @@
+import assert from 'assert';
+import {inspect} from 'util';
 import {triangulate, partition} from './polygon_partitioning';
-
-const assert = require('assert');
-const inspect = require('util').inspect;
 
 const triangulateTests = [
     {
@@ -9,11 +8,11 @@ const triangulateTests = [
             {x: 0, y: 0},
             {x: 1, y: 0},
             {x: 1, y: 1},
-            {x: 0, y: 1}
+            {x: 0, y: 1},
         ],
         diagonals: [
-            [{x: 0, y: 1}, {x: 1, y: 0}]
-        ]
+            [{x: 0, y: 1}, {x: 1, y: 0}],
+        ],
     },
     {
         polygon: [
@@ -25,7 +24,7 @@ const triangulateTests = [
             {x: 5, y: 0},
             {x: 6, y: 1},
             {x: 2, y: 5},
-            {x: 0, y: 3}
+            {x: 0, y: 3},
         ],
         diagonals: [
             [{x: 0, y: 3}, {x: 2, y: 0}],
@@ -33,17 +32,15 @@ const triangulateTests = [
             [{x: 2, y: 5}, {x: 3, y: 2}],
             [{x: 4, y: 1}, {x: 5, y: 0}],
             [{x: 4, y: 1}, {x: 6, y: 1}],
-            [{x: 4, y: 1}, {x: 2, y: 5}]
-        ]
-    }
+            [{x: 4, y: 1}, {x: 2, y: 5}],
+        ],
+    },
 ];
 
 for (const test of triangulateTests) {
     const actual = triangulate(test.polygon);
-    assert.deepStrictEqual(test.diagonals, actual,
-        `For polygon ${inspect(test.polygon)}, ` +
-        `expected triangulation diagonals to be ${inspect(test.diagonals)}, ` +
-        `but were ${inspect(actual)}`);
+    assert.deepStrictEqual(test.diagonals, actual, `For polygon ${inspect(test.polygon)}, ` +
+        `expected triangulation diagonals to be ${inspect(test.diagonals)}, but were ${inspect(actual)}`);
 }
 
 const partitionTests = [
@@ -52,9 +49,9 @@ const partitionTests = [
             {x: 0, y: 0},
             {x: 1, y: 0},
             {x: 1, y: 1},
-            {x: 0, y: 1}
+            {x: 0, y: 1},
         ],
-        diagonals: []
+        diagonals: [],
     },
     {
         polygon: [
@@ -66,19 +63,17 @@ const partitionTests = [
             {x: 5, y: 0},
             {x: 6, y: 1},
             {x: 2, y: 5},
-            {x: 0, y: 3}
+            {x: 0, y: 3},
         ],
         diagonals: [
             [{x: 2, y: 5}, {x: 3, y: 2}],
-            [{x: 4, y: 1}, {x: 6, y: 1}]
-        ]
-    }
+            [{x: 4, y: 1}, {x: 6, y: 1}],
+        ],
+    },
 ];
 
 for (const test of partitionTests) {
     const actual = partition(test.polygon);
-    assert.deepStrictEqual(test.diagonals, actual,
-        `For polygon ${inspect(test.polygon)}, ` +
-        `expected partition diagonals to be ${inspect(test.diagonals)}, ` +
-        `but were ${inspect(actual)}`);
+    assert.deepStrictEqual(test.diagonals, actual, `For polygon ${inspect(test.polygon)}, ` +
+        `expected partition diagonals to be ${inspect(test.diagonals)}, but were ${inspect(actual)}`);
 }

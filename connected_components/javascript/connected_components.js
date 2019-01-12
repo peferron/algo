@@ -1,17 +1,16 @@
-import {AdjacencyList} from './adjacency_list.js';
+import AdjacencyList from './adjacency_list';
 
-export function connectedComponents(graph) {
+export default function connectedComponents(graph) {
     if (graph.directed) {
         throw new Error('This algorithm only supports undirected graphs');
     }
 
     const list = new AdjacencyList(graph);
-
-    let currentComponent = 0;
     const components = new Array(list.a.length);
+    let currentComponent = 0;
 
-    for (let x = 0; x < list.a.length; x++) {
-        if (!isNaN(components[x])) {
+    for (let x = 0; x < list.a.length; x += 1) {
+        if (components[x] !== undefined) {
             // This vertex has already been processed.
             continue;
         }
@@ -21,7 +20,7 @@ export function connectedComponents(graph) {
             components[y] = currentComponent;
         });
 
-        currentComponent++;
+        currentComponent += 1;
     }
 
     return components;

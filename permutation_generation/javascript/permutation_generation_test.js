@@ -1,19 +1,16 @@
-'use strict';
+import assert from 'assert';
+import {rank, unrank, all} from './permutation_generation';
 
-var assert = require('assert');
-
-var permutation_generation = require('./permutation_generation.js');
-
-var tests = [
+const tests = [
     // n = 1
     [
-        [1]
+        [1],
     ],
 
     // n = 2
     [
         [1, 2],
-        [2, 1]
+        [2, 1],
     ],
 
     // n = 3
@@ -23,7 +20,7 @@ var tests = [
         [2, 1, 3],
         [2, 3, 1],
         [3, 1, 2],
-        [3, 2, 1]
+        [3, 2, 1],
     ],
 
     // n = 4
@@ -51,37 +48,36 @@ var tests = [
         [4, 2, 1, 3],
         [4, 2, 3, 1],
         [4, 3, 1, 2],
-        [4, 3, 2, 1]
-    ]
+        [4, 3, 2, 1],
+    ],
 ];
 
 function testRank() {
-    tests.forEach(function(permutations) {
-        permutations.forEach(function(p, m) {
-            var m2 = permutation_generation.rank(p);
+    for (const permutations of tests) {
+        for (const [m, p] of permutations.entries()) {
+            const m2 = rank(p);
             assert.strictEqual(m2, m, `For p: ${p}, expected m to be: ${m}, but was: ${m2}`);
-        });
-    });
+        }
+    }
 }
 
 function testUnrank() {
-    tests.forEach(function(permutations) {
-        permutations.forEach(function(p, m) {
-            var n = p.length;
-            var p2 = permutation_generation.unrank(m, n);
-            assert.deepStrictEqual(p2, p, `For m: ${m} and n: ${n}, ` +
-                `expected p to be: ${p}, but was ${p2}`);
-        });
-    });
+    for (const permutations of tests) {
+        for (const [m, p] of permutations.entries()) {
+            const n = p.length;
+            const p2 = unrank(m, n);
+            assert.deepStrictEqual(p2, p, `For m: ${m} and n: ${n}, expected p to be: ${p}, but was ${p2}`);
+        }
+    }
 }
 
 function testAll() {
-    tests.forEach(function(permutations) {
-        var n = permutations[0].length;
-        var permutations2 = permutation_generation.all(n);
+    for (const permutations of tests) {
+        const n = permutations[0].length;
+        const permutations2 = all(n);
         assert.deepStrictEqual(permutations2, permutations,
-            `For n: ${n}, expected permutations to be: ${permutations}, but was: ${permutations2}`);
-    });
+            `For n: ${n}, expected permutations to be: ${permutations}, but were: ${permutations2}`);
+    }
 }
 
 testRank();

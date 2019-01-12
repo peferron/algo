@@ -1,57 +1,56 @@
-const assert = require('assert');
-
-import {getVertexColoring} from './vertex_coloring.js';
+import assert from 'assert';
+import getVertexColoring from './vertex_coloring';
 
 const tests = [
     {
         graph: {
             vertexCount: 0,
-            edges: []
+            edges: [],
         },
-        colors: 0
+        colors: 0,
     },
     {
         graph: {
             vertexCount: 1,
-            edges: []
+            edges: [],
         },
-        colors: 1
+        colors: 1,
     },
     {
         graph: {
             vertexCount: 2,
-            edges: []
+            edges: [],
         },
-        colors: 1
+        colors: 1,
     },
     {
         graph: {
             vertexCount: 2,
             edges: [
-                [0, 1]
-            ]
+                [0, 1],
+            ],
         },
-        colors: 2
+        colors: 2,
     },
     {
         graph: {
             vertexCount: 3,
             edges: [
                 [0, 1],
-                [1, 2]
-            ]
+                [1, 2],
+            ],
         },
-        colors: 2
+        colors: 2,
     },
     {
         graph: {
             vertexCount: 3,
             edges: [
                 [0, 1], [0, 2],
-                [1, 2]
-            ]
+                [1, 2],
+            ],
         },
-        colors: 3
+        colors: 3,
     },
     {
         // Petersen graph: https://en.wikipedia.org/wiki/Petersen_graph
@@ -65,23 +64,21 @@ const tests = [
                 [4, 9],
                 [5, 7], [5, 8],
                 [6, 8], [6, 9],
-                [7, 9]
-            ]
+                [7, 9],
+            ],
         },
-        colors: 3
-    }
+        colors: 3,
+    },
 ];
 
 function isValidColoring(coloring, graph) {
-    return graph.edges.every(([x, y]) =>
-        coloring[x] >= 0 && coloring[y] >= 0 && coloring[x] !== coloring[y]
-    );
+    return graph.edges.every(([x, y]) => coloring[x] >= 0 && coloring[y] >= 0 && coloring[x] !== coloring[y]);
 }
 
 function runTest(test) {
     const coloring = getVertexColoring(test.graph);
-    assert(isValidColoring(coloring, test.graph));
-    assert(new Set(coloring).size <= test.colors);
+    assert.ok(isValidColoring(coloring, test.graph));
+    assert.ok(new Set(coloring).size <= test.colors);
 }
 
 tests.forEach(runTest);
