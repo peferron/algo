@@ -85,10 +85,10 @@ const compareY = (s1: Segment, s2: Segment, x: number) => {
 };
 
 class SweepLine extends BinarySearchTree<Segment> {
-    x: number;
+    x: number | undefined;
 
     constructor() {
-        super((a, b) => compareY(a, b, this.x));
+        super((a, b) => compareY(a, b, this.x!));
     }
 
     neighbors(segment: Segment): {below?: Segment, above?: Segment} {

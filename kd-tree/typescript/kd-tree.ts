@@ -15,8 +15,8 @@ const inRange = (p: Point, r: Range) => p.every((v, i) => r.origin[i] <= v && v 
 export class KDTree {
     axis: number;
     point: Point;
-    left: KDTree;
-    right: KDTree;
+    left: KDTree | undefined;
+    right: KDTree | undefined;
 
     constructor(points: Point[], depth: number = 0) {
         const dimensions = points[0].length;
