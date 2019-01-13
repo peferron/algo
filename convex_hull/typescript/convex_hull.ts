@@ -84,13 +84,13 @@ export function graham(points: Point[]): Point[] {
 
     for (const point of ordered) {
         hull.push(point);
-        removeTurns(hull, direction => direction !== Direction.CounterClockwise);
+        removeTurns(hull, dir => dir !== Direction.CounterClockwise);
     }
 
     return hull;
 }
 
-function removeTurns(hull: Point[], test: (direction: Direction) => boolean) {
+function removeTurns(hull: Point[], test: (dir: Direction) => boolean) {
     while (hull.length > 2 &&
         test(direction(hull[hull.length - 3], hull[hull.length - 2], hull[hull.length - 1]))) {
         hull.splice(hull.length - 2, 1);
@@ -113,9 +113,9 @@ export function monotoneChain(points: Point[]): Point[] {
     const upper: Point[] = [];
     for (const point of ordered) {
         lower.push(point);
-        removeTurns(lower, direction => direction !== Direction.CounterClockwise);
+        removeTurns(lower, dir => dir !== Direction.CounterClockwise);
         upper.push(point);
-        removeTurns(upper, direction => direction !== Direction.Clockwise);
+        removeTurns(upper, dir => dir !== Direction.Clockwise);
     }
 
     // The first and last points in ordered are present in both lower and upper. We need to make

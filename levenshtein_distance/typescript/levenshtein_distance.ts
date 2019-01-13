@@ -13,16 +13,16 @@ export function distance(a: string, b: string): number {
 
     // The edit distance between the empty string and a string of length k is k. So we can already
     // fill the first column and the first row of the table.
-    for (let i = 0; i < rows; i++) {
+    for (let i = 0; i < rows; i += 1) {
         table[i][0] = i;
     }
-    for (let j = 0; j < columns; j++) {
+    for (let j = 0; j < columns; j += 1) {
         table[0][j] = j;
     }
 
     // Fill the rest of the table using dynamic programming.
-    for (let i = 1; i < rows; i++) {
-        for (let j = 1; j < columns; j++) {
+    for (let i = 1; i < rows; i += 1) {
+        for (let j = 1; j < columns; j += 1) {
             // Let's calculate table[i][j].
 
             // WWe know that table[i-1][j-1] is already calculated and is the edit distance between

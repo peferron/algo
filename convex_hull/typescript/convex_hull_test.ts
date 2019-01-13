@@ -1,7 +1,5 @@
+import * as assert from 'assert';
 import {Point, giftWrap, graham, monotoneChain} from './convex_hull';
-
-declare function require(name: string): any;
-const assert = require('assert');
 
 interface Test {
     points: Point[];
@@ -141,8 +139,8 @@ const tests: Test[] = [
             {x: -0.4907368011686362, y: 0.1865826865533206},
             {x: 0.4916198379282093, y: -0.345391701297268},
             {x: -0.4404289572876217, y: -0.2894855991839297},
-        ]
-    }
+        ],
+    },
 ];
 
 const lexicographicalComparison = (a: Point, b: Point) => (a.x - b.x) || (a.y - b.y);

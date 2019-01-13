@@ -15,7 +15,7 @@ export default class SpellingCorrector {
     }
 
     private candidates(word: string): string[] {
-        for (let distance = 0; distance <= this.maxDistance; distance++) {
+        for (let distance = 0; distance <= this.maxDistance; distance += 1) {
             const edits = editsN(word, this.alphabet, distance).filter(w => this.counts.has(w));
             if (edits.length > 0) {
                 return edits;

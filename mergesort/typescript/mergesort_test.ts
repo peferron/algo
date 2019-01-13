@@ -1,8 +1,8 @@
+import * as assert from 'assert';
+import * as util from 'util';
 import sort from './mergesort';
 
-declare function require(name: string): any;
-const assert = require('assert');
-const inspect = (v: any) => require('util').inspect(v, {depth: null});
+const inspect = (v: any) => util.inspect(v, {depth: null});
 
 const clone = (array: number[]) => array.slice();
 
@@ -16,16 +16,16 @@ function testBasicInputs(): void {
     const tests = [
         {
             array: [],
-            sorted: []
+            sorted: [],
         },
         {
             array: [1],
-            sorted: [1]
+            sorted: [1],
         },
         {
             array: [3, 7, 2, 1, 5, 4, 6, 7],
-            sorted: [1, 2, 3, 4, 5, 6, 7, 7]
-        }
+            sorted: [1, 2, 3, 4, 5, 6, 7, 7],
+        },
     ];
 
     for (const test of tests) {
@@ -40,7 +40,7 @@ function testRandomInputs() {
     for (let i = 0; i < 1000; i += 1) {
         const array = randomInts(Math.floor(Math.random() * 1000));
         sort(array);
-        assert(isSorted(array));
+        assert.ok(isSorted(array));
     }
 }
 

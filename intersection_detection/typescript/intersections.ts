@@ -29,13 +29,13 @@ class Events {
         this.heap.insert({
             type: EventType.LeftEndpoint,
             point: ordered[0],
-            segment: ordered
+            segment: ordered,
         });
 
         this.heap.insert({
             type: EventType.RightEndpoint,
             point: ordered[1],
-            segment: ordered
+            segment: ordered,
         });
     }
 
@@ -45,8 +45,8 @@ class Events {
         if (point && point.x >= minX) {
             this.heap.insert({
                 type: EventType.Intersection,
-                point: point,
-                segments: {below, above}
+                point,
+                segments: {below, above},
             });
         }
     }
@@ -103,12 +103,12 @@ export default function intersections(segments: Segment[]): Point[] {
     }
 
     const line = new SweepLine();
-    const intersections: Point[] = [];
+    const inters: Point[] = [];
 
     while (true) {
         const event = events.removeNext();
         if (!event) {
-            return intersections;
+            return inters;
         }
 
         line.x = event.point.x;
@@ -154,7 +154,7 @@ export default function intersections(segments: Segment[]): Point[] {
 
             case EventType.Intersection: {
                 // Step 1: add the intersection point to the list.
-                intersections.push(event.point);
+                inters.push(event.point);
 
                 const {below} = line.neighbors(event.segments!.below);
                 const {above} = line.neighbors(event.segments!.above);

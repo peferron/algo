@@ -64,7 +64,7 @@ export class KDTree {
     }
 
     inRange(range: Range): Point[] {
-        let points = inRange(this.point, range) ? [this.point] : [];
+        const points = inRange(this.point, range) ? [this.point] : [];
 
         // Does range intersect the left side of the splitting plane?
         if (this.left && range.origin[this.axis] <= this.point[this.axis]) {

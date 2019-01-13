@@ -17,12 +17,12 @@ const path = (end: number, parents: Map<number, number>) => {
     // Recursive one-liner:
     // return isNaN(end) ? [] : [...path(parents.get(end), parents), end];
 
-    const path: number[] = [];
+    const p: number[] = [];
     while (!isNaN(end)) {
-        path.push(end);
+        p.push(end);
         end = parents.get(end)!;
     }
-    return path.reverse();
+    return p.reverse();
 };
 
 export function shortestPath(graph: Graph, start: number, end: number): number[] | undefined {

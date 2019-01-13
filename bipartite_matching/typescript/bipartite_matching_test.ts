@@ -1,8 +1,6 @@
+import * as assert from 'assert';
 import {Edge, BipartiteGraph} from './adjacency_matrix';
 import bipartiteMatching from './bipartite_matching';
-
-declare function require(name: string): any;
-const assert = require('assert');
 
 interface Test {
     graph: BipartiteGraph;
@@ -16,12 +14,12 @@ const tests = [
             vertexCount: 2,
             flags: [true, false],
             edges: [
-                [0, 1]
-            ]
+                [0, 1],
+            ],
         },
         solution: [
-            [0, 1]
-        ]
+            [0, 1],
+        ],
     },
     {
         graph: {
@@ -31,15 +29,15 @@ const tests = [
             edges: [
                 [0, 3], [0, 4],
                 [1, 3],
-                [2, 4], [2, 5]
-            ]
+                [2, 4], [2, 5],
+            ],
         },
         solution: [
             [0, 4],
             [1, 3],
-            [2, 5]
-        ]
-    }
+            [2, 5],
+        ],
+    },
 ];
 
 function runTest(test: Test): void {

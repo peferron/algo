@@ -1,9 +1,9 @@
+import * as assert from 'assert';
+import * as util from 'util';
 import {Point, Range, KDTree} from './kd-tree';
 import {Region, KDRegionTree} from './kd-region-tree';
 
-declare function require(name: string): any;
-const assert = require('assert');
-const inspect = require('util').inspect;
+const inspect = (v: any) => util.inspect(v, {depth: null});
 
 interface NearestNeighborTest {
     points: Point[];
@@ -25,7 +25,7 @@ const nearestNeighborTests: NearestNeighborTest[] = [
             {input: [4, 3], output: [3, 1]},
             {input: [2, -2], output: [0, 0]},
             {input: [3, -1], output: [3, 1]},
-        ]
+        ],
     },
     {
         points: [
@@ -48,8 +48,8 @@ const nearestNeighborTests: NearestNeighborTest[] = [
             {input: [4, 2, 6], output: [5, 3, 6]},
             {input: [5, 4, 5], output: [5, 5, 5]},
             {input: [4, 4, 11], output: [3, 1, 7]},
-        ]
-    }
+        ],
+    },
 ];
 
 function runNearestNeighborTest(test: NearestNeighborTest) {
@@ -80,25 +80,25 @@ const rangeTests: RangeTest[] = [
         cases: [
             {
                 input: {origin: [-1, -2], diagonal: [1, -1]},
-                output: []
+                output: [],
             },
             {
                 input: {origin: [0, 0], diagonal: [1, 2]},
-                output: [[1, 2], [0, 0]]
+                output: [[1, 2], [0, 0]],
             },
             {
                 input: {origin: [0.5, 0.5], diagonal: [3.5, 2.5]},
-                output: [[1, 2], [3, 1]]
+                output: [[1, 2], [3, 1]],
             },
             {
                 input: {origin: [2.5, 0], diagonal: [4, 1.5]},
-                output: [[3, 1]]
+                output: [[3, 1]],
             },
             {
                 input: {origin: [-1, -1], diagonal: [10, 10]},
-                output: [[1, 2], [0, 0], [3, 1]]
+                output: [[1, 2], [0, 0], [3, 1]],
             },
-        ]
+        ],
     },
     {
         points: [
@@ -112,14 +112,14 @@ const rangeTests: RangeTest[] = [
         cases: [
             {
                 input: {origin: [-1, 2, 0], diagonal: [3, 3, 1]},
-                output: [[1, 3, 0]]
+                output: [[1, 3, 0]],
             },
             {
                 input: {origin: [-1, 0, 5], diagonal: [10, 4, 8]},
-                output: [[3, 1, 7], [5, 3, 6]]
+                output: [[3, 1, 7], [5, 3, 6]],
             },
-        ]
-    }
+        ],
+    },
 ];
 
 function runRangeTest(test: RangeTest) {
@@ -154,27 +154,27 @@ const regionTests: RegionTest[] = [
         cases: [
             {
                 input: [1, 1],
-                output: [[0, 0], [1, 2], [3, 1]]
+                output: [[0, 0], [1, 2], [3, 1]],
             },
             {
                 input: [2, 2],
-                output: undefined
+                output: undefined,
             },
             {
                 input: [2.5, 1.5],
-                output: undefined
+                output: undefined,
             },
             {
                 // Points on a right-side boundary edge are considered outside.
                 input: [2, 1.5],
-                output: undefined
+                output: undefined,
             },
             {
                 // Points on a left-side boundary edge are considered inside.
                 input: [0.5, 1],
-                output: [[0, 0], [1, 2], [3, 1]]
+                output: [[0, 0], [1, 2], [3, 1]],
             },
-        ]
+        ],
     },
     {
         points: [
@@ -195,45 +195,45 @@ const regionTests: RegionTest[] = [
         cases: [
             {
                 input: [2, 3],
-                output: undefined
+                output: undefined,
             },
             {
                 input: [2, 3.5],
-                output: [[0, 2], [3, 4], [4, 0], [6, 5], [5, 7]]
+                output: [[0, 2], [3, 4], [4, 0], [6, 5], [5, 7]],
             },
             {
                 input: [4, 1],
-                output: [[0, 2], [3, 4], [4, 0], [6, 5], [5, 7]]
+                output: [[0, 2], [3, 4], [4, 0], [6, 5], [5, 7]],
             },
             {
                 input: [5, 5],
-                output: [[0, 2], [3, 4], [4, 0], [6, 5], [5, 7]]
+                output: [[0, 2], [3, 4], [4, 0], [6, 5], [5, 7]],
             },
             {
                 input: [4.5, 1],
-                output: [[4, 0], [8, 1], [6, 5]]
+                output: [[4, 0], [8, 1], [6, 5]],
             },
             {
                 input: [7, 0.5],
-                output: undefined
+                output: undefined,
             },
             {
                 input: [7, 2],
-                output: [[4, 0], [8, 1], [6, 5]]
+                output: [[4, 0], [8, 1], [6, 5]],
             },
             {
                 input: [7, 4],
-                output: [[8, 1], [11, 3], [9, 6], [6, 5]]
+                output: [[8, 1], [11, 3], [9, 6], [6, 5]],
             },
             {
                 input: [10, 4],
-                output: [[8, 1], [11, 3], [9, 6], [6, 5]]
+                output: [[8, 1], [11, 3], [9, 6], [6, 5]],
             },
             {
                 input: [10, 5],
-                output: undefined
+                output: undefined,
             },
-        ]
+        ],
     },
 ];
 

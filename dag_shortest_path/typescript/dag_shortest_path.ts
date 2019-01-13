@@ -5,7 +5,7 @@ export default function shortestPath(graph: Graph, start: number, end: number): 
         throw new Error('This algorithm only supports directed graphs.');
     }
 
-    const list = new AdjacencyList(graph)
+    const list = new AdjacencyList(graph);
     const sorted = topologicalSort(list);
 
     // distance[x] is the distance between start and x.
@@ -52,7 +52,7 @@ function topologicalSort(list: AdjacencyList): number[] {
         sorted.unshift(x);
     }
 
-    for (let i = 0; i < list.a.length; i++) {
+    for (let i = 0; i < list.a.length; i += 1) {
         list.depthFirstSearch(i, process);
     }
 

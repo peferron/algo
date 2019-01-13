@@ -1,8 +1,6 @@
+import * as assert from 'assert';
 import {Graph, Edge} from './adjacency_list';
 import minimumSpanningTreeEdges from './minimum_spanning_tree';
-
-declare function require(name: string): any;
-const assert = require('assert');
 
 interface Test {
     graph: Graph;
@@ -14,9 +12,9 @@ const tests: Test[] = [
         graph: {
             vertexCount: 0,
             directed: true,
-            edges: []
+            edges: [],
         },
-        mstEdges: []
+        mstEdges: [],
     },
     {
         graph: {
@@ -25,13 +23,13 @@ const tests: Test[] = [
             edges: [
                 {x: 0, y: 1, weight: 1},
                 {x: 0, y: 2, weight: 3},
-                {x: 1, y: 2, weight: 2}
-            ]
+                {x: 1, y: 2, weight: 2},
+            ],
         },
         mstEdges: [
             {x: 0, y: 1, weight: 1},
-            {x: 1, y: 2, weight: 2}
-        ]
+            {x: 1, y: 2, weight: 2},
+        ],
     },
     {
         // See an illustration of this example at:
@@ -50,8 +48,8 @@ const tests: Test[] = [
                 {x: 3, y: 5, weight: 6},
                 {x: 4, y: 5, weight: 12},
                 {x: 4, y: 6, weight: 8},
-                {x: 5, y: 6, weight: 13}
-            ]
+                {x: 5, y: 6, weight: 13},
+            ],
         },
         mstEdges: [
             {x: 0, y: 1, weight: 7},
@@ -59,9 +57,9 @@ const tests: Test[] = [
             {x: 1, y: 4, weight: 10},
             {x: 2, y: 4, weight: 5},
             {x: 3, y: 5, weight: 6},
-            {x: 4, y: 6, weight: 8}
-        ]
-    }
+            {x: 4, y: 6, weight: 8},
+        ],
+    },
 ];
 
 const compareEdges = (a: Edge, b: Edge) => (a.x !== b.x) ? a.x - b.x : a.y - b.y;

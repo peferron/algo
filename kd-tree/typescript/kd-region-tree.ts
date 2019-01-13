@@ -18,7 +18,7 @@ function inRegion(point: Point, region: Region): boolean {
         // See http://geomalgorithms.com/a03-_inclusion.html for the list of rules.
 
         // Rule #3: Exclude horizontal edges.
-        if (p2[1] == p1[1]) {
+        if (p2[1] === p1[1]) {
             return inside;
         }
 

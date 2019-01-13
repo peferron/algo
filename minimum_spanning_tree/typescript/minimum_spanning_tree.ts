@@ -26,8 +26,8 @@ export default function minimumSpanningTreeEdges(graph: Graph): Edge[] {
 function lightestCrossEdge(list: AdjacencyList, mstVertices: boolean[]): Edge | undefined {
     let best: Edge | undefined;
 
-    for (let edges of list.a) {
-        for (let edge of edges) {
+    for (const edges of list.a) {
+        for (const edge of edges) {
             if (mstVertices[edge.x] !== mstVertices[edge.y] &&
                 (!best || best.weight > edge.weight)) {
                 best = edge;

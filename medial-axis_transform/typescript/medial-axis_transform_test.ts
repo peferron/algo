@@ -1,7 +1,5 @@
+import * as assert from 'assert';
 import {manhattanDistances, skeleton} from './medial-axis_transform';
-
-declare function require(name: string): any;
-const assert = require('assert');
 
 interface Test {
     input: string;
@@ -37,7 +35,7 @@ const tests: Test[] = [
 ..X.....X..
 .X.......X.
 ...........
-`
+`,
     },
     {
         input: `
@@ -69,7 +67,7 @@ const tests: Test[] = [
 ...XX.......
 .XX.........
 ............
-`
+`,
     },
     {
         input: `
@@ -119,7 +117,7 @@ const tests: Test[] = [
 ..XX...................XX...
 .XX......................XX.
 ............................
-`
+`,
     },
     {
         input: `
@@ -157,7 +155,7 @@ const tests: Test[] = [
 ..XXXXX..X...X......
 .............X......
 ....................
-`
+`,
     },
 ];
 
@@ -167,24 +165,20 @@ const stringToPixels = (str: string) => str.trim().split('\n').map(lineToPixels)
 
 const distanceToChar = (distance: number) => distance === 0 ? '.' : distance.toString();
 const distancesToLine = (distances: number[]) => distances.map(distanceToChar).join('');
-const distancesToString = (distances: number[][]) => '\n' + distances.map(distancesToLine).join('\n') + '\n';
+const distancesToString = (distances: number[][]) => `\n${distances.map(distancesToLine).join('\n')}\n`;
 
 const pixelToChar = (pixel: boolean) => pixel ? 'X' : '.';
 const pixelsToLine = (pixels: boolean[]) => pixels.map(pixelToChar).join('');
-const pixelsToString = (pixels: boolean[][]) => '\n' + pixels.map(pixelsToLine).join('\n') + '\n';
+const pixelsToString = (pixels: boolean[][]) => `\n${pixels.map(pixelsToLine).join('\n')}\n`;
 
 function runTest(test: Test) {
     const actualDistances = distancesToString(manhattanDistances(stringToPixels(test.input)));
-    assert.strictEqual(test.manhattanDistances, actualDistances,
-        'For input pixels:' + test.input +
-        'expected chessboard distances to be:' + test.manhattanDistances +
-        'but were:' + actualDistances);
+    assert.strictEqual(test.manhattanDistances, actualDistances, `For input pixels: ${test.input}` +
+        `expected chessboard distances to be: ${test.manhattanDistances}, but were: ${actualDistances}`);
 
     const actualSkeleton = pixelsToString(skeleton(stringToPixels(test.input)));
-    assert.strictEqual(test.skeleton, actualSkeleton,
-        'For input pixels:' + test.input +
-        'expected skeleton to be:' + test.skeleton +
-        'but was:' + actualSkeleton);
+    assert.strictEqual(test.skeleton, actualSkeleton, `For input pixels: ${test.input}` +
+        `expected skeleton to be: ${test.skeleton}, but was: ${actualSkeleton}`);
 }
 
 tests.forEach(runTest);

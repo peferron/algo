@@ -23,7 +23,7 @@ export function articulations(graph: Graph): number[] {
         visited[x] = true;
         depth[x] = currentDepth;
         lowpoint[x] = currentDepth;
-        currentDepth++;
+        currentDepth += 1;
     }
 
     function processEdge(x: number, y: number): void {
@@ -48,9 +48,9 @@ export function articulations(graph: Graph): number[] {
     function dfs(x: number): void {
         processVertexEarly(x);
         let children = 0;
-        for (let y of list.a[x]) {
+        for (const y of list.a[x]) {
             if (!visited[y]) {
-                children++;
+                children += 1;
             }
             processEdge(x, y);
         }

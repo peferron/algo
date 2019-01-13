@@ -35,7 +35,7 @@ const vectors = (polygon: Polygon) => polygon.map((start, i) => {
     const end = polygon[(i + 1) % polygon.length];
     return {
         x: end.x - start.x,
-        y: end.y - start.y
+        y: end.y - start.y,
     };
 });
 
@@ -43,15 +43,16 @@ const vectors = (polygon: Polygon) => polygon.map((start, i) => {
 function merge(a: Vector[], b: Vector[]): Vector[] {
     const origin = {x: 0, y: 0};
     const merged: Vector[] = [];
-    let i = 0, j = 0;
+    let i = 0;
+    let j = 0;
 
     while (i < a.length && j < b.length) {
         if (direction(a[i], origin, b[j]) === Direction.Clockwise) {
             merged.push(a[i]);
-            i++;
+            i += 1;
         } else {
             merged.push(b[j]);
-            j++;
+            j += 1;
         }
     }
 
@@ -66,7 +67,7 @@ export function minkowskiSum(a: Polygon, b: Polygon): Polygon {
     // points of a and b.
     const sum = [{
         x: a[0].x + b[0].x,
-        y: a[0].y + b[0].y
+        y: a[0].y + b[0].y,
     }];
 
     // We compute the remaining points of the Minkowski sum by moving along the vector of each edge
@@ -76,7 +77,7 @@ export function minkowskiSum(a: Polygon, b: Polygon): Polygon {
         const prev = sum[sum.length - 1];
         const next = {
             x: prev.x + v.x,
-            y: prev.y + v.y
+            y: prev.y + v.y,
         };
         sum.push(next);
     }

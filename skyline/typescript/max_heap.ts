@@ -2,11 +2,11 @@ export default class MaxHeap {
     private values: number[] = [];
     private valueToIndexes = new Map<number, Set<number>>();
 
-    public max(): number {
+    max(): number {
         return this.values[0];
     }
 
-    public add(value: number) {
+    add(value: number) {
         this.values.push(value);
 
         const index = this.values.length - 1;
@@ -20,7 +20,7 @@ export default class MaxHeap {
         this.bubbleUp(index);
     }
 
-    public delete(value: number) {
+    delete(value: number) {
         const index = this.valueToIndexes.get(value)!.values().next().value;
         const lastIndex = this.values.length - 1;
 

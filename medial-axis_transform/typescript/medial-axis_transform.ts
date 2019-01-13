@@ -17,8 +17,8 @@ export function manhattanDistances(pixels: boolean[][]): number[][] {
     const distance = (r: number, c: number) => get(distances, r, c, 0);
 
     // The first grassfire starts from the top left corner.
-    for (let r = 0; r < rows; r++) {
-        for (let c = 0; c < cols; c++) {
+    for (let r = 0; r < rows; r += 1) {
+        for (let c = 0; c < cols; c += 1) {
             distances[r][c] = pixels[r][c] ?
                 1 + Math.min(distance(r - 1, c), distance(r, c - 1)) :
                 0;
@@ -41,8 +41,8 @@ export function manhattanDistances(pixels: boolean[][]): number[][] {
     //
     // Note how the center point has a distance of 3 instead of 2 (via its top-right neighbor).
     // Running the second grassfire against the output of the first grassfire resolves this issue.
-    for (let r = rows - 1; r >= 0; r--) {
-        for (let c = cols - 1; c >= 0; c--) {
+    for (let r = rows - 1; r >= 0; r -= 1) {
+        for (let c = cols - 1; c >= 0; c -= 1) {
             distances[r][c] = Math.min(
                 distances[r][c],
                 1 + Math.min(distance(r + 1, c), distance(r, c + 1))

@@ -1,8 +1,6 @@
+import * as assert from 'assert';
 import {Graph} from './adjacency_list';
 import {articulations} from './biconnected_components';
-
-declare function require(name: string): any;
-const assert = require('assert');
 
 interface Test {
     graph: Graph;
@@ -14,35 +12,35 @@ const tests: Test[] = [
         graph: {
             vertexCount: 0,
             directed: false,
-            edges: []
+            edges: [],
         },
-        articulations: []
+        articulations: [],
     },
     {
         graph: {
             vertexCount: 1,
             directed: false,
-            edges: []
+            edges: [],
         },
-        articulations: []
+        articulations: [],
     },
     {
         graph: {
             vertexCount: 2,
             directed: false,
-            edges: []
+            edges: [],
         },
-        articulations: []
+        articulations: [],
     },
     {
         graph: {
             vertexCount: 2,
             directed: false,
             edges: [
-                [0, 1]
-            ]
+                [0, 1],
+            ],
         },
-        articulations: []
+        articulations: [],
     },
     {
         graph: {
@@ -50,10 +48,10 @@ const tests: Test[] = [
             directed: false,
             edges: [
                 [0, 1],
-                [1, 2]
-            ]
+                [1, 2],
+            ],
         },
-        articulations: [1]
+        articulations: [1],
     },
     {
         graph: {
@@ -62,10 +60,10 @@ const tests: Test[] = [
             edges: [
                 [0, 1],
                 [0, 2],
-                [1, 2]
-            ]
+                [1, 2],
+            ],
         },
-        articulations: []
+        articulations: [],
     },
     {
         graph: {
@@ -75,10 +73,10 @@ const tests: Test[] = [
                 [0, 1],
                 [0, 2],
                 [1, 2],
-                [2, 3]
-            ]
+                [2, 3],
+            ],
         },
-        articulations: [2]
+        articulations: [2],
     },
     {
         graph: {
@@ -90,10 +88,10 @@ const tests: Test[] = [
                 [1, 3],
                 [2, 3],
                 [2, 4],
-                [3, 4]
-            ]
+                [3, 4],
+            ],
         },
-        articulations: [1]
+        articulations: [1],
     },
     {
         // See an illustration of this example at:
@@ -114,11 +112,11 @@ const tests: Test[] = [
                 [5, 7],
                 [5, 8],
                 [7, 8],
-                [8, 9]
-            ]
+                [8, 9],
+            ],
         },
-        articulations: [1, 5, 8]
-    }
+        articulations: [1, 5, 8],
+    },
 ];
 
 function compareNumbers(a: number, b: number): number {

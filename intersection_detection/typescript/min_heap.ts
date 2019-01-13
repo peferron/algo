@@ -5,7 +5,7 @@ export default class MinHeap<T> {
     }
 
     private swap(i: number, j: number) {
-        [this.a[i], this.a[j]] = [this.a[j], this.a[i]]
+        [this.a[i], this.a[j]] = [this.a[j], this.a[i]];
     }
 
     private bubbleUp(index: number) {

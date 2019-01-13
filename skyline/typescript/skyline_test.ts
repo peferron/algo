@@ -1,8 +1,8 @@
+import * as assert from 'assert';
+import * as util from 'util';
 import {Rectangle, Point, skyline} from './skyline';
 
-declare function require(name: string): any;
-const assert = require('assert');
-const inspect = (v: any) => require('util').inspect(v, {depth: null});
+const inspect = (v: any) => util.inspect(v, {depth: null});
 
 interface Test {
     buildings: Rectangle[];
@@ -18,7 +18,7 @@ const tests: Test[] = [
         skyline: [
             {x: 1, y: 2},
             {x: 4, y: 0},
-        ]
+        ],
     },
     {
         buildings: [
@@ -28,7 +28,7 @@ const tests: Test[] = [
         skyline: [
             {x: 1, y: 2},
             {x: 4, y: 0},
-        ]
+        ],
     },
     {
         buildings: [
@@ -40,7 +40,7 @@ const tests: Test[] = [
             {x: 2, y: 0},
             {x: 3, y: 2},
             {x: 4, y: 0},
-        ]
+        ],
     },
     {
         buildings: [
@@ -57,14 +57,14 @@ const tests: Test[] = [
             {x: 8, y: 3},
             {x: 12, y: 2},
             {x: 14, y: 0},
-        ]
+        ],
     },
-]
+];
 
 function runTest(test: Test) {
     const actual = skyline(test.buildings);
     assert.deepEqual(actual, test.skyline, `For buildings ${inspect(test.buildings)}, ` +
-        `expected skyline to be ${inspect(test.skyline)}, but was ${inspect(actual)}`)
+        `expected skyline to be ${inspect(test.skyline)}, but was ${inspect(actual)}`);
 }
 
 tests.forEach(runTest);

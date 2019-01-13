@@ -1,7 +1,5 @@
+import * as assert from 'assert';
 import SpellingCorrector from './spelling_corrector';
-
-declare function require(name: string): any;
-const assert = require('assert');
 
 const latinCorrector = new SpellingCorrector('abcdefghijklmnopqrstuvwxyz', 2);
 
@@ -15,7 +13,7 @@ assert.strictEqual(latinCorrector.correct('korrectud'), 'corrected');
 
 const emoticonCorrector = new SpellingCorrector('()/\\_¯¯°━┻╯□ツ︵）💕', 2);
 
-emoticonCorrector.train('¯\\_(ツ)_/¯')
+emoticonCorrector.train('¯\\_(ツ)_/¯');
 emoticonCorrector.train('i💕u');
 
 assert.strictEqual(emoticonCorrector.correct('¯\_()_/¯'), '¯\\_(ツ)_/¯');

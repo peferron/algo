@@ -1,9 +1,9 @@
+import * as assert from 'assert';
+import * as util from 'util';
 import {Point, Segment, intersection} from './intersection';
 import intersections from './intersections';
 
-declare function require(name: string): any;
-const assert = require('assert');
-const inspect = (v: any) => require('util').inspect(v, {depth: null});
+const inspect = (v: any) => util.inspect(v, {depth: null});
 
 interface IntersectionTest {
     s1: Segment;
@@ -65,14 +65,14 @@ const intersectionsTests: IntersectionsTest[] = [
             [{x: 0, y: 0}, {x: 3, y: 3}],
             [{x: 1, y: 0}, {x: 4, y: 0}],
         ],
-        intersections: []
+        intersections: [],
     },
     {
         segments: [
             [{x: 0, y: 0}, {x: 3, y: 3}],
             [{x: 1, y: 2}, {x: 4, y: 2}],
         ],
-        intersections: [{x: 2, y: 2}]
+        intersections: [{x: 2, y: 2}],
     },
     {
         segments: [
@@ -80,7 +80,7 @@ const intersectionsTests: IntersectionsTest[] = [
             [{x: 1, y: 2}, {x: 3, y: 2}],
             [{x: 2, y: 4}, {x: 5, y: 1}],
         ],
-        intersections: [{x: 4, y: 2}]
+        intersections: [{x: 4, y: 2}],
     },
     {
         segments: [
@@ -88,7 +88,7 @@ const intersectionsTests: IntersectionsTest[] = [
             [{x: 1, y: 2}, {x: 3, y: 2}],
             [{x: 2, y: 4}, {x: 5, y: 1}],
         ],
-        intersections: [{x: 4, y: 2}]
+        intersections: [{x: 4, y: 2}],
     },
     {
         segments: [
@@ -96,7 +96,7 @@ const intersectionsTests: IntersectionsTest[] = [
             [{x: 1, y: 1}, {x: 7, y: -2}],
             [{x: 2, y: 2}, {x: 6, y: -2}],
         ],
-        intersections: [{x: 3, y: 0}, {x: 4, y: 0}, {x: 5, y: -1}]
+        intersections: [{x: 3, y: 0}, {x: 4, y: 0}, {x: 5, y: -1}],
     },
     {
         segments: [
@@ -104,14 +104,14 @@ const intersectionsTests: IntersectionsTest[] = [
             [{x: -1, y: 2}, {x: 7, y: -2}],
             [{x: 2, y: 2}, {x: 6, y: -2}],
         ],
-        intersections: [{x: 3, y: 0}, {x: 4, y: 0}, {x: 5, y: -1}]
+        intersections: [{x: 3, y: 0}, {x: 4, y: 0}, {x: 5, y: -1}],
     },
     {
         segments: [
             [{x: 0, y: 0}, {x: 2, y: 0}],
             [{x: 1, y: 1}, {x: 1, y: -1}],
         ],
-        intersections: [{x: 1, y: 0}]
+        intersections: [{x: 1, y: 0}],
     },
     {
         segments: [
@@ -119,7 +119,7 @@ const intersectionsTests: IntersectionsTest[] = [
             [{x: 3, y: 2}, {x: 3, y: -1}],
             [{x: 2, y: 2}, {x: 6, y: -2}],
         ],
-        intersections: [{x: 3, y: 0}, {x: 3, y: 1}, {x: 4, y: 0}]
+        intersections: [{x: 3, y: 0}, {x: 3, y: 1}, {x: 4, y: 0}],
     },
 ];
 

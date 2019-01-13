@@ -1,8 +1,6 @@
+import * as assert from 'assert';
 import {Graph} from './adjacency_list';
 import sort from './topological_sorting';
-
-declare function require(name: string): any;
-const assert = require('assert');
 
 interface Test {
     graph: Graph;
@@ -24,13 +22,13 @@ const tests: Test[] = [
                 {x: 6, y: 0},
                 {x: 6, y: 5},
                 {x: 2, y: 5},
-                {x: 5, y: 4}
-            ]
+                {x: 5, y: 4},
+            ],
         },
         sorts: [
-            [6, 0, 1, 2, 5, 4, 3]
-        ]
-    }
+            [6, 0, 1, 2, 5, 4, 3],
+        ],
+    },
 ];
 
 const deepEqual = (a: any, b: any) => {
@@ -46,7 +44,7 @@ const contains = (list: number[][], item: number[]) =>
     list.some(listItem => deepEqual(listItem, item));
 
 function runTest(test: Test): void {
-    assert(contains(test.sorts, sort(test.graph)));
+    assert.ok(contains(test.sorts, sort(test.graph)));
 }
 
 tests.forEach(runTest);

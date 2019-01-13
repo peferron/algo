@@ -7,7 +7,7 @@ interface Network extends Graph {
 
 export default function bipartiteMatching(graph: BipartiteGraph): Edge[] {
     if (graph.directed) {
-        throw new Error("This bipartite matching algorithm only supports undirected graphs")
+        throw new Error('This bipartite matching algorithm only supports undirected graphs');
     }
 
     const network = constructNetwork(graph);
@@ -36,8 +36,7 @@ function constructNetwork(graph: BipartiteGraph): Network {
     const directedEdges = graph.edges.map(edge => {
         const [x, y] = edge;
         if (graph.flags[x] === graph.flags[y]) {
-            throw new Error("This bipartite graph has an edge between two vertices of the same" +
-                " set: " + x + " -> " + y);
+            throw new Error(`This bipartite graph has an edge between two vertices of the same set: ${x} -> ${y}`);
         }
         return graph.flags[x] ? [x, y] : [y, x];
     });
@@ -52,8 +51,8 @@ function constructNetwork(graph: BipartiteGraph): Network {
         directed: true,
         vertexCount: graph.vertexCount + 2,
         edges: directedEdges.concat(additionalEdges),
-        source: source,
-        sink: sink
+        source,
+        sink,
     };
 }
 
@@ -85,4 +84,3 @@ function subtractPath(residual: AdjacencyMatrix, parents: number[], end: number)
     residual.a[end][p] = true;
     subtractPath(residual, parents, p);
 }
-

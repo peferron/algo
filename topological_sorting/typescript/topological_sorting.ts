@@ -5,7 +5,7 @@ export default function sort(graph: Graph): number[] {
         throw new Error('Topological sorting only supports directed graphs.');
     }
 
-    const list = new AdjacencyList(graph)
+    const list = new AdjacencyList(graph);
 
     const sorted: number[] = [];
 
@@ -20,7 +20,7 @@ export default function sort(graph: Graph): number[] {
         sorted.unshift(x);
     }
 
-    for (let i = 0; i < list.a.length; i++) {
+    for (let i = 0; i < list.a.length; i += 1) {
         list.depthFirstSearch(i, process);
     }
 

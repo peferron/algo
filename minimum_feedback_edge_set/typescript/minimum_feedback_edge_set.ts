@@ -17,7 +17,7 @@ export function minimumFeedbackEdgeSet(graph: Graph): Edge[] {
     // vertex ordering.
     const ltr: Edge[] = [];
     const rtl: Edge[] = [];
-    for (let edge of graph.edges) {
+    for (const edge of graph.edges) {
         const [x, y] = edge;
         if (before(x, y)) {
             ltr.push(edge);
@@ -36,9 +36,9 @@ export function minimumFeedbackEdgeSet(graph: Graph): Edge[] {
 function imbalances(graph: Graph): number[] {
     const imba = new Array(graph.vertexCount).fill(0);
 
-    for (let [x, y] of graph.edges) {
-        imba[x]--;
-        imba[y]++;
+    for (const [x, y] of graph.edges) {
+        imba[x] -= 1;
+        imba[y] += 1;
     }
 
     return imba;

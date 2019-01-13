@@ -1,8 +1,8 @@
+import * as assert from 'assert';
+import * as util from 'util';
 import {Coordinates, Graph, shortestPath} from './A*';
 
-declare function require(name: string): any;
-const assert = require('assert');
-const inspect = (v: any) => require('util').inspect(v, {depth: null});
+const inspect = (v: any) => util.inspect(v, {depth: null});
 
 // . = free points
 // # = blocked points
@@ -69,7 +69,7 @@ function parse(test: string): {graph: Graph, path: number[]} {
 
     return {
         graph: {coordinates, adjacencyList},
-        path
+        path,
     };
 }
 
@@ -79,10 +79,9 @@ function runTest(test: string) {
     const end = expectedPath[expectedPath.length - 1];
     const actualPath = shortestPath(graph, start, end);
 
-    assert.deepStrictEqual(expectedPath, actualPath,
-        'For input:' + test +
-        'expected path to be:\n' + inspect(expectedPath.map(point => graph.coordinates[point])) +
-        '\nbut was:\n' + inspect(actualPath && actualPath.map(point => graph.coordinates[point])));
+    assert.deepStrictEqual(expectedPath, actualPath, `For input: ${test}, ` +
+        `expected path to be:\n' ${inspect(expectedPath.map(point => graph.coordinates[point]))}` +
+        `\nbut was:\n ${inspect(actualPath && actualPath.map(point => graph.coordinates[point]))}`);
 }
 
 tests.forEach(runTest);

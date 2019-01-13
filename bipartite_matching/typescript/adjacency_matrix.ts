@@ -28,7 +28,7 @@ export class AdjacencyMatrix {
         while (queue.length) {
             const x = queue.shift()!;
 
-            for (let y = 0; y < this.a.length; y++) {
+            for (let y = 0; y < this.a.length; y += 1) {
                 if (visited[y] || !this.a[x][y]) {
                     continue;
                 }
@@ -49,7 +49,7 @@ function constructAdjacencyMatrix(graph: Graph): boolean[][] {
         () => new Array(graph.vertexCount).fill(false)
     );
 
-    for (let edge of graph.edges) {
+    for (const edge of graph.edges) {
         insertEdge(a, edge, graph.directed);
     }
 

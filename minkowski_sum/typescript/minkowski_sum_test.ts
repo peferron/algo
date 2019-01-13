@@ -1,8 +1,8 @@
+import * as assert from 'assert';
+import * as util from 'util';
 import {Polygon, minkowskiSum} from './minkowski_sum';
 
-declare function require(name: string): any;
-const assert = require('assert');
-const inspect = (v: any) => require('util').inspect(v, {depth: null});
+const inspect = (v: any) => util.inspect(v, {depth: null});
 
 interface Test {
     a: Polygon;
@@ -29,7 +29,7 @@ const tests: Test[] = [
             {x: 2, y: 3},
             {x: 1, y: 4},
             {x: 0, y: 3},
-        ]
+        ],
     },
     {
         a: [
@@ -49,7 +49,7 @@ const tests: Test[] = [
             {x: 2, y: 3},
             {x: 1, y: 4},
             {x: 0, y: 3},
-        ]
+        ],
     },
     {
         a: [
@@ -71,7 +71,7 @@ const tests: Test[] = [
             {x: 5, y: 7},
             {x: 4, y: 7},
             {x: 4, y: 5}, // Optional
-        ]
+        ],
     },
     {
         a: [
@@ -93,7 +93,7 @@ const tests: Test[] = [
             {x: 6, y: 7},
             {x: 5, y: 7},
             {x: 4, y: 5},
-        ]
+        ],
     },
     {
         a: [
@@ -119,8 +119,8 @@ const tests: Test[] = [
             {x: 0, y: 4},
             {x: -1, y: 3},
             {x: -2, y: 2},
-        ]
-    }
+        ],
+    },
 ];
 
 function runTest(test: Test) {
