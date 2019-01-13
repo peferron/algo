@@ -6,6 +6,7 @@ before_install:
   - brew update
   - brew upgrade go node || brew install go node
   - npm install
-  - curl -sSf https://static.rust-lang.org/rustup.sh | sh -s -- --yes --channel=nightly
+  - curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain nightly
+  - source "$HOME/.cargo/env"
 
 script: ./test
