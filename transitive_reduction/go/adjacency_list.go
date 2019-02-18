@@ -25,18 +25,13 @@ func (a AdjacencyList) Transpose() AdjacencyList {
 	return t
 }
 
-func (a AdjacencyList) DepthFirstSearch(x int, lateCallback VertexCallback) {
-	discovered := make([]bool, len(a))
-	dfs(a, discovered, x, lateCallback)
-}
-
-func dfs(a AdjacencyList, discovered []bool, x int, lateCallback VertexCallback) {
-	if discovered[x] {
+func (a AdjacencyList) DepthFirstSearch(start int, late VertexCallback, discovered []bool) {
+	if discovered[start] {
 		return
 	}
-	discovered[x] = true
-	for _, y := range a[x] {
-		dfs(a, discovered, y, lateCallback)
+	discovered[start] = true
+	for _, neighbor := range a[start] {
+		a.DepthFirstSearch(neighbor, late, discovered)
 	}
-	lateCallback(x)
+	late(start)
 }

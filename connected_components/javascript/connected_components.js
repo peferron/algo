@@ -10,18 +10,25 @@ export default function connectedComponents(graph) {
     let currentComponent = 0;
 
     for (let x = 0; x < list.a.length; x += 1) {
-        if (components[x] !== undefined) {
-            // This vertex has already been processed.
-            continue;
+        if (assignComponent(list, x, currentComponent, components)) {
+            currentComponent += 1;
         }
-
-        // Mark this vertex and all connected vertices with the current component number.
-        list.depthFirstSearch(x, y => {
-            components[y] = currentComponent;
-        });
-
-        currentComponent += 1;
     }
 
     return components;
+}
+
+function assignComponent(list, x, currentComponent, components) {
+    if (components[x] !== undefined) {
+        // This vertex has already been assigned to a component.
+        return false;
+    }
+
+    components[x] = currentComponent;
+
+    for (const y of list.a[x]) {
+        assignComponent(list, y, currentComponent, components);
+    }
+
+    return true;
 }

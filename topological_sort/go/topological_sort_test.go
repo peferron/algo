@@ -1,4 +1,4 @@
-package topological_sorting
+package topological_sort
 
 import (
 	"reflect"

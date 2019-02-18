@@ -35,25 +35,25 @@ func TestConstruct(t *testing.T) {
 }
 
 func TestBreadthFirstSearch(t *testing.T) {
-	vertices := []int{}
+	order := []int{}
 	NewAdjacencyMatrix(graph).BreadthFirstSearch(0, func(x int) {
-		vertices = append(vertices, x)
+		order = append(order, x)
 	})
 
-	if expected := []int{0, 1, 4, 5, 2, 3}; !reflect.DeepEqual(vertices, expected) {
+	if expected := []int{0, 1, 4, 5, 2, 3}; !reflect.DeepEqual(order, expected) {
 		t.Errorf("For graph %+v, expected breadth-first search order to be %v, but was %v",
-			graph, expected, vertices)
+			graph, expected, order)
 	}
 }
 
 func TestDepthFirstSearch(t *testing.T) {
-	vertices := []int{}
+	preOrder := []int{}
 	NewAdjacencyMatrix(graph).DepthFirstSearch(0, func(x int) {
-		vertices = append(vertices, x)
+		preOrder = append(preOrder, x)
 	})
 
-	if expected := []int{0, 1, 2, 3, 4, 5}; !reflect.DeepEqual(vertices, expected) {
-		t.Errorf("For graph %+v, expected depth-first search order to be %v, but was %v",
-			graph, expected, vertices)
+	if expected := []int{0, 1, 2, 3, 4, 5}; !reflect.DeepEqual(preOrder, expected) {
+		t.Errorf("For graph %+v, expected depth-first search pre-order to be %v, but was %v",
+			graph, expected, preOrder)
 	}
 }

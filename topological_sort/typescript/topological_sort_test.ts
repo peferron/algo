@@ -1,6 +1,6 @@
 import * as assert from 'assert';
 import {Graph} from './adjacency_list';
-import sort from './topological_sorting';
+import sort from './topological_sort';
 
 interface Test {
     graph: Graph;

@@ -1,4 +1,5 @@
 import {AdjacencyList, Graph, Edge} from './adjacency_list';
+import topologicalSort from './topological_sort';
 
 export default function shortestPath(graph: Graph, start: number, end: number): number[] | undefined {
     if (!graph.directed) {
@@ -15,18 +16,16 @@ export default function shortestPath(graph: Graph, start: number, end: number): 
     // parent[x] is the vertex that precedes x in the shortest path from start to x.
     const parent = new Array(graph.vertexCount);
 
-    function processVertex(x: number): void {
-        list.a[x].forEach(processEdge);
-    }
+    const processVertex = (x: number) => list.a[x].forEach(processEdge);
 
-    function processEdge(edge: Edge): void {
+    const processEdge = (edge: Edge) => {
         // dxy is the distance from start to y via x.
         const dxy = distance[edge.x] + edge.weight;
         if (dxy < distance[edge.y]) {
             distance[edge.y] = dxy;
             parent[edge.y] = edge.x;
         }
-    }
+    };
 
     sorted.forEach(processVertex);
 
@@ -36,27 +35,6 @@ export default function shortestPath(graph: Graph, start: number, end: number): 
     }
 
     return path(parent, end);
-}
-
-function topologicalSort(list: AdjacencyList): number[] {
-    const sorted: number[] = [];
-
-    const processed: boolean[] = new Array(list.a.length);
-    function process(x: number) {
-        if (processed[x]) {
-            return;
-        }
-        processed[x] = true;
-        // Vertices are processed in reverse topological order. To bring back the correct order,
-        // each vertex must be prepended instead of appended.
-        sorted.unshift(x);
-    }
-
-    for (let i = 0; i < list.a.length; i += 1) {
-        list.depthFirstSearch(i, process);
-    }
-
-    return sorted;
 }
 
 function path(parent: number[], end: number): number[] {

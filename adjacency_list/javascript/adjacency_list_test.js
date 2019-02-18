@@ -29,16 +29,18 @@ function testConstruct() {
 
 function testBreadthFirstSearch() {
     const list = new AdjacencyList(graph);
-    const vertices = [];
-    list.breadthFirstSearch(0, x => vertices.push(x));
-    assert.deepStrictEqual(vertices, [0, 1, 4, 5, 2, 3]);
+    const order = [];
+    list.breadthFirstSearch(0, x => order.push(x));
+    assert.deepStrictEqual(order, [0, 1, 4, 5, 2, 3]);
 }
 
 function testDepthFirstSearch() {
     const list = new AdjacencyList(graph);
-    const vertices = [];
-    list.depthFirstSearch(0, x => vertices.push(x));
-    assert.deepStrictEqual(vertices, [0, 1, 2, 3, 4, 5]);
+    const preOrder = [];
+    const postOrder = [];
+    list.depthFirstSearch(0, x => preOrder.push(x), x => postOrder.push(x));
+    assert.deepStrictEqual(preOrder, [0, 1, 2, 3, 4, 5]);
+    assert.deepStrictEqual(postOrder, [4, 3, 2, 1, 5, 0]);
 }
 
 testConstruct();

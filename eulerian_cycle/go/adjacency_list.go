@@ -30,18 +30,18 @@ func (a AdjacencyList) insertEdge(edge Edge, directed bool) {
 	}
 }
 
-func (a AdjacencyList) DepthFirstSearch(x int, lateCallback VertexCallback) {
+func (a AdjacencyList) DepthFirstSearch(start int, late VertexCallback) {
 	discovered := make([]bool, len(a))
-	a.dfs(discovered, x, lateCallback)
+	a.dfs(start, late, discovered)
 }
 
-func (a AdjacencyList) dfs(discovered []bool, x int, lateCallback VertexCallback) {
+func (a AdjacencyList) dfs(x int, late VertexCallback, discovered []bool) {
 	if discovered[x] {
 		return
 	}
 	discovered[x] = true
 	for _, y := range a[x] {
-		a.dfs(discovered, y, lateCallback)
+		a.dfs(y, late, discovered)
 	}
-	lateCallback(x)
+	late(x)
 }

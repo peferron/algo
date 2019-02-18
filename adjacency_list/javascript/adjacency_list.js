@@ -3,12 +3,13 @@ export default class AdjacencyList {
         this.a = constructAdjacencyList(graph);
     }
 
-    breadthFirstSearch(start, earlyCallback) {
-        breadthFirstSearch(this.a, start, earlyCallback);
+    breadthFirstSearch(start, callback) {
+        breadthFirstSearch(this.a, start, callback);
     }
 
-    depthFirstSearch(start, earlyCallback) {
-        depthFirstSearch(this.a, start, earlyCallback);
+    depthFirstSearch(start, preOrderCallback, postOrderCallback) {
+        const discovered = new Array(this.a.length);
+        depthFirstSearch(this.a, start, preOrderCallback, postOrderCallback, discovered);
     }
 }
 
@@ -31,43 +32,40 @@ function insertEdge(a, x, y, directed) {
     }
 }
 
-function breadthFirstSearch(a, start, earlyCallback) {
-    if (!a.length) {
-        return;
-    }
-
-    const processed = new Array(a.length);
+function breadthFirstSearch(a, start, callback) {
+    const discovered = new Array(a.length);
     const queue = [];
 
-    earlyCallback(start);
-    processed[start] = true;
+    discovered[start] = true;
+    callback(start);
     queue.push(start);
 
     while (queue.length) {
          // Use shift() for simplicity, but it can take linear time.
         const x = queue.shift();
+
         for (const y of a[x]) {
-            if (processed[y]) {
+            if (discovered[y]) {
                 continue;
             }
-            earlyCallback(y);
-            processed[y] = true;
+            discovered[y] = true;
+            callback(y);
             queue.push(y);
         }
     }
 }
 
-function depthFirstSearch(a, start, earlyCallback) {
-    const processed = new Array(a.length);
+function depthFirstSearch(a, start, preOrderCallback, postOrderCallback, discovered) {
+    if (discovered[start]) {
+        return;
+    }
 
-    const dfs = x => {
-        if (processed[x]) {
-            return;
-        }
-        earlyCallback(x);
-        processed[x] = true;
-        a[x].forEach(dfs);
-    };
+    discovered[start] = true;
+    preOrderCallback(start);
 
-    dfs(start);
+    for (const neighbor of a[start]) {
+        depthFirstSearch(a, neighbor, preOrderCallback, postOrderCallback, discovered);
+    }
+
+    postOrderCallback(start);
 }

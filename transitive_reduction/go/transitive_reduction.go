@@ -3,8 +3,7 @@ package transitive_reduction
 func TransitiveReduction(a AdjacencyList) AdjacencyList {
 	reduction := NewAdjacencyList(len(a))
 
-	// Compute the strongly connected components of the graph. For convenience, we use two different
-	// representations:
+	// Compute the strongly connected components of the graph. For convenience, we use two different representations:
 	// - `componentIndexes`, which labels each vertex with the index of the component it belongs to;
 	// - `components`, which groups together vertices that belong to same component.
 	componentIndexes, componentCount := StronglyConnectedComponents(a)

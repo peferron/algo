@@ -38,42 +38,42 @@ func (m *AdjacencyMatrix) insertEdge(x, y int, directed bool) {
 	}
 }
 
-func (m *AdjacencyMatrix) BreadthFirstSearch(start int, early VertexCallback) {
+func (m *AdjacencyMatrix) BreadthFirstSearch(start int, callback VertexCallback) {
+	discovered := make([]bool, len(*m))
 	queue := []int{}
-	processed := make([]bool, len(*m))
 
+	discovered[start] = true
+	callback(start)
 	queue = append(queue, start)
-	processed[start] = true
-	early(start)
 
 	for len(queue) > 0 {
 		x := queue[0]
 		queue = queue[1:]
 		for y, connected := range (*m)[x] {
-			if !connected || processed[y] {
+			if !connected || discovered[y] {
 				continue
 			}
-			early(y)
-			processed[y] = true
+			discovered[y] = true
+			callback(y)
 			queue = append(queue, y)
 		}
 	}
 }
 
-func (m *AdjacencyMatrix) DepthFirstSearch(start int, early VertexCallback) {
-	processed := make([]bool, len(*m))
-	m.dfs(start, processed, early)
+func (m *AdjacencyMatrix) DepthFirstSearch(start int, preOrderCallback VertexCallback) {
+	discovered := make([]bool, len(*m))
+	m.dfs(start, preOrderCallback, discovered)
 }
 
-func (m *AdjacencyMatrix) dfs(x int, processed []bool, early VertexCallback) {
-	if processed[x] {
+func (m *AdjacencyMatrix) dfs(x int, preOrderCallback VertexCallback, discovered []bool) {
+	if discovered[x] {
 		return
 	}
-	early(x)
-	processed[x] = true
+	discovered[x] = true
+	preOrderCallback(x)
 	for y, connected := range (*m)[x] {
 		if connected {
-			m.dfs(y, processed, early)
+			m.dfs(y, preOrderCallback, discovered)
 		}
 	}
 }

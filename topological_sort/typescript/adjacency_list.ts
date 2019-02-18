@@ -13,17 +13,28 @@ type VertexCallback = (x: number) => void;
 
 export class AdjacencyList {
     a: Edge[][];
+
     constructor(graph: Graph) {
         this.a = constructAdjacencyList(graph);
     }
-    depthFirstSearch(start: number, lateCallback: VertexCallback) {
-        depthFirstSearch(this.a, start, lateCallback);
+
+    depthFirstSearch(start: number, lateCallback: VertexCallback, discovered: boolean[]) {
+        if (discovered[start]) {
+            return;
+        }
+
+        discovered[start] = true;
+
+        for (const edge of this.a[start]) {
+            this.depthFirstSearch(edge.y, lateCallback, discovered);
+        }
+
+        lateCallback(start);
     }
 }
 
 function constructAdjacencyList(graph: Graph): Edge[][] {
-    // new Array(vertexCount).fill([]) does not work because it reuses the same array instance
-    // for every element.
+    // new Array(vertexCount).fill([]) does not work because it reuses the same array instance for every element.
     const a = Array.from({length: graph.vertexCount}, () => []);
 
     for (const edge of graph.edges) {
@@ -39,19 +50,4 @@ function insertEdge(a: Edge[][], edge: Edge, directed: boolean): void {
         const reversed = {x: edge.y, y: edge.x};
         insertEdge(a, reversed, true);
     }
-}
-
-function depthFirstSearch(a: Edge[][], start: number, lateCallback: VertexCallback): void {
-    const discovered = new Array(a.length);
-
-    function dfs(x: number) {
-        if (discovered[x]) {
-            return;
-        }
-        discovered[x] = true;
-        a[x].forEach(edge => dfs(edge.y));
-        lateCallback(x);
-    }
-
-    dfs(start);
 }
