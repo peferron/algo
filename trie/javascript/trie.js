@@ -24,7 +24,7 @@ export default class Trie {
     }
 
     del(key) {
-        del(this.root, key);
+        del(this.root, key[Symbol.iterator]());
     }
 
     all() {
@@ -51,42 +51,48 @@ class Node {
 }
 
 function find(n, key) {
-    if (!key) {
-        return n;
+    for (const c of key) {
+        const i = charToIndex(c);
+        const child = n.children[i];
+        if (child) {
+            n = child;
+        } else {
+            return undefined;
+        }
     }
-    const i = charToIndex(key[0]);
-    const child = n.children[i];
-    return child && find(child, key.substring(1));
+    return n;
 }
 
 function set(n, key, value) {
-    if (!key) {
-        n.value = value;
-        return;
+    for (const c of key) {
+        const i = charToIndex(c);
+        let child = n.children[i];
+        if (!child) {
+            child = new Node();
+            n.children[i] = child;
+        }
+        n = child;
     }
-    const i = charToIndex(key[0]);
-    let child = n.children[i];
-    if (!child) {
-        child = new Node();
-        n.children[i] = child;
-    }
-    set(child, key.substring(1), value);
+    n.value = value;
 }
 
-function del(n, key) {
-    const i = charToIndex(key[0]);
+function del(n, keyIterator) {
+    const c = keyIterator.next();
+
+    if (c.done) {
+        n.delValue();
+        return;
+    }
+
+    const i = charToIndex(c.value);
     const child = n.children[i];
     if (!child) {
         return;
     }
-    if (key.length > 1) {
-        del(child, key.substring(1));
-        return;
-    }
-    // Delete this child.
-    if (child.children.some(x => x !== undefined)) {
-        child.delValue();
-    } else {
+
+    del(child, keyIterator);
+
+    if (!child.hasValue() && child.children.every(x => x === undefined)) {
         n.children[i] = undefined;
     }
 }
@@ -102,13 +108,13 @@ function preOrder(n, key, callback) {
     }
 }
 
-// function log(n, indent) {
-//     var spaces = new Array(indent + 1).join(' ');
-//     n.children.forEach(function(child, i) {
+// function log(n, indent = 2) {
+//     const spaces = new Array(indent + 1).join(' ');
+//     for (const [i, child] of n.children.entries()) {
 //         if (child) {
-//             var v = child.hasValue() ? '(' + child.value + ')' : '';
-//             console.log(spaces + indexToChar(i) + ' ' + v);
+//             const v = child.hasValue() ? `(${child.value})` : '';
+//             console.log(`${spaces}${indexToChar(i)} ${v}`);
 //             log(child, indent + 2);
 //         }
-//     });
+//     }
 // }
