@@ -8,9 +8,14 @@ export default function dijkstra(graph, start, end) {
     const parents = new Array(n).fill(-1);
 
     distances[start] = 0;
-    let x = start;
 
-    while (x >= 0) {
+    while (true) {
+        const x = best(distances, visited);
+
+        if (x < 0) {
+            return undefined;
+        }
+
         if (x === end) {
             return path(end, parents);
         }
@@ -26,10 +31,7 @@ export default function dijkstra(graph, start, end) {
         }
 
         visited[x] = true;
-        x = best(distances, visited);
     }
-
-    return undefined;
 }
 
 // path returns an array containing all the ancestors of x, sorted from x's oldest ancestor to x itself.
