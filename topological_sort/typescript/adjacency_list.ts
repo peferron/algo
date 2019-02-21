@@ -7,6 +7,7 @@ export interface Graph {
 export interface Edge {
     x: number;
     y: number;
+    weight: number;
 }
 
 type VertexCallback = (x: number) => void;
@@ -47,7 +48,7 @@ function constructAdjacencyList(graph: Graph): Edge[][] {
 function insertEdge(a: Edge[][], edge: Edge, directed: boolean): void {
     a[edge.x].push(edge);
     if (!directed) {
-        const reversed = {x: edge.y, y: edge.x};
+        const reversed = {x: edge.y, y: edge.x, weight: edge.weight};
         insertEdge(a, reversed, true);
     }
 }
