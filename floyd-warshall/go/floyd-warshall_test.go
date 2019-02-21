@@ -1,13 +1,14 @@
 package floyd_warshall
 
 import (
+	"math"
 	"reflect"
 	"testing"
 )
 
 var tests = []struct {
 	graph     Graph
-	distances [][]float64
+	distances [][]int64
 }{
 	{
 		Graph{
@@ -15,7 +16,7 @@ var tests = []struct {
 			true,
 			[]Edge{},
 		},
-		[][]float64{},
+		[][]int64{},
 	},
 	{
 		Graph{
@@ -23,7 +24,7 @@ var tests = []struct {
 			true,
 			[]Edge{},
 		},
-		[][]float64{
+		[][]int64{
 			{0},
 		},
 	},
@@ -35,9 +36,9 @@ var tests = []struct {
 				{0, 1, 3},
 			},
 		},
-		[][]float64{
+		[][]int64{
 			{0, 3},
-			{Inf, 0},
+			{math.MaxInt64, 0},
 		},
 	},
 	{
@@ -48,7 +49,7 @@ var tests = []struct {
 				{0, 1, 3},
 			},
 		},
-		[][]float64{
+		[][]int64{
 			{0, 3},
 			{3, 0},
 		},
@@ -67,7 +68,7 @@ var tests = []struct {
 				{1, 2, 3},
 			},
 		},
-		[][]float64{
+		[][]int64{
 			{0, -1, -2, 0},
 			{4, 0, 2, 4},
 			{5, 1, 0, 2},
