@@ -8,7 +8,7 @@ export default function getVertexColoring(graph) {
     const coloring = new Array(graph.vertexCount).fill(-1);
 
     // neighboringColors[x] is the set of colors adjacent to x.
-    // Caching these sets allows this algorithm to run in O(n²) time.
+    // Caching these sets allows this algorithm to run in O(|V|²) time.
     const neighboringColors = Array.from({length: graph.vertexCount}, () => new Set());
 
     while (true) {

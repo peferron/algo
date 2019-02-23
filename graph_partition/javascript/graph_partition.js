@@ -14,7 +14,7 @@ export default function bisect(graph) {
     const matrix = newAdjacencyMatrix(graph);
     const subsets = split(graph, 2);
 
-    // Experiments have shown that the number of iterations of this loop does not increase with n, and should be
+    // Experiments have shown that the number of iterations of this loop does not increase with |V|, and should be
     // considered constant for time complexity analysis.
     while (true) {
         const swaps = getSwaps(matrix, subsets);
@@ -38,21 +38,21 @@ function getSwaps(matrix, subsets) {
     const swaps = [];
     const subsetsCopy = subsets.slice();
 
-    // The loop below can be optimized to run in O(n² log n) instead of O(n³):
+    // The loop below can be optimized to run in O(|V|² log |V|) instead of O(|V|³):
     //
-    // 1. getCostDifferences runs in O(n²), and is called in each iteration so the total is O(n³). Instead of calling it
-    //    in each iteration, we could call it only once before the loop, and then after each swap update only the cost
-    //    differences of the neighbors of the swapped vertices (+1 if the neighbor is now in a different subset, or -1
-    //    if the neighbor is now in the same subset). This would bring the time complexity down to O(n) per iteration,
-    //    for a total of O(n²).
+    // 1. getCostDifferences runs in O(|V|²), and is called in each iteration so the total is O(|V|³). Instead of
+    //    calling it in each iteration, we could call it only once before the loop, and then after each swap update only
+    //    the cost differences of the neighbors of the swapped vertices (+1 if the neighbor is now in a different
+    //    subset, or -1 if the neighbor is now in the same subset). This would bring the time complexity down to O(|V|)
+    //    per iteration, for a total of O(|V|²).
     //
-    // 2. The nested loop that finds the best pair of vertices to swap also runs in O(n²). But it can be optimized to
-    //    run in O(n log n). Recall that we want to select the pair that optimizes the cost reduction. We can sort the
-    //    cost differences of each subset's vertices in decreasing order: Da1 >= Da2 >= ... and Db1 >= Db2 >= ..., in
-    //    O(n log n) time. Then we examine the pairs in order. If we come across a pair (Dai, Dbj) such that (Dai + Dbj)
-    //    is less than the gain seen so far in this iteration, then we do not need to examine any more pairs. It is
-    //    almost never required to examine all the pairs, so the time complexity is O(n log n) per iteration, for a
-    //    total of O(n² log n).
+    // 2. The nested loop that finds the best pair of vertices to swap also runs in O(|V|²). But it can be optimized to
+    //    run in O(|V| log |V|). Recall that we want to select the pair that optimizes the cost reduction. We can sort
+    //    the cost differences of each subset's vertices in decreasing order: Da1 >= Da2 >= ... and Db1 >= Db2 >= ...,
+    //    in O(|V| log |V|) time. Then we examine the pairs in order. If we come across a pair (Dai, Dbj) such that (Dai
+    //    + Dbj) is less than the gain seen so far in this iteration, then we do not need to examine any more pairs. It
+    //    is almost never required to examine all the pairs, so the time complexity is O(|V| log |V|) per iteration, for
+    //    a total of O(|V|² log |V|).
 
     while (true) {
         const costDiffs = getCostDifferences(matrix, subsetsCopy);

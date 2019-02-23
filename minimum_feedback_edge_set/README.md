@@ -4,6 +4,6 @@
 
 Also called *minimum feedback arc set* problem, or *maximum acyclic subgraph* problem.
 
-The heuristic implemented here runs in O(n + m) time, where n is the number of vertices and m the number of edges in the graph.
+The heuristic implemented here runs in O(|V| + |E|) time.
 
 To find a minimum feedback **vertex** set: find a minimum feedback edge set first, then find a vertex cover of this set. See the [vertex_cover](../vertex_cover) module.
