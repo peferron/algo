@@ -18,24 +18,30 @@ export function shortestPath(graph: Graph, start: number, end: number): Path {
 
     distances[start] = 0;
 
-    for (let i = 0; i < graph.vertexCount - 1; i += 1) {
+    // |V| - 1 iterations should be enough to reach the final distances. If the distances are getting updated past
+    // that, then it means the graph has a negative cycle.
+    for (let i = 0; i < graph.vertexCount; i += 1) {
+        let updated = false;
+
         for (const {x, y, weight} of graph.edges) {
             const dxy = distances[x] + weight;
             if (dxy < distances[y]) {
                 distances[y] = dxy;
                 parents[y] = x;
+                updated = true;
             }
         }
-    }
 
-    for (const {x, y, weight} of graph.edges) {
-        if (distances[x] + weight < distances[y]) {
-            throw new Error('This graph contains a negative cycle');
+        if (!updated) {
+            // This iteration didn't update the distances. This means the distances are final, and the shortest path can
+            // be returned.
+            const reachable = start === end || parents[end] !== -1;
+            return reachable ? path(end, parents) : undefined;
         }
     }
 
-    const reachable = start === end || parents[end] !== -1;
-    return reachable ? path(end, parents) : undefined;
+    // |V| iterations ran without finalizing the distances. This means the graph has a negative cycle.
+    throw new Error('This graph contains a negative cycle');
 }
 
 function path(end: number, parents: number[]): Path {
