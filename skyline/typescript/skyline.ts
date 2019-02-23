@@ -1,4 +1,4 @@
-import MaxHeap from './max_heap';
+import MaxHeap from './maxheap';
 
 export interface Rectangle {
     left: number;

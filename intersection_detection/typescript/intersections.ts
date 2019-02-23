@@ -1,5 +1,5 @@
 import {Point, Segment, intersection} from './intersection';
-import MinHeap from './min_heap';
+import MinHeap from './minheap';
 import BinarySearchTree from './binary_search_tree';
 
 // If two events happen at the same x-coordinate, the event with the lowest type value will be

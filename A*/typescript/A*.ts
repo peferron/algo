@@ -1,4 +1,4 @@
-import MinHeap from './min_heap';
+import MinHeap from './minheap';
 
 export interface Coordinates {
     x: number;
