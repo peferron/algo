@@ -3,7 +3,7 @@ import topologicalSort from './topological_sort';
 
 export type Path = number[] | undefined;
 
-export function shortestPaths(graph: Graph, start: number): Path[] {
+export function shortestPath(graph: Graph, start: number, end: number): Path {
     if (!graph.directed) {
         throw new Error('This algorithm only supports directed graphs.');
     }
@@ -12,13 +12,17 @@ export function shortestPaths(graph: Graph, start: number): Path[] {
     const sorted = topologicalSort(list);
 
     // distances[x] is the distance between start and x.
-    const distances = new Array(graph.vertexCount).fill(Infinity);
+    const distances = new Array(list.a.length).fill(Infinity);
     distances[start] = 0;
 
     // parents[x] is the vertex that precedes x in the shortest path from start to x.
-    const parents = new Array(graph.vertexCount).fill(-1);
+    const parents = new Array(list.a.length).fill(-1);
 
-    for (let i = sorted.indexOf(start); i < sorted.length; i += 1) {
+    // To change the algorithm to compute shortest paths from start to all other vertices, replace endIndex with
+    // list.a.length.
+    const endIndex = sorted.indexOf(end);
+
+    for (let i = sorted.indexOf(start); i < endIndex; i += 1) {
         const x = sorted[i];
 
         for (const {y, weight} of list.a[x]) {
@@ -30,14 +34,8 @@ export function shortestPaths(graph: Graph, start: number): Path[] {
         }
     }
 
-    return paths(parents, start);
-}
-
-function paths(parents: number[], start: number): Path[] {
-    return parents.map((_, end) => {
-        const reachable = start === end || parents[end] !== -1;
-        return reachable ? path(parents, end) : undefined;
-    });
+    const reachable = start === end || parents[end] !== -1;
+    return reachable ? path(parents, end) : undefined;
 }
 
 function path(parents: number[], end: number): Path {

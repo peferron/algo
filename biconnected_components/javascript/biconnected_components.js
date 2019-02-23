@@ -45,17 +45,13 @@ export default function articulations(graph) {
 
     const dfs = x => {
         processVertexEarly(x);
-
         let children = 0;
-        const neighbors = list.a[x];
-
-        for (const y of neighbors) {
+        for (const y of list.a[x]) {
             if (!visited[y]) {
                 children += 1;
             }
             processEdge(x, y);
         }
-
         processVertexLate(x, children);
     };
 

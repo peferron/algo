@@ -1,7 +1,7 @@
 import * as assert from 'assert';
 import * as util from 'util';
 import {Graph} from './adjacency_list';
-import {Path, shortestPaths} from './dag_shortest_path';
+import {Path, shortestPath} from './dag_shortest_path';
 
 const inspect = (v: any) => util.inspect(v, {depth: null});
 
@@ -64,9 +64,15 @@ const tests: Test[] = [
 ];
 
 function runTest(test: Test): void {
-    const actual = test.shortestPaths.map((_, start) => shortestPaths(test.graph, start));
-    assert.deepStrictEqual(actual, test.shortestPaths, `For graph ${inspect(test.graph)}, ` +
-        `expected shortest paths to be ${inspect(test.shortestPaths)}, but were ${inspect(actual)}`);
+    for (let start = 0; start < test.graph.vertexCount; start += 1) {
+        for (let end = 0; end < test.graph.vertexCount; end += 1) {
+            const actual = shortestPath(test.graph, start, end);
+            const expected = test.shortestPaths[start][end];
+            assert.deepStrictEqual(actual, expected, `For graph ${inspect(test.graph)}, ` +
+                `expected shortest path from ${start} to ${end} to be ${inspect(expected)}, ` +
+                `but was ${inspect(actual)}`);
+        }
+    }
 }
 
 tests.forEach(runTest);

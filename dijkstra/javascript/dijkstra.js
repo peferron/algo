@@ -2,10 +2,9 @@ import AdjacencyList from './adjacency_list';
 
 export default function dijkstra(graph, start, end) {
     const list = new AdjacencyList(graph);
-    const n = list.a.length;
-    const visited = new Array(n).fill(false);
-    const distances = new Array(n).fill(Infinity);
-    const parents = new Array(n).fill(-1);
+    const visited = new Array(list.a.length).fill(false);
+    const distances = new Array(list.a.length).fill(Infinity);
+    const parents = new Array(list.a.length).fill(-1);
 
     distances[start] = 0;
 
