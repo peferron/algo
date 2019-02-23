@@ -16,8 +16,8 @@ const tests: Test[] = [
             {left: 2, right: 4, height: 2},
         ],
         skyline: [
-            {x: 1, y: 2},
-            {x: 4, y: 0},
+            {x: 1, height: 2},
+            {x: 4, height: 0},
         ],
     },
     {
@@ -26,8 +26,8 @@ const tests: Test[] = [
             {left: 2, right: 4, height: 2},
         ],
         skyline: [
-            {x: 1, y: 2},
-            {x: 4, y: 0},
+            {x: 1, height: 2},
+            {x: 4, height: 0},
         ],
     },
     {
@@ -36,10 +36,10 @@ const tests: Test[] = [
             {left: 3, right: 4, height: 2},
         ],
         skyline: [
-            {x: 1, y: 2},
-            {x: 2, y: 0},
-            {x: 3, y: 2},
-            {x: 4, y: 0},
+            {x: 1, height: 2},
+            {x: 2, height: 0},
+            {x: 3, height: 2},
+            {x: 4, height: 0},
         ],
     },
     {
@@ -51,12 +51,12 @@ const tests: Test[] = [
             {left: 8, right: 12, height: 3},
         ],
         skyline: [
-            {x: 0, y: 3},
-            {x: 2, y: 4},
-            {x: 6, y: 2},
-            {x: 8, y: 3},
-            {x: 12, y: 2},
-            {x: 14, y: 0},
+            {x: 0, height: 3},
+            {x: 2, height: 4},
+            {x: 6, height: 2},
+            {x: 8, height: 3},
+            {x: 12, height: 2},
+            {x: 14, height: 0},
         ],
     },
 ];

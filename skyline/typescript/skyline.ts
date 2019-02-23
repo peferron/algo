@@ -8,42 +8,30 @@ export interface Rectangle {
 
 export interface Point {
     x: number;
-    y: number;
+    height: number;
 }
 
 export function skyline(buildings: Rectangle[]): Point[] {
-    // Build a map from each position to the list of buildings that start or end there.
-    const positionToBuildings = new Map<number, Rectangle[]>();
-    for (const building of buildings) {
-        for (const x of [building.left, building.right]) {
-            if (positionToBuildings.has(x)) {
-                positionToBuildings.get(x)!.push(building);
-            } else {
-                positionToBuildings.set(x, [building]);
-            }
+    const lefts = buildings.map(b => ({type: 'left', x: b.left, height: b.height}));
+    const rights = buildings.map(b => ({type: 'right', x: b.right, height: b.height}));
+    const endpoints = lefts.concat(rights).sort((a, b) => a.x - b.x);
+    const heap = new MaxHeap();
+    const points: Point[] = [];
+
+    // Iterate through the sorted endpoints, adding and removing buildings and getting the max height at each position.
+    for (const e of endpoints) {
+        if (e.type === 'left') {
+            heap.add(e.height);
+        } else {
+            heap.delete(e.height);
+        }
+
+        const height = heap.max() || 0;
+
+        if (!points.length || points[points.length - 1].height !== height) {
+            points.push({x: e.x, height});
         }
     }
 
-    // Build a sorted list of all left and right positions.
-    const xs = buildings.map(b => b.left)
-        .concat(buildings.map(b => b.right))
-        .sort((x1, x2) => x1 - x2);
-
-    // Iterate through the sorted list of positions, adding and removing buildings as we go, and
-    // getting the max height at each position.
-    const heap = new MaxHeap();
-    heap.add(0);
-    const points = xs.map(x => {
-        for (const building of positionToBuildings.get(x)!) {
-            if (x === building.left) {
-                heap.add(building.height);
-            } else {
-                heap.delete(building.height);
-            }
-        }
-        return {x, y: heap.max()};
-    });
-
-    // Remove redundant points.
-    return points.filter((point, i) => i === 0 || point.y !== points[i - 1].y);
+    return points;
 }
