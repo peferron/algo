@@ -12,24 +12,27 @@ export interface Point {
 }
 
 export function skyline(buildings: Rectangle[]): Point[] {
-    const lefts = buildings.map(b => ({type: 'left', x: b.left, height: b.height}));
-    const rights = buildings.map(b => ({type: 'right', x: b.right, height: b.height}));
-    const endpoints = lefts.concat(rights).sort((a, b) => a.x - b.x);
-    const heap = new MaxHeap();
+    const lefts = buildings.map(building => ({x: building.left, building}));
+    const rights = buildings.map(building => ({x: building.right, building}));
+    const sides = lefts.concat(rights).sort((a, b) => a.x - b.x);
+    const heap = new MaxHeap<Rectangle>((a, b) => a.height - b.height);
     const points: Point[] = [];
 
-    // Iterate through the sorted endpoints, adding and removing buildings and getting the max height at each position.
-    for (const e of endpoints) {
-        if (e.type === 'left') {
-            heap.add(e.height);
+    // Iterate through the sorted sides, getting the max height at each position.
+    for (const {x, building} of sides) {
+        if (x === building.left) {
+            heap.add(building);
         } else {
-            heap.delete(e.height);
+            // Pop buildings until finding one whose right side is still ahead.
+            while (heap.max && heap.max.right <= x) {
+                heap.deleteMax();
+            }
         }
 
-        const height = heap.max() || 0;
+        const height = heap.max && heap.max.height || 0;
 
         if (!points.length || points[points.length - 1].height !== height) {
-            points.push({x: e.x, height});
+            points.push({x, height});
         }
     }
 

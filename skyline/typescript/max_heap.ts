@@ -1,102 +1,57 @@
-export default class MaxHeap {
-    private values: number[] = [];
-    private valueToIndexes = new Map<number, Set<number>>();
+export default class MaxHeap<T> {
+    private array: T[] = [];
 
-    max(): number {
-        return this.values[0];
+    constructor(private compare: (a: T, b: T) => number) {
     }
 
-    add(value: number) {
-        this.values.push(value);
-
-        const index = this.values.length - 1;
-
-        if (this.valueToIndexes.has(value)) {
-            this.valueToIndexes.get(value)!.add(index);
-        } else {
-            this.valueToIndexes.set(value, new Set([index]));
-        }
-
-        this.bubbleUp(index);
+    private swap(i: number, j: number) {
+        [this.array[i], this.array[j]] = [this.array[j], this.array[i]];
     }
 
-    delete(value: number) {
-        const index = this.valueToIndexes.get(value)!.values().next().value;
-        const lastIndex = this.values.length - 1;
-
-        if (index !== lastIndex) {
-            this.swap(index, lastIndex);
-        }
-
-        this.values.pop();
-        this.valueToIndexes.get(value)!.delete(lastIndex);
-
-        if (index !== lastIndex) {
-            this.bubbleDown(index);
-        }
-    }
-
-    bubbleUp(index: number) {
-        if (index === 0) {
-            return;
-        }
-
-        const value = this.values[index];
+    private bubbleUp(index: number) {
         const parentIndex = Math.floor((index - 1) / 2);
-        const parentValue = this.values[parentIndex];
-
-        if (value < parentValue) {
-            return;
+        if (parentIndex >= 0 && this.compare(this.array[index], this.array[parentIndex]) > 0) {
+            this.swap(parentIndex, index);
+            this.bubbleUp(parentIndex);
         }
-
-        this.swap(index, parentIndex);
-        this.bubbleUp(parentIndex);
     }
 
-    bubbleDown(index: number) {
-        const value = this.values[index];
-        const maxChildIndex = this.maxChildIndex(index);
-
-        if (maxChildIndex < 0 || this.values[maxChildIndex] < value) {
-            return;
-        }
-
-        this.swap(index, maxChildIndex);
-        this.bubbleDown(maxChildIndex);
+    add(element: T) {
+        this.array.push(element);
+        this.bubbleUp(this.array.length - 1);
     }
 
-    swap(aIndex: number, bIndex: number) {
-        const a = this.values[aIndex];
-        const b = this.values[bIndex];
-
-        if (a === b) {
-            return;
-        }
-
-        this.values[aIndex] = b;
-        this.values[bIndex] = a;
-
-        const aIndexes = this.valueToIndexes.get(a)!;
-        aIndexes.delete(aIndex);
-        aIndexes.add(bIndex);
-
-        const bIndexes = this.valueToIndexes.get(b)!;
-        bIndexes.delete(bIndex);
-        bIndexes.add(aIndex);
-    }
-
-    maxChildIndex(index: number) {
+    private bubbleDown(index: number) {
         const leftChildIndex = index * 2 + 1;
-        if (leftChildIndex >= this.values.length) {
-            return -1;
+        if (leftChildIndex >= this.array.length) {
+            return;
         }
 
-        const rightChildIndex = index * 2 + 2;
-        if (rightChildIndex >= this.values.length) {
-            return leftChildIndex;
+        const rightChildIndex = leftChildIndex + 1;
+
+        const minChildIndex = rightChildIndex > this.array.length &&
+            this.compare(this.array[rightChildIndex], this.array[leftChildIndex]) > 0 ?
+            rightChildIndex : leftChildIndex;
+
+        if (this.compare(this.array[minChildIndex], this.array[index]) > 0) {
+            this.swap(minChildIndex, index);
+            this.bubbleDown(minChildIndex);
+        }
+    }
+
+    get max(): T {
+        return this.array[0];
+    }
+
+    deleteMax(): T {
+        const max = this.array[0];
+        const last = this.array.pop()!;
+
+        if (this.array.length) {
+            this.array[0] = last;
+            this.bubbleDown(0);
         }
 
-        return this.values[leftChildIndex] > this.values[rightChildIndex] ?
-            leftChildIndex : rightChildIndex;
+        return max;
     }
 }
