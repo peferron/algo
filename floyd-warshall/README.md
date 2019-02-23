@@ -12,3 +12,4 @@ Other shortest path algorithms are available in this repo:
 * Single-source shortest paths on directed acyclic graphs: [shortest path via topological sort](../dag_shortest_path).
 * Single-source shortest paths on weighted graphs with no negative edges: [Dijkstra](../dijkstra).
 * Single-source shortest paths on weighted graphs with no negative edges, plus a heuristic to estimate the distance from any vertex to the target: [A*](../A*).
+* Single-source shortest paths on graphs with no negative cycles: [Bellman–Ford](../bellman-ford).
