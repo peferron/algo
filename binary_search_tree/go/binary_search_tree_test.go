@@ -15,16 +15,10 @@ func TestBasicSequence(t *testing.T) {
 	if _, ok := s.Get(2); ok {
 		t.Error("Expected ok to be false, was true")
 	}
-	if a := s.All(); !reflect.DeepEqual(a, []Data{}) {
-		t.Errorf("Expected a to be [], was %v", a)
-	}
 
 	s.Set(2, "two")
 	if v, ok := s.Get(2); !ok || v != "two" {
 		t.Errorf("Expected (ok, v) to be (true, \"two\"), was (%t, %q)", ok, v)
-	}
-	if a := s.All(); !reflect.DeepEqual(a, []Data{Data{2, "two"}}) {
-		t.Errorf("Expected a to be [(2, \"two\")], was %v", a)
 	}
 
 	// Check that deleting a non-existing key doesn't crash.
@@ -43,9 +37,6 @@ func TestBasicSequence(t *testing.T) {
 	if v, ok := s.Get(5); !ok || v != "five" {
 		t.Errorf("Expected (ok, v) to be (true, \"five\"), was (%t, %q)", ok, v)
 	}
-	if a := s.All(); !reflect.DeepEqual(a, []Data{Data{2, "two again"}, Data{5, "five"}}) {
-		t.Errorf("Expected a to be [(2, \"two\")], was %v", a)
-	}
 
 	s.Del(2)
 	if _, ok := s.Get(2); ok {
@@ -53,6 +44,50 @@ func TestBasicSequence(t *testing.T) {
 	}
 	if v, ok := s.Get(5); !ok || v != "five" {
 		t.Errorf("Expected (ok, v) to be (true, \"five\"), was (%t, %q)", ok, v)
+	}
+
+	s.Set(7, "seven")
+	s.Set(6, "six")
+	s.Set(3, "three")
+	s.Set(4, "four")
+	s.Set(0, "zero")
+	s.Set(2, "two")
+	s.Set(1, "one")
+	if a := s.InOrder(); !reflect.DeepEqual(a, []Data{
+		Data{0, "zero"},
+		Data{1, "one"},
+		Data{2, "two"},
+		Data{3, "three"},
+		Data{4, "four"},
+		Data{5, "five"},
+		Data{6, "six"},
+		Data{7, "seven"},
+	}) {
+		t.Errorf("Got incorrect in-order traversal: %v", a)
+	}
+	if a := s.PostOrderRecursive(); !reflect.DeepEqual(a, []Data{
+		Data{1, "one"},
+		Data{2, "two"},
+		Data{0, "zero"},
+		Data{4, "four"},
+		Data{3, "three"},
+		Data{6, "six"},
+		Data{7, "seven"},
+		Data{5, "five"},
+	}) {
+		t.Errorf("Got incorrect post-order traversal: %v", a)
+	}
+	if a := s.PostOrderIterative(); !reflect.DeepEqual(a, []Data{
+		Data{1, "one"},
+		Data{2, "two"},
+		Data{0, "zero"},
+		Data{4, "four"},
+		Data{3, "three"},
+		Data{6, "six"},
+		Data{7, "seven"},
+		Data{5, "five"},
+	}) {
+		t.Errorf("Got incorrect post-order traversal: %v", a)
 	}
 }
 
@@ -86,9 +121,9 @@ func validate(t *testing.T, s *Bst, m map[int]string, a []int) {
 		}
 	}
 
-	all := s.All()
+	all := s.InOrder()
 	if len(all) != len(a) {
-		t.Errorf("Expected t.all() to have len %d, was %d", len(a), len(all))
+		t.Errorf("Expected t.InOrder() to have len %d, was %d", len(a), len(all))
 	}
 	sort.Ints(a)
 	for i, d := range all {

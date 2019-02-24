@@ -34,12 +34,16 @@ func (t *Bst) Del(key int) {
 	t.root = remove(t.root, key)
 }
 
-func (t *Bst) All() []Data {
-	a := []Data{}
-	inOrder(t.root, func(d Data) {
-		a = append(a, d)
-	})
-	return a
+func (t *Bst) InOrder() []Data {
+	return collect(inOrder, t.root)
+}
+
+func (t *Bst) PostOrderRecursive() []Data {
+	return collect(postOrderRecursive, t.root)
+}
+
+func (t *Bst) PostOrderIterative() []Data {
+	return collect(postOrderIterative, t.root)
 }
 
 func find(n *node, key int) *node {
@@ -104,6 +108,14 @@ func removeMax(n *node) (root, max *node) {
 	return n, max
 }
 
+func collect(fn func(*node, func(Data)), n *node) []Data {
+	a := []Data{}
+	fn(n, func(d Data) {
+		a = append(a, d)
+	})
+	return a
+}
+
 func inOrder(n *node, cb func(Data)) {
 	if n == nil {
 		return
@@ -111,4 +123,37 @@ func inOrder(n *node, cb func(Data)) {
 	inOrder(n.left, cb)
 	cb(n.data)
 	inOrder(n.right, cb)
+}
+
+func postOrderRecursive(n *node, cb func(Data)) {
+	if n == nil {
+		return
+	}
+	postOrderRecursive(n.left, cb)
+	postOrderRecursive(n.right, cb)
+	cb(n.data)
+}
+
+func postOrderIterative(n *node, cb func(Data)) {
+	parents := []*node{}
+	var child *node
+
+	for {
+		if child == nil && n.left != nil {
+			parents = append(parents, n)
+			n = n.left
+		} else if (child == nil || child == n.left) && n.right != nil {
+			parents = append(parents, n)
+			n = n.right
+			child = nil
+		} else {
+			cb(n.data)
+			if len(parents) == 0 {
+				return
+			}
+			child = n
+			n = parents[len(parents)-1]
+			parents = parents[:len(parents)-1]
+		}
+	}
 }
