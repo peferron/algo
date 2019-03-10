@@ -1,5 +1,3 @@
-import MinHeap from './minheap';
-
 export interface Coordinates {
     x: number;
     y: number;
@@ -13,68 +11,73 @@ export interface Graph {
 const euclideanDistance = (a: Coordinates, b: Coordinates) =>
     Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2));
 
-const path = (end: number, parents: Map<number, number>) => {
-    // Recursive one-liner:
-    // return isNaN(end) ? [] : [...path(parents.get(end), parents), end];
-
-    const p: number[] = [];
-    while (!isNaN(end)) {
-        p.push(end);
-        end = parents.get(end)!;
-    }
-    return p.reverse();
-};
-
 export function shortestPath(graph: Graph, start: number, end: number): number[] | undefined {
-    const processed = new Set<number>();
-
-    const pendingSet = new Set<number>();
-    const pendingHeap = new MinHeap<number>((a, b) =>
-        distancesToEndViaPoint.get(a)! - distancesToEndViaPoint.get(b)!);
-
+    const visited = new Set<number>();
     const parents = new Map<number, number>();
-
-    const distancesToPoint = new Map<number, number>();
-    const distancesToEndViaPoint = new Map<number, number>();
+    const distancesToVertex = new Map<number, number>();
+    const distancesToEndViaVertex = new Map<number, number>();
 
     // Set the initial situation.
-    pendingSet.add(start);
-    pendingHeap.add(start);
-    distancesToPoint.set(start, 0);
+    distancesToVertex.set(start, 0);
+    distancesToEndViaVertex.set(start, euclideanDistance(graph.coordinates[start], graph.coordinates[end]));
 
-    while (pendingSet.size) {
-        const point = pendingHeap.deleteMin();
-        pendingSet.delete(point);
+    while (true) {
+        const x = best(visited, distancesToEndViaVertex);
 
-        if (point === end) {
-            return path(end, parents);
+        if (x < 0) {
+            return undefined;
         }
 
-        processed.add(point);
+        if (x === end) {
+            return ancestors(end, parents);
+        }
 
-        for (const neighbor of graph.adjacencyList[point]) {
-            if (processed.has(neighbor)) {
+        for (const y of graph.adjacencyList[x]) {
+            if (visited.has(y)) {
                 continue;
             }
 
-            if (!pendingSet.has(neighbor)) {
-                pendingSet.add(neighbor);
-                pendingHeap.add(neighbor);
-            }
+            const distanceToY = distancesToVertex.get(y);
+            const distanceToYViaX = distancesToVertex.get(x)! +
+                euclideanDistance(graph.coordinates[x], graph.coordinates[y]);
 
-            const oldDistanceToNeighbor = distancesToPoint.get(neighbor);
-            const newDistanceToNeighbor = distancesToPoint.get(point)! +
-                euclideanDistance(graph.coordinates[point], graph.coordinates[neighbor]);
-
-            if (oldDistanceToNeighbor === undefined ||
-                newDistanceToNeighbor < oldDistanceToNeighbor) {
-                parents.set(neighbor, point);
-                distancesToPoint.set(neighbor, newDistanceToNeighbor);
-                distancesToEndViaPoint.set(neighbor, newDistanceToNeighbor +
-                    euclideanDistance(graph.coordinates[neighbor], graph.coordinates[end]));
+            if (distanceToY === undefined || distanceToY > distanceToYViaX) {
+                parents.set(y, x);
+                distancesToVertex.set(y, distanceToYViaX);
+                distancesToEndViaVertex.set(y, distanceToYViaX +
+                    euclideanDistance(graph.coordinates[y], graph.coordinates[end]));
             }
         }
+
+        visited.add(x);
     }
 
     return undefined;
+}
+
+// best returns the best vertex to visit, or -1 if none. The best vertex to visit is the discovered (but unvisited)
+// vertex with the lowest distance to the end vertex.
+function best(visited: Set<number>, distancesToEndViaVertex: Map<number, number>): number {
+    let bestVertex = -1;
+    let minDistance = Infinity;
+
+    for (const [x, distance] of distancesToEndViaVertex.entries()) {
+        if (!visited.has(x) && distance < minDistance) {
+            bestVertex = x;
+            minDistance = distance;
+        }
+    }
+
+    return bestVertex;
+}
+
+// ancestors returns an array containing all the ancestors of x, sorted from x's oldest ancestor to x itself.
+function ancestors(x: number, parents: Map<number, number>): number[] {
+    // Recursive one-liner: return x === undefined ? [] : [...path(parents.get(x), parents), x];
+    const p: number[] = [];
+    while (x !== undefined) {
+        p.push(x);
+        x = parents.get(x)!;
+    }
+    return p.reverse();
 }

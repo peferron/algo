@@ -39,9 +39,9 @@ function path(x, parents) {
     return x < 0 ? [] : [...path(parents[x], parents), x];
 }
 
-// best returns the best vertex to visit, or -1 if none.
+// best returns the best vertex to visit, or -1 if none. The best vertex to visit is the discovered (but unvisited)
+// vertex with the lowest distance. The "discovered" state is indicated by distance < Infinity.
 function best(distances, visited) {
-    // The best vertex to visit is the unvisited vertex with the lowest initialized distance.
     let bestIndex = -1;
     let minDistance = Infinity;
 

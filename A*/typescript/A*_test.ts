@@ -9,8 +9,8 @@ const inspect = (v: any) => util.inspect(v, {depth: null});
 // [0-9A-Z] = shortest path
 const tests: string[] = [
 `
-01..
-..2.
+0...
+.12.
 ...3
 `,
 `
@@ -31,8 +31,8 @@ const tests: string[] = [
 ..#01.
 `,
 `
-...10....
-.32......
+....0....
+.321.....
 4#.....#.
 5##...##.
 .6##.##..
@@ -48,14 +48,16 @@ function parse(test: string): {graph: Graph, path: number[]} {
     const coordinates: Coordinates[] = [];
     const path: number[] = [];
 
-    chars.forEach((line, y) => line.forEach((char, x) => {
-        if (char !== '#') {
-            coordinates.push({x, y});
-            if (/[0-9A-Z]/.test(char)) {
-                path[parseInt(char, 36)] = coordinates.length - 1;
+    for (const [y, line] of chars.entries()) {
+        for (const [x, char] of line.entries()) {
+            if (char !== '#') {
+                coordinates.push({x, y});
+                if (/[0-9A-Z]/.test(char)) {
+                    path[parseInt(char, 36)] = coordinates.length - 1;
+                }
             }
         }
-    }));
+    }
 
     const adjacencyList = coordinates.map(a =>
         coordinates
