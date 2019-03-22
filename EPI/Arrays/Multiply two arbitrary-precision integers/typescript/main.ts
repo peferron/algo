@@ -1,26 +1,26 @@
 export default function multiply(a: number[], b: number[]): number[] {
-    const isNegative = a[0] * b[0] < 0;
-    const product: number[] = [];
+    const product = [0];
 
     for (let ai = 0; ai < a.length; ai += 1) {
         const av = a[a.length - 1 - ai];
-            for (let bi = 0; bi < b.length; bi += 1) {
+        for (let bi = 0; bi < b.length; bi += 1) {
             const bv = b[b.length - 1 - bi];
             const pi = ai + bi;
-            product[pi] = (product[pi] || 0) + Math.abs(av * bv);
+            const pv = Math.abs(av * bv);
+            if (pv > 0) {
+                product[pi] = (product[pi] || 0) + pv;
+            }
             bubbleUp(product, pi);
         }
     }
 
-    while (product.length > 1 && product[product.length - 1] == 0) {
-        product.pop();
+    product.reverse();
+
+    if (a[0] * b[0] < 0) {
+        product[0] *= -1;
     }
 
-    if (isNegative) {
-        product[product.length - 1] *= -1;
-    }
-
-    return product.reverse();
+    return product;
 }
 
 function bubbleUp(a: number[], i: number): void {
