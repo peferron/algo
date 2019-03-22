@@ -9,20 +9,20 @@ const tests: {pairs: number, matchedParens: string[]}[] = [
         pairs: 0,
         matchedParens: [
             '',
-        ]
+        ],
     },
     {
         pairs: 1,
         matchedParens: [
             '()',
-        ]
+        ],
     },
     {
         pairs: 2,
         matchedParens: [
             '(())',
             '()()',
-        ]
+        ],
     },
     {
         pairs: 3,
@@ -32,7 +32,7 @@ const tests: {pairs: number, matchedParens: string[]}[] = [
             '(())()',
             '()(())',
             '()()()',
-        ]
+        ],
     },
     {
         pairs: 4,
@@ -51,7 +51,7 @@ const tests: {pairs: number, matchedParens: string[]}[] = [
             '()(())()',
             '()()(())',
             '()()()()',
-        ]
+        ],
     },
 ];
 
