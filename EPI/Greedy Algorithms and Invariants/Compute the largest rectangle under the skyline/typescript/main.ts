@@ -1,18 +1,19 @@
 export default function maxArea(heights: number[]): number {
-    let maxArea = 0;
-    const stack = [{index: -1, height: 0}];
+    let result = 0;
+    const pillars: {index: number, height: number}[] = [];
+    heights.push(0); // To flush the last building
 
-    for (const [i, h] of [...heights, 0].entries()) {
-        while (stack.length > 1 && h <= stack[stack.length - 1].height) {
-            const {height} = stack.pop()!;
-            const right = i - 1;
-            const left = stack[stack.length - 1].index + 1;
-            const area = (right - left + 1) * height;
-            maxArea = Math.max(maxArea, area);
+    for (const [i, h] of heights.entries()) {
+        while (pillars.length && h <= pillars[pillars.length - 1].height) {
+            const {height} = pillars.pop()!;
+            const start = pillars.length === 0 ? 0 : pillars[pillars.length - 1].index + 1; // Inclusive
+            const end = i; // Exclusive
+            const area = (end - start) * height;
+            result = Math.max(result, area);
         }
 
-        stack.push({index: i, height: h});
+        pillars.push({index: i, height: h});
     }
 
-    return maxArea;
+    return result;
 }
