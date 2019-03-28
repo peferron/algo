@@ -30,10 +30,11 @@ var basicTests = []struct {
 }
 
 func TestBasicInputs(t *testing.T) {
+	b := 10
 	for i, test := range basicTests {
-		if out := Sort(test.in); !reflect.DeepEqual(out, test.out) {
-			t.Errorf("In test #%d with input slice %v, expected sorted slice to be %v, was %v",
-				i, test.in, test.out, out)
+		if out := Sorted(test.in, b); !reflect.DeepEqual(out, test.out) {
+			t.Errorf("In test #%d with input slice %v and base %v, expected sorted slice to be %v, was %v",
+				i, test.in, b, test.out, out)
 		}
 	}
 }
@@ -46,8 +47,9 @@ func TestRandomInputs(t *testing.T) {
 
 func testRandomInput(t *testing.T) {
 	in := randomInts()
-	if out := Sort(in); !sort.IntsAreSorted(out) {
-		t.Errorf("In random test with input slice %v, got unsorted slice %v", in, out)
+	b := 2 + rand.Intn(10)
+	if out := Sorted(in, b); !sort.IntsAreSorted(out) {
+		t.Errorf("In random test with input slice %v and base %v, got unsorted slice %v", in, b, out)
 	}
 }
 
@@ -55,8 +57,7 @@ func randomInts() []int {
 	n := rand.Intn(1000)
 	a := make([]int, n)
 	for i := 0; i < n; i++ {
-		// Generate ints between -n/2 and +n/2 to produce positive numbers, negative numbers, and
-		// duplicates.
+		// Generate ints between -n/2 and +n/2 to produce positive numbers, negative numbers, and duplicates.
 		a[i] = rand.Intn(n) - n/2
 	}
 	return a
