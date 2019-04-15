@@ -19,6 +19,7 @@ func (s *Sieve) Next() int {
 	for {
 		s.i++
 		primes, ok := s.sieve[s.i]
+		delete(s.sieve, s.i)
 
 		if !ok {
 			// i is a prime.
@@ -35,7 +36,5 @@ func (s *Sieve) Next() int {
 			m := s.i + p
 			s.sieve[m] = append(s.sieve[m], p)
 		}
-		// i won't be needed in the sieve anymore.
-		delete(s.sieve, s.i)
 	}
 }
