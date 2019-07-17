@@ -17,7 +17,7 @@ public func maximize(_ tableau: [[Float]]) -> [Float] {
 // or nil if the olution is already optimal.
 func selectPivotColumn(_ tableau: [[Float]]) -> Int? {
     // Select the first column with a negative value in the first row.
-    return tableau[0].dropLast().index { $0 < 0 }
+    return tableau[0].dropLast().firstIndex { $0 < 0 }
 }
 
 // selectPivotRow returns the index of the row that should be used for pivoting the tableau at the

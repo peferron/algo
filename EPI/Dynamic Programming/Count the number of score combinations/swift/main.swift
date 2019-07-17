@@ -31,7 +31,7 @@ public func combinations(score: Int) -> [Combination] {
         // s-2 (safeties: i-1, goals: j, touchdowns: k). Adding 1 goal to the combination for s-3
         // (safeties: i, goals: j-1, touchdowns: k) results in the same combination.
         let goalCombinations = s < 3 ? [] :
-            computedCombinations[s - 3].flatMap {
+            computedCombinations[s - 3].compactMap {
                 $0.safeties == 0 ? ($0.safeties, $0.goals + 1, $0.touchdowns) : nil
             }
 
@@ -39,7 +39,7 @@ public func combinations(score: Int) -> [Combination] {
         // Just like above, to avoid duplicates we ignore the combinations for s-7 that have 1 or
         // more safeties or goals.
         let touchdownCombinations = s < 7 ? [] :
-            computedCombinations[s - 7].flatMap {
+            computedCombinations[s - 7].compactMap {
                 $0.safeties == 0 && $0.goals == 0 ? ($0.safeties, $0.goals, $0.touchdowns + 1) : nil
             }
 

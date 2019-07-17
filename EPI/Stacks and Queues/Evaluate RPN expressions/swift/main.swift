@@ -25,7 +25,7 @@ enum Token {
 }
 
 public func evaluate(_ expression: String) -> Int? {
-    let tokens = expression.characters.split(separator: ",").map { Token(string: String($0))! }
+    let tokens = expression.split(separator: ",").map { Token(string: String($0))! }
     var stack = [Token]()
 
     for token in tokens {

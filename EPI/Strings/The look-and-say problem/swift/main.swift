@@ -19,14 +19,14 @@ func next(_ sequence: [Character]) -> [Character] {
         if character == streakCharacter {
             streakCount += 1
         } else {
-            nextSequence += String(streakCount).characters + [streakCharacter]
+            nextSequence += String(streakCount) + [streakCharacter]
             streakCharacter = character
             streakCount = 1
         }
     }
 
     // Append the final streak.
-    nextSequence += String(streakCount).characters + [streakCharacter]
+    nextSequence += String(streakCount) + [streakCharacter]
 
     return nextSequence
 }

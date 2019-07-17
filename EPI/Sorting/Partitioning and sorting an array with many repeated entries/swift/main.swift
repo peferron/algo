@@ -35,7 +35,7 @@ public func group(_ students: inout [Student]) {
         } else {
             // Move the current student to the target index for this age group.
             if index != ageTargetIndex {
-                swap(&students[index], &students[ageTargetIndex])
+                students.swapAt(index, ageTargetIndex)
             }
             ageTargetIndexes[age]! += 1
         }

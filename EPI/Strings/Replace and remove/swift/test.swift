@@ -15,17 +15,17 @@ let tests: [(before: String, after: String)] = [
 ]
 
 for test in tests {
-    let beforeCharacters = [Character](test.before.characters)
+    let beforeCharacters = [Character](test.before)
     let beforeCount = beforeCharacters.count
 
-    let afterCount = test.after.characters.count
+    let afterCount = test.after.count
 
     var actualCharacters = beforeCharacters
     if afterCount > beforeCount {
         actualCharacters += [Character](repeating: " ", count: afterCount - beforeCount)
     }
     let actualCount = replaceAndRemove(characters: &actualCharacters, count: beforeCount)
-    var actualString = String(actualCharacters.prefix(actualCount))
+    let actualString = String(actualCharacters.prefix(actualCount))
 
     guard actualCount == afterCount && actualString == test.after else {
         print("For characters '\(test.before)' and count \(beforeCount), " +

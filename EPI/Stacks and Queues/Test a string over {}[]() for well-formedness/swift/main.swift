@@ -1,7 +1,7 @@
 public func wellFormed(_ string: String) -> Bool {
     var opened = [Character]()
 
-    for character in string.characters {
+    for character in string {
         switch character {
         case "{", "[", "(":
             opened.append(character)

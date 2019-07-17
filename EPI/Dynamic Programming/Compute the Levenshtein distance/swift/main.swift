@@ -1,6 +1,6 @@
 public func distance(_ sa: String, _ sb: String) -> Int {
-    let a = [Character](sa.characters)
-    let b = [Character](sb.characters)
+    let a = [Character](sa)
+    let b = [Character](sb)
 
     // distances[i][j] is the distance between the substring formed using the i first characters of
     // a, and the substring formed using the j first characters of b.

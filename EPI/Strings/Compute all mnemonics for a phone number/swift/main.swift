@@ -12,7 +12,7 @@ let digitMnemonics: [Character: [Character]] = [
 ]
 
 public func mnemonicsIterative(number: String) -> [String] {
-    let choices = number.characters.map { digitMnemonics[$0]! }
+    let choices = number.map { digitMnemonics[$0]! }
     return combinations(choices).map { String($0) }
 }
 
@@ -40,10 +40,10 @@ func combination<T>(_ choices: [[T]], index combinationIndex: Int) -> [T] {
 }
 
 public func mnemonicsRecursive(_ number: String) -> [String] {
-    return mnemonicsRec(number.characters).map { String($0) }
+    return mnemonicsRec(Substring(number)).map { String($0) }
 }
 
-func mnemonicsRec(_ number: String.CharacterView) -> [[Character]] {
+func mnemonicsRec(_ number: Substring) -> [[Character]] {
     if number.isEmpty {
         return [[]]
     }

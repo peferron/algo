@@ -11,7 +11,7 @@ let tests: [(n1: String, b1: Int, b2: Int, n2: String)] = [
 
 for test in tests {
     for (n1, b1, b2, n2) in [test, (test.n2, test.b2, test.b1, test.n1)] {
-        var actual = convert(number: n1, fromBase: b1, toBase: b2)
+        let actual = convert(number: n1, fromBase: b1, toBase: b2)
         guard actual == n2 else {
             print("For number \(n1) in base \(b1), expected output in base \(b2) " +
                 "to be \(n2), but was \(actual)")

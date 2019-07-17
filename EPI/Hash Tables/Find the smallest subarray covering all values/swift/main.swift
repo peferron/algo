@@ -20,7 +20,7 @@ public func digest(article: [String], search: Set<String>) -> Range<Int>? {
             // The current range contains all search words. Increment the start index to try to
             // reduce the range count.
             if bestRange == nil || currentRangeEnd - currentRangeStart < bestRange!.count {
-                bestRange = Range(currentRangeStart..<currentRangeEnd)
+                bestRange = currentRangeStart..<currentRangeEnd
             }
             let outgoingWord = article[currentRangeStart]
             currentRangeStart += 1

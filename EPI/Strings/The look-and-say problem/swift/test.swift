@@ -12,7 +12,7 @@ let tests: [(index: Int, result: String)] = [
 ]
 
 for test in tests {
-    var actual = lookAndSay(index: test.index)
+    let actual = lookAndSay(index: test.index)
     guard actual == test.result else {
         print("For index \(test.index), expected result to be '\(test.result)', " +
             "but was '\(actual)'")

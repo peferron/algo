@@ -74,7 +74,7 @@ let tests: [(array: [[Int]], spiral: [Int])] = [
 
 for fn in fns {
     for test in tests {
-        var actual = fn(test.array)
+        let actual = fn(test.array)
         guard actual == test.spiral else {
             print("For array \(test.array), expected spiral to be \(test.spiral), " +
                 "but was \(actual)")

@@ -1,4 +1,4 @@
-public func largestContainedIntervalLength(values: [Int]) -> Int {
+public func largestContainedIntervalLength(_ values: [Int]) -> Int {
     var set = Set<Int>(values)
     var maxLength = 0
 

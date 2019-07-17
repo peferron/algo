@@ -1,7 +1,7 @@
 // swiftlint:disable variable_name
 
 public func reverseWordsSimple(_ characters: inout [Character]) {
-    characters = characters.split(separator: " ").reversed().joined(separator: [" "]).flatMap { $0 }
+    characters = characters.split(separator: " ").reversed().joined(separator: [" "]).compactMap { $0 }
 }
 
 public func reverseWordsSmart(_ characters: inout [Character]) {
@@ -27,12 +27,12 @@ func swap(_ array: inout [Character], _ i: Int, _ j: Int) {
 }
 
 func rangeOfNextWord(_ characters: [Character], startIndex: Int) -> Range<Int>? {
-    let wordStartIndex = characters[startIndex..<characters.count].index { $0 != " " }
+    let wordStartIndex = characters[startIndex..<characters.count].firstIndex { $0 != " " }
     if wordStartIndex == nil {
         return nil
     }
 
-    let spaceStartIndex = characters[wordStartIndex!..<characters.count].index(of: " ")
+    let spaceStartIndex = characters[wordStartIndex!..<characters.count].firstIndex(of: " ")
     if spaceStartIndex == nil {
         return wordStartIndex!..<characters.count
     }

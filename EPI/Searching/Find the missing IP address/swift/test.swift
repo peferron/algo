@@ -15,11 +15,11 @@ let tests: [(numbers: [UInt8], missing: UInt8?)] = [
         missing: 8
     ),
     (
-        numbers: shuffle([UInt8](UInt8(0).stride(through: UInt8.max, by: 1))),
+        numbers: shuffle(array: [UInt8](stride(from: UInt8(0), through: UInt8.max, by: 1))),
         missing: nil
     ),
     (
-        numbers: shuffle([UInt8](0...27) + [UInt8](UInt8(29).stride(through: UInt8.max, by: 1))),
+        numbers: shuffle(array: [UInt8](0...27) + [UInt8](stride(from: UInt8(29), through: UInt8.max, by: 1))),
         missing: 28
     ),
 ]
@@ -28,7 +28,7 @@ for test in tests {
     let missing = findMissingNumber(test.numbers)
     guard missing == nil && test.missing == nil || missing! == test.missing! else {
         print("For test numbers \(test.numbers), " +
-            "expected missing to be \(test.missing), but was \(missing)")
+            "expected missing to be \(String(describing: test.missing)), but was \(String(describing: missing))")
         exit(1)
     }
 }

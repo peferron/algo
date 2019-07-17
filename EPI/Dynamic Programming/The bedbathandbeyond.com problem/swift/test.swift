@@ -38,7 +38,8 @@ for test in tests {
     guard actual == nil && test.decomposition == nil ||
         actual != nil && test.decomposition != nil && actual! == test.decomposition! else {
         print("For name \(test.name) and dictionary \(test.dictionary), " +
-            "expected decomposition to be \(test.decomposition), but was \(actual)")
+            "expected decomposition to be \(String(describing: test.decomposition)), " +
+            "but was \(String(describing: actual))")
         exit(1)
     }
 }

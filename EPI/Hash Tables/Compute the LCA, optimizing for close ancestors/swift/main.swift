@@ -39,8 +39,8 @@ public class Node: Hashable {
         return nil
     }
 
-    public var hashValue: Int {
-        return value
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(value)
     }
 }
 

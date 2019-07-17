@@ -1,12 +1,12 @@
 // swiftlint:disable variable_name
 
-public func findMissingNumber(numbers: [UInt8]) -> UInt8? {
+public func findMissingNumber(_ numbers: [UInt8]) -> UInt8? {
     var missing: UInt8 = 0
 
     // We process from the most significant bit (7th bit) down to the least significant bit (0th
     // bit). This makes this algorithm return the lowest missing number, which can be a nice
     // property to have.
-    for i: UInt8 in (0..<8).reverse() {
+    for i: UInt8 in (0..<8).reversed() {
         // Consider only the numbers that have the same 0...i bits as missing.
         let mask = i == 7 ? 0 : UInt8.max << i
 

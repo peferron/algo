@@ -14,7 +14,7 @@ let tests: [(roman: String, int: Int)] = [
 ]
 
 for test in tests {
-    var actual = toInt(roman: test.roman)
+    let actual = toInt(roman: test.roman)
     guard actual == test.int else {
         print("For roman '\(test.roman)', expected int to be \(test.int), but was \(actual)")
         exit(1)

@@ -1,13 +1,13 @@
 ({
-    var a = Node(value: 5, next: nil)
+    let a = Node(value: 5, next: nil)
     let head = a.sort()
     assert(head === a)
     assert(head.next === nil)
 }())
 
 ({
-    var b = Node(value: 5, next: nil)
-    var a = Node(value: 3, next: b)
+    let b = Node(value: 5, next: nil)
+    let a = Node(value: 3, next: b)
     let head = a.sort()
     assert(head === a)
     assert(head.next! === b)
@@ -15,8 +15,8 @@
 }())
 
 ({
-    var b = Node(value: 3, next: nil)
-    var a = Node(value: 5, next: b)
+    let b = Node(value: 3, next: nil)
+    let a = Node(value: 5, next: b)
     let head = a.sort()
     assert(head === b)
     assert(head.next! === a)
@@ -24,10 +24,10 @@
 }())
 
 ({
-    var d = Node(value: 4, next: nil)
-    var c = Node(value: 3, next: d)
-    var b = Node(value: 4, next: c)
-    var a = Node(value: 5, next: b)
+    let d = Node(value: 4, next: nil)
+    let c = Node(value: 3, next: d)
+    let b = Node(value: 4, next: c)
+    let a = Node(value: 5, next: b)
     let head = a.sort()
     assert(head === c)
     assert(head.next! === b)

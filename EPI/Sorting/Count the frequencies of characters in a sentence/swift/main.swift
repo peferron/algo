@@ -1,7 +1,7 @@
 public typealias Occurrences = (character: Character, count: Int)
 
 public func occurrences(_ string: String) -> [Occurrences] {
-    let sortedChars = string.characters.sorted(by: <)
+    let sortedChars = string.sorted(by: <)
     var result = [Occurrences]()
 
     for char in sortedChars {
@@ -19,12 +19,12 @@ public func occurrences(_ string: String) -> [Occurrences] {
 // it allocates a new array of chars, which is linear with string length. Using dictionary, on the
 // other hand, only takes space linear with the number of distinct chars, which is bounded by some
 // constant (although this constant will be very high for e.g. Chinese). Also, in Swift, iterating
-// the string characters is lazy and does not allocate a new array.
+// the string is lazy and does not allocate a new array.
 /*
 public func occurrences(_ string: String) -> [(Character, Int)] {
     var counts = [Character: Int]()
 
-    for char in string.characters {
+    for char in string {
         let count = counts[char] ?? 0
         counts[char] = count + 1
     }

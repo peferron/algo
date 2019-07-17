@@ -4,10 +4,10 @@ public func decompose(_ name: String, dictionary: Set<String>) -> [String]? {
     // The base case is the empty substring, which maps to the empty decomposition.
     var decompositions: [Int: [String]?] = [0: []]
 
-    return decompose(name.characters, dictionary: dictionary, decompositions: &decompositions)
+    return decompose(name, dictionary: dictionary, decompositions: &decompositions)
 }
 
-private func decompose(_ name: String.CharacterView, dictionary: Set<String>, decompositions: inout [Int: [String]?]) -> [String]? {
+private func decompose(_ name: String, dictionary: Set<String>, decompositions: inout [Int: [String]?]) -> [String]? {
     // Check if the result is cached.
     if let decomposition = decompositions[name.count] {
         return decomposition
@@ -21,7 +21,7 @@ private func decompose(_ name: String.CharacterView, dictionary: Set<String>, de
             continue
         }
 
-        let suffix = name.suffix(from: name.index(after: i))
+        let suffix = String(name.suffix(from: name.index(after: i)))
         if let suffixDecomposition = decompose(suffix, dictionary: dictionary, decompositions: &decompositions) {
             decomposition = [prefix] + suffixDecomposition
             break

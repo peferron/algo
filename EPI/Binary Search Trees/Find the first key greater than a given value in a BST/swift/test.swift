@@ -87,8 +87,8 @@ for test in tests {
         let expected = subTest.result(test.tree)
         guard actual === expected else {
             print("For test tree \(test.tree), " +
-                "expected lowest value greater than \(subTest.threshold) to be \(expected), " +
-                "but was \(actual)")
+                "expected lowest value greater than \(subTest.threshold) to be \(String(describing: expected)), " +
+                "but was \(String(describing: actual))")
             exit(1)
         }
     }

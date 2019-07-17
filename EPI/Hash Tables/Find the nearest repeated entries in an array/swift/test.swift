@@ -23,7 +23,8 @@ for test in tests {
     let distance = distanceOfClosestPair(test.words)
     guard distance == test.distance else {
         print("For test words \(test.words), " +
-            "expected distance of closest pair to be \(test.distance), but was \(distance)")
+            "expected distance of closest pair to be \(String(describing: test.distance)), " +
+            "but was \(String(describing: distance))")
         exit(1)
     }
 }

@@ -7,8 +7,8 @@ func isAlphanumeric(_ character: Character) -> Bool {
 }
 
 public func isPalindromeSimple(_ string: String) -> Bool {
-    let cleanedCharacters = string.lowercased().characters.filter(isAlphanumeric)
-    return cleanedCharacters == cleanedCharacters.reversed()
+    let cleanedCharacters = string.lowercased().filter(isAlphanumeric)
+    return cleanedCharacters == String(cleanedCharacters.reversed())
 }
 
 public func isPalindromeSmart(_ string: String) -> Bool {

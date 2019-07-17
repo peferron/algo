@@ -17,7 +17,7 @@ let tests: [(string: String, isPalindrome: Bool)] = [
 
 for fn in fns {
     for test in tests {
-        var actual = fn(test.string)
+        let actual = fn(test.string)
         guard actual == test.isPalindrome else {
             print("For string \(test.string), expected isPalindrome to be \(test.isPalindrome), " +
                 "but was \(actual)")

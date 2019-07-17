@@ -21,5 +21,5 @@ public func indexOfAmpleCity(_ cities: [City]) -> Int {
 
     // Let's say gas[k] is the minimum value. If we start the road at cities[k], then gas[k] becomes
     // 0, and all other gas values become >= 0. This means that cities[k] is an ample city.
-    return gas.index(of: gas.min()!)!
+    return gas.firstIndex(of: gas.min()!)!
 }

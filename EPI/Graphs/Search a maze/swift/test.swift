@@ -107,8 +107,8 @@ for test in tests {
         guard actual == nil && subTest.path == nil ||
             actual != nil && subTest.path != nil && actual! == subTest.path! else {
             print("For maze \(test.maze), " +
-                "expected path from \(subTest.start) to \(subTest.end) to be \(subTest.path), " +
-                "but was \(actual)")
+                "expected path from \(subTest.start) to \(subTest.end) to be \(String(describing: subTest.path)), " +
+                "but was \(String(describing: actual))")
             exit(1)
         }
     }

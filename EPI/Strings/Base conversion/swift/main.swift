@@ -38,7 +38,7 @@ func toString(number: UInt, base: Int) -> String {
         n /= UInt(base)
     }
 
-    return String(s.characters.reversed())
+    return String(s.reversed())
 }
 
 public func convert(number: String, fromBase b1: Int, toBase b2: Int) -> String {
