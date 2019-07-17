@@ -12,7 +12,7 @@ function inRegion(point: Point, region: Region): boolean {
     // intersects an odd number of region edges, then point is in region. Otherwise, point is
     // outside region.
 
-    return region.reduce((inside, p1, i) => {
+    return region.reduce((inside: boolean, p1, i) => {
         const p2 = region[(i + 1) % region.length];
 
         // See http://geomalgorithms.com/a03-_inclusion.html for the list of rules.
